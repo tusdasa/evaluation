@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.tusdasa.evaluation.dao.TeacherMapper">
+  <resultMap id="BaseResultMap" type="net.tusdasa.evaluation.entity.Teacher">
+    <id column="work_id" jdbcType="INTEGER" property="workId" />
+    <result column="teacher_secret" jdbcType="VARCHAR" property="teacherSecret" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="teacher_name" jdbcType="VARCHAR" property="teacherName" />
+    <association property="department" select="net.tusdasa.evaluation.dao.DepartmentMapper.selectByPrimaryKey" column="department_id" />
+    <association property="professional"  select="net.tusdasa.evaluation.dao.ProfessionalMapper.selectByPrimaryKey" column="professional_id" />
+    <association property="state" select="net.tusdasa.evaluation.dao.TeacherStateMapper.selectByPrimaryKey"  column="state_id"/>
+  </resultMap>
+  <resultMap id="TeacherResultMap" type="net.tusdasa.evaluation.entity.Teacher">
+    <id column="work_id" jdbcType="INTEGER" property="workId" />
+    <result column="teacher_secret" jdbcType="VARCHAR" property="teacherSecret" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="teacher_name" jdbcType="VARCHAR" property="teacherName" />
+    <association property="department" javaType="net.tusdasa.evaluation.entity.Department">
+      <id column="department_id" jdbcType="INTEGER" property="departmentId" />
+      <result column="department_name" jdbcType="VARCHAR" property="departmentName" />
+    </association>
+    <association property="professional" javaType="net.tusdasa.evaluation.entity.Professional">
+      <id column="professional_id" jdbcType="INTEGER" property="professionalId" />
+      <result column="professional_title" jdbcType="VARCHAR" property="professionalTitle" />
+    </association>
+    <association property="state" javaType="net.tusdasa.evaluation.entity.TeacherState">
+      <id column="state_id" jdbcType="INTEGER" property="stateId" />
+      <result column="state_name" jdbcType="VARCHAR" property="stateName" />
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    work_id, teacher_secret, role_id, department_id, teacher_name, professional_id, state_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `t_teacher`
+    where work_id = #{workId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from `t_teacher`
+    where work_id = #{workId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="net.tusdasa.evaluation.entity.Teacher">
+    insert into `t_teacher` (work_id, teacher_secret, role_id, 
+      department_id, teacher_name, professional_id, 
+      state_id)
+    values (#{workId,jdbcType=INTEGER}, #{teacherSecret,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, 
+      #{department.departmentId,jdbcType=INTEGER}, #{teacherName,jdbcType=VARCHAR}, #{professional.professionalId,jdbcType=INTEGER},
+      #{state.stateId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="net.tusdasa.evaluation.entity.Teacher">
+    insert into `t_teacher`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="workId != null">
+        work_id,
+      </if>
+      <if test="teacherSecret != null">
+        teacher_secret,
+      </if>
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="department.departmentId != null">
+        department_id,
+      </if>
+      <if test="teacherName != null">
+        teacher_name,
+      </if>
+      <if test="professional.professionalId != null">
+        professional_id,
+      </if>
+      <if test="state.stateId != null">
+        state_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="workId != null">
+        #{workId,jdbcType=INTEGER},
+      </if>
+      <if test="teacherSecret != null">
+        #{teacherSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="department.departmentId != null">
+        #{department.departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="teacherName != null">
+        #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="professional.professionalId != null">
+        #{professional.professionalId,jdbcType=INTEGER},
+      </if>
+      <if test="state.stateId!= null">
+        #{state.stateId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="net.tusdasa.evaluation.entity.Teacher">
+    update `t_teacher`
+    <set>
+      <if test="teacherSecret != null">
+        teacher_secret = #{teacherSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="department.departmentId != null">
+        department_id = #{department.departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="teacherName != null">
+        teacher_name = #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="professional.professionalId != null">
+        professional_id = #{professional.professionalId,jdbcType=INTEGER},
+      </if>
+      <if test="state.stateId != null">
+        state_id = #{state.stateId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where work_id = #{workId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="net.tusdasa.evaluation.entity.Teacher">
+    update `t_teacher`
+    set teacher_secret = #{teacherSecret,jdbcType=VARCHAR},
+      role_id = #{roleId,jdbcType=INTEGER},
+      department_id = #{department.departmentId,jdbcType=INTEGER},
+      teacher_name = #{teacherName,jdbcType=VARCHAR},
+      professional_id = #{professional.professionalId,jdbcType=INTEGER},
+      state_id = #{state.stateId,jdbcType=INTEGER}
+    where work_id = #{workId,jdbcType=INTEGER}
+  </update>
+  <select id="findAll" parameterType="java.util.Map" resultMap="TeacherResultMap">
+    SELECT
+      t_teacher.work_id,
+      t_teacher.teacher_secret,
+      t_teacher.role_id,
+      t_teacher.teacher_name,
+      t_teacher_state.state_id,
+      t_teacher_state.state_name,
+      t_department.department_id,
+      t_department.department_name,
+      t_professional.professional_id,
+      t_professional.professional_title
+    FROM
+      t_teacher
+        INNER JOIN t_teacher_state ON t_teacher.state_id = t_teacher_state.state_id
+        INNER JOIN t_department ON t_teacher.department_id = t_department.department_id
+        INNER JOIN t_professional ON t_teacher.professional_id = t_professional.professional_id
+    LIMIT #{page, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
+  </select>
+</mapper>

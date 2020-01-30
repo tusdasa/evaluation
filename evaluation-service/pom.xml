@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>evaluation</artifactId>
+        <groupId>net.tusdasa</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+
+    <name>Microservice-Service</name>
+    <description>
+        教学评价系统-微服务-微服务组件
+    </description>
+
+    <modules>
+        <module>commons</module>
+        <module>data-service</module>
+        <module>student-service</module>
+        <module>authority-service</module>
+        <module>teacher-service</module>
+        <module>course-service</module>
+        <module>firstkpi-service</module>
+        <module>secondkpi-service</module>
+        <module>thirdkpi-service</module>
+    </modules>
+
+    <artifactId>evaluation-service</artifactId>
+
+</project>

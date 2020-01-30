@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>登录</title>
+  <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+  <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+  <div class="container">
+    <div class="page-header">
+      <h1>登录</h1>
+    </div>
+    <div>
+      <div class="row clearfix">
+        <div class="col-md-4 column"></div>
+        <div class="col-md-4 column">
+          <form role="form" method="POST" action="auth" enctype="application/x-www-form-urlencoded" onsubmit="return check();">
+            <div class="form-group">
+              <label for="Inputusername">用户名</label><input type="text" class="form-control" id="Inputusername"
+                name="username" />
+            </div>
+            <div class="form-group">
+              <label for="InputPassword">密码</label><input type="password" class="form-control" id="InputPassword"
+                name="password" />
+            </div>
+
+            <button type="submit" class="btn btn-default btn-block btn-primary">登录</button>
+          </form>
+        </div>
+        <div class="col-md-4 column"></div>
+      </div>
+    </div>
+  </div>
+  <script src="/javascripts/jquery-3.4.1.min.js"></script>
+  <script src="/javascripts/bootstrap.min.js"></script>
+  <script>
+    function check() {
+      let username = $("Inputusername").val();
+      let password = $("InputPassword").val();
+      if (username && password && username.length<=10 && password.length >=7 && password.length <20 ){
+        return true;
+      }else {
+        return false;
+      }
+    }
+  </script>
+</body>
+
+</html>

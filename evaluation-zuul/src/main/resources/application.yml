@@ -1,0 +1,35 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: evaluation-zuul-service
+eureka:
+  client:
+    service-url:
+      defaultZone: http://tusdasa:8000/eureka/
+zuul:
+  SendErrorFilter:
+    error:
+      disable: true
+  prefix: /service
+  routes:
+    student:
+      path: /student/**
+      serviceId: evaluation-student-service
+      strip-prefix: false
+    teacher:
+      path: /teacher/**
+      serviceId: evaluation-teacher-service
+      strip-prefix: false
+    course:
+      path: /course/**
+      serviceId: evaluation-course-service
+      strip-prefix: false
+    data:
+      path: /data/**
+      serviceId: evaluation-data-service
+      strip-prefix: false
+    auth:
+      path: /auth/**
+      serviceId: evaluation-auth-service
+      strip-prefix: false

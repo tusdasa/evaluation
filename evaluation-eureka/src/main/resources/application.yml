@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: evaluation-eureka-server
+server:
+  port: 8000
+eureka:
+  instance:
+    hostname: tusdasa
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/

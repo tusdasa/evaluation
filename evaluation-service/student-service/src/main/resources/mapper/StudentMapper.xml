@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.tusdasa.evaluation.dao.StudentMapper">
+  <resultMap id="BaseResultMap" type="net.tusdasa.evaluation.entity.Student">
+    <id column="student_id" jdbcType="BIGINT" property="studentId" />
+    <result column="student_secret" jdbcType="VARCHAR" property="studentSecret" />
+    <result column="student_name" jdbcType="VARCHAR" property="studentName" />
+    <association property="studentClass" select="net.tusdasa.evaluation.dao.StudentClassMapper.selectByPrimaryKey" column="class_id" >
+    </association>
+  </resultMap>
+  <resultMap id="StudentResultMap" type="net.tusdasa.evaluation.entity.Student">
+    <id column="student_id" jdbcType="BIGINT" property="studentId" />
+    <result column="student_secret" jdbcType="VARCHAR" property="studentSecret" />
+    <result column="student_name" jdbcType="VARCHAR" property="studentName" />
+    <association property="studentClass" javaType="net.tusdasa.evaluation.entity.StudentClass">
+      <id column="class_id" jdbcType="INTEGER" property="classId" />
+      <result column="class_name" jdbcType="VARCHAR" property="className" />
+      <association property="department" javaType="net.tusdasa.evaluation.entity.Department">
+        <id column="department_id" jdbcType="INTEGER" property="departmentId" />
+        <result column="department_name" jdbcType="VARCHAR" property="departmentName" />
+      </association>
+      <association property="grade" javaType="net.tusdasa.evaluation.entity.Grade">
+        <id column="grade_id" jdbcType="INTEGER" property="gradeId" />
+        <result column="grade_name" jdbcType="VARCHAR" property="gradeName" />
+      </association>
+      <association property="major" javaType="net.tusdasa.evaluation.entity.Major">
+        <id column="major_id" jdbcType="INTEGER" property="majorId" />
+        <result column="major_name" jdbcType="VARCHAR" property="majorName" />
+      </association>
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    student_id, student_secret, student_name, class_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `t_student`
+    where student_id = #{studentId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `t_student`
+    where student_id = #{studentId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="net.tusdasa.evaluation.entity.Student">
+    insert into `t_student` (student_id, student_secret, student_name, 
+      class_id)
+    values (#{studentId,jdbcType=BIGINT}, #{studentSecret,jdbcType=VARCHAR}, #{studentName,jdbcType=VARCHAR}, 
+      #{studentClass.classId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="net.tusdasa.evaluation.entity.Student">
+    insert into `t_student`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="studentId != null">
+        student_id,
+      </if>
+      <if test="studentSecret != null">
+        student_secret,
+      </if>
+      <if test="studentName != null">
+        student_name,
+      </if>
+      <if test="studentClass.classId != null">
+        class_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="studentId != null">
+        #{studentId,jdbcType=BIGINT},
+      </if>
+      <if test="studentSecret != null">
+        #{studentSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="studentName != null">
+        #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="studentClass.classId != null">
+        #{studentClass.classId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="net.tusdasa.evaluation.entity.Student">
+    update `t_student`
+    <set>
+      <if test="studentSecret != null">
+        student_secret = #{studentSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="studentName != null">
+        student_name = #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="studentClass.classId != null">
+        class_id = #{studentClass.classId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where student_id = #{studentId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="net.tusdasa.evaluation.entity.Student">
+    update `t_student`
+    set student_secret = #{studentSecret,jdbcType=VARCHAR},
+      student_name = #{studentName,jdbcType=VARCHAR},
+      class_id = #{classId,jdbcType=INTEGER}
+    where student_id = #{studentClass.classId,jdbcType=BIGINT}
+  </update>
+  <select id="findAll" parameterType="java.util.Map" resultMap="StudentResultMap">
+    SELECT
+      t_student.student_id,
+      t_student.student_secret,
+      t_student.student_name,
+      t_student_class.class_id,
+      t_student_class.class_name,
+      t_grade.grade_id,
+      t_grade.grade_name,
+      t_major.major_id,
+      t_major.major_name,
+      t_department.department_id,
+      t_department.department_name
+    FROM
+      t_student
+        INNER JOIN t_student_class ON t_student.class_id = t_student_class.class_id
+        INNER JOIN t_grade ON t_student_class.grade_id = t_grade.grade_id
+        INNER JOIN t_major ON t_student_class.major_id = t_major.major_id
+        INNER JOIN t_department ON t_student_class.department_id = t_department.department_id
+    LIMIT #{page,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+  </select>
+</mapper>

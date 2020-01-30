@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.tusdasa.evaluation.dao.GradeMapper">
+  <resultMap id="BaseResultMap" type="net.tusdasa.evaluation.entity.Grade">
+    <id column="grade_id" jdbcType="INTEGER" property="gradeId" />
+    <result column="grade_name" jdbcType="VARCHAR" property="gradeName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    grade_id, grade_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `t_grade`
+    where grade_id = #{gradeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from `t_grade`
+    where grade_id = #{gradeId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="net.tusdasa.evaluation.entity.Grade">
+    insert into `t_grade` (grade_id, grade_name)
+    values (#{gradeId,jdbcType=INTEGER}, #{gradeName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="net.tusdasa.evaluation.entity.Grade">
+    insert into `t_grade`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="gradeId != null">
+        grade_id,
+      </if>
+      <if test="gradeName != null">
+        grade_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="gradeId != null">
+        #{gradeId,jdbcType=INTEGER},
+      </if>
+      <if test="gradeName != null">
+        #{gradeName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="net.tusdasa.evaluation.entity.Grade">
+    update `t_grade`
+    <set>
+      <if test="gradeName != null">
+        grade_name = #{gradeName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where grade_id = #{gradeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="net.tusdasa.evaluation.entity.Grade">
+    update `t_grade`
+    set grade_name = #{gradeName,jdbcType=VARCHAR}
+    where grade_id = #{gradeId,jdbcType=INTEGER}
+  </update>
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from `t_grade`
+  </select>
+</mapper>

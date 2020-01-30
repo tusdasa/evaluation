@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <setting name="cacheEnabled" value="true"/>
+        <setting name="defaultStatementTimeout" value="5"/>
+    </settings>
+    <typeAliases>
+        <package name="net.tusdasa.evaluation.entity" />
+        <package name="net.tusdasa.evaluation.dao" />
+    </typeAliases>
+    <mappers>
+        <mapper resource="mapper/DepartmentMapper.xml" />
+        <mapper resource="mapper/ProfessionalMapper.xml" />
+        <mapper resource="mapper/TeacherMapper.xml" />
+        <mapper resource="mapper/TeacherStateMapper.xml" />
+    </mappers>
+</configuration>

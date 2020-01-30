@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.tusdasa.evaluation.dao.TeacherStateMapper">
+  <resultMap id="BaseResultMap" type="net.tusdasa.evaluation.entity.TeacherState">
+    <id column="state_id" jdbcType="INTEGER" property="stateId" />
+    <result column="state_name" jdbcType="VARCHAR" property="stateName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    state_id, state_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `t_teacher_state`
+    where state_id = #{stateId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from `t_teacher_state`
+    where state_id = #{stateId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="net.tusdasa.evaluation.entity.TeacherState">
+    insert into `t_teacher_state` (state_id, state_name)
+    values (#{stateId,jdbcType=INTEGER}, #{stateName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="net.tusdasa.evaluation.entity.TeacherState">
+    insert into `t_teacher_state`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="stateId != null">
+        state_id,
+      </if>
+      <if test="stateName != null">
+        state_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="stateId != null">
+        #{stateId,jdbcType=INTEGER},
+      </if>
+      <if test="stateName != null">
+        #{stateName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="net.tusdasa.evaluation.entity.TeacherState">
+    update `t_teacher_state`
+    <set>
+      <if test="stateName != null">
+        state_name = #{stateName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where state_id = #{stateId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="net.tusdasa.evaluation.entity.TeacherState">
+    update `t_teacher_state`
+    set state_name = #{stateName,jdbcType=VARCHAR}
+    where state_id = #{stateId,jdbcType=INTEGER}
+  </update>
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from `t_teacher_state`
+  </select>
+</mapper>

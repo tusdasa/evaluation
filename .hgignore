@@ -1,0 +1,6 @@
+syntax: glob
+*.class
+*.iml
+syntax: regexp
+^\.idea/
+^target$

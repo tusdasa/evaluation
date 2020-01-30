@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.tusdasa.evaluation.dao.StudentClassMapper">
+  <resultMap id="BaseResultMap" type="net.tusdasa.evaluation.entity.StudentClass">
+    <id column="class_id" jdbcType="INTEGER" property="classId" />
+    <result column="class_name" jdbcType="VARCHAR" property="className" />
+    <association property="department" select="net.tusdasa.evaluation.dao.DepartmentMapper.selectByPrimaryKey" column="department_id" >
+    </association>
+    <association property="grade" select="net.tusdasa.evaluation.dao.GradeMapper.selectByPrimaryKey"  column="grade_id" >
+    </association>
+    <association property="major" select="net.tusdasa.evaluation.dao.MajorMapper.selectByPrimaryKey" column="major_id" >
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    class_id, class_name, department_id, grade_id, major_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from `t_student_class`
+    where class_id = #{classId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from `t_student_class`
+    where class_id = #{classId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="net.tusdasa.evaluation.entity.StudentClass">
+    insert into `t_student_class` (class_id, class_name, department_id, 
+      grade_id, major_id)
+    values (#{classId,jdbcType=INTEGER}, #{className,jdbcType=VARCHAR}, #{department.departmentId,jdbcType=INTEGER},
+      #{grade.gradeId,jdbcType=INTEGER}, #{major.majorId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="net.tusdasa.evaluation.entity.StudentClass">
+    insert into `t_student_class`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="classId != null">
+        class_id,
+      </if>
+      <if test="className != null">
+        class_name,
+      </if>
+      <if test="department.departmentId != null">
+        department_id,
+      </if>
+      <if test="grade.gradeId != null">
+        grade_id,
+      </if>
+      <if test="major.majorId != null">
+        major_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="classId != null">
+        #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="className != null">
+        #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="department.departmentId != null">
+        #{department.departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="grade.gradeId != null">
+        #{grade.gradeId,jdbcType=INTEGER},
+      </if>
+      <if test="major.majorId != null">
+        #{major.majorId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="net.tusdasa.evaluation.entity.StudentClass">
+    update `t_student_class`
+    <set>
+      <if test="className != null">
+        class_name = #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="department.departmentId != null">
+        department_id = #{department.departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="grade.gradeId != null">
+        grade_id = #{grade.gradeId,jdbcType=INTEGER},
+      </if>
+      <if test="major.majorId != null">
+        major_id = #{major.majorId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where class_id = #{classId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="net.tusdasa.evaluation.entity.StudentClass">
+    update `t_student_class`
+    set class_name = #{className,jdbcType=VARCHAR},
+      department_id = #{department.departmentId,jdbcType=INTEGER},
+      grade_id = #{grade.gradeId,jdbcType=INTEGER},
+      major_id = #{major.majorId,jdbcType=INTEGER}
+    where class_id = #{classId,jdbcType=INTEGER}
+  </update>
+</mapper>
