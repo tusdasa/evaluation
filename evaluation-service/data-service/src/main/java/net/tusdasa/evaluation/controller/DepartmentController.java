@@ -21,11 +21,10 @@ public class DepartmentController {
     @GetMapping("/{id}")
     public CommonResponse<Department> findById(@PathVariable("id") Integer id){
         Department department = this.departmentService.findById(id);
-        if (department!=null){
+        if (department != null) {
             return new CommonResponse<Department>().ok().data(department);
-        }else {
-            return new CommonResponse<Department>().error("未找到");
         }
+        return new CommonResponse<Department>().error("未找到");
     }
 
     @GetMapping("/")

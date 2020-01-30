@@ -36,7 +36,20 @@ public class FirstKpiController {
     }
 
     @PutMapping("/")
-    public CommonResponse<String> updateFirstKpi(@RequestBody FirstKpiRequest request){
+    public CommonResponse<String> updateFirstKpi(@RequestBody FirstKpiRequest request) {
+        if (request.isUpdateRequest()) {
+            this.firstKpiService.updateFirstKpi(request);
+            return new CommonResponse<String>().ok();
+        }
+        return new CommonResponse<String>().error();
+    }
+
+    @PostMapping("/")
+    public CommonResponse<String> createFirstKpi(@RequestBody FirstKpiRequest request) {
+        if (request.isCreateRequest()) {
+            this.firstKpiService.addFirstKpi(request);
+            return new CommonResponse<String>().ok();
+        }
         return new CommonResponse<String>().error();
     }
 

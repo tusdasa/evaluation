@@ -75,12 +75,11 @@ public class TeacherController {
      * */
     @PostMapping("/")
     public CommonResponse<String> createTeacher(@RequestBody TeacherRequest request){
-        if (request.isCreateRequest()){
+        if (request.isCreateRequest()) {
             teacherService.addTeacher(request);
             return new CommonResponse<String>().ok();
-        }else {
-            return new CommonResponse<String>().error();
         }
+        return new CommonResponse<String>().error();
     }
 
 

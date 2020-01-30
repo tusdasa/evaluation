@@ -42,9 +42,8 @@ public class AcademicYearController {
         if (request.isCreateRequest()){
             this.academicYearService.addAcaAcademicYear(request);
             return new CommonResponse<String>().ok();
-        }else {
-            return new CommonResponse<String>().error();
         }
+            return new CommonResponse<String>().error();
 
     }
 

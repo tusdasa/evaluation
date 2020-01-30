@@ -55,10 +55,8 @@ public class StudentController {
         if (request.isUpdateRequest()){
             studentService.updateStudent(request);
             return new CommonResponse<Student>().ok();
-        }else {
-            return new CommonResponse<Student>().error();
         }
-
+            return new CommonResponse<Student>().error();
     }
 
     /***
@@ -79,8 +77,7 @@ public class StudentController {
         if (request.isCreateRequest()){
             studentService.addStudent(request);
             return new CommonResponse<Student>().ok();
-        }else {
-            return new CommonResponse<Student>().error();
         }
+            return new CommonResponse<Student>().error();
     }
 }

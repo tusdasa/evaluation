@@ -29,9 +29,9 @@ public class AuthController {
         if (result.get("obj")!=null){
             Student student = (Student) result.get("obj");
             return new CommonResponse<String>().ok().data(jwtUtils.generateToken(student.getStudentId()));
-        }else {
-            return new CommonResponse<String>().error(result.get("msg").toString());
         }
+            return new CommonResponse<String>().error(result.get("msg").toString());
+
     }
 
     @PostMapping("/teacher")
@@ -41,9 +41,8 @@ public class AuthController {
         if (result.get("obj")!=null){
             Teacher teacher = (Teacher) result.get("obj");
             return new CommonResponse<String>().ok().data(jwtUtils.generateToken(teacher.getRoleId().longValue()));
-        }else {
-            return new CommonResponse<String>().error(result.get("msg").toString());
         }
+            return new CommonResponse<String>().error(result.get("msg").toString());
 
     }
 }
