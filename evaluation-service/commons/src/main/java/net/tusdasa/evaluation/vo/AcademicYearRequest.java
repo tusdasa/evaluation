@@ -22,7 +22,7 @@ public class AcademicYearRequest implements CommonRequest<AcademicYear> {
 
     private Integer endTerm;
 
-    public AcademicYear build(){
+    public AcademicYear build() {
         Term start = Term.builder().build().withTermId(this.getStartTerm());
         Term end = Term.builder().build().withTermId(this.getEndTerm());
         return AcademicYear.builder().build()

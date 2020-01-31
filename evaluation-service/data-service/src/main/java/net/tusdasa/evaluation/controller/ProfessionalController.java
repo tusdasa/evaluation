@@ -13,21 +13,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/professional")
 public class ProfessionalController {
     private ProfessionalService professionalService;
+
     public ProfessionalController(ProfessionalService professionalService) {
         this.professionalService = professionalService;
     }
 
     @GetMapping("/{id}")
-    public CommonResponse<Professional> findById(@PathVariable("id") Integer id){
+    public CommonResponse<Professional> findById(@PathVariable("id") Integer id) {
         Professional professional = this.professionalService.findById(id);
-        if (professional!=null){
+        if (professional != null) {
             return new CommonResponse<Professional>().data(professional);
         }
         return new CommonResponse<Professional>().error("未找到");
     }
 
     @GetMapping("/")
-    public CommonResponse<Professional> findAll(){
+    public CommonResponse<Professional> findAll() {
         return new CommonResponse<Professional>().ok().table(this.professionalService.findAll());
     }
 }

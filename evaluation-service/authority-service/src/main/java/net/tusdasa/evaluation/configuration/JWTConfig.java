@@ -15,12 +15,12 @@ public class JWTConfig {
     @Value("${auth.secret}")
     private String secret = null;
 
-    public JWTConfig(){
+    public JWTConfig() {
     }
 
     @Bean
     @Scope("singleton")
-    public JWTUtils jwtUtils(){
+    public JWTUtils jwtUtils() {
         return new JWTUtils(this.enable, secret);
     }
 

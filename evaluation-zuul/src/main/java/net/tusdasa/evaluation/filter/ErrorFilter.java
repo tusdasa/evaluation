@@ -1,7 +1,6 @@
 package net.tusdasa.evaluation.filter;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
@@ -36,7 +35,7 @@ public class ErrorFilter extends ZuulFilter {
         try {
             response.setContentType("application/json; charset=utf8");
             response.getWriter().println(JSON.toJSON(new CommonResponse<String>().error(context.getThrowable().getMessage())));
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         return null;

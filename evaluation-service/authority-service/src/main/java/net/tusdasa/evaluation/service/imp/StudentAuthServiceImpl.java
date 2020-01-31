@@ -15,7 +15,7 @@ public class StudentAuthServiceImpl implements StudentAuthService {
 
     private StudentAuthClient studentAuthClient;
 
-    public StudentAuthServiceImpl(StudentAuthClient studentAuthClient){
+    public StudentAuthServiceImpl(StudentAuthClient studentAuthClient) {
         this.studentAuthClient = studentAuthClient;
     }
 
@@ -24,14 +24,14 @@ public class StudentAuthServiceImpl implements StudentAuthService {
         HashMap<String, Object> result = new HashMap<>();
         CommonResponse<Student> response = studentAuthClient.getStudent(studentId, DigestUtils.md5DigestAsHex(password.getBytes()));
 
-        if (response.success()){
+        if (response.success()) {
             // 认证成功
-            result.put("code",response.getCode());
-            result.put("obj",response.getData());
-        }else {
+            result.put("code", response.getCode());
+            result.put("obj", response.getData());
+        } else {
             // 认证失败
-            result.put("code",response.getCode());
-            result.put("msg",response.getMessage());
+            result.put("code", response.getCode());
+            result.put("msg", response.getMessage());
         }
 
         return result;

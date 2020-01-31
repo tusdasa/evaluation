@@ -20,10 +20,10 @@ public class GradeController {
     }
 
     @GetMapping("/{id}")
-    public CommonResponse<Grade> findById(@PathVariable("id") Integer id){
+    public CommonResponse<Grade> findById(@PathVariable("id") Integer id) {
         Grade grade = this.gradeService.findById(id);
 
-        if (grade!=null){
+        if (grade != null) {
             return new CommonResponse<Grade>().ok().data(grade);
         }
         return new CommonResponse<Grade>().error("未找到");
@@ -32,7 +32,7 @@ public class GradeController {
     }
 
     @GetMapping("/")
-    public CommonResponse<Grade> findAll(){
+    public CommonResponse<Grade> findAll() {
         return new CommonResponse<Grade>().ok().table(this.gradeService.findAll());
     }
 }

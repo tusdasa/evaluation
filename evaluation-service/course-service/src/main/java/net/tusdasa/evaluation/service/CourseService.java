@@ -6,7 +6,10 @@ import java.util.List;
 
 public interface CourseService {
     List<Course> findCourseByStudentClass(Integer classId);
+
     List<Course> findCourseByTeacher(Integer workId);
+
     List<Course> findAll(Integer page, Integer size);
+
     Course findById(Long courseId);
 }

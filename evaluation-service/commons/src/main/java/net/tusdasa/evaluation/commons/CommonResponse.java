@@ -23,32 +23,32 @@ public class CommonResponse<Model extends Serializable> {
     private Model data;
     private List<Model> table;
 
-    public CommonResponse(){
+    public CommonResponse() {
 
     }
 
-    public CommonResponse<Model> ok(){
+    public CommonResponse<Model> ok() {
         this.setCode(CommonResponse.CODE_SUCCESS);
         this.setRequestId(UUID.randomUUID().toString().replaceAll("-", ""));
         this.setMessage("success");
         return this;
     }
 
-    public CommonResponse<Model> ok(String message){
+    public CommonResponse<Model> ok(String message) {
         this.setCode(CommonResponse.CODE_SUCCESS);
         this.setRequestId(UUID.randomUUID().toString().replaceAll("-", ""));
         this.setMessage(message);
         return this;
     }
 
-    public CommonResponse<Model> error(){
+    public CommonResponse<Model> error() {
         this.setCode(CommonResponse.CODE_ERROR);
         this.setRequestId(UUID.randomUUID().toString().replaceAll("-", ""));
         this.setMessage("failure");
         return this;
     }
 
-    public CommonResponse<Model> error(String message){
+    public CommonResponse<Model> error(String message) {
         this.setCode(CommonResponse.CODE_ERROR);
         this.setRequestId(UUID.randomUUID().toString().replaceAll("-", ""));
         this.setMessage(message);
@@ -56,21 +56,21 @@ public class CommonResponse<Model extends Serializable> {
     }
 
 
-    public CommonResponse<Model> data(Model data){
+    public CommonResponse<Model> data(Model data) {
         this.setData(data);
         return this;
     }
 
-    public CommonResponse<Model> table(List<Model> table){
-        if (table==null){
+    public CommonResponse<Model> table(List<Model> table) {
+        if (table == null) {
             table = new ArrayList<Model>();
         }
         this.setTable(table);
         return this;
     }
 
-    public boolean success(){
-        if (this.getCode() == CommonResponse.CODE_SUCCESS){
+    public boolean success() {
+        if (this.getCode() == CommonResponse.CODE_SUCCESS) {
             return true;
         }
         return false;

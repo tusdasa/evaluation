@@ -13,7 +13,7 @@ import java.util.Date;
 @ToString
 @EqualsAndHashCode
 @Builder
-public class Term implements Serializable,Comparable<TermRequest> {
+public class Term implements Serializable, Comparable<TermRequest> {
 
     private Integer termId;
 
@@ -27,10 +27,10 @@ public class Term implements Serializable,Comparable<TermRequest> {
 
     @Override
     public int compareTo(TermRequest request) {
-        if (request.getTermId().intValue()==this.getTermId().intValue()
-                && request.getTermName().equals(this.getTermName())){
+        if (request.getTermId().intValue() == this.getTermId().intValue()
+                && request.getTermName().equals(this.getTermName())) {
             return 0;
-        }else {
+        } else {
             return -1;
         }
     }

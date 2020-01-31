@@ -11,7 +11,7 @@ import java.io.Serializable;
 @With
 @Builder
 @ToString
-public class FirstKpi implements Serializable,Comparable<FirstKpiRequest> {
+public class FirstKpi implements Serializable, Comparable<FirstKpiRequest> {
 
     private Integer firstKpiId;
 
@@ -25,9 +25,9 @@ public class FirstKpi implements Serializable,Comparable<FirstKpiRequest> {
     public int compareTo(FirstKpiRequest request) {
 
         if (request.getAcademicYearId().intValue() == this.getAcademicYearId().intValue()
-            && request.getFirsKpiContent().equals(this.getFirsKpiContent())
+                && request.getFirsKpiContent().equals(this.getFirsKpiContent())
                 && request.getFirstKpiId().intValue() == this.getFirstKpiId().intValue()
-        ){
+        ) {
             return 0;
         }
         return -1;

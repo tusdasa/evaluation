@@ -36,7 +36,7 @@ public class TermServiceImpl implements TermService {
     @Override
     public void updateTerm(TermRequest request) {
         Term term = this.termMapper.selectByPrimaryKey(request.getTermId());
-        if (term!=null && term.compareTo(request)!=0){
+        if (term != null && term.compareTo(request) != 0) {
             this.termMapper.updateByPrimaryKeySelective(request.build().withTermId(request.getTermId()));
         }
 

@@ -20,16 +20,16 @@ public class TermController {
     }
 
     @GetMapping("/{id}")
-    public CommonResponse<Term> findById(@PathVariable("id") Integer id){
+    public CommonResponse<Term> findById(@PathVariable("id") Integer id) {
         Term term = this.termService.findById(id);
-        if (term!=null){
+        if (term != null) {
             return new CommonResponse<Term>().ok().data(term);
         }
         return new CommonResponse<Term>().error("未找到");
     }
 
     @GetMapping("/")
-    public CommonResponse<Term> findAll(){
+    public CommonResponse<Term> findAll() {
         return new CommonResponse<Term>().table(this.termService.findAll());
     }
 

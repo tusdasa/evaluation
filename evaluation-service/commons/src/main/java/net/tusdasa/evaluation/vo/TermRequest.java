@@ -23,7 +23,7 @@ public class TermRequest implements CommonRequest<Term> {
 
     private String termName;
 
-    public Term build(){
+    public Term build() {
         return Term.builder().build().withTermName(this.getTermName()).withEndTime(this.getEndTime()).withStartTime(this.getStartTime());
     }
 

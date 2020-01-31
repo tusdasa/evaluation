@@ -4,6 +4,6 @@ import net.tusdasa.evaluation.entity.Department;
 
 /**
  * 无需变化
- * */
-public interface DepartmentService extends BaseService<Department,Integer> {
+ */
+public interface DepartmentService extends BaseService<Department, Integer> {
 }

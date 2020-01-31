@@ -14,7 +14,7 @@ public class ProfessionalServiceImpl implements ProfessionalService {
 
     private ProfessionalMapper professionalMapper;
 
-    public ProfessionalServiceImpl(ProfessionalMapper professionalMapper){
+    public ProfessionalServiceImpl(ProfessionalMapper professionalMapper) {
         this.professionalMapper = professionalMapper;
     }
 

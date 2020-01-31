@@ -20,16 +20,16 @@ public class RoleController {
     }
 
     @GetMapping("/{id}")
-    public CommonResponse<Role> findById(@PathVariable("id") Integer id){
+    public CommonResponse<Role> findById(@PathVariable("id") Integer id) {
         Role role = this.roleService.findById(id);
-        if (role!=null){
+        if (role != null) {
             return new CommonResponse<Role>().ok().data(role);
         }
         return new CommonResponse<Role>().error("未找到");
     }
 
     @GetMapping("/")
-    public CommonResponse<Role> findAll(){
+    public CommonResponse<Role> findAll() {
         return new CommonResponse<Role>().ok().table(this.roleService.findAll());
     }
 }

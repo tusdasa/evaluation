@@ -18,7 +18,7 @@ public class FirstKpiRequest implements CommonRequest<FirstKpi> {
 
     private Integer academicYearId;
 
-    public FirstKpi build(){
+    public FirstKpi build() {
         return FirstKpi.builder().build().withFirstKpiId(this.getFirstKpiId()).withAcademicYearId(this.getAcademicYearId())
                 .withFirsKpiContent(this.getFirsKpiContent());
     }

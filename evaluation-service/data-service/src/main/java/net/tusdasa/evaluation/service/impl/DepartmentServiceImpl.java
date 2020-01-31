@@ -14,7 +14,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     private DepartmentMapper departmentMapper;
 
-    public DepartmentServiceImpl(DepartmentMapper departmentMapper){
+    public DepartmentServiceImpl(DepartmentMapper departmentMapper) {
         this.departmentMapper = departmentMapper;
     }
 

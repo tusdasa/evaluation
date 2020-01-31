@@ -1,6 +1,9 @@
 package net.tusdasa.evaluation.vo;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.With;
 import net.tusdasa.evaluation.entity.Department;
 import net.tusdasa.evaluation.entity.Professional;
 import net.tusdasa.evaluation.entity.Teacher;
@@ -28,7 +31,7 @@ public class TeacherRequest implements CommonRequest<Teacher> {
 
     private Integer stateId;
 
-    public Teacher build(){
+    public Teacher build() {
         Department department = Department.builder().build().withDepartmentId(this.getDepartmentId());
         Professional professional = Professional.builder().build().withProfessionalId(this.getProfessionalId());
         TeacherState teacherState = TeacherState.builder().build().withStateId(this.getStateId());

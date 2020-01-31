@@ -26,7 +26,7 @@ public class StudentRequest implements CommonRequest<Student> {
 
     private Integer majorId;
 
-    public boolean isCreateRequest(){
+    public boolean isCreateRequest() {
         return CheckUtils.isPassword(this.getStudentSecret())
                 && CheckUtils.isName(this.getStudentName())
                 && CheckUtils.isIntegerNumber(this.getClassId())
@@ -35,7 +35,7 @@ public class StudentRequest implements CommonRequest<Student> {
                 && CheckUtils.isIntegerNumber(this.getMajorId());
     }
 
-    public boolean isUpdateRequest(){
+    public boolean isUpdateRequest() {
         return CheckUtils.isLongNumber(this.getStudentId()) &&
                 CheckUtils.isPassword(this.getStudentSecret())
                 && CheckUtils.isName(this.getStudentName())
@@ -45,7 +45,7 @@ public class StudentRequest implements CommonRequest<Student> {
                 && CheckUtils.isIntegerNumber(this.getMajorId());
     }
 
-    public Student build(){
+    public Student build() {
         Department department = Department.builder().build().withDepartmentId(this.getDepartmentId());
         Grade grade = Grade.builder().build().withGradeId(this.getGradeId());
         Major major = Major.builder().build().withMajorId(this.getMajorId());

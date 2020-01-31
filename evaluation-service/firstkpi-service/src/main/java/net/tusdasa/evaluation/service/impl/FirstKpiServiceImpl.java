@@ -8,12 +8,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
 @Service
 public class FirstKpiServiceImpl implements FirstKpiService {
 
     private FirstKpiMapper firstKpiMapper;
 
-    public FirstKpiServiceImpl(FirstKpiMapper firstKpiMapper){
+    public FirstKpiServiceImpl(FirstKpiMapper firstKpiMapper) {
         this.firstKpiMapper = firstKpiMapper;
     }
 
@@ -39,7 +40,7 @@ public class FirstKpiServiceImpl implements FirstKpiService {
     @Override
     public void updateFirstKpi(FirstKpiRequest request) {
         FirstKpi firstKpi = this.firstKpiMapper.selectByPrimaryKey(request.getFirstKpiId());
-        if (firstKpi!=null && firstKpi.compareTo(request)!=0){
+        if (firstKpi != null && firstKpi.compareTo(request) != 0) {
             this.firstKpiMapper.insertSelective(request.build());
         }
     }

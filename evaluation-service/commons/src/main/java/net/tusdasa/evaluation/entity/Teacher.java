@@ -35,15 +35,15 @@ public class Teacher implements Serializable, Comparable<TeacherRequest> {
     public int compareTo(TeacherRequest request) {
 
         if (request.getWorkId().intValue() == this.getWorkId().intValue()
-            && DigestUtils.md5DigestAsHex(request.getTeacherSecret().getBytes()).equals(request.getTeacherSecret())
+                && DigestUtils.md5DigestAsHex(request.getTeacherSecret().getBytes()).equals(request.getTeacherSecret())
                 && request.getRoleId().intValue() == this.roleId.intValue()
                 && request.getTeacherName().equals(this.getTeacherName())
                 && request.getDepartmentId().intValue() == this.getDepartment().getDepartmentId().intValue()
                 && request.getProfessionalId().intValue() == this.getProfessional().getProfessionalId().intValue()
                 && request.getStateId().intValue() == this.getState().getStateId().intValue()
-        ){
+        ) {
             return 0;
-        }else {
+        } else {
             return -1;
         }
 

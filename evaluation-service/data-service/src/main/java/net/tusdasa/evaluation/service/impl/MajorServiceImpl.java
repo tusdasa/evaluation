@@ -7,13 +7,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
 @Service
 @Transactional(readOnly = true)
 public class MajorServiceImpl implements MajorService {
 
     private MajorMapper majorMapper;
 
-    public MajorServiceImpl(MajorMapper majorMapper){
+    public MajorServiceImpl(MajorMapper majorMapper) {
         this.majorMapper = majorMapper;
     }
 

@@ -26,7 +26,7 @@ public class StudentClassRequest implements CommonRequest<StudentClass> {
 
     private Integer gradeId;
 
-    public StudentClass build(){
+    public StudentClass build() {
         Major major = Major.builder().build().withMajorId(this.getMajorId());
         Department department = Department.builder().build().withDepartmentId(this.getDepartmentId());
         Grade grade = Grade.builder().build().withGradeId(this.getGradeId());

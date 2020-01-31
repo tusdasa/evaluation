@@ -14,26 +14,26 @@ public class StudentController {
 
     private StudentService studentService;
 
-    public StudentController(StudentService studentService){
+    public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
 
     @GetMapping("/{id}")
-    public CommonResponse<Student> getStudentById(@PathVariable(name = "id") Long id){
+    public CommonResponse<Student> getStudentById(@PathVariable(name = "id") Long id) {
         Student student = studentService.findStudentById(id);
-        if (student!=null){
+        if (student != null) {
             return new CommonResponse<Student>().ok().data(student);
-        }else {
+        } else {
             return new CommonResponse<Student>().error("未找到");
         }
     }
 
     @GetMapping("/{id}/{password}")
-    public CommonResponse<Student> getStudent(@PathVariable(name = "id") Long id, @PathVariable("password") String password){
-        Map<String, Object> map = this.studentService.findStudentByIdAndPassword(id,password);
-        if (map.get("code").equals(1)){
+    public CommonResponse<Student> getStudent(@PathVariable(name = "id") Long id, @PathVariable("password") String password) {
+        Map<String, Object> map = this.studentService.findStudentByIdAndPassword(id, password);
+        if (map.get("code").equals(1)) {
             return new CommonResponse<Student>().ok().data((Student) map.get("obj"));
-        }else {
+        } else {
             return new CommonResponse<Student>().error(map.get("msg").toString());
         }
     }
@@ -51,12 +51,12 @@ public class StudentController {
      */
 
     @PutMapping("/")
-    public CommonResponse<Student> updateStudent(@RequestBody StudentRequest request){
-        if (request.isUpdateRequest()){
+    public CommonResponse<Student> updateStudent(@RequestBody StudentRequest request) {
+        if (request.isUpdateRequest()) {
             studentService.updateStudent(request);
             return new CommonResponse<Student>().ok();
         }
-            return new CommonResponse<Student>().error();
+        return new CommonResponse<Student>().error();
     }
 
     /***
@@ -72,12 +72,12 @@ public class StudentController {
      */
 
     @PostMapping("/")
-    public CommonResponse<Student> crateStudent(@RequestBody StudentRequest request){
+    public CommonResponse<Student> crateStudent(@RequestBody StudentRequest request) {
 
-        if (request.isCreateRequest()){
+        if (request.isCreateRequest()) {
             studentService.addStudent(request);
             return new CommonResponse<Student>().ok();
         }
-            return new CommonResponse<Student>().error();
+        return new CommonResponse<Student>().error();
     }
 }

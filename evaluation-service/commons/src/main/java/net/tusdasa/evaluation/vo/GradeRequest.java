@@ -18,7 +18,7 @@ public class GradeRequest implements CommonRequest<Grade> {
     private String gradeName;
 
 
-    public Grade build(){
+    public Grade build() {
         return Grade.builder().build().withGradeName(this.getGradeName());
     }
 

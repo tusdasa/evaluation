@@ -1,13 +1,14 @@
 package net.tusdasa.evaluation.dao;
 
 import java.io.Serializable;
+
 /**
  *
- *
- * */
+ */
 public interface BaseDao<Model, PK extends Serializable> {
     /**
      * 按主键删除
+     *
      * @param id
      * @return
      */
@@ -15,6 +16,7 @@ public interface BaseDao<Model, PK extends Serializable> {
 
     /**
      * 添加
+     *
      * @param record
      * @return
      */
@@ -23,6 +25,7 @@ public interface BaseDao<Model, PK extends Serializable> {
 
     /**
      * 按选定的条件删除
+     *
      * @param record
      * @return
      */
@@ -30,7 +33,6 @@ public interface BaseDao<Model, PK extends Serializable> {
     int insertSelective(Model record);
 
     /**
-     *
      * @param id
      * @return
      */
@@ -38,6 +40,7 @@ public interface BaseDao<Model, PK extends Serializable> {
 
     /**
      * 按条件更新
+     *
      * @param record
      * @return
      */
@@ -46,6 +49,7 @@ public interface BaseDao<Model, PK extends Serializable> {
 
     /**
      * 按主键更新
+     *
      * @param record
      * @return
      */

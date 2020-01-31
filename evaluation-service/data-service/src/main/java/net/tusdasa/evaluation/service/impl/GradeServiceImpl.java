@@ -8,7 +8,6 @@ import net.tusdasa.evaluation.vo.GradeRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Slf4j
@@ -37,7 +36,7 @@ public class GradeServiceImpl implements GradeService {
     @Override
     public void updateGrade(GradeRequest request) {
         Grade grade = this.gradeMapper.selectByPrimaryKey(request.getGradeId());
-        if (grade!=null && grade.compareTo(request)!=0){
+        if (grade != null && grade.compareTo(request) != 0) {
             this.gradeMapper.updateByPrimaryKeySelective(request.build());
         }
 

@@ -62,7 +62,7 @@ public class JWTUtils {
         JWTCreator.Builder builder = JWT.create();
         builder.withSubject(String.valueOf(Id));
         builder.withIssuer("www.tusdasa.net");
-        builder.withClaim("role","");
+        builder.withClaim("role", "");
         builder.withExpiresAt(new Date(System.currentTimeMillis() + (24 * 3600 * 1000)));
         return builder.sign(algorithm);
     }

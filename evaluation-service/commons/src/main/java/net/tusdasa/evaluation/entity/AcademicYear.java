@@ -30,9 +30,9 @@ public class AcademicYear implements Serializable, Comparable<AcademicYearReques
                 && request.getAcademicYearName().equals(this.getAcademicYearName())
                 && request.getStartTerm().intValue() == this.getStartTerm().getTermId().intValue()
                 && request.getEndTerm().intValue() == this.getEndTerm().getTermId().intValue()
-        ){
+        ) {
             return 0;
-        }else {
+        } else {
             return -1;
         }
 

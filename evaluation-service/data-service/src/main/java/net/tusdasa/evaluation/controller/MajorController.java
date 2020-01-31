@@ -20,16 +20,16 @@ public class MajorController {
     }
 
     @GetMapping("/{id}")
-    public CommonResponse<Major> findById(@PathVariable("id") Integer id){
+    public CommonResponse<Major> findById(@PathVariable("id") Integer id) {
         Major major = this.majorService.findById(id);
-        if (major!=null){
+        if (major != null) {
             return new CommonResponse<Major>().ok().data(major);
         }
         return new CommonResponse<Major>().error("未找到");
     }
 
     @GetMapping("/")
-    public CommonResponse<Major> findAll(){
+    public CommonResponse<Major> findAll() {
         return new CommonResponse<Major>().ok().table(this.majorService.findAll());
     }
 }

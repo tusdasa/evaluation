@@ -15,19 +15,19 @@ public class StudentClassController {
 
     private StudentClassService studentClassService;
 
-    public StudentClassController(StudentClassService studentClassService){
+    public StudentClassController(StudentClassService studentClassService) {
         this.studentClassService = studentClassService;
     }
 
     @GetMapping("/")
-    public CommonResponse<StudentClass> findAll(){
+    public CommonResponse<StudentClass> findAll() {
         return new CommonResponse<StudentClass>().ok().table(this.studentClassService.findAll());
     }
 
     @GetMapping("/{id}")
-    public CommonResponse<StudentClass> findById(@PathVariable Integer id){
+    public CommonResponse<StudentClass> findById(@PathVariable Integer id) {
         StudentClass studentClass = this.studentClassService.findStudentClassById(id);
-        if (studentClass!=null){
+        if (studentClass != null) {
             return new CommonResponse<StudentClass>().ok().data(studentClass);
         }
         return new CommonResponse<StudentClass>().error("未找到");

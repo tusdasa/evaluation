@@ -15,7 +15,7 @@ public class CourseServiceImpl implements CourseService {
 
     private CourseMapper courseMapper;
 
-    public CourseServiceImpl(CourseMapper courseMapper){
+    public CourseServiceImpl(CourseMapper courseMapper) {
         this.courseMapper = courseMapper;
     }
 
@@ -34,9 +34,9 @@ public class CourseServiceImpl implements CourseService {
     @Transactional(readOnly = true)
     @Override
     public List<Course> findAll(Integer page, Integer size) {
-        Map<String,Integer> parameter = new HashMap<>();
-        parameter.put("page",page);
-        parameter.put("size",size);
+        Map<String, Integer> parameter = new HashMap<>();
+        parameter.put("page", page);
+        parameter.put("size", size);
         return this.courseMapper.findAll(parameter);
     }
 

@@ -2,13 +2,12 @@ package net.tusdasa.evaluation.controller;
 
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.AcademicYear;
-import net.tusdasa.evaluation.service.AcademicYearService;
 import net.tusdasa.evaluation.vo.AcademicYearRequest;
+import net.tusdasa.evaluation.service.AcademicYearService;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/academic")
 public class AcademicYearController {
 
     private AcademicYearService academicYearService;
@@ -32,9 +31,8 @@ public class AcademicYearController {
         if (request.isUpdateRequest()) {
             this.academicYearService.updateAcaAcademicYear(request);
             return new CommonResponse<String>().ok();
-        } else {
-            return new CommonResponse<String>().error();
         }
+        return new CommonResponse<String>().error();
     }
 
     @PostMapping("/")

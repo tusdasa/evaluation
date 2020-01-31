@@ -19,7 +19,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/{id}")
-    public CommonResponse<Department> findById(@PathVariable("id") Integer id){
+    public CommonResponse<Department> findById(@PathVariable("id") Integer id) {
         Department department = this.departmentService.findById(id);
         if (department != null) {
             return new CommonResponse<Department>().ok().data(department);
@@ -28,7 +28,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/")
-    public CommonResponse<Department> findAll(){
+    public CommonResponse<Department> findAll() {
         return new CommonResponse<Department>().ok().table(this.departmentService.findAll());
     }
 }
