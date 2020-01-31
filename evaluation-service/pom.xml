@@ -25,6 +25,7 @@
         <module>firstkpi-service</module>
         <module>secondkpi-service</module>
         <module>thirdkpi-service</module>
+        <module>academicyear-service</module>
     </modules>
 
     <artifactId>evaluation-service</artifactId>

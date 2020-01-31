@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.tusdasa.evaluation.dao.TermMapper">
+    <resultMap id="BaseResultMap" type="net.tusdasa.evaluation.entity.Term">
+        <id column="term_id" jdbcType="INTEGER" property="termId"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="term_name" jdbcType="VARCHAR" property="termName"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        term_id, start_time, end_time, term_name
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_term`
+        where term_id = #{termId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from `t_term`
+        where term_id = #{termId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="net.tusdasa.evaluation.entity.Term">
+        insert into `t_term` (term_id, start_time, end_time,
+                              term_name)
+        values (#{termId,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP},
+                #{termName,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="net.tusdasa.evaluation.entity.Term">
+        insert into `t_term`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="termId != null">
+                term_id,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="termName != null">
+                term_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="termId != null">
+                #{termId,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="termName != null">
+                #{termName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="net.tusdasa.evaluation.entity.Term">
+        update `t_term`
+        <set>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="termName != null">
+                term_name = #{termName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where term_id = #{termId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="net.tusdasa.evaluation.entity.Term">
+        update `t_term`
+        set start_time = #{startTime,jdbcType=TIMESTAMP},
+            end_time   = #{endTime,jdbcType=TIMESTAMP},
+            term_name  = #{termName,jdbcType=VARCHAR}
+        where term_id = #{termId,jdbcType=INTEGER}
+    </update>
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_term`
+    </select>
+</mapper>

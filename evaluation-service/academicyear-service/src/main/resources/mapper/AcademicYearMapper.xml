@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.tusdasa.evaluation.dao.AcademicYearMapper">
+    <resultMap id="BaseResultMap" type="net.tusdasa.evaluation.entity.AcademicYear">
+        <id column="academic_year_id" jdbcType="INTEGER" property="academicYearId"/>
+        <result column="academic_year_name" jdbcType="VARCHAR" property="academicYearName"/>
+        <association property="startTerm" select="net.tusdasa.evaluation.dao.TermMapper.selectByPrimaryKey"
+                     column="start_term"/>
+        <association property="endTerm" select="net.tusdasa.evaluation.dao.TermMapper.selectByPrimaryKey"
+                     column="end_term"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        academic_year_id, academic_year_name, start_term, end_term
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_academic_year`
+        where academic_year_id = #{academicYearId,jdbcType=INTEGER}
+        LIMIT 1
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from `t_academic_year`
+        where academic_year_id = #{academicYearId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="net.tusdasa.evaluation.entity.AcademicYear">
+        insert into `t_academic_year` (academic_year_id, academic_year_name,
+                                       start_term, end_term)
+        values (#{academicYearId,jdbcType=INTEGER}, #{academicYearName,jdbcType=VARCHAR},
+                #{startTerm.termId,jdbcType=INTEGER}, #{endTerm.termId,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="net.tusdasa.evaluation.entity.AcademicYear">
+        insert into `t_academic_year`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="academicYearId != null">
+                academic_year_id,
+            </if>
+            <if test="academicYearName != null">
+                academic_year_name,
+            </if>
+            <if test="startTerm.termId != null">
+                start_term,
+            </if>
+            <if test="endTerm.termId != null">
+                end_term,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="academicYearId != null">
+                #{academicYearId,jdbcType=INTEGER},
+            </if>
+            <if test="academicYearName != null">
+                #{academicYearName,jdbcType=VARCHAR},
+            </if>
+            <if test="startTerm.termId != null">
+                #{startTerm.termId,jdbcType=INTEGER},
+            </if>
+            <if test="endTerm.termId != null">
+                #{endTerm.termId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="net.tusdasa.evaluation.entity.AcademicYear">
+        update `t_academic_year`
+        <set>
+            <if test="academicYearName != null">
+                academic_year_name = #{academicYearName,jdbcType=VARCHAR},
+            </if>
+            <if test="startTerm.termId != null">
+                start_term = #{startTerm.termId,jdbcType=INTEGER},
+            </if>
+            <if test="endTerm.termId != null">
+                end_term = #{endTerm.termId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where academic_year_id = #{academicYearId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="net.tusdasa.evaluation.entity.AcademicYear">
+        update `t_academic_year`
+        set academic_year_name = #{academicYearName,jdbcType=VARCHAR},
+            start_term         = #{startTerm.termId,jdbcType=INTEGER},
+            end_term           = #{endTerm.termId,jdbcType=INTEGER}
+        where academic_year_id = #{academicYearId,jdbcType=INTEGER}
+    </update>
+    <select id="currentAcademicYear" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        `t_academic_year`,`t_term`
+        WHERE term_id = end_term and end_time >= DATE(now())
+        LIMIT 1
+    </select>
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_academic_year`
+    </select>
+</mapper>
