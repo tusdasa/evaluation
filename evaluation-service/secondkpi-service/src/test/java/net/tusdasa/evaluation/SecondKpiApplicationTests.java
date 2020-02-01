@@ -5,9 +5,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 
 @SpringBootTest
-class EvaluationApplicationTests {
+class SecondKpiApplicationTests {
 
-	public EvaluationApplicationTests(){
+	public SecondKpiApplicationTests() {
 
 	}
 

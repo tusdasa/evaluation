@@ -5,14 +5,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 
 @SpringBootTest
-class EvaluationApplicationTests {
+class AuthorityApplicationTests {
 
-	public EvaluationApplicationTests(){
+    public AuthorityApplicationTests() {
 
-	}
+    }
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
 }

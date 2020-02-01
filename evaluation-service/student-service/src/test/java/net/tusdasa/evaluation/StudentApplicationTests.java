@@ -5,9 +5,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 
 @SpringBootTest
-class TermApplicationTests {
+class StudentApplicationTests {
 
-	public TermApplicationTests(){
+	public StudentApplicationTests() {
+
 	}
 
 	@Test
