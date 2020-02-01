@@ -1,0 +1,14 @@
+server:
+  port: 7009
+  servlet:
+    context-path: /studentassessment
+spring:
+  application:
+    name: evaluation-studentAssessment-service
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+eureka:
+  client:
+    service-url:
+      defaultZone: http://tusdasa:8000/eureka/

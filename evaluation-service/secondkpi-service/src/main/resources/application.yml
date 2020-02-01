@@ -1,5 +1,5 @@
 server:
-  port: 7007
+  port: 7008
   servlet:
     context-path: /secondkpi
 spring:

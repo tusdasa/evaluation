@@ -1,5 +1,5 @@
 server:
-  port: 7003
+  port: 7001
   servlet:
     context-path: /academic
 spring:

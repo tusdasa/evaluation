@@ -42,7 +42,7 @@
     <properties>
         <java.version>1.8</java.version>
         <spring-cloud.version>Hoxton.SR1</spring-cloud.version>
-        <out.file>E:/Project/evaluation_app/bulid/</out.file>
+        <output.jar.location>E:/Project/evaluation_app/bulid/</output.jar.location>
     </properties>
 
     <dependencies>
@@ -64,17 +64,4 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <outputDirectory>
-                        ${out.file}
-                    </outputDirectory>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>

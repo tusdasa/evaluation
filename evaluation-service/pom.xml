@@ -29,6 +29,7 @@
         <module>grade-service</module>
         <module>data-service</module>
         <module>class-service</module>
+        <module>student-assessment</module>
     </modules>
     <dependencies>
         <dependency>

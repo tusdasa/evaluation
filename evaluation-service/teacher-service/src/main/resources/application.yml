@@ -1,5 +1,5 @@
 server:
-  port: 7002
+  port: 7011
   servlet:
     context-path: /teacher
 spring:
