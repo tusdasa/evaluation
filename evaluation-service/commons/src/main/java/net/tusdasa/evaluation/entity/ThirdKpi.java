@@ -24,6 +24,14 @@ public class ThirdKpi implements Serializable, Comparable<ThirdKpiRequest> {
 
     @Override
     public int compareTo(ThirdKpiRequest request) {
-        return 0;
+        if (request.getThirdKpiId().intValue() == this.getThirdKpiId()
+                && request.getSecondKpiId().intValue() == this.getSecondKpiId().intValue()
+                && request.getThirdKpiContent().equals(this.getThirdKpiContent())
+                && request.getCalculationRuleId().intValue() == this.getCalculationRuleId().intValue()
+
+        ) {
+            return 0;
+        }
+        return -1;
     }
 }

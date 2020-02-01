@@ -73,15 +73,21 @@
     where third_kpi_id = #{thirdKpiId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="net.tusdasa.evaluation.entity.ThirdKpi">
-    update `t_third_kpi`
-    set second_kpi_id = #{secondKpiId,jdbcType=INTEGER},
-      third_kpi_content = #{thirdKpiContent,jdbcType=VARCHAR},
-      calculation_rule_id = #{calculationRuleId,jdbcType=INTEGER}
-    where third_kpi_id = #{thirdKpiId,jdbcType=INTEGER}
+      update `t_third_kpi`
+      set second_kpi_id       = #{secondKpiId,jdbcType=INTEGER},
+          third_kpi_content   = #{thirdKpiContent,jdbcType=VARCHAR},
+          calculation_rule_id = #{calculationRuleId,jdbcType=INTEGER}
+      where third_kpi_id = #{thirdKpiId,jdbcType=INTEGER}
   </update>
-  <select id="findAll" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from `t_third_kpi`
-  </select>
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_third_kpi`
+    </select>
+    <select id="findBySecondKpiId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_third_kpi`
+        where second_kpi_id = #{secondKpiId,jdbcType=INTEGER}
+    </select>
 </mapper>
