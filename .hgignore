@@ -1,7 +1,8 @@
 syntax: glob
 *.class
 *.iml
+*.jar
 syntax: regexp
 ^\.idea/
 ^target$
-bulid/*jar
+bulid
