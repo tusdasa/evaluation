@@ -4,3 +4,4 @@ syntax: glob
 syntax: regexp
 ^\.idea/
 ^target$
+bulid/
