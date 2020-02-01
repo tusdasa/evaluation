@@ -4,4 +4,4 @@ syntax: glob
 syntax: regexp
 ^\.idea/
 ^target$
-bulid/
+bulid/*jar
