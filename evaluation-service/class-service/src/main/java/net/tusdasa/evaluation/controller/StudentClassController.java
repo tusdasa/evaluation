@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/class")
 public class StudentClassController {
 
     private StudentClassService studentClassService;

@@ -55,25 +55,6 @@ public class StudentClassServiceImpl implements StudentClassService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<StudentClass> findAll(Integer departmentId, Integer gradeId, Integer majorId) {
-
-        Map<String, Integer> parameter = new HashMap<>();
-
-        if (CheckUtils.isIntegerNumber(departmentId)) {
-            parameter.put("departmentId", departmentId);
-        }
-        if (CheckUtils.isIntegerNumber(gradeId)) {
-            parameter.put("gradeId", gradeId);
-        }
-        if (CheckUtils.isIntegerNumber(majorId)) {
-            parameter.put("majorId", majorId);
-        }
-
-        return this.studentClassMapper.findAllByAll(parameter);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
     public StudentClass findStudentClassById(Integer studentClassId) {
         return this.studentClassMapper.selectByPrimaryKey(studentClassId);
     }

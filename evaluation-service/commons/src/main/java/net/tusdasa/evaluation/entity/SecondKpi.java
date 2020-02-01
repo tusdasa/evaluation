@@ -11,6 +11,7 @@ import java.io.Serializable;
 @Builder
 @ToString
 public class SecondKpi implements Serializable {
+
     private Integer secondKpiId;
 
     private Integer firstKpiId;

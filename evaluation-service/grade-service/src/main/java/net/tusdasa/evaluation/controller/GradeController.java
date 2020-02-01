@@ -5,12 +5,10 @@ import net.tusdasa.evaluation.entity.Grade;
 import net.tusdasa.evaluation.service.GradeService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/grade")
 public class GradeController {
 
     private GradeService gradeService;
@@ -27,7 +25,6 @@ public class GradeController {
             return new CommonResponse<Grade>().ok().data(grade);
         }
         return new CommonResponse<Grade>().error("未找到");
-
 
     }
 

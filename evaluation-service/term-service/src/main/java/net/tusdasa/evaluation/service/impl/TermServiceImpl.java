@@ -51,6 +51,6 @@ public class TermServiceImpl implements TermService {
     @Transactional(readOnly = true)
     @Override
     public List<Term> findAll() {
-        return this.findAll();
+        return this.termMapper.findAll();
     }
 }

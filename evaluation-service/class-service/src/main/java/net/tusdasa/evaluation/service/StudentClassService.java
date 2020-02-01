@@ -17,7 +17,6 @@ public interface StudentClassService {
 
     List<StudentClass> findAll();
 
-    List<StudentClass> findAll(Integer departmentId, Integer gradeId, Integer majorId);
 
     StudentClass findStudentClassById(Integer studentClassId);
 }
