@@ -1,6 +1,7 @@
 package net.tusdasa.evaluation.entity;
 
 import lombok.*;
+import net.tusdasa.evaluation.vo.ThirdKpiRequest;
 
 import java.io.Serializable;
 
@@ -10,7 +11,7 @@ import java.io.Serializable;
 @With
 @Builder
 @ToString
-public class ThirdKpi implements Serializable {
+public class ThirdKpi implements Serializable, Comparable<ThirdKpiRequest> {
     private Integer thirdKpiId;
 
     private Integer secondKpiId;
@@ -21,4 +22,8 @@ public class ThirdKpi implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Override
+    public int compareTo(ThirdKpiRequest request) {
+        return 0;
+    }
 }

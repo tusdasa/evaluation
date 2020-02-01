@@ -4,14 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import net.tusdasa.evaluation.dao.StudentClassMapper;
 import net.tusdasa.evaluation.entity.StudentClass;
 import net.tusdasa.evaluation.service.StudentClassService;
-import net.tusdasa.evaluation.utils.CheckUtils;
 import net.tusdasa.evaluation.vo.StudentClassRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Service

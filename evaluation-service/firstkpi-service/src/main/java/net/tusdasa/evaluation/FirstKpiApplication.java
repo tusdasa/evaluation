@@ -10,8 +10,8 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @SpringBootApplication
 public class FirstKpiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(FirstKpiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(FirstKpiApplication.class, args);
+    }
 
 }

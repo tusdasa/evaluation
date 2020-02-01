@@ -7,12 +7,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class EvaluationApplicationTests {
 
-	public EvaluationApplicationTests(){
+    public EvaluationApplicationTests() {
 
-	}
+    }
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
 }

@@ -1,82 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.tusdasa.evaluation.dao.FirstKpiMapper">
-  <resultMap id="BaseResultMap" type="net.tusdasa.evaluation.entity.FirstKpi">
-    <id column="first_kpi_id" jdbcType="INTEGER" property="firstKpiId" />
-    <result column="firs_kpi_content" jdbcType="VARCHAR" property="firsKpiContent" />
-    <result column="academic_year_id" jdbcType="INTEGER" property="academicYearId" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    first_kpi_id, firs_kpi_content, academic_year_id
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from `t_first_kpi`
-    where first_kpi_id = #{firstKpiId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from `t_first_kpi`
-    where first_kpi_id = #{firstKpiId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="net.tusdasa.evaluation.entity.FirstKpi">
-    insert into `t_first_kpi` (first_kpi_id, firs_kpi_content, academic_year_id
-      )
-    values (#{firstKpiId,jdbcType=INTEGER}, #{firsKpiContent,jdbcType=VARCHAR}, #{academicYearId,jdbcType=INTEGER}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="net.tusdasa.evaluation.entity.FirstKpi">
-    insert into `t_first_kpi`
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="firstKpiId != null">
-        first_kpi_id,
-      </if>
-      <if test="firsKpiContent != null">
-        firs_kpi_content,
-      </if>
-      <if test="academicYearId != null">
-        academic_year_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="firstKpiId != null">
-        #{firstKpiId,jdbcType=INTEGER},
-      </if>
-      <if test="firsKpiContent != null">
-        #{firsKpiContent,jdbcType=VARCHAR},
-      </if>
-      <if test="academicYearId != null">
-        #{academicYearId,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="net.tusdasa.evaluation.entity.FirstKpi">
-    update `t_first_kpi`
-    <set>
-      <if test="firsKpiContent != null">
-        firs_kpi_content = #{firsKpiContent,jdbcType=VARCHAR},
-      </if>
-      <if test="academicYearId != null">
-        academic_year_id = #{academicYearId,jdbcType=INTEGER},
-      </if>
-    </set>
-    where first_kpi_id = #{firstKpiId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="net.tusdasa.evaluation.entity.FirstKpi">
-    update `t_first_kpi`
-    set firs_kpi_content = #{firsKpiContent,jdbcType=VARCHAR},
-      academic_year_id = #{academicYearId,jdbcType=INTEGER}
-    where first_kpi_id = #{firstKpiId,jdbcType=INTEGER}
-  </update>
-  <select id="findAll" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from `t_first_kpi`
-  </select>
-  <select id="findAllByAcademicYear" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from `t_first_kpi`
-    where academic_year_id = #{academicYearId,jdbcType=INTEGER}
-  </select>
+    <resultMap id="BaseResultMap" type="net.tusdasa.evaluation.entity.FirstKpi">
+        <id column="first_kpi_id" jdbcType="INTEGER" property="firstKpiId"/>
+        <result column="firs_kpi_content" jdbcType="VARCHAR" property="firsKpiContent"/>
+        <result column="academic_year_id" jdbcType="INTEGER" property="academicYearId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        first_kpi_id, firs_kpi_content, academic_year_id
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_first_kpi`
+        where first_kpi_id = #{firstKpiId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from `t_first_kpi`
+        where first_kpi_id = #{firstKpiId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="net.tusdasa.evaluation.entity.FirstKpi">
+        insert into `t_first_kpi` (first_kpi_id, firs_kpi_content, academic_year_id)
+        values (#{firstKpiId,jdbcType=INTEGER}, #{firsKpiContent,jdbcType=VARCHAR}, #{academicYearId,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="net.tusdasa.evaluation.entity.FirstKpi">
+        insert into `t_first_kpi`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="firstKpiId != null">
+                first_kpi_id,
+            </if>
+            <if test="firsKpiContent != null">
+                firs_kpi_content,
+            </if>
+            <if test="academicYearId != null">
+                academic_year_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="firstKpiId != null">
+                #{firstKpiId,jdbcType=INTEGER},
+            </if>
+            <if test="firsKpiContent != null">
+                #{firsKpiContent,jdbcType=VARCHAR},
+            </if>
+            <if test="academicYearId != null">
+                #{academicYearId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="net.tusdasa.evaluation.entity.FirstKpi">
+        update `t_first_kpi`
+        <set>
+            <if test="firsKpiContent != null">
+                firs_kpi_content = #{firsKpiContent,jdbcType=VARCHAR},
+            </if>
+            <if test="academicYearId != null">
+                academic_year_id = #{academicYearId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where first_kpi_id = #{firstKpiId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="net.tusdasa.evaluation.entity.FirstKpi">
+        update `t_first_kpi`
+        set firs_kpi_content = #{firsKpiContent,jdbcType=VARCHAR},
+            academic_year_id = #{academicYearId,jdbcType=INTEGER}
+        where first_kpi_id = #{firstKpiId,jdbcType=INTEGER}
+    </update>
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_first_kpi`
+    </select>
+    <select id="findAllByAcademicYear" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_first_kpi`
+        where academic_year_id = #{academicYearId,jdbcType=INTEGER}
+    </select>
 </mapper>

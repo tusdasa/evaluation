@@ -1,135 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.tusdasa.evaluation.dao.CourseMapper">
-  <resultMap id="classMap" type="net.tusdasa.evaluation.entity.StudentClass">
-    <id column="class_id" jdbcType="INTEGER" property="classId" />
-    <result column="class_name" jdbcType="VARCHAR" property="className" />
-    <result column="department_id" jdbcType="INTEGER" property="departmentId" />
-    <result column="grade_id" jdbcType="INTEGER" property="gradeId" />
-    <result column="major_id" jdbcType="INTEGER" property="majorId" />
-  </resultMap>
-  <resultMap id="BaseResultMap" type="net.tusdasa.evaluation.entity.Course">
-    <id column="course_id" jdbcType="BIGINT" property="courseId" />
-    <result column="course_name" jdbcType="VARCHAR" property="courseName" />
-    <result column="teacher_work_id" jdbcType="INTEGER" property="teacherWorkId" />
-    <result column="term_id" jdbcType="INTEGER" property="termId" />
-    <collection property="studentClassList" ofType="net.tusdasa.evaluation.entity.StudentClass" select="t1" column="course_id" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    course_id, course_name, teacher_work_id, term_id
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from `t_course`
-    where course_id = #{courseId,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from `t_course`
-    where course_id = #{courseId,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="net.tusdasa.evaluation.entity.Course">
-    insert into `t_course` (course_id, course_name, teacher_work_id, 
-      term_id)
-    values (#{courseId,jdbcType=BIGINT}, #{courseName,jdbcType=VARCHAR}, #{teacherWorkId,jdbcType=INTEGER}, 
-      #{termId,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" parameterType="net.tusdasa.evaluation.entity.Course">
-    insert into `t_course`
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="courseId != null">
-        course_id,
-      </if>
-      <if test="courseName != null">
-        course_name,
-      </if>
-      <if test="teacherWorkId != null">
-        teacher_work_id,
-      </if>
-      <if test="termId != null">
-        term_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="courseId != null">
-        #{courseId,jdbcType=BIGINT},
-      </if>
-      <if test="courseName != null">
-        #{courseName,jdbcType=VARCHAR},
-      </if>
-      <if test="teacherWorkId != null">
-        #{teacherWorkId,jdbcType=INTEGER},
-      </if>
-      <if test="termId != null">
-        #{termId,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="net.tusdasa.evaluation.entity.Course">
-    update `t_course`
-    <set>
-      <if test="courseName != null">
-        course_name = #{courseName,jdbcType=VARCHAR},
-      </if>
-      <if test="teacherWorkId != null">
-        teacher_work_id = #{teacherWorkId,jdbcType=INTEGER},
-      </if>
-      <if test="termId != null">
-        term_id = #{termId,jdbcType=INTEGER},
-      </if>
-    </set>
-    where course_id = #{courseId,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="net.tusdasa.evaluation.entity.Course">
-    update `t_course`
-    set course_name = #{courseName,jdbcType=VARCHAR},
-      teacher_work_id = #{teacherWorkId,jdbcType=INTEGER},
-      term_id = #{termId,jdbcType=INTEGER}
-    where course_id = #{courseId,jdbcType=BIGINT}
-  </update>
-  <select id="t1" parameterType="java.lang.Long" resultMap="classMap">
-    SELECT
-      t_student_class.class_id,
-      t_student_class.class_name,
-      t_student_class.department_id,
-      t_student_class.grade_id,
-      t_student_class.major_id
-    FROM
-      t_course_class
-        INNER JOIN t_student_class ON t_course_class.class_id = t_student_class.class_id
-    WHERE
-      t_course_class.course_id=#{courseId,jdbcType=BIGINT}
-  </select>
-  <select id="findAll" resultMap="BaseResultMap" parameterType="java.util.Map">
-    select
-    <include refid="Base_Column_List" />
-    from `t_course`
-    limit #{page,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
-  </select>
-  <insert id="insertClassAndCourse" parameterType="java.util.Map">
-    insert into `t_course_class` (course_id, class_id)
-    values (#{courseId,jdbcType=BIGINT}, #{classId,jdbcType=INTEGER})
-  </insert>
-  <select id="findCourseByStudentClass" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    SELECT
-      t_course.course_id,
-      t_course.course_name,
-      t_course.teacher_work_id,
-      t_course.term_id
-    FROM
-      t_course
-        INNER JOIN t_course_class ON t_course_class.course_id = t_course.course_id
-    WHERE
-      t_course_class.class_id=#{classId,jdbcType=INTEGER}
-  </select>
-  <select id="findCourseByTeacher" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    SELECT
-      t_course.course_id,
-      t_course.course_name,
-      t_course.teacher_work_id,
-      t_course.term_id
-    FROM
-      t_course
-    WHERE t_course.teacher_work_id=#{teacherWorkId,jdbcType=INTEGER}
-  </select>
+    <resultMap id="classMap" type="net.tusdasa.evaluation.entity.StudentClass">
+        <id column="class_id" jdbcType="INTEGER" property="classId"/>
+        <result column="class_name" jdbcType="VARCHAR" property="className"/>
+        <result column="department_id" jdbcType="INTEGER" property="departmentId"/>
+        <result column="grade_id" jdbcType="INTEGER" property="gradeId"/>
+        <result column="major_id" jdbcType="INTEGER" property="majorId"/>
+    </resultMap>
+    <resultMap id="BaseResultMap" type="net.tusdasa.evaluation.entity.Course">
+        <id column="course_id" jdbcType="BIGINT" property="courseId"/>
+        <result column="course_name" jdbcType="VARCHAR" property="courseName"/>
+        <result column="teacher_work_id" jdbcType="INTEGER" property="teacherWorkId"/>
+        <result column="term_id" jdbcType="INTEGER" property="termId"/>
+        <collection property="studentClassList" ofType="net.tusdasa.evaluation.entity.StudentClass" select="t1"
+                    column="course_id"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        course_id, course_name, teacher_work_id, term_id
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_course`
+        where course_id = #{courseId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from `t_course`
+        where course_id = #{courseId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="net.tusdasa.evaluation.entity.Course">
+        insert into `t_course` (course_id, course_name, teacher_work_id,
+                                term_id)
+        values (#{courseId,jdbcType=BIGINT}, #{courseName,jdbcType=VARCHAR}, #{teacherWorkId,jdbcType=INTEGER},
+                #{termId,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="net.tusdasa.evaluation.entity.Course">
+        insert into `t_course`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">
+                course_id,
+            </if>
+            <if test="courseName != null">
+                course_name,
+            </if>
+            <if test="teacherWorkId != null">
+                teacher_work_id,
+            </if>
+            <if test="termId != null">
+                term_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">
+                #{courseId,jdbcType=BIGINT},
+            </if>
+            <if test="courseName != null">
+                #{courseName,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherWorkId != null">
+                #{teacherWorkId,jdbcType=INTEGER},
+            </if>
+            <if test="termId != null">
+                #{termId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="net.tusdasa.evaluation.entity.Course">
+        update `t_course`
+        <set>
+            <if test="courseName != null">
+                course_name = #{courseName,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherWorkId != null">
+                teacher_work_id = #{teacherWorkId,jdbcType=INTEGER},
+            </if>
+            <if test="termId != null">
+                term_id = #{termId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where course_id = #{courseId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="net.tusdasa.evaluation.entity.Course">
+        update `t_course`
+        set course_name     = #{courseName,jdbcType=VARCHAR},
+            teacher_work_id = #{teacherWorkId,jdbcType=INTEGER},
+            term_id         = #{termId,jdbcType=INTEGER}
+        where course_id = #{courseId,jdbcType=BIGINT}
+    </update>
+    <select id="t1" parameterType="java.lang.Long" resultMap="classMap">
+        SELECT t_student_class.class_id,
+               t_student_class.class_name,
+               t_student_class.department_id,
+               t_student_class.grade_id,
+               t_student_class.major_id
+        FROM t_course_class
+                 INNER JOIN t_student_class ON t_course_class.class_id = t_student_class.class_id
+        WHERE t_course_class.course_id = #{courseId,jdbcType=BIGINT}
+    </select>
+    <select id="findAll" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_course`
+        limit #{page,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+    </select>
+    <insert id="insertClassAndCourse" parameterType="java.util.Map">
+        insert into `t_course_class` (course_id, class_id)
+        values (#{courseId,jdbcType=BIGINT}, #{classId,jdbcType=INTEGER})
+    </insert>
+    <select id="findCourseByStudentClass" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT t_course.course_id,
+               t_course.course_name,
+               t_course.teacher_work_id,
+               t_course.term_id
+        FROM t_course
+                 INNER JOIN t_course_class ON t_course_class.course_id = t_course.course_id
+        WHERE t_course_class.class_id = #{classId,jdbcType=INTEGER}
+    </select>
+    <select id="findCourseByTeacher" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT t_course.course_id,
+               t_course.course_name,
+               t_course.teacher_work_id,
+               t_course.term_id
+        FROM t_course
+        WHERE t_course.teacher_work_id = #{teacherWorkId,jdbcType=INTEGER}
+    </select>
 </mapper>

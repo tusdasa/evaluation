@@ -9,10 +9,10 @@
         <setting name="defaultStatementTimeout" value="5"/>
     </settings>
     <typeAliases>
-        <package name="net.tusdasa.evaluation.entity" />
-        <package name="net.tusdasa.evaluation.dao" />
+        <package name="net.tusdasa.evaluation.entity"/>
+        <package name="net.tusdasa.evaluation.dao"/>
     </typeAliases>
     <mappers>
-        <mapper resource="mapper/StudentClassMapper.xml" />
+        <mapper resource="mapper/StudentClassMapper.xml"/>
     </mappers>
 </configuration>

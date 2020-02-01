@@ -5,11 +5,11 @@ server:
 spring:
   application:
     name: evaluation-auth-service
-#  datasource:
-#    url: jdbc:mysql://127.0.0.1:3306/xynu_evaluation?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
-#    username: root
-#    password: root
-#    driver-class-name: com.mysql.cj.jdbc.Driver
+    #  datasource:
+    #    url: jdbc:mysql://127.0.0.1:3306/xynu_evaluation?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    #    username: root
+    #    password: root
+    #    driver-class-name: com.mysql.cj.jdbc.Driver
     tomcat:
       max-active: 4
       min-idle: 2

@@ -1,65 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.tusdasa.evaluation.dao.ProfessionalMapper">
-  <resultMap id="BaseResultMap" type="net.tusdasa.evaluation.entity.Professional">
-    <id column="professional_id" jdbcType="INTEGER" property="professionalId" />
-    <result column="professional_title" jdbcType="VARCHAR" property="professionalTitle" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    professional_id, professional_title
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from `t_professional`
-    where professional_id = #{professionalId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from `t_professional`
-    where professional_id = #{professionalId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="net.tusdasa.evaluation.entity.Professional">
-    insert into `t_professional` (professional_id, professional_title
-      )
-    values (#{professionalId,jdbcType=INTEGER}, #{professionalTitle,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="net.tusdasa.evaluation.entity.Professional">
-    insert into `t_professional`
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="professionalId != null">
-        professional_id,
-      </if>
-      <if test="professionalTitle != null">
-        professional_title,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="professionalId != null">
-        #{professionalId,jdbcType=INTEGER},
-      </if>
-      <if test="professionalTitle != null">
-        #{professionalTitle,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="net.tusdasa.evaluation.entity.Professional">
-    update `t_professional`
-    <set>
-      <if test="professionalTitle != null">
-        professional_title = #{professionalTitle,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where professional_id = #{professionalId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="net.tusdasa.evaluation.entity.Professional">
-    update `t_professional`
-    set professional_title = #{professionalTitle,jdbcType=VARCHAR}
-    where professional_id = #{professionalId,jdbcType=INTEGER}
-  </update>
-  <select id="findAll" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from `t_professional`
-  </select>
+    <resultMap id="BaseResultMap" type="net.tusdasa.evaluation.entity.Professional">
+        <id column="professional_id" jdbcType="INTEGER" property="professionalId"/>
+        <result column="professional_title" jdbcType="VARCHAR" property="professionalTitle"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        professional_id, professional_title
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_professional`
+        where professional_id = #{professionalId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from `t_professional`
+        where professional_id = #{professionalId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="net.tusdasa.evaluation.entity.Professional">
+        insert into `t_professional` (professional_id, professional_title)
+        values (#{professionalId,jdbcType=INTEGER}, #{professionalTitle,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="net.tusdasa.evaluation.entity.Professional">
+        insert into `t_professional`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="professionalId != null">
+                professional_id,
+            </if>
+            <if test="professionalTitle != null">
+                professional_title,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="professionalId != null">
+                #{professionalId,jdbcType=INTEGER},
+            </if>
+            <if test="professionalTitle != null">
+                #{professionalTitle,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="net.tusdasa.evaluation.entity.Professional">
+        update `t_professional`
+        <set>
+            <if test="professionalTitle != null">
+                professional_title = #{professionalTitle,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where professional_id = #{professionalId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="net.tusdasa.evaluation.entity.Professional">
+        update `t_professional`
+        set professional_title = #{professionalTitle,jdbcType=VARCHAR}
+        where professional_id = #{professionalId,jdbcType=INTEGER}
+    </update>
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_professional`
+    </select>
 </mapper>
