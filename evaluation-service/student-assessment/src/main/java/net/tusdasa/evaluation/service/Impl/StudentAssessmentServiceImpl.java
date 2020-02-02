@@ -1,6 +1,5 @@
 package net.tusdasa.evaluation.service.Impl;
 
-import net.tusdasa.evaluation.kpi.FirstKpiResponse;
 import net.tusdasa.evaluation.service.StudentAssessmentService;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +14,4 @@ public class StudentAssessmentServiceImpl implements StudentAssessmentService {
 
     }
 
-    @Override
-    public List<FirstKpiResponse> findAllSecondKpi(Integer firstKpiId) {
-        return null;
-    }
 }
