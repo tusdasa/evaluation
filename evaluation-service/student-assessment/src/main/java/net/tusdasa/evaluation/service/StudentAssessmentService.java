@@ -1,17 +1,14 @@
 package net.tusdasa.evaluation.service;
 
+import net.tusdasa.evaluation.commons.FirstKpiResponse;
+import net.tusdasa.evaluation.commons.SecondKpiResponse;
+
 import java.util.List;
 
 public interface StudentAssessmentService {
 
-    /*
-    List<FirstKpi> findAllFirstKpi(Integer roleId);
+    List<FirstKpiResponse> findAllSecondKpi(Integer firstKpiId);
 
-    List<SecondKpi> findAllSecondKpi(Integer firstKpiId);
-
-    List<ThirdKpi> findAllThirdKpi(Integer secondKpiId);
-
-     */
-
+    List<SecondKpiResponse> findAllThirdKpi(Integer secondKpiId);
 
 }
