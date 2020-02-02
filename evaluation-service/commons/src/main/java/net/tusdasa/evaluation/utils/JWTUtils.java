@@ -7,6 +7,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.Verification;
+import net.tusdasa.evaluation.entity.Role;
 import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.KeyGenerator;
@@ -58,11 +59,11 @@ public class JWTUtils {
 
     }
 
-    public String generateToken(Long Id) {
+    public String generateToken(Long Id, Integer role) {
         JWTCreator.Builder builder = JWT.create();
         builder.withSubject(String.valueOf(Id));
-        builder.withIssuer("www.tusdasa.net");
-        builder.withClaim("role", "");
+        builder.withIssuer("authority");
+        builder.withClaim("role", role);
         builder.withExpiresAt(new Date(System.currentTimeMillis() + (24 * 3600 * 1000)));
         return builder.sign(algorithm);
     }

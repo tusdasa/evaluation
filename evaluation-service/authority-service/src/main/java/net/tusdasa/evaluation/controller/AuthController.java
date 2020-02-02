@@ -32,7 +32,7 @@ public class AuthController {
         Map<String, Object> result = studentAuthService.findStudent(studentId, password);
         if (result.get("obj") != null) {
             Student student = (Student) result.get("obj");
-            return new CommonResponse<String>().ok().data(jwtUtils.generateToken(student.getStudentId()));
+            return new CommonResponse<String>().ok().data(jwtUtils.generateToken(student.getStudentId(), -1));
         }
         return new CommonResponse<String>().error(result.get("msg").toString());
 
@@ -44,7 +44,7 @@ public class AuthController {
 
         if (result.get("obj") != null) {
             Teacher teacher = (Teacher) result.get("obj");
-            return new CommonResponse<String>().ok().data(jwtUtils.generateToken(teacher.getRoleId().longValue()));
+            return new CommonResponse<String>().ok().data(jwtUtils.generateToken(teacher.getRoleId().longValue(), teacher.getRoleId()));
         }
         return new CommonResponse<String>().error(result.get("msg").toString());
 

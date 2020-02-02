@@ -6,3 +6,4 @@ syntax: regexp
 ^\.idea/
 ^target$
 bulid
+^node_modules/
