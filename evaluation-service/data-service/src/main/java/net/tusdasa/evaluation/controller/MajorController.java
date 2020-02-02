@@ -19,9 +19,9 @@ public class MajorController {
         this.majorService = majorService;
     }
 
-    @GetMapping("/{id}")
-    public CommonResponse<Major> findById(@PathVariable("id") Integer id) {
-        Major major = this.majorService.findById(id);
+    @GetMapping("/{majorId}")
+    public CommonResponse<Major> findById(@PathVariable("majorId") Integer majorId) {
+        Major major = this.majorService.findById(majorId);
         if (major != null) {
             return new CommonResponse<Major>().ok().data(major);
         }

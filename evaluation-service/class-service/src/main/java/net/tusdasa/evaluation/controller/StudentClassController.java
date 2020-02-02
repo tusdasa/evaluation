@@ -22,9 +22,9 @@ public class StudentClassController {
         return new CommonResponse<StudentClass>().ok().table(this.studentClassService.findAll());
     }
 
-    @GetMapping("/{id}")
-    public CommonResponse<StudentClass> findById(@PathVariable Integer id) {
-        StudentClass studentClass = this.studentClassService.findStudentClassById(id);
+    @GetMapping("/{studentClassId}")
+    public CommonResponse<StudentClass> findById(@PathVariable("studentClassId") Integer studentClassId) {
+        StudentClass studentClass = this.studentClassService.findStudentClassById(studentClassId);
         if (studentClass != null) {
             return new CommonResponse<StudentClass>().ok().data(studentClass);
         }

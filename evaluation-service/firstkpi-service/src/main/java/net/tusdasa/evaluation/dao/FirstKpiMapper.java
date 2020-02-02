@@ -5,9 +5,12 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @Mapper
 public interface FirstKpiMapper extends BaseDao<FirstKpi, Integer> {
     List<FirstKpi> findAllByAcademicYear(Integer academicYearId);
+
+    List<FirstKpi> findAllByAcademicYearAndId(Map<String, Integer> parameter);
 }

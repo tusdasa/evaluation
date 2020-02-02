@@ -45,9 +45,9 @@ public class AcademicYearController {
 
     }
 
-    @GetMapping("/{id}")
-    public CommonResponse<AcademicYear> findById(@PathVariable Integer id) {
-        AcademicYear academicYear = this.academicYearService.findAcaAcademicYearById(id);
+    @GetMapping("/{academicYearId}")
+    public CommonResponse<AcademicYear> findById(@PathVariable("academicYearId") Integer academicYearId) {
+        AcademicYear academicYear = this.academicYearService.findAcaAcademicYearById(academicYearId);
         if (academicYear != null) {
             return new CommonResponse<AcademicYear>().ok().data(academicYear);
         }

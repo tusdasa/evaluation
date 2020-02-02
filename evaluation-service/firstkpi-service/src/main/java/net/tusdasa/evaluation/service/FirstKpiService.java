@@ -4,8 +4,12 @@ import net.tusdasa.evaluation.entity.FirstKpi;
 import net.tusdasa.evaluation.vo.FirstKpiRequest;
 
 import java.util.List;
+import java.util.Map;
 
 public interface FirstKpiService {
+
+    List<FirstKpi> findAllByAcademicYearAndId(Integer academicYearId, Integer firstKpiId);
+
     List<FirstKpi> findAllFirstKpiByAcademicYear(Integer academicYearId);
 
     List<FirstKpi> findAll();

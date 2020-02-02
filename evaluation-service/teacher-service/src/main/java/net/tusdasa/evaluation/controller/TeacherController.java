@@ -18,9 +18,9 @@ public class TeacherController {
     }
 
 
-    @GetMapping("/{id}")
-    public CommonResponse<Teacher> getTeacherById(@PathVariable(name = "id") Integer id) {
-        Teacher teacher = teacherService.findTeacherByWorldId(id);
+    @GetMapping("/{workId}")
+    public CommonResponse<Teacher> getTeacherById(@PathVariable(name = "workId") Integer workId) {
+        Teacher teacher = teacherService.findTeacherByWorldId(workId);
         if (teacher != null) {
             return new CommonResponse<Teacher>().ok().data(teacher);
         } else {
@@ -28,9 +28,9 @@ public class TeacherController {
         }
     }
 
-    @GetMapping("/{id}/{password}")
-    public CommonResponse<Teacher> getTeacher(@PathVariable(name = "id") Integer id, @PathVariable("password") String password) {
-        Map<String, Object> map = teacherService.findTeacherByPassword(id, password);
+    @GetMapping("/{workId}/{password}")
+    public CommonResponse<Teacher> getTeacher(@PathVariable(name = "workId") Integer workId, @PathVariable("password") String password) {
+        Map<String, Object> map = teacherService.findTeacherByPassword(workId, password);
         if (map.get("code").equals(1)) {
             return new CommonResponse<Teacher>().ok().data((Teacher) map.get("obj"));
         } else {

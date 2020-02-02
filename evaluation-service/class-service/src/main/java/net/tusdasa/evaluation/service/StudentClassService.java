@@ -9,6 +9,7 @@ import java.util.List;
  * 添加新学生时需要添加
  */
 public interface StudentClassService {
+
     void addStudentClass(StudentClassRequest request);
 
     void deleteStudentClass(Integer studentClassId);
@@ -16,7 +17,6 @@ public interface StudentClassService {
     void updateStudentClass(StudentClassRequest request);
 
     List<StudentClass> findAll();
-
 
     StudentClass findStudentClassById(Integer studentClassId);
 }

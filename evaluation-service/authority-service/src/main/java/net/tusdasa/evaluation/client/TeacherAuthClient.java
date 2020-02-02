@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(value = "evaluation-teacher-service", path = "/teacher", fallback = TeacherAuthClientImpl.class)
 public interface TeacherAuthClient {
-    @GetMapping("/{id}/{password}")
-    CommonResponse<Teacher> getTeacher(@PathVariable(name = "id") Integer id, @PathVariable("password") String password);
+    @GetMapping("/{workId}/{password}")
+    CommonResponse<Teacher> getTeacher(@PathVariable(name = "workId") Integer workId, @PathVariable("password") String password);
 }

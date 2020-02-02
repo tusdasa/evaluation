@@ -78,4 +78,10 @@
         from `t_first_kpi`
         where academic_year_id = #{academicYearId,jdbcType=INTEGER}
     </select>
+    <select id="findAllByAcademicYearAndId" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_first_kpi`
+        where academic_year_id = #{academicYearId,jdbcType=INTEGER} and first_kpi_id = #{firstKpiId,jdbcType=INTEGER}
+    </select>
 </mapper>

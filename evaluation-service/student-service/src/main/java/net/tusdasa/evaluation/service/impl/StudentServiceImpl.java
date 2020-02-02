@@ -50,22 +50,22 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Transactional(readOnly = true)
-    public Student findStudentById(Long student_id) {
-        return studentMapper.selectByPrimaryKey(student_id);
+    public Student findStudentById(Long studentId) {
+        return studentMapper.selectByPrimaryKey(studentId);
     }
 
     @Override
     @Transactional
-    public void deleteStudent(Long student_id) {
-        this.studentMapper.deleteByPrimaryKey(student_id);
-        log.info("delete student {}", student_id);
+    public void deleteStudent(Long studentId) {
+        this.studentMapper.deleteByPrimaryKey(studentId);
+        log.info("delete student {}", studentId);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Map<String, Object> findStudentByIdAndPassword(Long student_id, String password) {
+    public Map<String, Object> findStudentByIdAndPassword(Long studentId, String password) {
         Map<String, Object> result = new HashMap<>();
-        Student student = this.studentMapper.selectByPrimaryKey(student_id);
+        Student student = this.studentMapper.selectByPrimaryKey(studentId);
 
         if (student != null) {
             if (password.equals(student.getStudentSecret())) {

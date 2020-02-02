@@ -24,7 +24,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role findById(Integer id) {
-        return roleMapper.selectByPrimaryKey(id);
+    public Role findById(Integer roleId) {
+        return roleMapper.selectByPrimaryKey(roleId);
     }
 }

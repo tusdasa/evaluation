@@ -24,7 +24,7 @@ public class ProfessionalServiceImpl implements ProfessionalService {
     }
 
     @Override
-    public Professional findById(Integer id) {
-        return professionalMapper.selectByPrimaryKey(id);
+    public Professional findById(Integer professionalId) {
+        return professionalMapper.selectByPrimaryKey(professionalId);
     }
 }

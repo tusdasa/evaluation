@@ -17,9 +17,9 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-    @GetMapping("/{id}")
-    public CommonResponse<Course> findById(@PathVariable Long id) {
-        Course course = this.courseService.findById(id);
+    @GetMapping("/{classId}")
+    public CommonResponse<Course> findById(@PathVariable("classId") Long classId) {
+        Course course = this.courseService.findById(classId);
         if (course != null) {
             return new CommonResponse<Course>().ok().data(course);
         }
@@ -27,14 +27,14 @@ public class CourseController {
 
     }
 
-    @GetMapping("/class/{id}")
-    public CommonResponse<Course> findByClassId(@PathVariable Integer id) {
-        return new CommonResponse<Course>().ok().table(this.courseService.findCourseByStudentClass(id));
+    @GetMapping("/class/{classId}")
+    public CommonResponse<Course> findByClassId(@PathVariable("classId") Integer classId) {
+        return new CommonResponse<Course>().ok().table(this.courseService.findCourseByStudentClass(classId));
     }
 
-    @GetMapping("/work/{id}")
-    public CommonResponse<Course> findByWorkId(@PathVariable Integer id) {
-        return new CommonResponse<Course>().ok().table(this.courseService.findCourseByTeacher(id));
+    @GetMapping("/work/{workId}")
+    public CommonResponse<Course> findByWorkId(@PathVariable("workId") Integer workId) {
+        return new CommonResponse<Course>().ok().table(this.courseService.findCourseByTeacher(workId));
     }
 
 }

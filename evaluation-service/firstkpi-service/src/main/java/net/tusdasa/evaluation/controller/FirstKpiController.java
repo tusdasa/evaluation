@@ -15,9 +15,14 @@ public class FirstKpiController {
         this.firstKpiService = firstKpiService;
     }
 
-    @GetMapping("/academicyear/{id}")
-    public CommonResponse<FirstKpi> findAllByFirstKpi(@PathVariable("id") Integer id) {
-        return new CommonResponse<FirstKpi>().ok().table(this.firstKpiService.findAllFirstKpiByAcademicYear(id));
+    @GetMapping("/year/{yearId}")
+    public CommonResponse<FirstKpi> findAllByFirstKpi(@PathVariable("yearId") Integer yearId) {
+        return new CommonResponse<FirstKpi>().ok().table(this.firstKpiService.findAllFirstKpiByAcademicYear(yearId));
+    }
+
+    @GetMapping("/year/{yearId}/{firstKpiId}")
+    public CommonResponse<FirstKpi> findAllByFirstKpiByAcademiceyearAndId(@PathVariable("yearId") Integer yearId, @PathVariable("firstKpiId") Integer firstKpiId) {
+        return new CommonResponse<FirstKpi>().ok().table(this.firstKpiService.findAllByAcademicYearAndId(yearId, firstKpiId));
     }
 
     @GetMapping("/")
@@ -25,11 +30,11 @@ public class FirstKpiController {
         return new CommonResponse<FirstKpi>().ok().table(this.firstKpiService.findAll());
     }
 
-    @GetMapping("/{id}")
-    public CommonResponse<FirstKpi> findById(@PathVariable("id") Integer id) {
-        FirstKpi firstKpi = this.firstKpiService.findById(id);
+    @GetMapping("/{firstKpiId}")
+    public CommonResponse<FirstKpi> findById(@PathVariable("firstKpiId") Integer firstKpiId) {
+        FirstKpi firstKpi = this.firstKpiService.findById(firstKpiId);
         if (firstKpi != null) {
-            return new CommonResponse<FirstKpi>().ok().data(this.firstKpiService.findById(id));
+            return new CommonResponse<FirstKpi>().ok().data(this.firstKpiService.findById(firstKpiId));
         } else {
             return new CommonResponse<FirstKpi>().error("未找到");
         }

@@ -7,6 +7,7 @@ import net.tusdasa.evaluation.vo.FirstKpiRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -16,6 +17,14 @@ public class FirstKpiServiceImpl implements FirstKpiService {
 
     public FirstKpiServiceImpl(FirstKpiMapper firstKpiMapper) {
         this.firstKpiMapper = firstKpiMapper;
+    }
+
+    @Override
+    public List<FirstKpi> findAllByAcademicYearAndId(Integer academicYearId, Integer firstKpiId) {
+        HashMap<String, Integer> parameter = new HashMap<>();
+        parameter.put("academicYearId", academicYearId);
+        parameter.put("firstKpiId", firstKpiId);
+        return this.firstKpiMapper.findAllByAcademicYearAndId(parameter);
     }
 
     @Transactional(readOnly = true)

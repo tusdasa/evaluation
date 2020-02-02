@@ -22,17 +22,17 @@ public class SecondKpiController {
     }
 
 
-    @GetMapping("/{id}")
-    public CommonResponse<SecondKpi> findById(@PathVariable("id") Integer id) {
-        SecondKpi secondKpi = this.secondKpiService.findSecondKpiById(id);
+    @GetMapping("/{secondKpiId}")
+    public CommonResponse<SecondKpi> findById(@PathVariable("secondKpiId") Integer secondKpiId) {
+        SecondKpi secondKpi = this.secondKpiService.findSecondKpiById(secondKpiId);
         if (secondKpi != null) {
             return new CommonResponse<SecondKpi>().ok().data(secondKpi);
         }
         return new CommonResponse<SecondKpi>().error();
     }
 
-    @GetMapping("/first/{id}")
-    public CommonResponse<SecondKpi> findByFirstId(@PathVariable("id") Integer firstId) {
+    @GetMapping("/first/{firstId}")
+    public CommonResponse<SecondKpi> findByFirstId(@PathVariable("firstId") Integer firstId) {
         return new CommonResponse<SecondKpi>().ok().table(this.secondKpiService.findAllByFirstKpi(firstId));
     }
 

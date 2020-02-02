@@ -19,9 +19,9 @@ public class RoleController {
         this.roleService = roleService;
     }
 
-    @GetMapping("/{id}")
-    public CommonResponse<Role> findById(@PathVariable("id") Integer id) {
-        Role role = this.roleService.findById(id);
+    @GetMapping("/{roleId}")
+    public CommonResponse<Role> findById(@PathVariable("roleId") Integer roleId) {
+        Role role = this.roleService.findById(roleId);
         if (role != null) {
             return new CommonResponse<Role>().ok().data(role);
         }

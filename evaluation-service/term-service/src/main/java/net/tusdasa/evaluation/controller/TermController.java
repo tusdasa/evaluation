@@ -18,12 +18,12 @@ public class TermController {
 
     @GetMapping("/")
     public CommonResponse<Term> findAllTerm() {
-       return new CommonResponse<Term>().ok().table(this.termService.findAll());
+        return new CommonResponse<Term>().ok().table(this.termService.findAll());
     }
 
-    @GetMapping("/{id}")
-    public CommonResponse<Term> findById(@PathVariable("id") Integer id) {
-        Term term = this.termService.findById(id);
+    @GetMapping("/{termId}")
+    public CommonResponse<Term> findById(@PathVariable("termId") Integer termId) {
+        Term term = this.termService.findById(termId);
         if (term != null) {
             return new CommonResponse<Term>().ok().data(term);
         }

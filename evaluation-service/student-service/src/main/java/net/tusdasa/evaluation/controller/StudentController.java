@@ -18,9 +18,9 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping("/{id}")
-    public CommonResponse<Student> getStudentById(@PathVariable(name = "id") Long id) {
-        Student student = studentService.findStudentById(id);
+    @GetMapping("/{studentId}")
+    public CommonResponse<Student> getStudentById(@PathVariable(name = "studentId") Long studentId) {
+        Student student = studentService.findStudentById(studentId);
         if (student != null) {
             return new CommonResponse<Student>().ok().data(student);
         } else {
@@ -28,9 +28,9 @@ public class StudentController {
         }
     }
 
-    @GetMapping("/{id}/{password}")
-    public CommonResponse<Student> getStudent(@PathVariable(name = "id") Long id, @PathVariable("password") String password) {
-        Map<String, Object> map = this.studentService.findStudentByIdAndPassword(id, password);
+    @GetMapping("/{studentId}/{password}")
+    public CommonResponse<Student> getStudent(@PathVariable(name = "studentId") Long studentId, @PathVariable("password") String password) {
+        Map<String, Object> map = this.studentService.findStudentByIdAndPassword(studentId, password);
         if (map.get("code").equals(1)) {
             return new CommonResponse<Student>().ok().data((Student) map.get("obj"));
         } else {

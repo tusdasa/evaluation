@@ -17,9 +17,9 @@ public class GradeController {
         this.gradeService = gradeService;
     }
 
-    @GetMapping("/{id}")
-    public CommonResponse<Grade> findById(@PathVariable("id") Integer id) {
-        Grade grade = this.gradeService.findById(id);
+    @GetMapping("/{gradeId}")
+    public CommonResponse<Grade> findById(@PathVariable("gradeId") Integer gradeId) {
+        Grade grade = this.gradeService.findById(gradeId);
 
         if (grade != null) {
             return new CommonResponse<Grade>().ok().data(grade);

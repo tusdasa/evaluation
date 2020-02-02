@@ -19,9 +19,9 @@ public class TeacherStateController {
         this.teacherStateService = teacherStateService;
     }
 
-    @GetMapping("/{id}")
-    public CommonResponse<TeacherState> findById(@PathVariable("id") Integer id) {
-        TeacherState teacherState = this.teacherStateService.findById(id);
+    @GetMapping("/{stateId}")
+    public CommonResponse<TeacherState> findById(@PathVariable("stateId") Integer stateId) {
+        TeacherState teacherState = this.teacherStateService.findById(stateId);
         if (teacherState != null) {
             return new CommonResponse<TeacherState>().ok().data(teacherState);
         }

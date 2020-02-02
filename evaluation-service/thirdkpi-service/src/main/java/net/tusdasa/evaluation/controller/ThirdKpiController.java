@@ -21,9 +21,9 @@ public class ThirdKpiController {
         return new CommonResponse<ThirdKpi>().ok().table(this.thirdKpiService.findAll());
     }
 
-    @GetMapping("/{id}")
-    public CommonResponse<ThirdKpi> findById(@PathVariable("id") Integer id) {
-        ThirdKpi thirdKpi = this.thirdKpiService.findThirdKpiById(id);
+    @GetMapping("/{thirdKpiId}")
+    public CommonResponse<ThirdKpi> findById(@PathVariable("thirdKpiId") Integer thirdKpiId) {
+        ThirdKpi thirdKpi = this.thirdKpiService.findThirdKpiById(thirdKpiId);
 
         if (thirdKpi != null) {
             return new CommonResponse<ThirdKpi>().ok().data(thirdKpi);
@@ -31,8 +31,8 @@ public class ThirdKpiController {
         return new CommonResponse<ThirdKpi>().error("未找到");
     }
 
-    @GetMapping("/second/{id}")
-    public CommonResponse<ThirdKpi> findSecondKpiId(@PathVariable("id") Integer secondKpiId) {
+    @GetMapping("/second/{secondKpiId}")
+    public CommonResponse<ThirdKpi> findSecondKpiId(@PathVariable("secondKpiId") Integer secondKpiId) {
         return new CommonResponse<ThirdKpi>().ok().table(this.thirdKpiService.findBySecondKpiId(secondKpiId));
     }
 
