@@ -7,11 +7,11 @@ import net.tusdasa.evaluation.entity.ThirdKpi;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
-@ToString
-@EqualsAndHashCode
-@NoArgsConstructor
 @With
 public class SecondKpiResponse extends SecondKpi {
     private List<ThirdKpi> table;
+
+    public SecondKpiResponse() {
+
+    }
 }
