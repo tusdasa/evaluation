@@ -1,16 +1,22 @@
 package net.tusdasa.evaluation.kpi;
 
 import lombok.*;
-import net.tusdasa.evaluation.entity.FirstKpi;
 
 import java.util.List;
 
 @Data
-@AllArgsConstructor
-@ToString
-@EqualsAndHashCode
-@NoArgsConstructor
 @With
-public class FirstKpiResponse extends FirstKpi {
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class FirstKpiResponse {
+
+    private Integer firstKpiId;
+
+    private String firsKpiContent;
+
+    private Integer academicYearId;
+
     List<SecondKpiResponse> table;
+
 }
