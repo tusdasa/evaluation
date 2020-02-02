@@ -1,9 +1,6 @@
 package net.tusdasa.evaluation.vo;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import net.tusdasa.evaluation.entity.SecondKpi;
 import net.tusdasa.evaluation.utils.CheckUtils;
 
@@ -11,6 +8,7 @@ import net.tusdasa.evaluation.utils.CheckUtils;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Builder
 public class SecondKpiRequest implements CommonRequest<SecondKpi> {
 
     private Integer secondKpiId;

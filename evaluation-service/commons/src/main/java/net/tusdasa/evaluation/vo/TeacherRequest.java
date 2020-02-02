@@ -1,9 +1,6 @@
 package net.tusdasa.evaluation.vo;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.With;
+import lombok.*;
 import net.tusdasa.evaluation.entity.Department;
 import net.tusdasa.evaluation.entity.Professional;
 import net.tusdasa.evaluation.entity.Teacher;
@@ -15,6 +12,7 @@ import org.springframework.util.DigestUtils;
 @AllArgsConstructor
 @NoArgsConstructor
 @With
+@Builder
 public class TeacherRequest implements CommonRequest<Teacher> {
 
     private Integer workId;

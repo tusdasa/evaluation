@@ -10,6 +10,7 @@ import org.springframework.util.DigestUtils;
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
+@Builder
 public class StudentRequest implements CommonRequest<Student> {
 
     private Long studentId;
