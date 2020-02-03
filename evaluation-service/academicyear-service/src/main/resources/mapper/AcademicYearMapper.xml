@@ -84,12 +84,12 @@
             end_term           = #{endTerm.termId,jdbcType=INTEGER}
         where academic_year_id = #{academicYearId,jdbcType=INTEGER}
     </update>
-    <select id="currentAcademicYear" resultMap="BaseResultMap">
+    <select id="currentAcademicYear" parameterType="java.util.Date" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM
         `t_academic_year`,`t_term`
-        WHERE term_id = end_term and end_time >= DATE(now())
+        WHERE term_id = end_term and end_time >= #{currentTime,jdbcType=TIMESTAMP}
         LIMIT 1
     </select>
     <select id="findAll" resultMap="BaseResultMap">

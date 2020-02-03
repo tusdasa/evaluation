@@ -7,6 +7,7 @@ import net.tusdasa.evaluation.vo.SecondKpiRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -53,5 +54,29 @@ public class SecondKpiServiceImpl implements SecondKpiService {
     @Override
     public List<SecondKpi> findAllByFirstKpi(Integer firstKpiId) {
         return this.secondKpiMapper.findAllByFirstKpiId(firstKpiId);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<SecondKpi> findAllByFirstKpiAndIds(Integer firstKpiId, Integer[] ids) {
+        HashMap<String, Object> parameter = new HashMap<>();
+        parameter.put("firstKpiId", firstKpiId);
+        parameter.put("secondKpiIds", ids);
+        return this.secondKpiMapper.findAllByFirstKpiIds(parameter);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<SecondKpi> finAllFirstKoiIdsAndIds(Integer[] firstKpiIds, Integer[] secondKpiIds) {
+        HashMap<String, Object> parameter = new HashMap<>();
+        parameter.put("firstKpiIds", firstKpiIds);
+        parameter.put("secondKpiIds", secondKpiIds);
+        return this.secondKpiMapper.finAllFirstKoiIdsAndIds(parameter);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<SecondKpi> findAllByFirstKpi(Integer[] firstKpiIds) {
+        return this.secondKpiMapper.findAllByFirstKpi(firstKpiIds);
     }
 }

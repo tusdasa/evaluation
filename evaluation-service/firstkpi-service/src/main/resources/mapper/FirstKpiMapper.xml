@@ -84,4 +84,14 @@
         from `t_first_kpi`
         where academic_year_id = #{academicYearId,jdbcType=INTEGER} and first_kpi_id = #{firstKpiId,jdbcType=INTEGER}
     </select>
+    <select id="findAllByAcademicYearAndIds" parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        t_first_kpi
+        WHERE academic_year_id = #{academicYearId,jdbcType=INTEGER} and first_kpi_id in
+        <foreach item="firstKpiId" collection="firstKpiIds" open="(" separator="," close=")">
+            #{firstKpiId,jdbcType=INTEGER}
+        </foreach>
+    </select>
 </mapper>

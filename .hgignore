@@ -5,5 +5,5 @@ syntax: glob
 syntax: regexp
 ^\.idea/
 ^target$
-bulid
+build
 ^node_modules/

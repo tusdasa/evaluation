@@ -21,4 +21,6 @@ public interface FirstKpiService {
     void addFirstKpi(FirstKpiRequest request);
 
     void deleteFirstKpi(Integer firstKpiId);
+
+    List<FirstKpi> findAllByAcademicYearAndIds(Integer academicYearId, Integer[] firstKpiIds);
 }

@@ -17,4 +17,8 @@ public interface ThirdKpiService {
     List<ThirdKpi> findAll();
 
     List<ThirdKpi> findBySecondKpiId(Integer secondKpiId);
+
+    List<ThirdKpi> findBySecondKpiIds(Integer secondKpiId, Integer[] thirdKpiIds);
+
+    List<ThirdKpi> findBySecondKpiIdsAndIds(Integer[] secondKpiIds, Integer[] thirdKpiIds);
 }

@@ -76,6 +76,13 @@ public class CommonResponse<Model extends Serializable> {
         return false;
     }
 
+    public boolean emptyTable() {
+        if (this.getTable() != null && !this.getTable().isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
     public Model getData() {
         return data;
     }

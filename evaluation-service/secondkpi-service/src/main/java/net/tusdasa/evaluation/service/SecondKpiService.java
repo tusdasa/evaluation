@@ -19,4 +19,10 @@ public interface SecondKpiService {
 
     List<SecondKpi> findAllByFirstKpi(Integer firstKpiId);
 
+    List<SecondKpi> findAllByFirstKpiAndIds(Integer firstKpiId, Integer[] ids);
+
+    List<SecondKpi> finAllFirstKoiIdsAndIds(Integer[] firstKpiIds, Integer[] secondKpiIds);
+
+    List<SecondKpi> findAllByFirstKpi(Integer[] firstKpiIds);
+
 }

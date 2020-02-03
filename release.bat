@@ -5,5 +5,5 @@ set Thh=%TIME:~0,2%
 set Thh=%Thh: =0%
 set folder=%Thh%.%Tmm%.%Tss%
 md %BUILD_DIR%\bulid-%folder%
-copy %BUILD_DIR%\*.jar %BUILD_DIR%\bulid-%folder%\
+copy %BUILD_DIR%\*.jar %BUILD_DIR%\build-%folder%\
 del /q %BUILD_DIR%\*.jar

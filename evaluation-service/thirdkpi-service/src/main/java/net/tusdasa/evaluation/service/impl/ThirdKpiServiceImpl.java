@@ -7,6 +7,7 @@ import net.tusdasa.evaluation.vo.ThirdKpiRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -56,5 +57,23 @@ public class ThirdKpiServiceImpl implements ThirdKpiService {
     @Override
     public List<ThirdKpi> findBySecondKpiId(Integer secondKpiId) {
         return this.thirdKpiMapper.findBySecondKpiId(secondKpiId);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<ThirdKpi> findBySecondKpiIds(Integer secondKpiId, Integer[] thirdKpiIds) {
+        HashMap<String, Object> parameter = new HashMap<>();
+        parameter.put("secondKpiId", secondKpiId);
+        parameter.put("thirdKpiIds", thirdKpiIds);
+        return this.thirdKpiMapper.findBySecondKpiIds(parameter);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<ThirdKpi> findBySecondKpiIdsAndIds(Integer[] secondKpiIds, Integer[] thirdKpiIds) {
+        HashMap<String, Object> parameter = new HashMap<>();
+        parameter.put("secondKpiIds", secondKpiIds);
+        parameter.put("thirdKpiIds", thirdKpiIds);
+        return this.thirdKpiMapper.findBySecondKpiIdsAndIds(parameter);
     }
 }

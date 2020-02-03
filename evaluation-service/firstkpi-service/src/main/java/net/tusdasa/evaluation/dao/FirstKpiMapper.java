@@ -13,4 +13,6 @@ public interface FirstKpiMapper extends BaseDao<FirstKpi, Integer> {
     List<FirstKpi> findAllByAcademicYear(Integer academicYearId);
 
     List<FirstKpi> findAllByAcademicYearAndId(Map<String, Integer> parameter);
+
+    List<FirstKpi> findAllByAcademicYearAndIds(Map<String, Object> parameter);
 }

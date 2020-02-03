@@ -65,4 +65,13 @@ public class FirstKpiServiceImpl implements FirstKpiService {
     public void deleteFirstKpi(Integer firstKpiId) {
         this.firstKpiMapper.deleteByPrimaryKey(firstKpiId);
     }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<FirstKpi> findAllByAcademicYearAndIds(Integer academicYearId, Integer[] firstKpiIds) {
+        HashMap<String, Object> parameter = new HashMap<>();
+        parameter.put("academicYearId", academicYearId);
+        parameter.put("firstKpiIds", firstKpiIds);
+        return this.firstKpiMapper.findAllByAcademicYearAndIds(parameter);
+    }
 }

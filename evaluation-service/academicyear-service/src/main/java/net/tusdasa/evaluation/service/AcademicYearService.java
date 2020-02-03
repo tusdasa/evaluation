@@ -1,6 +1,7 @@
 package net.tusdasa.evaluation.service;
 
 import net.tusdasa.evaluation.entity.AcademicYear;
+import net.tusdasa.evaluation.entity.Term;
 import net.tusdasa.evaluation.vo.AcademicYearRequest;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public interface AcademicYearService {
     List<AcademicYear> findAll();
 
     AcademicYear findAcaAcademicYearById(Integer academicYearId);
+
+    Term currentTerm();
 }

@@ -4,6 +4,7 @@ import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.FirstKpi;
 import net.tusdasa.evaluation.service.FirstKpiService;
 import net.tusdasa.evaluation.vo.FirstKpiRequest;
+import net.tusdasa.evaluation.vo.IdsRequest;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -38,6 +39,11 @@ public class FirstKpiController {
         } else {
             return new CommonResponse<FirstKpi>().error("未找到");
         }
+    }
+
+    @PostMapping("/ids/{yearId}")
+    public CommonResponse<FirstKpi> findByIds(@PathVariable("yearId") Integer yearId, @RequestBody IdsRequest idsRequest) {
+        return new CommonResponse<FirstKpi>().ok().table(this.firstKpiService.findAllByAcademicYearAndIds(yearId, idsRequest.getFirstArray()));
     }
 
     @PutMapping("/")

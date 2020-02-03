@@ -3,6 +3,7 @@ package net.tusdasa.evaluation.controller;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.SecondKpi;
 import net.tusdasa.evaluation.service.SecondKpiService;
+import net.tusdasa.evaluation.vo.IdsRequest;
 import net.tusdasa.evaluation.vo.SecondKpiRequest;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +35,21 @@ public class SecondKpiController {
     @GetMapping("/first/{firstId}")
     public CommonResponse<SecondKpi> findByFirstId(@PathVariable("firstId") Integer firstId) {
         return new CommonResponse<SecondKpi>().ok().table(this.secondKpiService.findAllByFirstKpi(firstId));
+    }
+
+    @PostMapping("/ids/{firstId}")
+    public CommonResponse<SecondKpi> findByIds(@PathVariable("firstId") Integer firstId, @RequestBody IdsRequest idsRequest) {
+        return new CommonResponse<SecondKpi>().ok().table(this.secondKpiService.findAllByFirstKpiAndIds(firstId, idsRequest.getFirstArray()));
+    }
+
+    @PostMapping("/ids/ids")
+    public CommonResponse<SecondKpi> findByIdsAndIds(@RequestBody IdsRequest idsRequest) {
+        return new CommonResponse<SecondKpi>().ok().table(this.secondKpiService.finAllFirstKoiIdsAndIds(idsRequest.getFirstArray(), idsRequest.getSecondIdsArray()));
+    }
+
+    @PostMapping("/first")
+    public CommonResponse<SecondKpi> findAllByFirstKpi(@RequestBody IdsRequest idsRequest) {
+        return new CommonResponse<SecondKpi>().ok().table(this.secondKpiService.findAllByFirstKpi(idsRequest.getFirstArray()));
     }
 
     @PostMapping("/")
