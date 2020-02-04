@@ -113,4 +113,13 @@
             #{thirdKpiId,jdbcType=INTEGER}
         </foreach>
     </select>
+    <select id="findBySecondKpiIdAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_third_kpi`
+        where second_kpi_id in
+        <foreach collection="secondKpiIds" item="secondKpiId" open="(" separator="," close=")">
+            #{secondKpiId,jdbcType=INTEGER}
+        </foreach>
+    </select>
 </mapper>

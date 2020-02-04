@@ -1,22 +1,45 @@
 package net.tusdasa.evaluation.commons;
 
 import lombok.*;
+import net.tusdasa.evaluation.entity.SecondKpi;
 import net.tusdasa.evaluation.entity.ThirdKpi;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @With
-public class SecondKpiResponse {
+public class SecondKpiResponse implements Serializable {
 
     private Integer secondKpiId;
 
-    private Integer firstKpiId;
-
     private String secondKpiContent;
 
+    private Integer firstKpiId;
+
     private List<ThirdKpi> table;
+
+    public SecondKpiResponse() {
+        this.table = new ArrayList<>();
+    }
+
+    public SecondKpiResponse(int size) {
+        this.table = new ArrayList<>(size);
+    }
+
+    public SecondKpiResponse addSecondKpi(SecondKpi secondKpi) {
+        this.setSecondKpiId(secondKpi.getSecondKpiId());
+        this.setSecondKpiContent(secondKpi.getSecondKpiContent());
+        this.setFirstKpiId(secondKpi.getFirstKpiId());
+        return this;
+    }
+
+    public SecondKpiResponse addTable(ThirdKpi thirdKpi) {
+        if (this.getTable() == null) this.table = new ArrayList<>();
+        table.add(thirdKpi);
+        return this;
+    }
 }

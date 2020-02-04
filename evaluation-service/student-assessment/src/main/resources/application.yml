@@ -8,7 +8,16 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
 eureka:
   client:
     service-url:
       defaultZone: http://tusdasa:8000/eureka/
+feign:
+  hystrix:
+    enabled: true
+  okhttp:
+    enabled: true

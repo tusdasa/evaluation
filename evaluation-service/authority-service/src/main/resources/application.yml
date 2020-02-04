@@ -17,6 +17,10 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
 eureka:
   client:
     service-url:
@@ -24,6 +28,11 @@ eureka:
 ribbon:
   ReadTimeout: 5000
   ConnectTimeout: 5000
+feign:
+  hystrix:
+    enabled: true
+  okhttp:
+    enabled: true
 #mybatis:
 #  config-location: classpath:myBatisConfig.xml
 #enable配置为false时在运行时生成密钥, 停止应用后密钥丢失。所有签发的token将失效

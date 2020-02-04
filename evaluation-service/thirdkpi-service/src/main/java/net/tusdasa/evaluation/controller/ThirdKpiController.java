@@ -37,6 +37,11 @@ public class ThirdKpiController {
         return new CommonResponse<ThirdKpi>().ok().table(this.thirdKpiService.findBySecondKpiId(secondKpiId));
     }
 
+    @PostMapping("/second")
+    public CommonResponse<ThirdKpi> findThirdBySecondKpiIds(@RequestBody IdsRequest idsRequest) {
+        return new CommonResponse<ThirdKpi>().ok().table(this.thirdKpiService.findBySecondKpiIdAll(idsRequest.getFirstArray()));
+    }
+
     @PostMapping("/ids/{secondKpiId}")
     public CommonResponse<ThirdKpi> findByIds(@PathVariable("secondKpiId") Integer secondKpiId, @RequestBody IdsRequest idsRequest) {
         return new CommonResponse<ThirdKpi>().ok().table(this.thirdKpiService.findBySecondKpiIds(secondKpiId, idsRequest.getFirstArray()));

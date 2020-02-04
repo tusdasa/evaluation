@@ -72,8 +72,14 @@ public class ThirdKpiServiceImpl implements ThirdKpiService {
     @Override
     public List<ThirdKpi> findBySecondKpiIdsAndIds(Integer[] secondKpiIds, Integer[] thirdKpiIds) {
         HashMap<String, Object> parameter = new HashMap<>();
-        parameter.put("secondKpiIds", secondKpiIds);
         parameter.put("thirdKpiIds", thirdKpiIds);
+        parameter.put("secondKpiIds", secondKpiIds);
         return this.thirdKpiMapper.findBySecondKpiIdsAndIds(parameter);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<ThirdKpi> findBySecondKpiIdAll(Integer[] secondKpiIds) {
+        return this.thirdKpiMapper.findBySecondKpiIdAll(secondKpiIds);
     }
 }

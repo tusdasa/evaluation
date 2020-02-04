@@ -12,6 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(value = "evaluation-thirdkpi-service", path = "/thirdkpi", fallback = ThirdKpiClientImpl.class)
 public interface ThirdKpiClient {
-    @PostMapping("/ids/ids")
-    CommonResponse<ThirdKpi> findByIdsAndIds(@RequestBody IdsRequest idsRequest);
+    @PostMapping("/second")
+    CommonResponse<ThirdKpi> findThirdBySecondKpiIds(@RequestBody IdsRequest idsRequest);
 }

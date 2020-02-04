@@ -11,10 +11,20 @@
 
     <artifactId>student-assessment</artifactId>
 
+    <name>Microservice-StudentAssessment</name>
+    <description>
+        学生评价微服务
+    </description>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.3.1</version>
         </dependency>
         <!--
         <dependency>

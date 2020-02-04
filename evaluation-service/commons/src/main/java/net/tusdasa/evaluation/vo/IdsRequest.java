@@ -7,10 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.With;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Data
 @With
@@ -25,6 +22,23 @@ public class IdsRequest implements Serializable {
     public IdsRequest() {
         this.firstIds = new ArrayList<>();
         this.secondIds = new ArrayList<>();
+    }
+
+    private Integer[] DuplicateArray(Integer[] array) {
+
+        Set<Integer> set = new LinkedHashSet<>();
+        for (int i = 0; i < array.length; i++) {
+            set.add(array[i]);
+        }
+        Integer[] newArray = new Integer[set.size()];
+
+        int i = 0;
+        for (Integer value : set) {
+            newArray[i] = value;
+            i++;
+        }
+
+        return newArray;
     }
 
     public Integer[] getFirstArray() {
@@ -43,6 +57,7 @@ public class IdsRequest implements Serializable {
             id[i] = iterator.next();
             i++;
         }
+        this.DuplicateArray(id);
         Arrays.sort(id);
         return id;
     }
