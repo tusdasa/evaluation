@@ -1,6 +1,9 @@
 package net.tusdasa.evaluation.commons;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.With;
 import net.tusdasa.evaluation.entity.SecondKpi;
 import net.tusdasa.evaluation.entity.ThirdKpi;
 
@@ -41,5 +44,16 @@ public class SecondKpiResponse implements Serializable {
         if (this.getTable() == null) this.table = new ArrayList<>();
         table.add(thirdKpi);
         return this;
+    }
+
+    public void addS(SecondKpi secondKpi) {
+        this.setSecondKpiId(secondKpi.getSecondKpiId());
+        this.setSecondKpiContent(secondKpi.getSecondKpiContent());
+        this.setFirstKpiId(secondKpi.getFirstKpiId());
+    }
+
+    public void addT(ThirdKpi thirdKpi) {
+        if (this.table == null) this.table = new ArrayList<>();
+        this.table.add(thirdKpi);
     }
 }

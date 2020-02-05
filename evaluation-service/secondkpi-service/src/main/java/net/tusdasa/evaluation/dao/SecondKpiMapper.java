@@ -11,11 +11,12 @@ import java.util.Map;
 @Repository
 @Mapper
 public interface SecondKpiMapper extends BaseDao<SecondKpi, Integer> {
+
     List<SecondKpi> findAllByFirstKpiId(Integer firstKpiId);
 
-    List<SecondKpi> findAllByFirstKpiIds(Map<String, Object> parameter);
+    List<SecondKpi> findAllByFirstKpiIdAndSecondKpiIds(Map<String, Object> parameter);
 
-    List<SecondKpi> finAllFirstKoiIdsAndIds(Map<String, Object> parameter);
+    List<SecondKpi> finAllFirstKpiIdsAndSecondKpiIds(Map<String, Object> parameter);
 
-    List<SecondKpi> findAllByFirstKpi(@Param("firstKpiIds") Integer[] firstKpiIds);
+    List<SecondKpi> findAllByFirstKpiIds(@Param("firstKpiIds") Integer[] firstKpiIds);
 }

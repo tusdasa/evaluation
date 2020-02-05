@@ -78,7 +78,7 @@
         from `t_second_kpi`
         where first_kpi_id=#{firstKpiId,jdbcType=INTEGER}
     </select>
-    <select id="findAllByFirstKpiIds" parameterType="java.util.Map" resultMap="BaseResultMap">
+    <select id="findAllByFirstKpiIdAndSecondKpiIds" parameterType="java.util.Map" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from `t_second_kpi`
@@ -87,7 +87,7 @@
             #{secondKpiId,jdbcType=INTEGER}
         </foreach>
     </select>
-    <select id="finAllFirstKoiIdsAndIds" resultMap="BaseResultMap" parameterType="java.util.Map">
+    <select id="finAllFirstKpiIdsAndSecondKpiIds" resultMap="BaseResultMap" parameterType="java.util.Map">
         select
         <include refid="Base_Column_List"/>
         from `t_second_kpi`
@@ -100,7 +100,7 @@
             #{secondKpiId,jdbcType=INTEGER}
         </foreach>
     </select>
-    <select id="findAllByFirstKpi" resultMap="BaseResultMap">
+    <select id="findAllByFirstKpiIds" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM

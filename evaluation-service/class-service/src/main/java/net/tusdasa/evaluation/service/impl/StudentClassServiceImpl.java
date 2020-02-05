@@ -19,7 +19,6 @@ public class StudentClassServiceImpl implements StudentClassService {
     public StudentClassServiceImpl(StudentClassMapper studentClassMapper) {
         this.studentClassMapper = studentClassMapper;
     }
-
     @Transactional
     @Override
     public void addStudentClass(StudentClassRequest request) {

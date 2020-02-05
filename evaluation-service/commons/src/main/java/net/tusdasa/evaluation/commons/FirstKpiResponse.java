@@ -1,6 +1,9 @@
 package net.tusdasa.evaluation.commons;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.With;
 import net.tusdasa.evaluation.entity.AcademicYear;
 import net.tusdasa.evaluation.entity.FirstKpi;
 
@@ -41,10 +44,18 @@ public class FirstKpiResponse implements Serializable {
         return this;
     }
 
-    public FirstKpiResponse addSecondKpiResponse(SecondKpiResponse secondKpiResponse) {
-        if (this.getTable() == null) this.table = new ArrayList<>();
-        this.table.add(secondKpiResponse);
-        return this;
+    public void addA(AcademicYear academicYear) {
+        this.setAcademicYearId(academicYear.getAcademicYearId());
+    }
+
+    public void addF(FirstKpi firstKpi) {
+        this.setFirstKpiId(firstKpi.getFirstKpiId());
+        this.setFirsKpiContent(firstKpi.getFirsKpiContent());
+    }
+
+    public void addT(SecondKpiResponse secondKpiResponse) {
+        if (this.table == null) this.table = new ArrayList<>();
+        table.add(secondKpiResponse);
     }
 
 }

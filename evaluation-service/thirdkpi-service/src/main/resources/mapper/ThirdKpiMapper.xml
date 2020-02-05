@@ -85,13 +85,13 @@
         <include refid="Base_Column_List"/>
         from `t_third_kpi`
     </select>
-    <select id="findBySecondKpiId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    <select id="findAllBySecondKpiId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
         from `t_third_kpi`
         where second_kpi_id = #{secondKpiId,jdbcType=INTEGER}
     </select>
-    <select id="findBySecondKpiIds" resultMap="BaseResultMap" parameterType="java.util.Map">
+    <select id="findAllBySecondKpiIdAndThirdKpiIds" resultMap="BaseResultMap" parameterType="java.util.Map">
         select
         <include refid="Base_Column_List"/>
         from `t_third_kpi`
@@ -100,7 +100,7 @@
             #{thirdKpiId,jdbcType=INTEGER}
         </foreach>
     </select>
-    <select id="findBySecondKpiIdsAndIds" resultMap="BaseResultMap" parameterType="java.util.Map">
+    <select id="findAllBySecondKpiIdsAndThirdKpiIds" resultMap="BaseResultMap" parameterType="java.util.Map">
         select
         <include refid="Base_Column_List"/>
         from `t_third_kpi`
@@ -113,7 +113,7 @@
             #{thirdKpiId,jdbcType=INTEGER}
         </foreach>
     </select>
-    <select id="findBySecondKpiIdAll" resultMap="BaseResultMap">
+    <select id="findAllBySecondKpiIds" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from `t_third_kpi`

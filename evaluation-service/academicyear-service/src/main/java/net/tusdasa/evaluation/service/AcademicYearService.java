@@ -10,6 +10,7 @@ import java.util.List;
  * 每年需要增加一次
  */
 public interface AcademicYearService {
+
     void addAcaAcademicYear(AcademicYearRequest request);
 
     void updateAcaAcademicYear(AcademicYearRequest request);

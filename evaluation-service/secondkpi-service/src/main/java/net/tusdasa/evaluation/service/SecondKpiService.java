@@ -1,6 +1,7 @@
 package net.tusdasa.evaluation.service;
 
 import net.tusdasa.evaluation.entity.SecondKpi;
+import net.tusdasa.evaluation.vo.IdsRequest;
 import net.tusdasa.evaluation.vo.SecondKpiRequest;
 
 import java.util.List;
@@ -17,12 +18,12 @@ public interface SecondKpiService {
 
     List<SecondKpi> findAll();
 
-    List<SecondKpi> findAllByFirstKpi(Integer firstKpiId);
+    List<SecondKpi> findAllByFirstKpiId(Integer firstKpiId);
 
-    List<SecondKpi> findAllByFirstKpiAndIds(Integer firstKpiId, Integer[] ids);
+    List<SecondKpi> findAllByFirstKpiIdAndSecondKpiIds(Integer firstKpiId, IdsRequest secondKpiIds);
 
-    List<SecondKpi> finAllFirstKoiIdsAndIds(Integer[] firstKpiIds, Integer[] secondKpiIds);
+    List<SecondKpi> finAllFirstKpiIdsAndSecondKpiIds(IdsRequest Ids);
 
-    List<SecondKpi> findAllByFirstKpi(Integer[] firstKpiIds);
+    List<SecondKpi> findAllByFirstKpiIds(IdsRequest firstKpiIds);
 
 }

@@ -23,7 +23,7 @@ public class StudentClassController {
     }
 
     @GetMapping("/{studentClassId}")
-    public CommonResponse<StudentClass> findById(@PathVariable("studentClassId") Integer studentClassId) {
+    public CommonResponse<StudentClass> findByStudentClassId(@PathVariable("studentClassId") Integer studentClassId) {
         StudentClass studentClass = this.studentClassService.findStudentClassById(studentClassId);
         if (studentClass != null) {
             return new CommonResponse<StudentClass>().ok().data(studentClass);

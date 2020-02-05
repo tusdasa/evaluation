@@ -17,12 +17,12 @@ public class FirstKpiController {
     }
 
     @GetMapping("/year/{yearId}")
-    public CommonResponse<FirstKpi> findAllByFirstKpi(@PathVariable("yearId") Integer yearId) {
+    public CommonResponse<FirstKpi> findAllFirstKpiByAcademicYear(@PathVariable("yearId") Integer yearId) {
         return new CommonResponse<FirstKpi>().ok().table(this.firstKpiService.findAllFirstKpiByAcademicYear(yearId));
     }
 
     @GetMapping("/year/{yearId}/{firstKpiId}")
-    public CommonResponse<FirstKpi> findAllByFirstKpiByAcademiceyearAndId(@PathVariable("yearId") Integer yearId, @PathVariable("firstKpiId") Integer firstKpiId) {
+    public CommonResponse<FirstKpi> findAllByAcademicYearAndId(@PathVariable("yearId") Integer yearId, @PathVariable("firstKpiId") Integer firstKpiId) {
         return new CommonResponse<FirstKpi>().ok().table(this.firstKpiService.findAllByAcademicYearAndId(yearId, firstKpiId));
     }
 
@@ -42,8 +42,8 @@ public class FirstKpiController {
     }
 
     @PostMapping("/ids/{yearId}")
-    public CommonResponse<FirstKpi> findByIds(@PathVariable("yearId") Integer yearId, @RequestBody IdsRequest idsRequest) {
-        return new CommonResponse<FirstKpi>().ok().table(this.firstKpiService.findAllByAcademicYearAndIds(yearId, idsRequest.getFirstArray()));
+    public CommonResponse<FirstKpi> findAllByAcademicYearAndIds(@PathVariable("yearId") Integer yearId, @RequestBody IdsRequest idsRequest) {
+        return new CommonResponse<FirstKpi>().ok().table(this.firstKpiService.findAllByAcademicYearAndIds(yearId, idsRequest));
     }
 
     @PutMapping("/")

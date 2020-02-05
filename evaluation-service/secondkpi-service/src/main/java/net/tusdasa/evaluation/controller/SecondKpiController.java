@@ -34,22 +34,22 @@ public class SecondKpiController {
 
     @GetMapping("/first/{firstId}")
     public CommonResponse<SecondKpi> findByFirstId(@PathVariable("firstId") Integer firstId) {
-        return new CommonResponse<SecondKpi>().ok().table(this.secondKpiService.findAllByFirstKpi(firstId));
+        return new CommonResponse<SecondKpi>().ok().table(this.secondKpiService.findAllByFirstKpiId(firstId));
     }
 
     @PostMapping("/ids/{firstId}")
-    public CommonResponse<SecondKpi> findByIds(@PathVariable("firstId") Integer firstId, @RequestBody IdsRequest idsRequest) {
-        return new CommonResponse<SecondKpi>().ok().table(this.secondKpiService.findAllByFirstKpiAndIds(firstId, idsRequest.getFirstArray()));
+    public CommonResponse<SecondKpi> findAllByFirstKpiIdAndSecondKpiIds(@PathVariable("firstId") Integer firstId, @RequestBody IdsRequest idsRequest) {
+        return new CommonResponse<SecondKpi>().ok().table(this.secondKpiService.findAllByFirstKpiIdAndSecondKpiIds(firstId, idsRequest));
     }
 
     @PostMapping("/ids/ids")
-    public CommonResponse<SecondKpi> findByIdsAndIds(@RequestBody IdsRequest idsRequest) {
-        return new CommonResponse<SecondKpi>().ok().table(this.secondKpiService.finAllFirstKoiIdsAndIds(idsRequest.getFirstArray(), idsRequest.getSecondIdsArray()));
+    public CommonResponse<SecondKpi> finAllFirstKpiIdsAndSecondKpiIds(@RequestBody IdsRequest idsRequest) {
+        return new CommonResponse<SecondKpi>().ok().table(this.secondKpiService.finAllFirstKpiIdsAndSecondKpiIds(idsRequest));
     }
 
     @PostMapping("/first")
-    public CommonResponse<SecondKpi> findAllByFirstKpi(@RequestBody IdsRequest idsRequest) {
-        return new CommonResponse<SecondKpi>().ok().table(this.secondKpiService.findAllByFirstKpi(idsRequest.getFirstArray()));
+    public CommonResponse<SecondKpi> findAllByFirstKpiIds(@RequestBody IdsRequest idsRequest) {
+        return new CommonResponse<SecondKpi>().ok().table(this.secondKpiService.findAllByFirstKpiIds(idsRequest));
     }
 
     @PostMapping("/")

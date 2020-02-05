@@ -72,7 +72,6 @@ public class AcademicYearServiceImpl implements AcademicYearService {
     }
 
     private Term currentTerm(AcademicYear academicYear) {
-
         Date currentDate = new Date();
 
         // 本学年第一学期

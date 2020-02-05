@@ -3,12 +3,13 @@ package net.tusdasa.evaluation.vo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.With;
 
 import java.io.Serializable;
 import java.util.*;
 
+@EqualsAndHashCode
 @Data
 @With
 @AllArgsConstructor

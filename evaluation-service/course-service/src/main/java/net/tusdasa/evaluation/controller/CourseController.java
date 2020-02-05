@@ -18,23 +18,22 @@ public class CourseController {
     }
 
     @GetMapping("/{classId}")
-    public CommonResponse<Course> findById(@PathVariable("classId") Long classId) {
-        Course course = this.courseService.findById(classId);
+    public CommonResponse<Course> findByCourseId(@PathVariable("classId") Long classId) {
+        Course course = this.courseService.findCourseById(classId);
         if (course != null) {
             return new CommonResponse<Course>().ok().data(course);
         }
         return new CommonResponse<Course>().error("不存在");
-
     }
 
     @GetMapping("/class/{classId}")
-    public CommonResponse<Course> findByClassId(@PathVariable("classId") Integer classId) {
-        return new CommonResponse<Course>().ok().table(this.courseService.findCourseByStudentClass(classId));
+    public CommonResponse<Course> findCourseByClassId(@PathVariable("classId") Integer classId) {
+        return new CommonResponse<Course>().ok().table(this.courseService.findCourseByStudentClassId(classId));
     }
 
     @GetMapping("/work/{workId}")
-    public CommonResponse<Course> findByWorkId(@PathVariable("workId") Integer workId) {
-        return new CommonResponse<Course>().ok().table(this.courseService.findCourseByTeacher(workId));
+    public CommonResponse<Course> findCourseByWorkId(@PathVariable("workId") Integer workId) {
+        return new CommonResponse<Course>().ok().table(this.courseService.findCourseByWorkId(workId));
     }
 
 }

@@ -21,19 +21,19 @@ public class CourseServiceImpl implements CourseService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<Course> findCourseByStudentClass(Integer classId) {
-        return this.courseMapper.findCourseByStudentClass(classId);
+    public List<Course> findCourseByStudentClassId(Integer classId) {
+        return this.courseMapper.findCourseByStudentClassId(classId);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<Course> findCourseByTeacher(Integer workId) {
-        return this.courseMapper.findCourseByTeacher(workId);
+    public List<Course> findCourseByWorkId(Integer workId) {
+        return this.courseMapper.findCourseByWorkId(workId);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<Course> findAll(Integer page, Integer size) {
+    public List<Course> findAllByPage(Integer page, Integer size) {
         Map<String, Integer> parameter = new HashMap<>();
         parameter.put("page", page);
         parameter.put("size", size);
@@ -42,7 +42,13 @@ public class CourseServiceImpl implements CourseService {
 
     @Transactional(readOnly = true)
     @Override
-    public Course findById(Long courseId) {
+    public Course findCourseById(Long courseId) {
         return this.courseMapper.selectByPrimaryKey(courseId);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Course> findAll() {
+        return this.courseMapper.findAll();
     }
 }

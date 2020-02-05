@@ -23,7 +23,7 @@ public class ThirdKpiController {
     }
 
     @GetMapping("/{thirdKpiId}")
-    public CommonResponse<ThirdKpi> findById(@PathVariable("thirdKpiId") Integer thirdKpiId) {
+    public CommonResponse<ThirdKpi> findThirdKpiById(@PathVariable("thirdKpiId") Integer thirdKpiId) {
         ThirdKpi thirdKpi = this.thirdKpiService.findThirdKpiById(thirdKpiId);
 
         if (thirdKpi != null) {
@@ -33,23 +33,23 @@ public class ThirdKpiController {
     }
 
     @GetMapping("/second/{secondKpiId}")
-    public CommonResponse<ThirdKpi> findSecondKpiId(@PathVariable("secondKpiId") Integer secondKpiId) {
-        return new CommonResponse<ThirdKpi>().ok().table(this.thirdKpiService.findBySecondKpiId(secondKpiId));
+    public CommonResponse<ThirdKpi> findAllBySecondKpiId(@PathVariable("secondKpiId") Integer secondKpiId) {
+        return new CommonResponse<ThirdKpi>().ok().table(this.thirdKpiService.findAllBySecondKpiId(secondKpiId));
     }
 
     @PostMapping("/second")
-    public CommonResponse<ThirdKpi> findThirdBySecondKpiIds(@RequestBody IdsRequest idsRequest) {
-        return new CommonResponse<ThirdKpi>().ok().table(this.thirdKpiService.findBySecondKpiIdAll(idsRequest.getFirstArray()));
+    public CommonResponse<ThirdKpi> findAllBySecondKpiIds(@RequestBody IdsRequest idsRequest) {
+        return new CommonResponse<ThirdKpi>().ok().table(this.thirdKpiService.findAllBySecondKpiIds(idsRequest));
     }
 
     @PostMapping("/ids/{secondKpiId}")
-    public CommonResponse<ThirdKpi> findByIds(@PathVariable("secondKpiId") Integer secondKpiId, @RequestBody IdsRequest idsRequest) {
-        return new CommonResponse<ThirdKpi>().ok().table(this.thirdKpiService.findBySecondKpiIds(secondKpiId, idsRequest.getFirstArray()));
+    public CommonResponse<ThirdKpi> findAllBySecondKpiIdAndThirdKpiIds(@PathVariable("secondKpiId") Integer secondKpiId, @RequestBody IdsRequest idsRequest) {
+        return new CommonResponse<ThirdKpi>().ok().table(this.thirdKpiService.findAllBySecondKpiIdAndThirdKpiIds(secondKpiId, idsRequest));
     }
 
     @PostMapping("/ids/ids")
-    public CommonResponse<ThirdKpi> findByIdsAndIds(@RequestBody IdsRequest idsRequest) {
-        return new CommonResponse<ThirdKpi>().ok().table(this.thirdKpiService.findBySecondKpiIdsAndIds(idsRequest.getFirstArray(), idsRequest.getSecondIdsArray()));
+    public CommonResponse<ThirdKpi> findAllBySecondKpiIdsAndThirdKpiIds(@RequestBody IdsRequest idsRequest) {
+        return new CommonResponse<ThirdKpi>().ok().table(this.thirdKpiService.findAllBySecondKpiIdsAndThirdKpiIds(idsRequest));
     }
 
     @PostMapping("/")

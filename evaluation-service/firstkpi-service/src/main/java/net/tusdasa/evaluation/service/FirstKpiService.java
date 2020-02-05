@@ -2,9 +2,9 @@ package net.tusdasa.evaluation.service;
 
 import net.tusdasa.evaluation.entity.FirstKpi;
 import net.tusdasa.evaluation.vo.FirstKpiRequest;
+import net.tusdasa.evaluation.vo.IdsRequest;
 
 import java.util.List;
-import java.util.Map;
 
 public interface FirstKpiService {
 
@@ -22,5 +22,5 @@ public interface FirstKpiService {
 
     void deleteFirstKpi(Integer firstKpiId);
 
-    List<FirstKpi> findAllByAcademicYearAndIds(Integer academicYearId, Integer[] firstKpiIds);
+    List<FirstKpi> findAllByAcademicYearAndIds(Integer academicYearId, IdsRequest firstKpiIds);
 }

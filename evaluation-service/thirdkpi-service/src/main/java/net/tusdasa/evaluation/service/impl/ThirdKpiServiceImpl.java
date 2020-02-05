@@ -3,7 +3,11 @@ package net.tusdasa.evaluation.service.impl;
 import net.tusdasa.evaluation.dao.ThirdKpiMapper;
 import net.tusdasa.evaluation.entity.ThirdKpi;
 import net.tusdasa.evaluation.service.ThirdKpiService;
+import net.tusdasa.evaluation.vo.IdsRequest;
 import net.tusdasa.evaluation.vo.ThirdKpiRequest;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,12 +24,30 @@ public class ThirdKpiServiceImpl implements ThirdKpiService {
 
     }
 
+    @Caching(
+            evict = {
+                    @CacheEvict(value = "allThirdKpi", allEntries = true),
+                    @CacheEvict(value = "secondKpiId", allEntries = true),
+                    @CacheEvict(value = "secondKpiIdAndThirdKpiIds", allEntries = true),
+                    @CacheEvict(value = "secondKpiIdsAndThirdKpiIds", allEntries = true),
+                    @CacheEvict(value = "secondKpiIds", allEntries = true)
+            }
+    )
     @Transactional
     @Override
     public void addThirdKpi(ThirdKpiRequest request) {
         this.thirdKpiMapper.insert(request.build());
     }
 
+    @Caching(
+            evict = {
+                    @CacheEvict(value = "allThirdKpi", allEntries = true),
+                    @CacheEvict(value = "secondKpiId", allEntries = true),
+                    @CacheEvict(value = "secondKpiIdAndThirdKpiIds", allEntries = true),
+                    @CacheEvict(value = "secondKpiIdsAndThirdKpiIds", allEntries = true),
+                    @CacheEvict(value = "secondKpiIds", allEntries = true)
+            }
+    )
     @Transactional
     @Override
     public void updateThirdKpi(ThirdKpiRequest request) {
@@ -35,6 +57,15 @@ public class ThirdKpiServiceImpl implements ThirdKpiService {
         }
     }
 
+    @Caching(
+            evict = {
+                    @CacheEvict(value = "allThirdKpi", allEntries = true),
+                    @CacheEvict(value = "secondKpiId", allEntries = true),
+                    @CacheEvict(value = "secondKpiIdAndThirdKpiIds", allEntries = true),
+                    @CacheEvict(value = "secondKpiIdsAndThirdKpiIds", allEntries = true),
+                    @CacheEvict(value = "secondKpiIds", allEntries = true)
+            }
+    )
     @Transactional
     @Override
     public void deleteThirdKpi(Integer thirdKpiId) {
@@ -47,39 +78,44 @@ public class ThirdKpiServiceImpl implements ThirdKpiService {
         return this.thirdKpiMapper.selectByPrimaryKey(thirdKpiId);
     }
 
+    @Cacheable("allThirdKpi")
     @Transactional(readOnly = true)
     @Override
     public List<ThirdKpi> findAll() {
         return this.thirdKpiMapper.findAll();
     }
 
+    @Cacheable(value = "secondKpiId", key = "methodName + #secondKpiId")
     @Transactional(readOnly = true)
     @Override
-    public List<ThirdKpi> findBySecondKpiId(Integer secondKpiId) {
-        return this.thirdKpiMapper.findBySecondKpiId(secondKpiId);
+    public List<ThirdKpi> findAllBySecondKpiId(Integer secondKpiId) {
+        return this.thirdKpiMapper.findAllBySecondKpiId(secondKpiId);
     }
 
+    @Cacheable(value = "secondKpiIdAndThirdKpiIds", key = "methodName + #thirdKpiIds")
     @Transactional(readOnly = true)
     @Override
-    public List<ThirdKpi> findBySecondKpiIds(Integer secondKpiId, Integer[] thirdKpiIds) {
+    public List<ThirdKpi> findAllBySecondKpiIdAndThirdKpiIds(Integer secondKpiId, IdsRequest thirdKpiIds) {
         HashMap<String, Object> parameter = new HashMap<>();
         parameter.put("secondKpiId", secondKpiId);
-        parameter.put("thirdKpiIds", thirdKpiIds);
-        return this.thirdKpiMapper.findBySecondKpiIds(parameter);
+        parameter.put("thirdKpiIds", thirdKpiIds.getFirstArray());
+        return this.thirdKpiMapper.findAllBySecondKpiIdAndThirdKpiIds(parameter);
     }
 
+    @Cacheable(value = "secondKpiIdsAndThirdKpiIds", key = "methodName + #Ids")
     @Transactional(readOnly = true)
     @Override
-    public List<ThirdKpi> findBySecondKpiIdsAndIds(Integer[] secondKpiIds, Integer[] thirdKpiIds) {
+    public List<ThirdKpi> findAllBySecondKpiIdsAndThirdKpiIds(IdsRequest Ids) {
         HashMap<String, Object> parameter = new HashMap<>();
-        parameter.put("thirdKpiIds", thirdKpiIds);
-        parameter.put("secondKpiIds", secondKpiIds);
-        return this.thirdKpiMapper.findBySecondKpiIdsAndIds(parameter);
+        parameter.put("thirdKpiIds", Ids.getSecondIdsArray());
+        parameter.put("secondKpiIds", Ids.getFirstArray());
+        return this.thirdKpiMapper.findAllBySecondKpiIdsAndThirdKpiIds(parameter);
     }
 
+    @Cacheable(value = "secondKpiIds", key = "methodName + #secondKpiIds")
     @Transactional(readOnly = true)
     @Override
-    public List<ThirdKpi> findBySecondKpiIdAll(Integer[] secondKpiIds) {
-        return this.thirdKpiMapper.findBySecondKpiIdAll(secondKpiIds);
+    public List<ThirdKpi> findAllBySecondKpiIds(IdsRequest secondKpiIds) {
+        return this.thirdKpiMapper.findAllBySecondKpiIds(secondKpiIds.getFirstArray());
     }
 }

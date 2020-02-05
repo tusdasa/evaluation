@@ -109,7 +109,7 @@
         insert into `t_course_class` (course_id, class_id)
         values (#{courseId,jdbcType=BIGINT}, #{classId,jdbcType=INTEGER})
     </insert>
-    <select id="findCourseByStudentClass" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="findCourseByStudentClassId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         SELECT t_course.course_id,
                t_course.course_name,
                t_course.teacher_work_id,
@@ -118,12 +118,18 @@
                  INNER JOIN t_course_class ON t_course_class.course_id = t_course.course_id
         WHERE t_course_class.class_id = #{classId,jdbcType=INTEGER}
     </select>
-    <select id="findCourseByTeacher" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="findCourseByWorkId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         SELECT t_course.course_id,
                t_course.course_name,
                t_course.teacher_work_id,
                t_course.term_id
         FROM t_course
         WHERE t_course.teacher_work_id = #{teacherWorkId,jdbcType=INTEGER}
+    </select>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_course`
     </select>
 </mapper>

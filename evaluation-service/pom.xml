@@ -18,7 +18,7 @@
     <modules>
         <module>commons</module>
         <module>student-service</module>
-        <module>authority-service</module>
+        <module>authorization-service</module>
         <module>teacher-service</module>
         <module>course-service</module>
         <module>firstkpi-service</module>
@@ -29,15 +29,8 @@
         <module>grade-service</module>
         <module>data-service</module>
         <module>class-service</module>
-        <module>student-assessment</module>
+        <module>student-evaluation</module>
     </modules>
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-netflix-eureka-client</artifactId>
-        </dependency>
-    </dependencies>
-
     <artifactId>evaluation-service</artifactId>
 
 </project>
