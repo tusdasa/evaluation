@@ -18,7 +18,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.ehcache</groupId>
+            <groupId>org.mybatis.caches</groupId>
+            <artifactId>mybatis-ehcache</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
         </dependency>
         <dependency>

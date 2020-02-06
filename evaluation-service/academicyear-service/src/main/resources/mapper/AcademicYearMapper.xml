@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.tusdasa.evaluation.dao.AcademicYearMapper">
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
     <resultMap id="BaseResultMap" type="net.tusdasa.evaluation.entity.AcademicYear">
         <id column="academic_year_id" jdbcType="INTEGER" property="academicYearId"/>
         <result column="academic_year_name" jdbcType="VARCHAR" property="academicYearName"/>
@@ -20,18 +21,18 @@
         where academic_year_id = #{academicYearId,jdbcType=INTEGER}
         LIMIT 1
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" flushCache="true">
         delete
         from `t_academic_year`
         where academic_year_id = #{academicYearId,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="net.tusdasa.evaluation.entity.AcademicYear">
+    <insert id="insert" parameterType="net.tusdasa.evaluation.entity.AcademicYear" flushCache="true">
         insert into `t_academic_year` (academic_year_id, academic_year_name,
                                        start_term, end_term)
         values (#{academicYearId,jdbcType=INTEGER}, #{academicYearName,jdbcType=VARCHAR},
                 #{startTerm.termId,jdbcType=INTEGER}, #{endTerm.termId,jdbcType=INTEGER})
     </insert>
-    <insert id="insertSelective" parameterType="net.tusdasa.evaluation.entity.AcademicYear">
+    <insert id="insertSelective" parameterType="net.tusdasa.evaluation.entity.AcademicYear" flushCache="true">
         insert into `t_academic_year`
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="academicYearId != null">
@@ -62,7 +63,8 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="net.tusdasa.evaluation.entity.AcademicYear">
+    <update id="updateByPrimaryKeySelective" parameterType="net.tusdasa.evaluation.entity.AcademicYear"
+            flushCache="true">
         update `t_academic_year`
         <set>
             <if test="academicYearName != null">
@@ -77,14 +79,14 @@
         </set>
         where academic_year_id = #{academicYearId,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="net.tusdasa.evaluation.entity.AcademicYear">
+    <update id="updateByPrimaryKey" parameterType="net.tusdasa.evaluation.entity.AcademicYear" flushCache="true">
         update `t_academic_year`
         set academic_year_name = #{academicYearName,jdbcType=VARCHAR},
             start_term         = #{startTerm.termId,jdbcType=INTEGER},
             end_term           = #{endTerm.termId,jdbcType=INTEGER}
         where academic_year_id = #{academicYearId,jdbcType=INTEGER}
     </update>
-    <select id="currentAcademicYear" parameterType="java.util.Date" resultMap="BaseResultMap">
+    <select id="currentAcademicYear" parameterType="java.util.Date" resultMap="BaseResultMap" useCache="true">
         SELECT
         <include refid="Base_Column_List"/>
         FROM
@@ -92,7 +94,7 @@
         WHERE term_id = end_term and end_time >= #{currentTime,jdbcType=TIMESTAMP}
         LIMIT 1
     </select>
-    <select id="findAll" resultMap="BaseResultMap">
+    <select id="findAll" resultMap="BaseResultMap" useCache="true">
         select
         <include refid="Base_Column_List"/>
         from `t_academic_year`

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.tusdasa.evaluation.dao.FirstKpiMapper">
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
     <resultMap id="BaseResultMap" type="net.tusdasa.evaluation.entity.FirstKpi">
         <id column="first_kpi_id" jdbcType="INTEGER" property="firstKpiId"/>
         <result column="firs_kpi_content" jdbcType="VARCHAR" property="firsKpiContent"/>
@@ -15,16 +16,16 @@
         from `t_first_kpi`
         where first_kpi_id = #{firstKpiId,jdbcType=INTEGER}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" flushCache="true">
         delete
         from `t_first_kpi`
         where first_kpi_id = #{firstKpiId,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="net.tusdasa.evaluation.entity.FirstKpi">
+    <insert id="insert" parameterType="net.tusdasa.evaluation.entity.FirstKpi" flushCache="true">
         insert into `t_first_kpi` (first_kpi_id, firs_kpi_content, academic_year_id)
         values (#{firstKpiId,jdbcType=INTEGER}, #{firsKpiContent,jdbcType=VARCHAR}, #{academicYearId,jdbcType=INTEGER})
     </insert>
-    <insert id="insertSelective" parameterType="net.tusdasa.evaluation.entity.FirstKpi">
+    <insert id="insertSelective" parameterType="net.tusdasa.evaluation.entity.FirstKpi" flushCache="true">
         insert into `t_first_kpi`
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="firstKpiId != null">
@@ -49,7 +50,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="net.tusdasa.evaluation.entity.FirstKpi">
+    <update id="updateByPrimaryKeySelective" parameterType="net.tusdasa.evaluation.entity.FirstKpi" flushCache="true">
         update `t_first_kpi`
         <set>
             <if test="firsKpiContent != null">
@@ -61,30 +62,30 @@
         </set>
         where first_kpi_id = #{firstKpiId,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="net.tusdasa.evaluation.entity.FirstKpi">
+    <update id="updateByPrimaryKey" parameterType="net.tusdasa.evaluation.entity.FirstKpi" flushCache="true">
         update `t_first_kpi`
         set firs_kpi_content = #{firsKpiContent,jdbcType=VARCHAR},
             academic_year_id = #{academicYearId,jdbcType=INTEGER}
         where first_kpi_id = #{firstKpiId,jdbcType=INTEGER}
     </update>
-    <select id="findAll" resultMap="BaseResultMap">
+    <select id="findAll" resultMap="BaseResultMap" useCache="true">
         select
         <include refid="Base_Column_List"/>
         from `t_first_kpi`
     </select>
-    <select id="findAllByAcademicYear" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="findAllByAcademicYear" parameterType="java.lang.Integer" resultMap="BaseResultMap" useCache="true">
         select
         <include refid="Base_Column_List"/>
         from `t_first_kpi`
         where academic_year_id = #{academicYearId,jdbcType=INTEGER}
     </select>
-    <select id="findAllByAcademicYearAndId" parameterType="java.util.Map" resultMap="BaseResultMap">
+    <select id="findAllByAcademicYearAndId" parameterType="java.util.Map" resultMap="BaseResultMap" useCache="true">
         select
         <include refid="Base_Column_List"/>
         from `t_first_kpi`
         where academic_year_id = #{academicYearId,jdbcType=INTEGER} and first_kpi_id = #{firstKpiId,jdbcType=INTEGER}
     </select>
-    <select id="findAllByAcademicYearAndIds" parameterType="java.util.Map" resultMap="BaseResultMap">
+    <select id="findAllByAcademicYearAndIds" parameterType="java.util.Map" resultMap="BaseResultMap" useCache="true">
         SELECT
         <include refid="Base_Column_List"/>
         FROM

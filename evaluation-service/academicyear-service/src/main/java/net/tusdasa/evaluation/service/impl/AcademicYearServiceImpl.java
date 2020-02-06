@@ -6,6 +6,9 @@ import net.tusdasa.evaluation.entity.AcademicYear;
 import net.tusdasa.evaluation.entity.Term;
 import net.tusdasa.evaluation.service.AcademicYearService;
 import net.tusdasa.evaluation.vo.AcademicYearRequest;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +25,14 @@ public class AcademicYearServiceImpl implements AcademicYearService {
         this.academicYearMapper = academicYearMapper;
     }
 
+    @Caching(
+            evict = {
+                    @CacheEvict(value = "currentAcademicYear", allEntries = true),
+                    @CacheEvict(value = "allAcademicYear", allEntries = true),
+                    @CacheEvict(value = "acaAcademicYearById", allEntries = true),
+                    @CacheEvict(value = "currentTerm", allEntries = true)
+            }
+    )
     @Transactional
     @Override
     public void addAcaAcademicYear(AcademicYearRequest request) {
@@ -29,6 +40,14 @@ public class AcademicYearServiceImpl implements AcademicYearService {
         log.info("add acaAcademicYear {}", request);
     }
 
+    @Caching(
+            evict = {
+                    @CacheEvict(value = "currentAcademicYear", allEntries = true),
+                    @CacheEvict(value = "allAcademicYear", allEntries = true),
+                    @CacheEvict(value = "acaAcademicYearById", allEntries = true),
+                    @CacheEvict(value = "currentTerm", allEntries = true)
+            }
+    )
     @Transactional
     @Override
     public void updateAcaAcademicYear(AcademicYearRequest request) {
@@ -39,6 +58,14 @@ public class AcademicYearServiceImpl implements AcademicYearService {
         }
     }
 
+    @Caching(
+            evict = {
+                    @CacheEvict(value = "currentAcademicYear", allEntries = true),
+                    @CacheEvict(value = "allAcademicYear", allEntries = true),
+                    @CacheEvict(value = "acaAcademicYearById", allEntries = true),
+                    @CacheEvict(value = "currentTerm", allEntries = true)
+            }
+    )
     @Transactional
     @Override
     public void deleteAcaAcademicYear(Integer academicYearId) {
@@ -46,24 +73,28 @@ public class AcademicYearServiceImpl implements AcademicYearService {
         log.info("delete acaAcademicYear {}", academicYearId);
     }
 
+    @Cacheable(value = "currentAcademicYear", key = "methodName")
     @Transactional(readOnly = true)
     @Override
     public AcademicYear currentAcademicYear() {
         return this.academicYearMapper.currentAcademicYear(new Date());
     }
 
+    @Cacheable(value = "allAcademicYear", key = "methodName")
     @Transactional(readOnly = true)
     @Override
     public List<AcademicYear> findAll() {
         return this.academicYearMapper.findAll();
     }
 
+    @Cacheable(value = "acaAcademicYearById", key = "methodName + #academicYearId")
     @Transactional(readOnly = true)
     @Override
     public AcademicYear findAcaAcademicYearById(Integer academicYearId) {
         return this.academicYearMapper.selectByPrimaryKey(academicYearId);
     }
 
+    @Cacheable("currentTerm")
     @Transactional(readOnly = true)
     @Override
     public Term currentTerm() {

@@ -7,7 +7,6 @@ import net.tusdasa.evaluation.client.SecondKpiClient;
 import net.tusdasa.evaluation.client.ThirdKpiClient;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.commons.FirstKpiResponse;
-import net.tusdasa.evaluation.commons.SecondKpiResponse;
 import net.tusdasa.evaluation.entity.AcademicYear;
 import net.tusdasa.evaluation.entity.FirstKpi;
 import net.tusdasa.evaluation.entity.SecondKpi;
@@ -16,7 +15,6 @@ import net.tusdasa.evaluation.service.StudentAssessmentService;
 import net.tusdasa.evaluation.vo.IdsRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -38,7 +36,6 @@ public class StudentAssessmentServiceImpl implements StudentAssessmentService {
         this.firstKpiClient = firstKpiClient;
         this.secondKpiClient = secondKpiClient;
         this.thirdKpiClient = thirdKpiClient;
-
     }
 
     /**
@@ -57,6 +54,7 @@ public class StudentAssessmentServiceImpl implements StudentAssessmentService {
      **/
     @Override
     public List<FirstKpiResponse> findAllThirdKpi() {
+        /*
         // 获取当前学期
         AcademicYear academicYear = this.currentAcademicYear();
         if (academicYear != null) {
@@ -88,42 +86,103 @@ public class StudentAssessmentServiceImpl implements StudentAssessmentService {
             // 获取学年失败
             return java.util.Collections.emptyList();
         }
+         */
+        return null;
     }
 
-    // 获取当前学年
-    private AcademicYear currentAcademicYear() {
-        CommonResponse<AcademicYear> academicYearResponse = this.academicYearClient.current();
-        if (academicYearResponse != null && academicYearResponse.success()) {
-            return academicYearResponse.getData();
+    @Override
+    public CommonResponse<ThirdKpi> findAll() {
+        //获取当前学期
+        CommonResponse<AcademicYear> academicYear = this.academicYearClient.current();
+        if (academicYear.success()) {
+            //获取当前学期和当前角色可以操作的指标
+            CommonResponse<FirstKpi> firstKpi = firstKpiClient.findAllByAcademicYearAndIds(academicYear.getData().getAcademicYearId(), new IdsRequest().addFirstIds(this.STUDENT_FIRST_KPI));
+            if (firstKpi.success()) {
+                //从CommonResponse<FirstKpi>里遍历当前的firstKpiId 封装为IdsRequest 传入第二指标微服务
+                //第二指标微服务找出第一指标中指定中的二级指标
+                CommonResponse<SecondKpi> secondKpi = this.secondKpiClient.findAllByFirstKpiIds(this.getFirstKpiIdsRequest(firstKpi.getTable()));
+                if (secondKpi.success()) {
+                    //从CommonResponse<SecondKpi>中遍历所有的secondKpiId 封装为IdsRequest 传入第三指标微服务
+                    //第三指标微服务找出第二指标中指定中的三级指标
+                    CommonResponse<ThirdKpi> thirdKpi = thirdKpiClient.findAllBySecondKpiIds(this.getSecondKpiIdsRequest(secondKpi.getTable()));
+                    if (thirdKpi.success()) {
+                        return thirdKpi;
+                    } else {
+                        return new CommonResponse<ThirdKpi>().error(thirdKpi.getMessage());
+                    }
+                } else {
+                    return new CommonResponse<ThirdKpi>().error(secondKpi.getMessage());
+                }
+
+            } else {
+                return new CommonResponse<ThirdKpi>().error(firstKpi.getMessage());
+            }
+
         } else {
+            return new CommonResponse<ThirdKpi>().error(academicYear.getMessage());
+        }
+
+    }
+
+    /*
+        // 获取当前学年
+        private AcademicYear currentAcademicYear() {
+            CommonResponse<AcademicYear> academicYearResponse = this.academicYearClient.current();
+            if (academicYearResponse != null && academicYearResponse.success()) {
+                return academicYearResponse.getData();
+            } else {
+                return null;
+            }
+        }
+
+        private List<FirstKpi> findAllFirstKpiByAcademicYear(AcademicYear academicYear, Integer firstKpiId) {
+            CommonResponse<FirstKpi> firstKpiCommonResponse = this.firstKpiClient.findAllByAcademicYearAndIds(academicYear.getAcademicYearId(), new IdsRequest().addFirstIds(firstKpiId));
+            if (firstKpiCommonResponse != null && firstKpiCommonResponse.success()) {
+                return firstKpiCommonResponse.getTable();
+            }
             return null;
         }
-    }
 
-    private List<FirstKpi> findAllFirstKpiByAcademicYear(AcademicYear academicYear, Integer firstKpiId) {
-        CommonResponse<FirstKpi> firstKpiCommonResponse = this.firstKpiClient.findAllByAcademicYearAndIds(academicYear.getAcademicYearId(), new IdsRequest().addFirstIds(4).addFirstIds(firstKpiId));
-        if (firstKpiCommonResponse != null && firstKpiCommonResponse.success()) {
-            return firstKpiCommonResponse.getTable();
+        private List<SecondKpi> findAllSecondKpiByFirstIds(IdsRequest idsRequest) {
+            CommonResponse<SecondKpi> secondKpiCommonResponse = this.secondKpiClient.findAllByFirstKpiIds(idsRequest);
+            if (secondKpiCommonResponse != null && secondKpiCommonResponse.success()) {
+                return secondKpiCommonResponse.getTable();
+            }
+            return null;
         }
-        return null;
-    }
 
-    private List<SecondKpi> findAllSecondKpiByFirstIds(IdsRequest idsRequest) {
-        CommonResponse<SecondKpi> secondKpiCommonResponse = this.secondKpiClient.findAllByFirstKpiIds(idsRequest);
-        if (secondKpiCommonResponse != null && secondKpiCommonResponse.success()) {
-            return secondKpiCommonResponse.getTable();
+        private List<ThirdKpi> findAllThirdKpiBySecondKpiIds(IdsRequest idsRequest) {
+            CommonResponse<ThirdKpi> thirdKpiCommonResponse = this.thirdKpiClient.findAllBySecondKpiIds(idsRequest);
+            if (thirdKpiCommonResponse != null && thirdKpiCommonResponse.success()) {
+                return thirdKpiCommonResponse.getTable();
+            }
+            return null;
         }
-        return null;
-    }
+        private List<FirstKpiResponse> createFirstKpiResponse(AcademicYear academicYear, List<FirstKpi> firstKpiList, List<SecondKpi> secondKpiList, List<ThirdKpi> thirdKpiList) {
+            List<FirstKpiResponse> firstKpiResponseList = new ArrayList<>(firstKpiList.size());
+            for (FirstKpi firstKpi : firstKpiList) {
+                FirstKpiResponse firstKpiResponse = new FirstKpiResponse().addFirstKpi(firstKpi).addAcademic(academicYear);
+                List<SecondKpiResponse> secondKpiResponseList = new ArrayList<>(secondKpiList.size());
+                for (SecondKpi secondKpi : secondKpiList) {
+                    if (secondKpi.getFirstKpiId().intValue() == firstKpiResponse.getFirstKpiId().intValue()) {
+                        SecondKpiResponse secondKpiResponse = new SecondKpiResponse().addSecondKpi(secondKpi);
+                        for (ThirdKpi thirdKpi : thirdKpiList) {
+                            if (thirdKpi.getSecondKpiId().intValue() == secondKpi.getSecondKpiId().intValue()) {
+                                secondKpiResponse.addT(thirdKpi);
+                            }
+                        }
+                        secondKpiResponseList.add(secondKpiResponse);
+                    } else {
+                        continue;
+                    }
+                }
+                firstKpiResponse.setTable(secondKpiResponseList);
+                firstKpiResponseList.add(firstKpiResponse);
+            }
 
-    private List<ThirdKpi> findAllThirdKpiBySecondKpiIds(IdsRequest idsRequest) {
-        CommonResponse<ThirdKpi> thirdKpiCommonResponse = this.thirdKpiClient.findAllBySecondKpiIds(idsRequest);
-        if (thirdKpiCommonResponse != null && thirdKpiCommonResponse.success()) {
-            return thirdKpiCommonResponse.getTable();
+            return firstKpiResponseList;
         }
-        return null;
-    }
-
+    */
     // 封装所有二级指标的ID到IdsRequest
     private IdsRequest getSecondKpiIdsRequest(List<SecondKpi> secondKpiList) {
         IdsRequest idsRequest = new IdsRequest();
@@ -150,29 +209,4 @@ public class StudentAssessmentServiceImpl implements StudentAssessmentService {
         }
     }
 
-    private List<FirstKpiResponse> createFirstKpiResponse(AcademicYear academicYear, List<FirstKpi> firstKpiList, List<SecondKpi> secondKpiList, List<ThirdKpi> thirdKpiList) {
-        List<FirstKpiResponse> firstKpiResponseList = new ArrayList<>(firstKpiList.size());
-        for (FirstKpi firstKpi : firstKpiList) {
-            FirstKpiResponse firstKpiResponse = new FirstKpiResponse().addFirstKpi(firstKpi).addAcademic(academicYear);
-            List<SecondKpiResponse> secondKpiResponseList = new ArrayList<>(secondKpiList.size());
-            for (SecondKpi secondKpi : secondKpiList) {
-                if (secondKpi.getFirstKpiId().intValue() == firstKpiResponse.getFirstKpiId().intValue()) {
-                    SecondKpiResponse secondKpiResponse = new SecondKpiResponse().addSecondKpi(secondKpi);
-                    for (ThirdKpi thirdKpi : thirdKpiList) {
-                        if (thirdKpi.getSecondKpiId().intValue() == secondKpi.getSecondKpiId().intValue()) {
-                            secondKpiResponse.addT(thirdKpi);
-
-                        }
-                    }
-                    secondKpiResponseList.add(secondKpiResponse);
-                } else {
-                    continue;
-                }
-            }
-            firstKpiResponse.setTable(secondKpiResponseList);
-            firstKpiResponseList.add(firstKpiResponse);
-        }
-
-        return firstKpiResponseList;
-    }
 }
