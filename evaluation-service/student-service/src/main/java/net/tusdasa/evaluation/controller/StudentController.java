@@ -28,8 +28,8 @@ public class StudentController {
         }
     }
 
-    @GetMapping("/{studentId}/{password}")
-    public CommonResponse<Student> getStudent(@PathVariable(name = "studentId") Long studentId, @PathVariable("password") String password) {
+    @PostMapping("/auth")
+    public CommonResponse<Student> getStudent(@RequestParam("studentId") Long studentId, @RequestParam("password") String password) {
         Map<String, Object> map = this.studentService.findStudentByIdAndPassword(studentId, password);
         if (map.get("code").equals(1)) {
             return new CommonResponse<Student>().ok().data((Student) map.get("obj"));

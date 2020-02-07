@@ -89,4 +89,15 @@ public class IdsRequest implements Serializable {
         if (this.getSecondIds() == null) this.setSecondIds(new ArrayList<>());
         this.secondIds.add(ids);
     }
+
+    public IdsRequest addFirstIds(HashSet<Integer> firstIds) {
+        this.firstIds.addAll(firstIds);
+        return this;
+    }
+
+    public IdsRequest addSecondIds(HashSet<Integer> secondIds) {
+        this.secondIds.addAll(secondIds);
+        return this;
+    }
+
 }

@@ -1,14 +1,11 @@
 package net.tusdasa.evaluation.service.Impl;
 
 import lombok.extern.slf4j.Slf4j;
-import net.tusdasa.evaluation.client.AcademicYearClient;
-import net.tusdasa.evaluation.client.FirstKpiClient;
-import net.tusdasa.evaluation.client.SecondKpiClient;
-import net.tusdasa.evaluation.client.ThirdKpiClient;
+import net.tusdasa.evaluation.client.*;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.commons.FirstKpiResponse;
-import net.tusdasa.evaluation.entity.AcademicYear;
 import net.tusdasa.evaluation.entity.FirstKpi;
+import net.tusdasa.evaluation.entity.Right;
 import net.tusdasa.evaluation.entity.SecondKpi;
 import net.tusdasa.evaluation.entity.ThirdKpi;
 import net.tusdasa.evaluation.service.StudentAssessmentService;
@@ -21,7 +18,7 @@ import java.util.List;
 @Service
 public class StudentAssessmentServiceImpl implements StudentAssessmentService {
 
-    private final Integer STUDENT_FIRST_KPI = 5;
+    private final Integer STUDENT_RIGHT = -1;
 
     private AcademicYearClient academicYearClient;
 
@@ -31,11 +28,14 @@ public class StudentAssessmentServiceImpl implements StudentAssessmentService {
 
     private ThirdKpiClient thirdKpiClient;
 
-    public StudentAssessmentServiceImpl(AcademicYearClient academicYearClient, FirstKpiClient firstKpiClient, SecondKpiClient secondKpiClient, ThirdKpiClient thirdKpiClient) {
+    private RightClient rightClient;
+
+    public StudentAssessmentServiceImpl(AcademicYearClient academicYearClient, FirstKpiClient firstKpiClient, SecondKpiClient secondKpiClient, ThirdKpiClient thirdKpiClient, RightClient rightClient) {
         this.academicYearClient = academicYearClient;
         this.firstKpiClient = firstKpiClient;
         this.secondKpiClient = secondKpiClient;
         this.thirdKpiClient = thirdKpiClient;
+        this.rightClient = rightClient;
     }
 
     /**
@@ -87,11 +87,13 @@ public class StudentAssessmentServiceImpl implements StudentAssessmentService {
             return java.util.Collections.emptyList();
         }
          */
+
         return null;
     }
 
     @Override
     public CommonResponse<ThirdKpi> findAll() {
+        /*
         //获取当前学期
         CommonResponse<AcademicYear> academicYear = this.academicYearClient.current();
         if (academicYear.success()) {
@@ -120,6 +122,25 @@ public class StudentAssessmentServiceImpl implements StudentAssessmentService {
 
         } else {
             return new CommonResponse<ThirdKpi>().error(academicYear.getMessage());
+        }
+         */
+        CommonResponse<Right> rightCommonResponse = rightClient.findRightById(-1);
+        if (rightCommonResponse != null && rightCommonResponse.success()) {
+            Right right = rightCommonResponse.getData();
+            if (!right.getFirstKpiId().isEmpty()) {
+                CommonResponse<ThirdKpi> thirdKpi = thirdKpiClient.findAllBySecondKpiIds(new IdsRequest().addFirstIds(right.getSecondKpiId()).addSecondIds(right.getThirdKpiId()));
+                if (thirdKpi.success()) {
+                    return thirdKpi;
+                } else {
+                    return new CommonResponse<ThirdKpi>().error(thirdKpi.getMessage());
+                }
+            } else {
+                return new CommonResponse<ThirdKpi>().error("您没有任何权限");
+            }
+            //System.out.println(right.toString());
+            //System.out.println(new IdsRequest().addFirstIds(right.getSecondKpiId()).addSecondIds(right.getThirdKpiId()).toString());
+        } else {
+            return new CommonResponse<ThirdKpi>().error(rightCommonResponse.getMessage());
         }
 
     }

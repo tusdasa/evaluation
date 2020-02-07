@@ -5,6 +5,9 @@ server:
 spring:
   application:
     name: evaluation-authorization-service
+  data:
+    mongodb:
+      uri: mongodb://127.0.0.1:27017/right
     #  datasource:
     #    url: jdbc:mysql://127.0.0.1:3306/xynu_evaluation?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
     #    username: root
@@ -35,6 +38,7 @@ feign:
     enabled: true
 #mybatis:
 #  config-location: classpath:myBatisConfig.xml
+
 #enable配置为false时在运行时生成密钥, 停止应用后密钥丢失。所有签发的token将失效
 #为true时使用secret的密钥签发token 停止应用后签发的token不会失效
 auth:

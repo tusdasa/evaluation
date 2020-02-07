@@ -1,13 +1,14 @@
 package net.tusdasa.evaluation.client;
 
+import net.tusdasa.evaluation.client.impl.TeacherAuthClientImpl;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.Teacher;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(value = "evaluation-teacher-service", path = "/teacher", fallback = TeacherAuthClientImpl.class)
 public interface TeacherAuthClient {
-    @GetMapping("/{workId}/{password}")
-    CommonResponse<Teacher> getTeacher(@PathVariable(name = "workId") Integer workId, @PathVariable("password") String password);
+    @PostMapping("/auth")
+    CommonResponse<Teacher> getTeacher(@RequestParam("workId") Integer workId, @RequestParam("password") String password);
 }

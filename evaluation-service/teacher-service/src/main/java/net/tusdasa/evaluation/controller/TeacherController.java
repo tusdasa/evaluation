@@ -28,8 +28,8 @@ public class TeacherController {
         }
     }
 
-    @GetMapping("/{workId}/{password}")
-    public CommonResponse<Teacher> getTeacher(@PathVariable(name = "workId") Integer workId, @PathVariable("password") String password) {
+    @PostMapping("/auth")
+    public CommonResponse<Teacher> getTeacher(@RequestParam("workId") Integer workId, @RequestParam("password") String password) {
         Map<String, Object> map = teacherService.findTeacherByPassword(workId, password);
         if (map.get("code").equals(1)) {
             return new CommonResponse<Teacher>().ok().data((Teacher) map.get("obj"));
