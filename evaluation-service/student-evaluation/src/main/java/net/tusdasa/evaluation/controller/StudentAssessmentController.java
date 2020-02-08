@@ -19,6 +19,8 @@ public class StudentAssessmentController {
     public CommonResponse<ThirdKpi> getAllThirdKpi() {
         return this.studentAssessmentService.findAll();
     }
+
+
     /*
     public CommonResponse<FirstKpiResponse> getTest() {
         return new CommonResponse<FirstKpiResponse>().ok().table(this.studentAssessmentService.findAllThirdKpi());

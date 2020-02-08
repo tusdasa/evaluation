@@ -61,8 +61,8 @@ public class JWTUtils {
     public String generateToken(Long Id, Integer role) {
         JWTCreator.Builder builder = JWT.create();
         builder.withSubject(String.valueOf(Id));
-        builder.withIssuer("authority");
-        builder.withClaim("role", role);
+        //builder.withIssuer("authority");
+        builder.withClaim("authority", role);
         builder.withExpiresAt(new Date(System.currentTimeMillis() + (24 * 3600 * 1000)));
         return builder.sign(algorithm);
     }

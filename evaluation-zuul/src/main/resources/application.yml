@@ -31,5 +31,5 @@ zuul:
       strip-prefix: false
     auth:
       path: /auth/**
-      serviceId: evaluation-auth-service
+      serviceId: evaluation-authorization-service
       strip-prefix: false

@@ -28,9 +28,6 @@ eureka:
   client:
     service-url:
       defaultZone: http://tusdasa:8000/eureka/
-ribbon:
-  ReadTimeout: 5000
-  ConnectTimeout: 5000
 feign:
   hystrix:
     enabled: true
