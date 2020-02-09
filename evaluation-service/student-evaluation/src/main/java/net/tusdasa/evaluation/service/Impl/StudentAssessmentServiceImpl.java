@@ -4,9 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import net.tusdasa.evaluation.client.*;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.commons.FirstKpiResponse;
-import net.tusdasa.evaluation.entity.FirstKpi;
+import net.tusdasa.evaluation.entity.Course;
 import net.tusdasa.evaluation.entity.Right;
-import net.tusdasa.evaluation.entity.SecondKpi;
+import net.tusdasa.evaluation.entity.Term;
 import net.tusdasa.evaluation.entity.ThirdKpi;
 import net.tusdasa.evaluation.service.StudentAssessmentService;
 import net.tusdasa.evaluation.vo.IdsRequest;
@@ -30,12 +30,20 @@ public class StudentAssessmentServiceImpl implements StudentAssessmentService {
 
     private RightClient rightClient;
 
-    public StudentAssessmentServiceImpl(AcademicYearClient academicYearClient, FirstKpiClient firstKpiClient, SecondKpiClient secondKpiClient, ThirdKpiClient thirdKpiClient, RightClient rightClient) {
+    private CourseClient courseClient;
+
+    public StudentAssessmentServiceImpl(AcademicYearClient academicYearClient,
+                                        FirstKpiClient firstKpiClient,
+                                        SecondKpiClient secondKpiClient,
+                                        ThirdKpiClient thirdKpiClient,
+                                        RightClient rightClient,
+                                        CourseClient courseClient) {
         this.academicYearClient = academicYearClient;
         this.firstKpiClient = firstKpiClient;
         this.secondKpiClient = secondKpiClient;
         this.thirdKpiClient = thirdKpiClient;
         this.rightClient = rightClient;
+        this.courseClient = courseClient;
     }
 
     /**
@@ -52,8 +60,7 @@ public class StudentAssessmentServiceImpl implements StudentAssessmentService {
      * 第三指标微服务找出第二指标中指定中的三级指标
      * CommonResponse<ThirdKpi> thirdKpiList = thirdKpiClient.findThirdBySecondKpiIds(secondKpiIds);
      **/
-    @Override
-    public List<FirstKpiResponse> findAllThirdKpi() {
+    private List<FirstKpiResponse> findAllThirdKpi() {
         /*
         // 获取当前学期
         AcademicYear academicYear = this.currentAcademicYear();
@@ -125,7 +132,7 @@ public class StudentAssessmentServiceImpl implements StudentAssessmentService {
         }
          */
         CommonResponse<Right> rightCommonResponse = rightClient.findRightById(-1);
-        if (rightCommonResponse != null && rightCommonResponse.success()) {
+        if (rightCommonResponse.success()) {
             Right right = rightCommonResponse.getData();
             if (!right.getFirstKpiId().isEmpty()) {
                 CommonResponse<ThirdKpi> thirdKpi = thirdKpiClient.findAllBySecondKpiIds(new IdsRequest().addFirstIds(right.getSecondKpiId()).addSecondIds(right.getThirdKpiId()));
@@ -141,6 +148,17 @@ public class StudentAssessmentServiceImpl implements StudentAssessmentService {
             //System.out.println(new IdsRequest().addFirstIds(right.getSecondKpiId()).addSecondIds(right.getThirdKpiId()).toString());
         } else {
             return new CommonResponse<ThirdKpi>().error(rightCommonResponse.getMessage());
+        }
+
+    }
+
+    @Override
+    public CommonResponse<Course> currentCourse(Integer classId) {
+        CommonResponse<Term> commonResponse = academicYearClient.currentTerm();
+        if (commonResponse.success()) {
+            return courseClient.findCourseByClassIdAndTermId(classId, commonResponse.getData().getTermId());
+        } else {
+            return new CommonResponse<Course>().error(commonResponse.getMessage());
         }
 
     }
@@ -204,30 +222,4 @@ public class StudentAssessmentServiceImpl implements StudentAssessmentService {
             return firstKpiResponseList;
         }
     */
-    // 封装所有二级指标的ID到IdsRequest
-    private IdsRequest getSecondKpiIdsRequest(List<SecondKpi> secondKpiList) {
-        IdsRequest idsRequest = new IdsRequest();
-        if (secondKpiList.isEmpty()) {
-            return null;
-        } else {
-            for (SecondKpi secondKpi : secondKpiList) {
-                idsRequest.addFirstId(secondKpi.getSecondKpiId());
-            }
-            return idsRequest;
-        }
-    }
-
-    // 封装所有一级指标的ID到IdsRequest
-    private IdsRequest getFirstKpiIdsRequest(List<FirstKpi> firstKpiList) {
-        IdsRequest idsRequest = new IdsRequest();
-        if (firstKpiList.isEmpty()) {
-            return null;
-        } else {
-            for (FirstKpi firstKpi : firstKpiList) {
-                idsRequest.addFirstId(firstKpi.getFirstKpiId());
-            }
-            return idsRequest;
-        }
-    }
-
 }

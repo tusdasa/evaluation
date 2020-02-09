@@ -27,6 +27,15 @@ public class CourseServiceImpl implements CourseService {
 
     @Transactional(readOnly = true)
     @Override
+    public List<Course> findCourseByStudentClassAndTermId(Integer classId, Integer termId) {
+        Map<String, Integer> parameter = new HashMap<>();
+        parameter.put("classId", classId);
+        parameter.put("termId", termId);
+        return this.courseMapper.findCourseByStudentClassAndTermId(parameter);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
     public List<Course> findCourseByWorkId(Integer workId) {
         return this.courseMapper.findCourseByWorkId(workId);
     }

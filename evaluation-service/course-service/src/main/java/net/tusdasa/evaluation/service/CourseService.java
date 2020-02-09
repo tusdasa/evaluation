@@ -8,6 +8,8 @@ public interface CourseService {
 
     List<Course> findCourseByStudentClassId(Integer classId);
 
+    List<Course> findCourseByStudentClassAndTermId(Integer classId, Integer termId);
+
     List<Course> findCourseByWorkId(Integer workId);
 
     List<Course> findAllByPage(Integer page, Integer size);

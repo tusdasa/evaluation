@@ -31,6 +31,11 @@ public class CourseController {
         return new CommonResponse<Course>().ok().table(this.courseService.findCourseByStudentClassId(classId));
     }
 
+    @GetMapping("/class/{classId}/term/{termId}")
+    public CommonResponse<Course> findCourseByClassIdAndTermId(@PathVariable("classId") Integer classId, @PathVariable("termId") Integer termId) {
+        return new CommonResponse<Course>().ok().table(this.courseService.findCourseByStudentClassAndTermId(classId, termId));
+    }
+
     @GetMapping("/work/{workId}")
     public CommonResponse<Course> findCourseByWorkId(@PathVariable("workId") Integer workId) {
         return new CommonResponse<Course>().ok().table(this.courseService.findCourseByWorkId(workId));

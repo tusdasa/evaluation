@@ -7,6 +7,8 @@ import net.tusdasa.evaluation.vo.IdsRequest;
 import net.tusdasa.evaluation.vo.ThirdKpiRequest;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class ThirdKpiController {
 
@@ -19,7 +21,8 @@ public class ThirdKpiController {
 
     @GetMapping("/")
     public CommonResponse<ThirdKpi> findAll() {
-        return new CommonResponse<ThirdKpi>().ok().table(this.thirdKpiService.findAll());
+        List<ThirdKpi> thirdKpiList = this.thirdKpiService.findAll();
+        return new CommonResponse<ThirdKpi>().ok().table(thirdKpiList);
     }
 
     @GetMapping("/{thirdKpiId}")

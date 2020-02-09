@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.tusdasa.evaluation.dao.CourseMapper">
+
     <resultMap id="classMap" type="net.tusdasa.evaluation.entity.StudentClass">
         <id column="class_id" jdbcType="INTEGER" property="classId"/>
         <result column="class_name" jdbcType="VARCHAR" property="className"/>
-        <result column="department_id" jdbcType="INTEGER" property="departmentId"/>
-        <result column="grade_id" jdbcType="INTEGER" property="gradeId"/>
-        <result column="major_id" jdbcType="INTEGER" property="majorId"/>
+        <!--
+        <result column="department_id" jdbcType="INTEGER" property="department.departmentId"/>
+        <result column="grade_id" jdbcType="INTEGER" property="grade.gradeId"/>
+        <result column="major_id" jdbcType="INTEGER" property="major.majorId"/>
+        -->
     </resultMap>
+
     <resultMap id="BaseResultMap" type="net.tusdasa.evaluation.entity.Course">
         <id column="course_id" jdbcType="BIGINT" property="courseId"/>
         <result column="course_name" jdbcType="VARCHAR" property="courseName"/>
@@ -16,9 +20,27 @@
         <collection property="studentClassList" ofType="net.tusdasa.evaluation.entity.StudentClass" select="t1"
                     column="course_id"/>
     </resultMap>
+    <resultMap id="CourseResultMap" type="net.tusdasa.evaluation.entity.Course">
+        <id column="course_id" jdbcType="BIGINT" property="courseId"/>
+        <result column="course_name" jdbcType="VARCHAR" property="courseName"/>
+        <result column="teacher_work_id" jdbcType="INTEGER" property="teacherWorkId"/>
+        <result column="term_id" jdbcType="INTEGER" property="termId"/>
+    </resultMap>
     <sql id="Base_Column_List">
         course_id, course_name, teacher_work_id, term_id
     </sql>
+
+    <select id="t1" parameterType="java.lang.Long" resultMap="classMap">
+        SELECT t_student_class.class_id,
+               t_student_class.class_name,
+               t_student_class.department_id,
+               t_student_class.grade_id,
+               t_student_class.major_id
+        FROM t_course_class
+                 INNER JOIN t_student_class ON t_course_class.class_id = t_student_class.class_id
+        WHERE t_course_class.course_id = #{courseId,jdbcType=BIGINT}
+    </select>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -89,16 +111,7 @@
             term_id         = #{termId,jdbcType=INTEGER}
         where course_id = #{courseId,jdbcType=BIGINT}
     </update>
-    <select id="t1" parameterType="java.lang.Long" resultMap="classMap">
-        SELECT t_student_class.class_id,
-               t_student_class.class_name,
-               t_student_class.department_id,
-               t_student_class.grade_id,
-               t_student_class.major_id
-        FROM t_course_class
-                 INNER JOIN t_student_class ON t_course_class.class_id = t_student_class.class_id
-        WHERE t_course_class.course_id = #{courseId,jdbcType=BIGINT}
-    </select>
+
     <select id="findAll" resultMap="BaseResultMap" parameterType="java.util.Map">
         select
         <include refid="Base_Column_List"/>
@@ -127,9 +140,14 @@
         WHERE t_course.teacher_work_id = #{teacherWorkId,jdbcType=INTEGER}
     </select>
 
-    <select id="findAll" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from `t_course`
+    <select id="findCourseByStudentClassAndTermId" parameterType="java.util.Map" resultMap="CourseResultMap">
+        SELECT t_course.course_id,
+               t_course.course_name,
+               t_course.teacher_work_id,
+               t_course.term_id
+        FROM t_course
+                 INNER JOIN t_course_class ON t_course_class.course_id = t_course.course_id
+        WHERE t_course_class.class_id = #{classId,jdbcType=INTEGER}
+          AND t_course.term_id = #{termId,jdbcType=INTEGER}
     </select>
 </mapper>

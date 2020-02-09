@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 
-
+axios.defaults.headers.common['Authorization'] = "";
 router.get('/', function (req, res, next) {
     res.render('auth', {msg: null});
 });

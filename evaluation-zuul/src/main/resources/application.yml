@@ -33,3 +33,10 @@ zuul:
       path: /auth/**
       serviceId: evaluation-authorization-service
       strip-prefix: false
+    studentAssessment:
+      path: /studentassessment/**
+      serviceId: evaluation-studentAssessment-service
+      strip-prefix: false
+auth:
+  enable: true
+  secret: 9O2B+amfn52nzowCysmC7+hfuA0q9xvxcgLU1UDVYwM=
