@@ -14,10 +14,10 @@ router.post("/auth", function (req, res, next) {
     params.append("studentId", username);
     params.append("password", password);
     if (username != null && password != null) {
-        axios.post('http://localhost:8080/service/auth/student', params).then(function (response) {
+        axios.post('http://127.0.0.1:8080/service/auth/student', params).then(function (response) {
             if (response.data.code == 200) {
                 req.session.token = response.data.data;
-                res.redirect("/users");
+                res.redirect("/course");
             } else {
                 res.render('auth', {msg: response.data.message});
             }

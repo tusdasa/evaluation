@@ -1,19 +1,13 @@
 package net.tusdasa.evaluation.configuration;
 
-import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.core.io.support.ResourcePatternResolver;
 
 @Configuration
-@EnableCaching
-public class EhCacheConfig {
+public class Config {
 
-    public EhCacheConfig() {
+    public Config() {
     }
-
+/*
     @Bean
     public EhCacheManagerFactoryBean ehCacheManagerFactoryBean() {
         EhCacheManagerFactoryBean ehCacheManagerFactoryBean = new EhCacheManagerFactoryBean();
@@ -23,4 +17,6 @@ public class EhCacheConfig {
         ehCacheManagerFactoryBean.setShared(true);
         return ehCacheManagerFactoryBean;
     }
+*/
+
 }

@@ -3,14 +3,15 @@ server:
 spring:
   application:
     name: evaluation-zuul-service
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
 eureka:
   client:
     service-url:
       defaultZone: http://tusdasa:8000/eureka/
 zuul:
-  SendErrorFilter:
-    error:
-      disable: true
   prefix: /service
   routes:
     student:
@@ -36,6 +37,10 @@ zuul:
     studentAssessment:
       path: /studentassessment/**
       serviceId: evaluation-studentAssessment-service
+      strip-prefix: false
+    thirdkpi:
+      path: /thirdkpi/**
+      serviceId: evaluation-thirdkpi-service
       strip-prefix: false
 auth:
   enable: true

@@ -14,6 +14,14 @@ spring:
       max-active: 4
       min-idle: 2
       initial-size: 2
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 3
+  cache:
+    type: redis
+    redis:
+      time-to-live: 604800
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8

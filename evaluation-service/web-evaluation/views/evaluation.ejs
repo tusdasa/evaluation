@@ -23,14 +23,14 @@
                 <strong><%= msg %></strong>
             <% } %>
             <% if (kpi) { %>
-                <h1 class="text-center">
-                    评教
-                </h1>
-                <p class="text-info text-center">
-                    <strong>编译原理</strong>
-                </p>
-                <form role="form">
-                    <% kpi.forEach(function(kp){ %>
+                    <h1 class="text-center">
+                        评教
+                    </h1>
+                    <p class="text-info text-center">
+                        <strong></strong>
+                    </p>
+                    <form role="form">
+                        <% kpi.forEach(function(kp){ %>
                         <div class="form-group">
                             <label for="d1"><strong><%= kp.thirdKpiContent %></strong></label>
                             <select class="form-control" id="d1">

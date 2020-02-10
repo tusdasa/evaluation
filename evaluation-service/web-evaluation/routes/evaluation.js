@@ -18,7 +18,6 @@ router.get('/', function (req, res, next) {
         } else {
             res.render("evaluation", {kpi: null, msg: response.data.message});
         }
-        y
     }).catch(function (error) {
         res.send(error);
     });

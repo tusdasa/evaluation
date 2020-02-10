@@ -28,8 +28,8 @@ public class AcademicYearServiceImpl implements AcademicYearService {
     @Caching(
             evict = {
                     @CacheEvict(value = "currentAcademicYear", allEntries = true),
-                    @CacheEvict(value = "allAcademicYear", allEntries = true),
-                    @CacheEvict(value = "acaAcademicYearById", allEntries = true),
+                    @CacheEvict(value = "findAll", allEntries = true),
+                    @CacheEvict(value = "findAcaAcademicYearById", allEntries = true),
                     @CacheEvict(value = "currentTerm", allEntries = true)
             }
     )
@@ -43,8 +43,8 @@ public class AcademicYearServiceImpl implements AcademicYearService {
     @Caching(
             evict = {
                     @CacheEvict(value = "currentAcademicYear", allEntries = true),
-                    @CacheEvict(value = "allAcademicYear", allEntries = true),
-                    @CacheEvict(value = "acaAcademicYearById", allEntries = true),
+                    @CacheEvict(value = "findAll", allEntries = true),
+                    @CacheEvict(value = "findAcaAcademicYearById", allEntries = true),
                     @CacheEvict(value = "currentTerm", allEntries = true)
             }
     )
@@ -61,8 +61,8 @@ public class AcademicYearServiceImpl implements AcademicYearService {
     @Caching(
             evict = {
                     @CacheEvict(value = "currentAcademicYear", allEntries = true),
-                    @CacheEvict(value = "allAcademicYear", allEntries = true),
-                    @CacheEvict(value = "acaAcademicYearById", allEntries = true),
+                    @CacheEvict(value = "findAll", allEntries = true),
+                    @CacheEvict(value = "findAcaAcademicYearById", allEntries = true),
                     @CacheEvict(value = "currentTerm", allEntries = true)
             }
     )
@@ -80,14 +80,14 @@ public class AcademicYearServiceImpl implements AcademicYearService {
         return this.academicYearMapper.currentAcademicYear(new Date());
     }
 
-    @Cacheable(value = "allAcademicYear", key = "methodName")
+    @Cacheable(value = "findAll", key = "methodName")
     @Transactional(readOnly = true)
     @Override
     public List<AcademicYear> findAll() {
         return this.academicYearMapper.findAll();
     }
 
-    @Cacheable(value = "acaAcademicYearById", key = "methodName + #academicYearId")
+    @Cacheable(value = "findAcaAcademicYearById", key = "methodName + #academicYearId")
     @Transactional(readOnly = true)
     @Override
     public AcademicYear findAcaAcademicYearById(Integer academicYearId) {

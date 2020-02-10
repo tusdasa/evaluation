@@ -2,9 +2,9 @@
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
 
-    <diskStore path="java.io.tmpdir/third"/>
+    <diskStore path="java.io.tmpdir/course"/>
     <defaultCache
-            maxElementsInMemory="10000"
+            maxElementsInMemory="1000"
             timeToIdleSeconds="604800"
             timeToLiveSeconds="604800"
             maxElementsOnDisk="10000"

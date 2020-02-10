@@ -13,7 +13,6 @@ public class EhCacheConfig {
 
     public EhCacheConfig() {
     }
-
     /*
         @Bean
         public EhCacheManagerFactoryBean ehCacheManagerFactoryBean() {
@@ -25,6 +24,7 @@ public class EhCacheConfig {
             return ehCacheManagerFactoryBean;
         }.
      */
+    //
     @Bean
     public RedisTemplate<String, List<ThirdKpi>> thirdKpiRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, List<ThirdKpi>> redisTemplate = new RedisTemplate<>();

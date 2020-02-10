@@ -1,18 +1,16 @@
 package net.tusdasa.evaluation.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.With;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.*;
 
-@EqualsAndHashCode
 @Data
 @With
 @AllArgsConstructor
+@ToString
+@EqualsAndHashCode
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class IdsRequest implements Serializable {
 

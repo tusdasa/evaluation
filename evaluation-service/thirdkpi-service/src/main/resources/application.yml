@@ -1,5 +1,5 @@
 server:
-  port: 7013
+  port: 0
   servlet:
     context-path: /thirdkpi
 spring:
@@ -9,6 +9,10 @@ spring:
     host: 127.0.0.1
     port: 6379
     database: 0
+  cache:
+    redis:
+      time-to-live: 604800
+    type: redis
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/xynu_evaluation?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
     username: root

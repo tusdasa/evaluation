@@ -18,6 +18,10 @@
 
 	<dependencies>
         <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.mybatis.caches</groupId>
             <artifactId>mybatis-ehcache</artifactId>
             <version>1.2.0</version>

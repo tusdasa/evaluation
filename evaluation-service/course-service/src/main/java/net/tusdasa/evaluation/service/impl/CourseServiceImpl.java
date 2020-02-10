@@ -3,6 +3,7 @@ package net.tusdasa.evaluation.service.impl;
 import net.tusdasa.evaluation.dao.CourseMapper;
 import net.tusdasa.evaluation.entity.Course;
 import net.tusdasa.evaluation.service.CourseService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,12 +20,14 @@ public class CourseServiceImpl implements CourseService {
         this.courseMapper = courseMapper;
     }
 
+    @Cacheable(value = "findCourseByStudentClassId", key = "methodName + #classId")
     @Transactional(readOnly = true)
     @Override
     public List<Course> findCourseByStudentClassId(Integer classId) {
         return this.courseMapper.findCourseByStudentClassId(classId);
     }
 
+    @Cacheable(value = "findCourseByStudentClassAndTermId", key = "methodName + #classId + #termId")
     @Transactional(readOnly = true)
     @Override
     public List<Course> findCourseByStudentClassAndTermId(Integer classId, Integer termId) {
@@ -34,12 +37,14 @@ public class CourseServiceImpl implements CourseService {
         return this.courseMapper.findCourseByStudentClassAndTermId(parameter);
     }
 
+    @Cacheable(value = "findCourseByWorkId", key = "methodName + #workId")
     @Transactional(readOnly = true)
     @Override
     public List<Course> findCourseByWorkId(Integer workId) {
         return this.courseMapper.findCourseByWorkId(workId);
     }
 
+    @Cacheable(value = "findAllByPage", key = "methodName + #page + #size")
     @Transactional(readOnly = true)
     @Override
     public List<Course> findAllByPage(Integer page, Integer size) {
@@ -49,12 +54,14 @@ public class CourseServiceImpl implements CourseService {
         return this.courseMapper.findAll(parameter);
     }
 
+    @Cacheable(value = "findCourseById", key = "methodName + #courseId")
     @Transactional(readOnly = true)
     @Override
     public Course findCourseById(Long courseId) {
         return this.courseMapper.selectByPrimaryKey(courseId);
     }
 
+    @Cacheable(value = "findAll", key = "methodName")
     @Transactional(readOnly = true)
     @Override
     public List<Course> findAll() {
