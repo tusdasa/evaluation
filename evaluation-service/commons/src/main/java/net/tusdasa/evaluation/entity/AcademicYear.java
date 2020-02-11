@@ -1,5 +1,6 @@
 package net.tusdasa.evaluation.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import net.tusdasa.evaluation.vo.AcademicYearRequest;
 
@@ -12,6 +13,7 @@ import java.io.Serializable;
 @ToString
 @EqualsAndHashCode
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AcademicYear implements Serializable, Comparable<AcademicYearRequest> {
 
     private Integer academicYearId;

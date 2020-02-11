@@ -1,5 +1,6 @@
 package net.tusdasa.evaluation.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import net.tusdasa.evaluation.vo.TeacherRequest;
 import org.springframework.util.DigestUtils;
@@ -13,6 +14,7 @@ import java.io.Serializable;
 @Builder
 @EqualsAndHashCode
 @ToString
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Teacher implements Serializable, Comparable<TeacherRequest> {
 
     private Integer workId;

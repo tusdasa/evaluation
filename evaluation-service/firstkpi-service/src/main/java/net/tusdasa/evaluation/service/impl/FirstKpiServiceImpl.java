@@ -23,7 +23,7 @@ public class FirstKpiServiceImpl implements FirstKpiService {
         this.firstKpiMapper = firstKpiMapper;
     }
 
-    @Cacheable(value = "firstKpiByAcademicYearAndIdCache", key = "methodName + #academicYearId + #firstKpiId")
+    @Cacheable(value = "findAllByAcademicYearAndId", key = "methodName + #academicYearId + #firstKpiId")
     @Transactional(readOnly = true)
     @Override
     public List<FirstKpi> findAllByAcademicYearAndId(Integer academicYearId, Integer firstKpiId) {
@@ -33,14 +33,14 @@ public class FirstKpiServiceImpl implements FirstKpiService {
         return this.firstKpiMapper.findAllByAcademicYearAndId(parameter);
     }
 
-    @Cacheable(value = "firstKpiByAcademicYearCache", key = "methodName + #academicYearId")
+    @Cacheable(value = "findAllFirstKpiByAcademicYear", key = "methodName + #academicYearId")
     @Transactional(readOnly = true)
     @Override
     public List<FirstKpi> findAllFirstKpiByAcademicYear(Integer academicYearId) {
         return this.firstKpiMapper.findAllByAcademicYear(academicYearId);
     }
 
-    @Cacheable("allFirstKpi")
+    @Cacheable(value = "findAll", key = "methodName")
     @Transactional(readOnly = true)
     @Override
     public List<FirstKpi> findAll() {
@@ -48,6 +48,7 @@ public class FirstKpiServiceImpl implements FirstKpiService {
     }
 
 
+    @Cacheable(value = "findById", key = "methodName + #firstKpiId")
     @Transactional(readOnly = true)
     @Override
     public FirstKpi findById(Integer firstKpiId) {
@@ -56,10 +57,11 @@ public class FirstKpiServiceImpl implements FirstKpiService {
 
     @Caching(
             evict = {
-                    @CacheEvict(value = "firstKpiByAcademicYearCache", allEntries = true),
-                    @CacheEvict(value = "firstKpiByAcademicYearAndIdCache", allEntries = true),
-                    @CacheEvict(value = "academicYearAndIds", allEntries = true),
-                    @CacheEvict(value = "allFirstKpi", allEntries = true)
+                    @CacheEvict(value = "findAllByAcademicYearAndIds", allEntries = true),
+                    @CacheEvict(value = "findById", allEntries = true),
+                    @CacheEvict(value = "findAll", allEntries = true),
+                    @CacheEvict(value = "findAllFirstKpiByAcademicYear", allEntries = true),
+                    @CacheEvict(value = "findAllByAcademicYearAndId", allEntries = true)
             }
     )
     @Transactional
@@ -73,10 +75,11 @@ public class FirstKpiServiceImpl implements FirstKpiService {
 
     @Caching(
             evict = {
-                    @CacheEvict(value = "firstKpiByAcademicYearCache", allEntries = true),
-                    @CacheEvict(value = "firstKpiByAcademicYearAndIdCache", allEntries = true),
-                    @CacheEvict(value = "academicYearAndIds", allEntries = true),
-                    @CacheEvict(value = "allFirstKpi", allEntries = true)
+                    @CacheEvict(value = "findAllByAcademicYearAndIds", allEntries = true),
+                    @CacheEvict(value = "findById", allEntries = true),
+                    @CacheEvict(value = "findAll", allEntries = true),
+                    @CacheEvict(value = "findAllFirstKpiByAcademicYear", allEntries = true),
+                    @CacheEvict(value = "findAllByAcademicYearAndId", allEntries = true)
             }
     )
     @Transactional
@@ -87,10 +90,11 @@ public class FirstKpiServiceImpl implements FirstKpiService {
 
     @Caching(
             evict = {
-                    @CacheEvict(value = "firstKpiByAcademicYearCache", allEntries = true),
-                    @CacheEvict(value = "firstKpiByAcademicYearAndIdCache", allEntries = true),
-                    @CacheEvict(value = "academicYearAndIds", allEntries = true),
-                    @CacheEvict(value = "allFirstKpi", allEntries = true)
+                    @CacheEvict(value = "findAllByAcademicYearAndIds", allEntries = true),
+                    @CacheEvict(value = "findById", allEntries = true),
+                    @CacheEvict(value = "findAll", allEntries = true),
+                    @CacheEvict(value = "findAllFirstKpiByAcademicYear", allEntries = true),
+                    @CacheEvict(value = "findAllByAcademicYearAndId", allEntries = true)
             }
     )
     @Transactional
@@ -99,7 +103,7 @@ public class FirstKpiServiceImpl implements FirstKpiService {
         this.firstKpiMapper.deleteByPrimaryKey(firstKpiId);
     }
 
-    @Cacheable(value = "academicYearAndIds", key = "methodName + #firstKpiIds")
+    @Cacheable(value = "findAllByAcademicYearAndIds", key = "methodName + #firstKpiIds")
     @Transactional(readOnly = true)
     @Override
     public List<FirstKpi> findAllByAcademicYearAndIds(Integer academicYearId, IdsRequest firstKpiIds) {

@@ -1,11 +1,11 @@
 package net.tusdasa.evaluation.commons;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import net.tusdasa.evaluation.utils.UUIDUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CommonResponse<Model extends Serializable> {
@@ -29,28 +29,28 @@ public class CommonResponse<Model extends Serializable> {
 
     public CommonResponse<Model> ok() {
         this.setCode(CommonResponse.CODE_SUCCESS);
-        this.setRequestId(UUID.randomUUID().toString().replaceAll("-", ""));
+        this.setRequestId(UUIDUtils.UUID());
         this.setMessage("success");
         return this;
     }
 
     public CommonResponse<Model> ok(String message) {
         this.setCode(CommonResponse.CODE_SUCCESS);
-        this.setRequestId(UUID.randomUUID().toString().replaceAll("-", ""));
+        this.setRequestId(UUIDUtils.UUID());
         this.setMessage(message);
         return this;
     }
 
     public CommonResponse<Model> error() {
         this.setCode(CommonResponse.CODE_ERROR);
-        this.setRequestId(UUID.randomUUID().toString().replaceAll("-", ""));
+        this.setRequestId(UUIDUtils.UUID());
         this.setMessage("failure");
         return this;
     }
 
     public CommonResponse<Model> error(String message) {
         this.setCode(CommonResponse.CODE_ERROR);
-        this.setRequestId(UUID.randomUUID().toString().replaceAll("-", ""));
+        this.setRequestId(UUIDUtils.UUID());
         this.setMessage(message);
         return this;
     }

@@ -1,13 +1,11 @@
 package net.tusdasa.evaluation.filter;
 
-import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import lombok.extern.slf4j.Slf4j;
 import net.tusdasa.evaluation.utils.JWTUtils;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,13 +42,12 @@ public class AccessLogFilter extends ZuulFilter {
             return false;
         }
         return true;
-
     }
 
     @Override
     public Object run() throws ZuulException {
+        /*
         RequestContext context = RequestContext.getCurrentContext();
-        System.out.println("第几个?");
         HttpServletRequest request = context.getRequest();
         String token = request.getHeader("Authorization");
         if (token != null && !token.isEmpty()) {
@@ -64,6 +61,7 @@ public class AccessLogFilter extends ZuulFilter {
             context.setSendZuulResponse(false);
             context.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
         }
+        */
         return null;
     }
 }

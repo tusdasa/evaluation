@@ -12,28 +12,4 @@
             memoryStoreEvictionPolicy="LRU">
         <persistence strategy="localTempSwap"/>
     </defaultCache>
-    <cache name="firstKpiByAcademicYearCache" maxElementsInMemory="100"
-           timeToIdleSeconds="604800"
-           timeToLiveSeconds="604800"
-           memoryStoreEvictionPolicy="LRU">
-        <persistence strategy="localTempSwap"/>
-    </cache>
-    <cache name="firstKpiByAcademicYearAndIdCache" maxElementsInMemory="100"
-           timeToIdleSeconds="604800"
-           timeToLiveSeconds="604800"
-           memoryStoreEvictionPolicy="LRU">
-        <persistence strategy="localTempSwap"/>
-    </cache>
-    <cache name="academicYearAndIds" maxElementsInMemory="100"
-           timeToIdleSeconds="604800"
-           timeToLiveSeconds="604800"
-           memoryStoreEvictionPolicy="LRU">
-        <persistence strategy="localTempSwap"/>
-    </cache>
-    <cache name="allFirstKpi" maxElementsInMemory="1000"
-           timeToIdleSeconds="604800"
-           timeToLiveSeconds="604800"
-           memoryStoreEvictionPolicy="LRU">
-        <persistence strategy="localTempSwap"/>
-    </cache>
 </ehcache>

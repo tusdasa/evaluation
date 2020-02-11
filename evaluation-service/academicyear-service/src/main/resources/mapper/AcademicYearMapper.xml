@@ -6,9 +6,9 @@
         <id column="academic_year_id" jdbcType="INTEGER" property="academicYearId"/>
         <result column="academic_year_name" jdbcType="VARCHAR" property="academicYearName"/>
         <association property="startTerm" select="net.tusdasa.evaluation.dao.TermMapper.selectByPrimaryKey"
-                     column="start_term"/>
+                     column="start_term" javaType="net.tusdasa.evaluation.entity.Term"/>
         <association property="endTerm" select="net.tusdasa.evaluation.dao.TermMapper.selectByPrimaryKey"
-                     column="end_term"/>
+                     column="end_term" javaType="net.tusdasa.evaluation.entity.Term"/>
     </resultMap>
 
     <sql id="Base_Column_List">

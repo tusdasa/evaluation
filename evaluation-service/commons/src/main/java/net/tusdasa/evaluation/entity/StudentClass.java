@@ -1,5 +1,6 @@
 package net.tusdasa.evaluation.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import net.tusdasa.evaluation.vo.StudentClassRequest;
 
@@ -12,6 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 @With
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class StudentClass implements Serializable, Comparable<StudentClassRequest> {
 
     private Integer classId;

@@ -21,6 +21,14 @@ spring:
     loadbalancer:
       ribbon:
         enabled: false
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 4
+  cache:
+    type: redis
+    redis:
+      time-to-live: 604800
 eureka:
   client:
     service-url:
