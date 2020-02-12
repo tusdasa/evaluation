@@ -30,6 +30,7 @@
         <module>data-service</module>
         <module>class-service</module>
         <module>student-evaluation</module>
+        <module>calculationrules-service</module>
     </modules>
     <artifactId>evaluation-service</artifactId>
 

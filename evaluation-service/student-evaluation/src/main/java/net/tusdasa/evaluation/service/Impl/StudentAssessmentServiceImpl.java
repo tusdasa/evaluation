@@ -87,8 +87,8 @@ public class StudentAssessmentServiceImpl implements StudentAssessmentService {
     }
 
     @Override
-    public CommonResponse<Course> currentCourse(String token) {
-        CommonResponse<Student> studentCommonResponse = this.rightClient.checkStudent(token);
+    public CommonResponse<Course> currentCourse(String studentId) {
+        CommonResponse<Student> studentCommonResponse = this.rightClient.checkStudent(studentId);
         if (studentCommonResponse.success()) {
             CommonResponse<Term> commonResponse = academicYearClient.currentTerm();
             if (commonResponse.success()) {

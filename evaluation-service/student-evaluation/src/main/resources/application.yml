@@ -1,10 +1,10 @@
 server:
   port: 7009
   servlet:
-    context-path: /studentassessment
+    context-path: /evaluation
 spring:
   application:
-    name: evaluation-studentAssessment-service
+    name: evaluation-studentevaluation-service
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8

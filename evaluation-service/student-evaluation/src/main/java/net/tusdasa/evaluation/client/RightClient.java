@@ -17,6 +17,6 @@ public interface RightClient {
     CommonResponse<Right> findRightById(@PathVariable("id") Integer id);
 
     @PostMapping("/check/student")
-    CommonResponse<Student> checkStudent(@RequestParam("token") String token);
+    CommonResponse<Student> checkStudent(@RequestParam("studentId") String studentId);
 
 }

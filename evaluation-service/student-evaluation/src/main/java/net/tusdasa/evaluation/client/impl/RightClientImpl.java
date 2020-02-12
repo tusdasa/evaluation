@@ -14,7 +14,8 @@ public class RightClientImpl implements RightClient {
     }
 
     @Override
-    public CommonResponse<Student> checkStudent(String token) {
+    public CommonResponse<Student> checkStudent(String studentId) {
         return new CommonResponse<Student>().error("忙");
     }
+
 }

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.tusdasa.evaluation.dao.LevelMapper">
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+    <resultMap id="BaseResultMap" type="net.tusdasa.evaluation.entity.Level">
+        <id column="level_id" jdbcType="INTEGER" property="levelId"/>
+        <result column="level_name" jdbcType="VARCHAR" property="levelName"/>
+        <result column="level_type" jdbcType="INTEGER" property="levelType"/>
+        <result column="level_sore" jdbcType="INTEGER" property="levelSore"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        level_id, level_name, level_type, level_sore
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_level`
+        where level_id = #{levelId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from `t_level`
+        where level_id = #{levelId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="net.tusdasa.evaluation.entity.Level">
+        insert into `t_level` (level_id, level_name, level_type,
+                               level_sore)
+        values (#{levelId,jdbcType=INTEGER}, #{levelName,jdbcType=VARCHAR}, #{levelType,jdbcType=INTEGER},
+                #{levelSore,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="net.tusdasa.evaluation.entity.Level">
+        insert into `t_level`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="levelId != null">
+                level_id,
+            </if>
+            <if test="levelName != null">
+                level_name,
+            </if>
+            <if test="levelType != null">
+                level_type,
+            </if>
+            <if test="levelSore != null">
+                level_sore,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="levelId != null">
+                #{levelId,jdbcType=INTEGER},
+            </if>
+            <if test="levelName != null">
+                #{levelName,jdbcType=VARCHAR},
+            </if>
+            <if test="levelType != null">
+                #{levelType,jdbcType=INTEGER},
+            </if>
+            <if test="levelSore != null">
+                #{levelSore,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="net.tusdasa.evaluation.entity.Level">
+        update `t_level`
+        <set>
+            <if test="levelName != null">
+                level_name = #{levelName,jdbcType=VARCHAR},
+            </if>
+            <if test="levelType != null">
+                level_type = #{levelType,jdbcType=INTEGER},
+            </if>
+            <if test="levelSore != null">
+                level_sore = #{levelSore,jdbcType=INTEGER},
+            </if>
+        </set>
+        where level_id = #{levelId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="net.tusdasa.evaluation.entity.Level">
+        update `t_level`
+        set level_name = #{levelName,jdbcType=VARCHAR},
+            level_type = #{levelType,jdbcType=INTEGER},
+            level_sore = #{levelSore,jdbcType=INTEGER}
+        where level_id = #{levelId,jdbcType=INTEGER}
+    </update>
+    <select id="findAllByLevelType" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_level`
+        where level_type = #{levelType,jdbcType=INTEGER}
+    </select>
+</mapper>

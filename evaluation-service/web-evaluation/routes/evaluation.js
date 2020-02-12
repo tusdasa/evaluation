@@ -1,26 +1,26 @@
 const express = require('express');
 const router = express.Router();
-const axios = require('axios');
-const util = require('../uitls/utils');
+const utils = require('../uitls/utils');
 
 router.get('/', function (req, res, next) {
-    if (req.session.token == null || util.check(req.session.token) == null) {
+    if (req.session.token == undefined || req.session.token == null) {
         res.redirect("/");
     }
-    axios({
-            url: "http://localhost:8080/service/studentassessment/",
-            method: 'get',
-            headers: {"Authorization": req.session.token}
-        }
-    ).then(function (response) {
+
+    utils.request({
+        url: "evaluation/",
+        method: 'get',
+        headers: {"Authorization": req.session.token}
+    }, function (response) {
         if (response.data.code == 200) {
-            res.render("evaluation", {kpi: response.data.table, msg: null})
+            res.render("evaluation", {kpi: response.data.table, msg: null, termId: req.query.t, courseId: req.query.c})
         } else {
-            res.render("evaluation", {kpi: null, msg: response.data.message});
+            res.render("evaluation", {kpi: null, msg: response.data.message, t: null, c: null});
         }
-    }).catch(function (error) {
+    }, function (error) {
         res.send(error);
-    });
+    })
+
 });
 
 module.exports = router;

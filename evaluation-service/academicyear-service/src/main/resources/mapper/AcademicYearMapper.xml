@@ -5,10 +5,12 @@
     <resultMap id="BaseResultMap" type="net.tusdasa.evaluation.entity.AcademicYear">
         <id column="academic_year_id" jdbcType="INTEGER" property="academicYearId"/>
         <result column="academic_year_name" jdbcType="VARCHAR" property="academicYearName"/>
-        <association property="startTerm" select="net.tusdasa.evaluation.dao.TermMapper.selectByPrimaryKey"
-                     column="start_term" javaType="net.tusdasa.evaluation.entity.Term"/>
-        <association property="endTerm" select="net.tusdasa.evaluation.dao.TermMapper.selectByPrimaryKey"
-                     column="end_term" javaType="net.tusdasa.evaluation.entity.Term"/>
+        <association property="startTerm" javaType="net.tusdasa.evaluation.entity.Term"
+                     select="net.tusdasa.evaluation.dao.TermMapper.selectByPrimaryKey"
+                     column="start_term"/>
+        <association property="endTerm" javaType="net.tusdasa.evaluation.entity.Term"
+                     select="net.tusdasa.evaluation.dao.TermMapper.selectByPrimaryKey"
+                     column="end_term"/>
     </resultMap>
 
     <sql id="Base_Column_List">

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.tusdasa.evaluation.dao.CalculationRuleMapper">
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+    <resultMap id="BaseResultMap" type="net.tusdasa.evaluation.entity.CalculationRule">
+        <id column="calculation_rule_id" jdbcType="INTEGER" property="calculationRuleId"/>
+        <result column="unique_item" jdbcType="INTEGER" property="uniqueItem"/>
+        <result column="max_score" jdbcType="INTEGER" property="maxScore"/>
+        <result column="min_score" jdbcType="INTEGER" property="minScore"/>
+        <association property="evidence" javaType="net.tusdasa.evaluation.entity.Evidence"
+                     select="net.tusdasa.evaluation.dao.EvidenceMapper.findAllByEvidenceType" column="evidence_type"
+                     notNullColumn="evidence_type">
+        </association>
+        <collection property="levels" javaType="java.util.List"
+                    select="net.tusdasa.evaluation.dao.LevelMapper.findAllByLevelType" column="level_type"
+                    notNullColumn="level_type">
+        </collection>
+        <!--
+        <result column="level_type" jdbcType="INTEGER" property="levelType" />
+        <result column="evidence_type" jdbcType="INTEGER" property="evidenceType" />
+        -->
+    </resultMap>
+    <sql id="Base_Column_List">
+        calculation_rule_id, unique_item, max_score, min_score, level_type, evidence_type
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_calculation_rule`
+        where calculation_rule_id = #{calculationRuleId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from `t_calculation_rule`
+        where calculation_rule_id = #{calculationRuleId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="net.tusdasa.evaluation.vo.CalculationRuleRequest">
+        insert into `t_calculation_rule` (calculation_rule_id, unique_item, max_score,
+                                          min_score, level_type, evidence_type)
+        values (#{calculationRuleId,jdbcType=INTEGER}, #{uniqueItem,jdbcType=INTEGER}, #{maxScore,jdbcType=INTEGER},
+                #{minScore,jdbcType=INTEGER}, #{levelType,jdbcType=INTEGER}, #{evidenceType,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="net.tusdasa.evaluation.vo.CalculationRuleRequest">
+        insert into `t_calculation_rule`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="calculationRuleId != null">
+                calculation_rule_id,
+            </if>
+            <if test="uniqueItem != null">
+                unique_item,
+            </if>
+            <if test="maxScore != null">
+                max_score,
+            </if>
+            <if test="minScore != null">
+                min_score,
+            </if>
+            <if test="levelType != null">
+                level_type,
+            </if>
+            <if test="evidenceType != null">
+                evidence_type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="calculationRuleId != null">
+                #{calculationRuleId,jdbcType=INTEGER},
+            </if>
+            <if test="uniqueItem != null">
+                #{uniqueItem,jdbcType=INTEGER},
+            </if>
+            <if test="maxScore != null">
+                #{maxScore,jdbcType=INTEGER},
+            </if>
+            <if test="minScore != null">
+                #{minScore,jdbcType=INTEGER},
+            </if>
+            <if test="levelType != null">
+                #{levelType,jdbcType=INTEGER},
+            </if>
+            <if test="evidenceType != null">
+                #{evidenceType,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="net.tusdasa.evaluation.vo.CalculationRuleRequest">
+        update `t_calculation_rule`
+        <set>
+            <if test="uniqueItem != null">
+                unique_item = #{uniqueItem,jdbcType=INTEGER},
+            </if>
+            <if test="maxScore != null">
+                max_score = #{maxScore,jdbcType=INTEGER},
+            </if>
+            <if test="minScore != null">
+                min_score = #{minScore,jdbcType=INTEGER},
+            </if>
+            <if test="levelType != null">
+                level_type = #{levelType,jdbcType=INTEGER},
+            </if>
+            <if test="evidenceType != null">
+                evidence_type = #{evidenceType,jdbcType=INTEGER},
+            </if>
+        </set>
+        where calculation_rule_id = #{calculationRuleId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="net.tusdasa.evaluation.vo.CalculationRuleRequest">
+        update `t_calculation_rule`
+        set unique_item   = #{uniqueItem,jdbcType=INTEGER},
+            max_score     = #{maxScore,jdbcType=INTEGER},
+            min_score     = #{minScore,jdbcType=INTEGER},
+            level_type    = #{levelType,jdbcType=INTEGER},
+            evidence_type = #{evidenceType,jdbcType=INTEGER}
+        where calculation_rule_id = #{calculationRuleId,jdbcType=INTEGER}
+    </update>
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_calculation_rule`
+    </select>
+</mapper>

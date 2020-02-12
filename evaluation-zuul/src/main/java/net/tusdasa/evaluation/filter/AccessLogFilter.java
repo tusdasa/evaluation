@@ -1,14 +1,22 @@
 package net.tusdasa.evaluation.filter;
 
+import com.alibaba.fastjson.JSON;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import lombok.extern.slf4j.Slf4j;
+import net.tusdasa.evaluation.commons.CommonResponse;
+import net.tusdasa.evaluation.commons.Token;
+import net.tusdasa.evaluation.entity.Student;
+import net.tusdasa.evaluation.entity.Teacher;
 import net.tusdasa.evaluation.utils.JWTUtils;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 
 @Slf4j
@@ -17,8 +25,14 @@ public class AccessLogFilter extends ZuulFilter {
 
     private JWTUtils jwtUtils;
 
-    public AccessLogFilter(JWTUtils jwtUtils) {
+    private RedisTemplate<String, Student> studentRedisTemplate;
+
+    private RedisTemplate<String, Teacher> teacherRedisTemplate;
+
+    public AccessLogFilter(JWTUtils jwtUtils, RedisTemplate<String, Student> studentRedisTemplate, RedisTemplate<String, Teacher> teacherRedisTemplate) {
         this.jwtUtils = jwtUtils;
+        this.studentRedisTemplate = studentRedisTemplate;
+        this.teacherRedisTemplate = teacherRedisTemplate;
     }
 
     @Override
@@ -46,22 +60,49 @@ public class AccessLogFilter extends ZuulFilter {
 
     @Override
     public Object run() throws ZuulException {
-        /*
         RequestContext context = RequestContext.getCurrentContext();
         HttpServletRequest request = context.getRequest();
-        String token = request.getHeader("Authorization");
-        if (token != null && !token.isEmpty()) {
-            try {
-                jwtUtils.check(token);
-            } catch (JWTVerificationException exception) {
+        String token_string = request.getHeader("Authorization");
+        if (token_string != null && !token_string.isEmpty()) {
+
+            Map<String, Object> result = jwtUtils.check(token_string);
+
+            if (result.get("code").equals(200)) {
+                Token token = (Token) result.get("token");
+                log.info("user:{} ==> role:{} ==> url:{}", token.getSub(), token.getRole(), request.getRequestURI());
+                Student student = null;
+                Teacher teacher = null;
+                if (token.getRole().equals(1)) {
+                    student = studentRedisTemplate.opsForValue().get(token.getSub());
+                } else {
+                    teacher = teacherRedisTemplate.opsForValue().get(token.getSub());
+                }
+
+                if (student != null && teacher == null) {
+                    context.addZuulRequestHeader("studentId", student.getStudentId().toString());
+                    context.addZuulRequestHeader("role", token.getRole().toString());
+                } else if (student == null && teacher != null) {
+                    context.addZuulRequestHeader("workId", teacher.getWorkId().toString());
+                    context.addZuulRequestHeader("role", teacher.getRoleId().toString());
+                } else {
+                    context.setSendZuulResponse(false);
+                    context.addZuulResponseHeader("Content-Type", "application/json;charset=utf8");
+                    context.setResponseStatusCode(HttpStatus.OK.value());
+                    context.setResponseBody((String) JSON.toJSON(new CommonResponse<String>().error("请重新登录")).toString());
+                }
+            } else {
                 context.setSendZuulResponse(false);
-                context.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
+                context.addZuulResponseHeader("Content-Type", "application/json;charset=utf8");
+                context.setResponseStatusCode(HttpStatus.OK.value());
+                context.setResponseBody((String) JSON.toJSON(new CommonResponse<String>().error("授权过期，请重新登录")).toString());
             }
         } else {
             context.setSendZuulResponse(false);
-            context.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
+            context.addZuulResponseHeader("Content-Type", "application/json;charset=utf8");
+            context.setResponseStatusCode(HttpStatus.OK.value());
+            context.setResponseBody(JSON.toJSON(new CommonResponse<String>().error("未授权，请登录")).toString());
         }
-        */
+
         return null;
     }
 }

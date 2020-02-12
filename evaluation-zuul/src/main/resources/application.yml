@@ -7,6 +7,10 @@ spring:
     loadbalancer:
       ribbon:
         enabled: false
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 10
 eureka:
   client:
     service-url:
@@ -35,8 +39,8 @@ zuul:
       serviceId: evaluation-authorization-service
       strip-prefix: false
     studentAssessment:
-      path: /studentassessment/**
-      serviceId: evaluation-studentAssessment-service
+      path: /evaluation/**
+      serviceId: evaluation-studentevaluation-service
       strip-prefix: false
     thirdkpi:
       path: /thirdkpi/**

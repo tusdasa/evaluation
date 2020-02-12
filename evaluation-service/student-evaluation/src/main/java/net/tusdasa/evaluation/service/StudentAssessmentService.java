@@ -8,6 +8,6 @@ public interface StudentAssessmentService {
 
     CommonResponse<ThirdKpi> findAll();
 
-    CommonResponse<Course> currentCourse(String token);
+    CommonResponse<Course> currentCourse(String studentId);
 
 }

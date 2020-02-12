@@ -1,18 +1,10 @@
 server:
-  port: 7014
+  port: 7015
   servlet:
-    context-path: /thirdkpi
+    context-path: /calc
 spring:
   application:
-    name: evaluation-thirdkpi-service
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    database: 0
-  cache:
-    redis:
-      time-to-live: 604800
-    type: redis
+    name: evaluation-calculationrule-service
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/xynu_evaluation?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
     username: root
@@ -22,6 +14,14 @@ spring:
       max-active: 4
       min-idle: 2
       initial-size: 2
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 6
+  cache:
+    type: redis
+    redis:
+      time-to-live: 604800
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8

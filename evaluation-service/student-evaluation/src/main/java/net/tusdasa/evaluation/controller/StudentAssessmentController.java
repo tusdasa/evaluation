@@ -28,8 +28,8 @@ public class StudentAssessmentController {
     }
 
     @GetMapping("/course")
-    public CommonResponse<Course> getAllCourse(@RequestHeader(name = "") String token) {
-        return this.studentAssessmentService.currentCourse(token);
+    public CommonResponse<Course> getAllCourse(@RequestHeader(name = "studentId") String studentId) {
+        return this.studentAssessmentService.currentCourse(studentId);
     }
 
     @PostMapping("/result")

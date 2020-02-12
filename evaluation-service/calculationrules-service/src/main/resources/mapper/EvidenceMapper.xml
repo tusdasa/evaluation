@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.tusdasa.evaluation.dao.EvidenceMapper">
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+    <resultMap id="BaseResultMap" type="net.tusdasa.evaluation.entity.Evidence">
+        <id column="evidence_id" jdbcType="INTEGER" property="evidenceId"/>
+        <result column="evidence_name" jdbcType="VARCHAR" property="evidenceName"/>
+        <result column="evidence_type" jdbcType="INTEGER" property="evidenceType"/>
+        <result column="evidence_score" jdbcType="INTEGER" property="evidenceScore"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        evidence_id, evidence_name, evidence_type, evidence_score
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_evidence`
+        where evidence_id = #{evidenceId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from `t_evidence`
+        where evidence_id = #{evidenceId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="net.tusdasa.evaluation.entity.Evidence">
+        insert into `t_evidence` (evidence_id, evidence_name, evidence_type,
+                                  evidence_score)
+        values (#{evidenceId,jdbcType=INTEGER}, #{evidenceName,jdbcType=VARCHAR}, #{evidenceType,jdbcType=INTEGER},
+                #{evidenceScore,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="net.tusdasa.evaluation.entity.Evidence">
+        insert into `t_evidence`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="evidenceId != null">
+                evidence_id,
+            </if>
+            <if test="evidenceName != null">
+                evidence_name,
+            </if>
+            <if test="evidenceType != null">
+                evidence_type,
+            </if>
+            <if test="evidenceScore != null">
+                evidence_score,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="evidenceId != null">
+                #{evidenceId,jdbcType=INTEGER},
+            </if>
+            <if test="evidenceName != null">
+                #{evidenceName,jdbcType=VARCHAR},
+            </if>
+            <if test="evidenceType != null">
+                #{evidenceType,jdbcType=INTEGER},
+            </if>
+            <if test="evidenceScore != null">
+                #{evidenceScore,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="net.tusdasa.evaluation.entity.Evidence">
+        update `t_evidence`
+        <set>
+            <if test="evidenceName != null">
+                evidence_name = #{evidenceName,jdbcType=VARCHAR},
+            </if>
+            <if test="evidenceType != null">
+                evidence_type = #{evidenceType,jdbcType=INTEGER},
+            </if>
+            <if test="evidenceScore != null">
+                evidence_score = #{evidenceScore,jdbcType=INTEGER},
+            </if>
+        </set>
+        where evidence_id = #{evidenceId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="net.tusdasa.evaluation.entity.Evidence">
+        update `t_evidence`
+        set evidence_name  = #{evidenceName,jdbcType=VARCHAR},
+            evidence_type  = #{evidenceType,jdbcType=INTEGER},
+            evidence_score = #{evidenceScore,jdbcType=INTEGER}
+        where evidence_id = #{evidenceId,jdbcType=INTEGER}
+    </update>
+
+    <select id="findAllByEvidenceType" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_evidence`
+        where evidence_type = #{evidenceType,jdbcType=INTEGER}
+    </select>
+
+</mapper>

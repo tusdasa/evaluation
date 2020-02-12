@@ -23,27 +23,29 @@
                 <strong><%= msg %></strong>
             <% } %>
             <% if (kpi) { %>
-                    <h1 class="text-center">
-                        评教
-                    </h1>
-                    <p class="text-info text-center">
-                        <strong></strong>
-                    </p>
-                    <form role="form">
-                        <% kpi.forEach(function(kp){ %>
-                        <div class="form-group">
-                            <label for="d1"><strong><%= kp.thirdKpiContent %></strong></label>
-                            <select class="form-control" id="d1">
-                                <option>请选择</option>
-                                <option>很好</option>
-                                <option>较好</option>
-                                <option>一般</option>
-                                <option>较差</option>
-                            </select>
-                        </div>
-                    <% }); %>
-                </form>
-                <button type="button" class="btn btn-primary btn-block btn-default">提交</button>
+            <h1 class="text-center">
+                评教
+            </h1>
+            <p class="text-info text-center">
+                <strong></strong>
+            </p>
+            <form role="form">
+                <input type="hidden" value="<%= courseId %>" name="courseId" id="courseId">
+                <input type="hidden" value="<%= termId %>" name="termId" id="termId">
+                <% kpi.forEach(function(kp){ %>
+                <div class="form-group">
+                    <label for="d<%= kp.secondKpiId %>"><strong><%= kp.thirdKpiContent %></strong></label>
+                    <select class="form-control" id="d<%= kp.secondKpiId %>">
+                        <option selected="selected">请选择</option>
+                        <option value="6">很好</option>
+                        <option value="4">较好</option>
+                        <option value="2">一般</option>
+                        <option value="0">较差</option>
+                    </select>
+                </div>
+                <% }); %>
+            </form>
+            <button type="button" class="btn btn-primary btn-block btn-default">提交</button>
         </div>
         <% } %>
     </div>

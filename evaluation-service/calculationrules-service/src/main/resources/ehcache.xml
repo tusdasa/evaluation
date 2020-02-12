@@ -2,7 +2,7 @@
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
 
-    <diskStore path="java.io.tmpdir/academical"/>
+    <diskStore path="java.io.tmpdir/calculation"/>
     <defaultCache
             maxElementsInMemory="1000"
             timeToIdleSeconds="604800"

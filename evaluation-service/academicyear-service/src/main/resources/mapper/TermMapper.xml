@@ -16,6 +16,7 @@
         <include refid="Base_Column_List"/>
         from `t_term`
         where term_id = #{termId,jdbcType=INTEGER}
+        limit 1
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" flushCache="true">
         delete
