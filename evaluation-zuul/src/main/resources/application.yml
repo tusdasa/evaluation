@@ -15,8 +15,25 @@ eureka:
   client:
     service-url:
       defaultZone: http://tusdasa:8000/eureka/
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
 zuul:
   prefix: /service
+  host:
+    connect-timeout-millis: 60000
+    socket-timeout-millis: 60000
+    connection-request-timeout-millis: 60000
+    max-total-connections: 500
   routes:
     student:
       path: /student/**

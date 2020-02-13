@@ -19,7 +19,7 @@ exports.requestAll = function () {
 exports.request = function (config, success, failure) {
     const instance = axios.create({
         baseURL: "http://localhost:8080/service/",
-        timeout: 5000,
+        timeout: 60000,
     });
     instance(config).then(function (response) {
         success(response);

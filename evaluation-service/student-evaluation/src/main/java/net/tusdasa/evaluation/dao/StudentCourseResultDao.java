@@ -6,15 +6,14 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface StudentCourseResultDao extends MongoRepository<StudentCourseResult, Integer> {
+public interface StudentCourseResultDao extends MongoRepository<StudentCourseResult, String> {
+
     List<StudentCourseResult> findAllByCourseId(Integer courseId);
 
-    List<StudentCourseResult> findAllByWorkId(Integer workId);
-
-    Optional<StudentCourseResult> findByStudentId(Long studentId);
+    Optional<StudentCourseResult> findAllById(String id);
 
     List<StudentCourseResult> findAllByCourseIdAndTermId(Integer courseId, Integer termId);
 
-    List<StudentCourseResult> findAllByWorkIdAndTermId(Integer workId, Integer termId);
+    List<StudentCourseResult> findAllByStudentId(Long studentId);
 
 }

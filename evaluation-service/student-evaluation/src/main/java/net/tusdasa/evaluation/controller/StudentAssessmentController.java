@@ -33,8 +33,8 @@ public class StudentAssessmentController {
     }
 
     @PostMapping("/result")
-    public CommonResponse<String> addCourseResult(@RequestBody StudentCourseResult studentCourseResult) {
-        studentCourseResultService.addStudentCourseResult(studentCourseResult);
+    public CommonResponse<String> addCourseResult(@RequestBody StudentCourseResult studentCourseResult, @RequestHeader(name = "studentId") Long studentId) {
+        studentCourseResultService.addStudentCourseResult(studentCourseResult, studentId);
         return new CommonResponse<String>().ok();
     }
 

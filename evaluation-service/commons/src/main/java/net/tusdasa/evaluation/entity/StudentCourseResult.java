@@ -7,7 +7,6 @@ import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 @Data
 @NoArgsConstructor
@@ -15,9 +14,7 @@ import java.util.Map;
 @EqualsAndHashCode
 public class StudentCourseResult implements Serializable {
 
-    private Integer id;
-
-    private Integer workId;
+    private String id;
 
     private Long studentId;
 
@@ -25,6 +22,6 @@ public class StudentCourseResult implements Serializable {
 
     private Integer courseId;
 
-    private List<Map<Integer, Integer>> result;
+    private List<KpiScore> scores;
 
 }

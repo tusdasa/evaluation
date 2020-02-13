@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-
+const utils = require('../uitls/utils')
 axios.defaults.headers.common['Authorization'] = "";
 router.get('/', function (req, res, next) {
     res.render('auth', {msg: null});
@@ -14,17 +14,21 @@ router.post("/auth", function (req, res, next) {
     params.append("studentId", username);
     params.append("password", password);
     if (username != null && password != null) {
-        axios.post('http://127.0.0.1:8080/service/auth/student', params).then(function (response) {
+        utils.request({
+            url: 'auth/student',
+            method: 'POST',
+            params: params,
+            headers: {"Content-Type": "application/x-www-form-urlencoded"}
+        }, function (response) {
             if (response.data.code == 200) {
                 req.session.token = response.data.data;
                 res.redirect("/course");
             } else {
                 res.render('auth', {msg: response.data.message});
             }
+        }, function (error) {
+            res.render('auth', {msg: error});
         })
-            .catch(function (error) {
-                res.render('auth', {msg: error});
-            });
     } else {
         res.render('auth', {msg: null});
     }

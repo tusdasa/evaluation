@@ -23,4 +23,29 @@ router.get('/', function (req, res, next) {
 
 });
 
+router.post('/result', function (req, res) {
+
+    console.log(req.body);
+
+    utils.request({
+        url: "evaluation/result",
+        method: 'post',
+        headers: {"Authorization": req.session.token},
+        data: req.body
+    }, function (response) {
+        console.log(response)
+        if (response.data.code == 200) {
+            res.status(200);
+            res.send("成功");
+        } else {
+            res.status(500);
+            res.send("失败");
+        }
+    }, function (error) {
+        res.status(500);
+        res.send(error);
+    })
+
+})
+
 module.exports = router;

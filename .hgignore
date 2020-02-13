@@ -7,3 +7,4 @@ syntax: regexp
 ^target$
 build
 ^node_modules/
+evaluation-service/web/
