@@ -19,9 +19,16 @@
     <div class="row clearfix">
         <div class="col-md-1 col-sm-1 col-xs-1 column"></div>
         <div class="col-md-10 col-sm-10 col-xs-10 column">
-            <h1>选择评价课程</h1>
+            <h1>评价课程</h1>
             <% if (msg) { %>
-                <strong><%= msg %></strong>
+                <div class="row clearfix">
+                    <div class="col-md-12 col-sm-12 col-xs-12 column">
+                        <div class="alert alert-success alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <strong><%= msg %></strong>
+                        </div>
+                    </div>
+                </div>
             <% } %>
             <% if (course) { %>
 

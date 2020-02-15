@@ -9,9 +9,6 @@ import org.springframework.context.annotation.Scope;
 @Configuration
 public class JWTConfig {
 
-    @Value("${auth.enable}")
-    private Boolean enable = false;
-
     @Value("${auth.secret}")
     private String secret = null;
 
@@ -21,12 +18,9 @@ public class JWTConfig {
     @Bean
     @Scope("singleton")
     public JWTUtils jwtUtils() {
-        return new JWTUtils(this.enable, secret);
+        return new JWTUtils(secret);
     }
 
-    public void setEnable(Boolean enable) {
-        this.enable = enable;
-    }
 
     public void setSecret(String secret) {
         this.secret = secret;

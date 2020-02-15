@@ -10,9 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import net.tusdasa.evaluation.commons.Token;
 import org.apache.commons.codec.binary.Base64;
 
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,9 +20,9 @@ public class JWTUtils {
 
     private final String MAC_NAME = "HMacSHA256";
 
-    private KeyGenerator keyGenerator;
+    //private KeyGenerator keyGenerator;
 
-    private SecretKey secretKey;
+    //private SecretKey secretKey;
 
     private Algorithm algorithm;
 
@@ -37,27 +34,19 @@ public class JWTUtils {
     public JWTUtils() {
     }
 
-    public JWTUtils(Boolean enable, String secret) {
-        try {
-
-            if (enable) {
-                if (secret != null) {
-                    this.algorithm = Algorithm.HMAC256(secret.getBytes());
-                } else {
-                    this.algorithm = Algorithm.HMAC256(SECRET_KEY.getBytes());
-                }
-            } else {
-                this.keyGenerator = KeyGenerator.getInstance(MAC_NAME);
-                this.secretKey = keyGenerator.generateKey();
-                this.algorithm = Algorithm.HMAC256(secretKey.getEncoded());
-            }
-
-            this.verification = JWT.require(algorithm);
-            this.jwtVerifier = verification.build();
-
-        } catch (NoSuchAlgorithmException e) {
-
+    public JWTUtils(String secret) {
+        // this.keyGenerator = KeyGenerator.getInstance(MAC_NAME);
+        // this.secretKey = keyGenerator.generateKey();
+        // this.algorithm = Algorithm.HMAC256(secretKey.getEncoded());
+        if (secret != null && !secret.isEmpty()) {
+            this.algorithm = Algorithm.HMAC256(secret.getBytes());
+        } else {
+            this.algorithm = Algorithm.HMAC256(SECRET_KEY.getBytes());
         }
+
+        this.verification = JWT.require(algorithm);
+        this.jwtVerifier = verification.build();
+
 
     }
 

@@ -4,12 +4,13 @@ import com.alibaba.fastjson.JSON;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
+import lombok.extern.slf4j.Slf4j;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletResponse;
-
+@Slf4j
 @Component
 public class ErrorFilter extends ZuulFilter {
 
@@ -31,13 +32,11 @@ public class ErrorFilter extends ZuulFilter {
     @Override
     public Object run() throws ZuulException {
         RequestContext context = RequestContext.getCurrentContext();
-        HttpServletResponse response = context.getResponse();
-        try {
-            response.setContentType("application/json; charset=utf8");
-            response.getWriter().println(JSON.toJSON(new CommonResponse<String>().error(context.getThrowable().getMessage())));
-        } catch (Exception e) {
-
-        }
+        context.setSendZuulResponse(false);
+        log.error("error info {}", context.getThrowable().getMessage());
+        context.addZuulResponseHeader("Content-Type", "application/json;charset=utf8");
+        context.setResponseStatusCode(HttpStatus.OK.value());
+        context.setResponseBody(JSON.toJSON(new CommonResponse<String>().error("出现错误请重试")).toString());
         return null;
     }
 

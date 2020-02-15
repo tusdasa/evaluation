@@ -12,6 +12,9 @@ import net.tusdasa.evaluation.service.StudentCourseResultService;
 import net.tusdasa.evaluation.vo.IdsRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
 @Service
 public class StudentAssessmentServiceImpl implements StudentAssessmentService {
@@ -30,7 +33,7 @@ public class StudentAssessmentServiceImpl implements StudentAssessmentService {
 
     private CourseClient courseClient;
 
-    private StudentCourseResultService studentAssessmentService;
+    private StudentCourseResultService studentCourseResultService;
 
 
     public StudentAssessmentServiceImpl(AcademicYearClient academicYearClient,
@@ -39,14 +42,15 @@ public class StudentAssessmentServiceImpl implements StudentAssessmentService {
                                         ThirdKpiClient thirdKpiClient,
                                         RightClient rightClient,
                                         CourseClient courseClient,
-                                        StudentCourseResultService studentAssessmentService) {
+                                        StudentCourseResultService studentCourseResultService
+    ) {
         this.academicYearClient = academicYearClient;
         //this.firstKpiClient = firstKpiClient;
         //this.secondKpiClient = secondKpiClient;
         this.thirdKpiClient = thirdKpiClient;
         this.rightClient = rightClient;
         this.courseClient = courseClient;
-        this.studentAssessmentService = studentAssessmentService;
+        this.studentCourseResultService = studentCourseResultService;
         this.academicYearClient = academicYearClient;
     }
 
@@ -88,12 +92,17 @@ public class StudentAssessmentServiceImpl implements StudentAssessmentService {
 
     @Override
     public CommonResponse<Course> currentCourse(String studentId) {
-        CommonResponse<Student> studentCommonResponse = this.rightClient.checkStudent(studentId);
+        CommonResponse<Student> studentCommonResponse = this.getStudent(studentId);
         if (studentCommonResponse.success()) {
-            CommonResponse<Term> commonResponse = academicYearClient.currentTerm();
+            CommonResponse<Term> commonResponse = this.getTerm();
             if (commonResponse.success()) {
                 CommonResponse<Course> courseCommonResponse = courseClient.findCourseByClassIdAndTermId(studentCommonResponse.getData().getStudentClass().getClassId(), commonResponse.getData().getTermId());
-                return courseCommonResponse;
+                List<Course> courseList = this.checkAllCourse(courseCommonResponse.getTable(), this.getStudentCourseResult(studentId));
+                if (courseList != null) {
+                    return new CommonResponse<Course>().ok().table(courseList);
+                } else {
+                    return new CommonResponse<Course>().error("您已经完成了所有的评价");
+                }
             } else {
                 return new CommonResponse<Course>().error(commonResponse.getMessage());
             }
@@ -101,5 +110,60 @@ public class StudentAssessmentServiceImpl implements StudentAssessmentService {
             return new CommonResponse<Course>().error(studentCommonResponse.getMessage());
         }
     }
+
+    /**
+     * 获取学生信息
+     */
+    private CommonResponse<Student> getStudent(String studentId) {
+        CommonResponse<Student> studentCommonResponse = this.rightClient.checkStudent(studentId);
+        return studentCommonResponse;
+    }
+
+    /**
+     * 获取当前学期信息
+     */
+    private CommonResponse<Term> getTerm() {
+        CommonResponse<Term> termCommonResponse = this.academicYearClient.currentTerm();
+        return termCommonResponse;
+    }
+
+    /**
+     * 获取学生已评价课程
+     */
+    private List<StudentCourseResult> getStudentCourseResult(String studentId) {
+        List<StudentCourseResult> studentCourseResultList = this.studentCourseResultService.findBydStudentId(Long.valueOf(studentId));
+        return studentCourseResultList;
+    }
+
+    private List<Course> checkAllCourse(List<Course> courseList, List<StudentCourseResult> studentCourseResultList) {
+        if (courseList != null && !courseList.isEmpty()) {
+            if (studentCourseResultList != null && !studentCourseResultList.isEmpty()) {
+                if (studentCourseResultList.size() < courseList.size()) {
+                    List<Course> newCourseList = new ArrayList<>(courseList.size() - studentCourseResultList.size());
+                    for (int i = 0; i < courseList.size(); i++) {
+                        Course course = courseList.get(i);
+                        for (int j = 0; j < studentCourseResultList.size(); j++) {
+                            StudentCourseResult studentCourseResult = studentCourseResultList.get(j);
+                            if (studentCourseResult.getCourseId().intValue() != course.getCourseId().intValue()) {
+                                newCourseList.add(course);
+                            }
+                        }
+                    }
+                    return newCourseList;
+                } else {
+                    return null;
+                }
+            } else {
+                // 没有已经评价了的课程
+                return courseList;
+            }
+
+        } else {
+            // 没有课
+            return null;
+        }
+
+    }
+
 
 }

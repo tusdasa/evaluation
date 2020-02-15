@@ -41,8 +41,6 @@ feign:
 #mybatis:
 #  config-location: classpath:myBatisConfig.xml
 
-#enable配置为false时在运行时生成密钥, 停止应用后密钥丢失。所有签发的token将失效
-#为true时使用secret的密钥签发token 停止应用后签发的token不会失效
+# 加密密钥
 auth:
-  enable: true
   secret: 9O2B+amfn52nzowCysmC7+hfuA0q9xvxcgLU1UDVYwM=

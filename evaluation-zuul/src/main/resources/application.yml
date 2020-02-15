@@ -63,6 +63,6 @@ zuul:
       path: /thirdkpi/**
       serviceId: evaluation-thirdkpi-service
       strip-prefix: false
+# 加密密钥
 auth:
-  enable: true
   secret: 9O2B+amfn52nzowCysmC7+hfuA0q9xvxcgLU1UDVYwM=
