@@ -46,7 +46,8 @@
                             </select>
                         </div>
                     <% }); %>
-                    <button type="button" onclick="c()" class="btn btn-primary btn-block btn-default">提交</button>
+                    <button type="button" onclick="submitData()" class="btn btn-primary btn-block btn-default">提交
+                    </button>
                 </form>
         </div>
         <% } %>
@@ -65,14 +66,18 @@
             }
         }
         if (i < obs.elements.length) {
-            return true;
-        } else {
             return false;
+        } else {
+            return true;
         }
     }
 
 
-    function c() {
+    function submitData() {
+        if (!check()) {
+            alert("您有未选择的选项");
+            return
+        }
         let request = {}
         let list = new Array()
         request.scores = []
@@ -93,8 +98,8 @@
         axios.post('/evaluation/result', request)
             .then(function (response) {
                 if (response.status == 200) {
-                    alert("成功");
-                    location.href = "http://127.0.0.1:3000/course";
+                    alert("提交成功");
+                    location.href = "http://" + window.location.host + "/course";
                 } else {
                     alert("提交失败请重试!")
                 }

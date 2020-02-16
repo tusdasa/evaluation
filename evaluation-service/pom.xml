@@ -31,6 +31,8 @@
         <module>class-service</module>
         <module>student-evaluation</module>
         <module>calculationrules-service</module>
+        <module>config-service</module>
+        <module>analysis-service</module>
     </modules>
     <artifactId>evaluation-service</artifactId>
 

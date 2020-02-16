@@ -12,16 +12,10 @@ spring:
     host: 127.0.0.1
     port: 6379
     database: 10
-    #  datasource:
-    #    url: jdbc:mysql://127.0.0.1:3306/xynu_evaluation?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
-    #    username: root
-    #    password: root
-    #    driver-class-name: com.mysql.cj.jdbc.Driver
     tomcat:
       max-active: 4
       min-idle: 2
       initial-size: 2
-
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
@@ -29,6 +23,8 @@ spring:
     loadbalancer:
       ribbon:
         enabled: false
+    config:
+      uri: http://localhost:7023/config/
 eureka:
   client:
     service-url:

@@ -55,7 +55,7 @@ public class JWTUtils {
         builder.withSubject(String.valueOf(ID));
         //builder.withClaim("uuid", uuid);
         builder.withClaim("role", role);
-        builder.withExpiresAt(new Date(System.currentTimeMillis() + (1 * 3600 * 1000)));
+        builder.withExpiresAt(new Date(System.currentTimeMillis() + (3600 * 1000)));
         return builder.sign(algorithm);
     }
 
@@ -64,7 +64,7 @@ public class JWTUtils {
         JWTCreator.Builder builder = JWT.create();
         builder.withSubject(String.valueOf(Id));
         builder.withClaim("authority", role);
-        builder.withExpiresAt(new Date(System.currentTimeMillis() + (1 * 3600 * 1000)));
+        builder.withExpiresAt(new Date(System.currentTimeMillis() + (3600 * 1000)));
         return builder.sign(algorithm);
     }
 

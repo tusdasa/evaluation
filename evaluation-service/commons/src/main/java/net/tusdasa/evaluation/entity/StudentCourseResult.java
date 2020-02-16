@@ -22,6 +22,8 @@ public class StudentCourseResult implements Serializable {
 
     private Integer courseId;
 
+    private Integer total;
+
     private List<KpiScore> scores;
 
 }

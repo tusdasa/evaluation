@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: evaluation-config-service
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://www.lolik.top/git/tusdasa/config.git
+          search-paths: /
+          username: tusdasa
+          password: 3988978349
+      label: master
+eureka:
+  client:
+    service-url:
+      defaultZone: http://tusdasa:8000/eureka/
+server:
+  servlet:
+    context-path: /config
+  port: 7023

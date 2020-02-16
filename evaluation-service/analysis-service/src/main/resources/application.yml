@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: evaluation-analysis-service
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+  data:
+    mongodb:
+      uri: mongodb://127.0.0.1:27017/evaluation
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: student_evaluation
+    password: 123456
+eureka:
+  client:
+    service-url:
+      defaultZone: http://tusdasa:8000/eureka/
+server:
+  port: 7030
+  servlet:
+    context-path: /analysis
+feign:
+  hystrix:
+    enabled: true
+  okhttp:
+    enabled: true
