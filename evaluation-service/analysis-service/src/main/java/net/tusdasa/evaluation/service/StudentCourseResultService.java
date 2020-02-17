@@ -8,6 +8,8 @@ public interface StudentCourseResultService {
 
     StudentCourseResult addStudentCourseResult(StudentCourseResult studentCourseResult);
 
+    void updateCourseResultTotal(StudentCourseResult studentCourseResult);
+
     List<StudentCourseResult> findAllByCourseId(Integer courseId);
 
     StudentCourseResult findAllById(String id);

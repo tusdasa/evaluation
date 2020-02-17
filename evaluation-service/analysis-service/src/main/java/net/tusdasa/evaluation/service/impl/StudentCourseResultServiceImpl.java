@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -21,6 +22,17 @@ public class StudentCourseResultServiceImpl implements StudentCourseResultServic
     @Override
     public StudentCourseResult addStudentCourseResult(StudentCourseResult studentCourseResult) {
         return studentCourseResultDao.insert(studentCourseResult);
+    }
+
+    @Override
+    public void updateCourseResultTotal(StudentCourseResult studentCourseResult) {
+        Optional<StudentCourseResult> studentCourseResultOptional = studentCourseResultDao.findById(studentCourseResult.getId());
+        if (studentCourseResultOptional.isPresent()) {
+            StudentCourseResult old = studentCourseResultOptional.get();
+            old.setTotal(studentCourseResult.getTotal());
+            studentCourseResultDao.save(old);
+        }
+
     }
 
     @Override

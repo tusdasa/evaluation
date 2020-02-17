@@ -15,7 +15,7 @@ public class ResultReceiver {
     public ResultReceiver(StudentCourseResultService studentCourseResultService) {
         this.studentCourseResultService = studentCourseResultService;
     }
-
+    // 计算总成绩
     public void receiveMessage(StudentCourseResult studentCourseResult) {
         List<KpiScore> scores = studentCourseResult.getScores();
         int totalScore = 0;
@@ -24,6 +24,6 @@ public class ResultReceiver {
             totalScore += kpiScore.getScore().intValue();
         }
         studentCourseResult.setTotal(totalScore);
-        studentCourseResultService.addStudentCourseResult(studentCourseResult);
+        studentCourseResultService.updateCourseResultTotal(studentCourseResult);
     }
 }

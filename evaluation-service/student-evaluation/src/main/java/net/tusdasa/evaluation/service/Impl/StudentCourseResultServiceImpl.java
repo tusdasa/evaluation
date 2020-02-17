@@ -6,7 +6,6 @@ import net.tusdasa.evaluation.dao.StudentCourseResultDao;
 import net.tusdasa.evaluation.entity.StudentCourseResult;
 import net.tusdasa.evaluation.service.StudentCourseResultService;
 import net.tusdasa.evaluation.utils.UUIDUtils;
-import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +15,7 @@ import java.util.List;
 @Slf4j
 @Transactional
 @Service
-public class StudentCourseResultServiceImpl implements StudentCourseResultService, RabbitTemplate.ConfirmCallback {
+public class StudentCourseResultServiceImpl implements StudentCourseResultService {
 
     private final RabbitTemplate rabbitTemplate;
     private StudentCourseResultDao studentCourseResultDao;
@@ -31,8 +30,9 @@ public class StudentCourseResultServiceImpl implements StudentCourseResultServic
         String uuid = UUIDUtils.UUID();
         studentCourseResult.setId(uuid);
         studentCourseResult.setStudentId(studentId);
+        studentCourseResultDao.insert(studentCourseResult);
+        // 通知分析服务计算成绩
         rabbitTemplate.convertAndSend(RabbitmqConfig.topicExchangeName, "evaluation.result", studentCourseResult);
-        rabbitTemplate.setConfirmCallback(this::confirm);
     }
 
     @Override
@@ -40,12 +40,4 @@ public class StudentCourseResultServiceImpl implements StudentCourseResultServic
         return studentCourseResultDao.findAllByStudentId(studentId);
     }
 
-    @Override
-    public void confirm(CorrelationData correlationData, boolean b, String s) {
-        if (b) {
-            log.info("message success");
-        } else {
-            log.info("ID: {} message failure cause {}", correlationData, s);
-        }
-    }
 }

@@ -21,13 +21,15 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 //app.use(bodyParser.json()); // for parsing application/json
 //app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(session({
     secret: "121212121212",
     resave: true,
     saveUninitialized: true,
-    cookie: ('name', 'value', {maxAge: 5 * 60 * 1000, secure: false})
+    cookie: ('name', 'value', {maxAge: 3600 * 1000, secure: false})
 }));
 
 app.use('/', indexRouter);
