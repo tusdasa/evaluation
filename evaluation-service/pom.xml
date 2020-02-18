@@ -33,6 +33,7 @@
         <module>calculationrules-service</module>
         <module>config-service</module>
         <module>analysis-service</module>
+        <module>teacher-evaluation</module>
     </modules>
     <artifactId>evaluation-service</artifactId>
 
