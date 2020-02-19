@@ -1,20 +1,41 @@
 <?php
-    $str = "";
     $shell = "hg log --limit 1";
+
     exec($shell, $result, $status);
-	for($a =0 ; $a < count($result) ;$a++){
-		$str = $str."<br />".iconv('GB2312', 'UTF-8', $result[$a]);
-	}
-	$data = array("to" => "tusdasa@qq.com", "title" => "构建通知", "text" => $str);
-	$data_string = json_encode($data);
-	$ch = curl_init('http://127.0.0.1:8085/send2');
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-    curl_setopt($ch, CURLOPT_POSTFIELDS,$data_string);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+	$str = "changeset: ".substr(iconv('GB2312', 'UTF-8', $result[0]),13)."\n";
+	$str =$str."分支： ".substr(iconv('GB2312', 'UTF-8', $result[1]),13)."\n";
+	$str = $str."提交者： ".substr(iconv('GB2312', 'UTF-8', $result[4]),12)."\n";
+	$str = $str."提交时间： ".date("Y-m-d h:i:s a", strtotime(substr(iconv('GB2312', 'UTF-8', $result[5]),12)))."\n";
+	$str = $str."提交信息: ".substr(iconv('GB2312', 'UTF-8', $result[6]),15)."\n";
+
+	$email_text = array("to" => "tusdasa@qq.com", "title" => "构建通知", "text" => $str);
+	$email_data = json_encode($email_text);
+
+	// send email
+	$email = curl_init('http://127.0.0.1:8085/send2');
+    curl_setopt($email, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($email, CURLOPT_POSTFIELDS,$email_data);
+    curl_setopt($email, CURLOPT_RETURNTRANSFER,true);
+    curl_setopt($email, CURLOPT_HTTPHEADER, array(
         'Content-Type: application/json',
-        'Content-Length: ' . strlen($data_string))
-    );
-    $result = curl_exec($ch);
-    echo $result
+        'Content-Length: ' . strlen($email_data)
+        ));
+    $email_result = curl_exec($email);
+
+    // send qq
+    $qq_text = array("auto_escape" => true,
+    "group_id" => 808154403,
+    "message" => "本次构建:\n完成时间:\n详情\n".$str);
+    $qq_data = json_encode($qq_text);
+    $qq = curl_init("http://127.0.0.1:7501/send_group_msg");
+    curl_setopt($qq, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($qq, CURLOPT_POSTFIELDS, $qq_data);
+    curl_setopt($qq, CURLOPT_RETURNTRANSFER,true);
+    curl_setopt($qq, CURLOPT_HTTPHEADER, array(
+            'Authorization: Bearer DvPG5r2LYoW3QnOb',
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($qq_data))
+     );
+     $qq_result = curl_exec($qq);
+
 ?>
