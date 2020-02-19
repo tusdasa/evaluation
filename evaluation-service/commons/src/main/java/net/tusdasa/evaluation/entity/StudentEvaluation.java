@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class StudentCourseResult implements Serializable {
+public class StudentEvaluation implements Serializable {
 
     private String id;
 
@@ -24,6 +24,6 @@ public class StudentCourseResult implements Serializable {
 
     private Integer total;
 
-    private List<KpiScore> scores;
+    private List<KpiScore> kpiScoreList;
 
 }

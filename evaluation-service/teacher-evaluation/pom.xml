@@ -10,6 +10,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>teacher-evaluation</artifactId>
+    <name>Microservice-TeacherEvaluation</name>
+    <description>
+        教学督导评价微服务
+    </description>
 
     <dependencies>
         <dependency>
@@ -37,7 +41,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
@@ -52,5 +55,18 @@
         </dependency>
     </dependencies>
 
-
+    <build>
+        <finalName>evaluation-teacher-service</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <outputDirectory>
+                        ${output.jar.location}
+                    </outputDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

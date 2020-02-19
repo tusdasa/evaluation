@@ -1,8 +1,8 @@
 package net.tusdasa.evaluation.mq;
 
 import net.tusdasa.evaluation.entity.KpiScore;
-import net.tusdasa.evaluation.entity.StudentCourseResult;
-import net.tusdasa.evaluation.service.StudentCourseResultService;
+import net.tusdasa.evaluation.entity.StudentEvaluation;
+import net.tusdasa.evaluation.service.StudentEvaluationService;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -10,20 +10,21 @@ import java.util.List;
 @Component
 public class ResultReceiver {
 
-    private StudentCourseResultService studentCourseResultService;
+    private StudentEvaluationService studentEvaluationService;
 
-    public ResultReceiver(StudentCourseResultService studentCourseResultService) {
-        this.studentCourseResultService = studentCourseResultService;
+    public ResultReceiver(StudentEvaluationService studentEvaluationService) {
+        this.studentEvaluationService = studentEvaluationService;
     }
+
     // 计算总成绩
-    public void receiveMessage(StudentCourseResult studentCourseResult) {
-        List<KpiScore> scores = studentCourseResult.getScores();
+    public void receiveMessage(StudentEvaluation studentEvaluation) {
+        List<KpiScore> kpiScoreList = studentEvaluation.getKpiScoreList();
         int totalScore = 0;
-        for (int i = 0; i < scores.size(); i++) {
-            KpiScore kpiScore = scores.get(i);
+        for (int i = 0; i < kpiScoreList.size(); i++) {
+            KpiScore kpiScore = kpiScoreList.get(i);
             totalScore += kpiScore.getScore().intValue();
         }
-        studentCourseResult.setTotal(totalScore);
-        studentCourseResultService.updateCourseResultTotal(studentCourseResult);
+        studentEvaluation.setTotal(totalScore);
+        studentEvaluationService.updateCourseResultTotal(studentEvaluation);
     }
 }

@@ -7,8 +7,8 @@ import net.tusdasa.evaluation.client.RightClient;
 import net.tusdasa.evaluation.client.ThirdKpiClient;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.*;
-import net.tusdasa.evaluation.service.StudentAssessmentService;
-import net.tusdasa.evaluation.service.StudentCourseResultService;
+import net.tusdasa.evaluation.service.StudentEvaluationInfoService;
+import net.tusdasa.evaluation.service.StudentEvaluationService;
 import net.tusdasa.evaluation.vo.IdsRequest;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class StudentAssessmentServiceImpl implements StudentAssessmentService {
+public class StudentEvaluationInfoServiceImpl implements StudentEvaluationInfoService {
 
     private final Integer STUDENT_RIGHT = -1;
 
@@ -33,16 +33,16 @@ public class StudentAssessmentServiceImpl implements StudentAssessmentService {
 
     private CourseClient courseClient;
 
-    private StudentCourseResultService studentCourseResultService;
+    private StudentEvaluationService studentEvaluationService;
 
 
-    public StudentAssessmentServiceImpl(AcademicYearClient academicYearClient,
-                                        //FirstKpiClient firstKpiClient,
-                                        //SecondKpiClient secondKpiClient,
-                                        ThirdKpiClient thirdKpiClient,
-                                        RightClient rightClient,
-                                        CourseClient courseClient,
-                                        StudentCourseResultService studentCourseResultService
+    public StudentEvaluationInfoServiceImpl(AcademicYearClient academicYearClient,
+                                            //FirstKpiClient firstKpiClient,
+                                            //SecondKpiClient secondKpiClient,
+                                            ThirdKpiClient thirdKpiClient,
+                                            RightClient rightClient,
+                                            CourseClient courseClient,
+                                            StudentEvaluationService studentEvaluationService
     ) {
         this.academicYearClient = academicYearClient;
         //this.firstKpiClient = firstKpiClient;
@@ -50,7 +50,7 @@ public class StudentAssessmentServiceImpl implements StudentAssessmentService {
         this.thirdKpiClient = thirdKpiClient;
         this.rightClient = rightClient;
         this.courseClient = courseClient;
-        this.studentCourseResultService = studentCourseResultService;
+        this.studentEvaluationService = studentEvaluationService;
         this.academicYearClient = academicYearClient;
     }
 
@@ -130,21 +130,21 @@ public class StudentAssessmentServiceImpl implements StudentAssessmentService {
     /**
      * 获取学生已评价课程
      */
-    private List<StudentCourseResult> getStudentCourseResult(String studentId) {
-        List<StudentCourseResult> studentCourseResultList = this.studentCourseResultService.findBydStudentId(Long.valueOf(studentId));
-        return studentCourseResultList;
+    private List<StudentEvaluation> getStudentCourseResult(String studentId) {
+        List<StudentEvaluation> studentEvaluationList = this.studentEvaluationService.findBydStudentId(Long.valueOf(studentId));
+        return studentEvaluationList;
     }
 
-    private List<Course> checkAllCourse(List<Course> courseList, List<StudentCourseResult> studentCourseResultList) {
+    private List<Course> checkAllCourse(List<Course> courseList, List<StudentEvaluation> studentEvaluationList) {
         if (courseList != null && !courseList.isEmpty()) {
-            if (studentCourseResultList != null && !studentCourseResultList.isEmpty()) {
-                if (studentCourseResultList.size() < courseList.size()) {
-                    List<Course> newCourseList = new ArrayList<>(courseList.size() - studentCourseResultList.size());
+            if (studentEvaluationList != null && !studentEvaluationList.isEmpty()) {
+                if (studentEvaluationList.size() < courseList.size()) {
+                    List<Course> newCourseList = new ArrayList<>(courseList.size() - studentEvaluationList.size());
                     for (int i = 0; i < courseList.size(); i++) {
                         Course course = courseList.get(i);
-                        for (int j = 0; j < studentCourseResultList.size(); j++) {
-                            StudentCourseResult studentCourseResult = studentCourseResultList.get(j);
-                            if (studentCourseResult.getCourseId().intValue() != course.getCourseId().intValue()) {
+                        for (int j = 0; j < studentEvaluationList.size(); j++) {
+                            StudentEvaluation studentEvaluation = studentEvaluationList.get(j);
+                            if (studentEvaluation.getCourseId().intValue() != course.getCourseId().intValue()) {
                                 newCourseList.add(course);
                             }
                         }

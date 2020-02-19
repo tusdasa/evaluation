@@ -4,7 +4,7 @@ import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.Course;
 import net.tusdasa.evaluation.entity.ThirdKpi;
 
-public interface StudentAssessmentService {
+public interface StudentEvaluationInfoService {
 
     CommonResponse<ThirdKpi> findAll();
 

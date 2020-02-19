@@ -93,7 +93,7 @@
         }
         request.courseId = obs.elements[0].value;
         request.termId = obs.elements[1].value;
-        request.scores = list;
+        request.kpiScoreList = list;
 
         axios.post('/evaluation/result', request)
             .then(function (response) {
