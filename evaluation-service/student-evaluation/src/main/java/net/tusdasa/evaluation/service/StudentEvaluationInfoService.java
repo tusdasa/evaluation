@@ -6,7 +6,7 @@ import net.tusdasa.evaluation.entity.ThirdKpi;
 
 public interface StudentEvaluationInfoService {
 
-    CommonResponse<ThirdKpi> findAll();
+    CommonResponse<ThirdKpi> findAll(Integer role);
 
     CommonResponse<Course> currentCourse(String studentId);
 

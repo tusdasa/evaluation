@@ -1,3 +1,7 @@
+server:
+  port: 7052
+  servlet:
+    context-path: /teacherevaluation
 spring:
   application:
     name: evaluation-teacher-evaluation
@@ -9,3 +13,8 @@ eureka:
   client:
     service-url:
       defaultZone: http://tusdasa:8000/eureka/
+feign:
+  hystrix:
+    enabled: false
+  okhttp:
+    enabled: true

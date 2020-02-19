@@ -19,8 +19,6 @@ import java.util.List;
 @Service
 public class StudentEvaluationInfoServiceImpl implements StudentEvaluationInfoService {
 
-    private final Integer STUDENT_RIGHT = -1;
-
     private AcademicYearClient academicYearClient;
 
     //private FirstKpiClient firstKpiClient;
@@ -37,16 +35,12 @@ public class StudentEvaluationInfoServiceImpl implements StudentEvaluationInfoSe
 
 
     public StudentEvaluationInfoServiceImpl(AcademicYearClient academicYearClient,
-                                            //FirstKpiClient firstKpiClient,
-                                            //SecondKpiClient secondKpiClient,
                                             ThirdKpiClient thirdKpiClient,
                                             RightClient rightClient,
                                             CourseClient courseClient,
                                             StudentEvaluationService studentEvaluationService
     ) {
         this.academicYearClient = academicYearClient;
-        //this.firstKpiClient = firstKpiClient;
-        //this.secondKpiClient = secondKpiClient;
         this.thirdKpiClient = thirdKpiClient;
         this.rightClient = rightClient;
         this.courseClient = courseClient;
@@ -70,8 +64,8 @@ public class StudentEvaluationInfoServiceImpl implements StudentEvaluationInfoSe
      **/
 
     @Override
-    public CommonResponse<ThirdKpi> findAll() {
-        CommonResponse<Right> rightCommonResponse = rightClient.findRightById(-1);
+    public CommonResponse<ThirdKpi> findAll(Integer role) {
+        CommonResponse<Right> rightCommonResponse = rightClient.findRightById(role);
         if (rightCommonResponse.success()) {
             Right right = rightCommonResponse.getData();
             if (!right.getFirstKpiId().isEmpty()) {

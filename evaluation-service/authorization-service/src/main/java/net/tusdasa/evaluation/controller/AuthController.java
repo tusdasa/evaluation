@@ -48,7 +48,7 @@ public class AuthController {
         if (result.get("obj") != null) {
             Student student = (Student) result.get("obj");
             studentRedisTemplate.opsForValue().set(student.getStudentId().toString(), student, Duration.of(1, ChronoUnit.HOURS));
-            return new CommonResponse<String>().ok().data(jwtUtils.generateNewToken(student.getStudentId(), 1));
+            return new CommonResponse<String>().ok().data(jwtUtils.generateNewToken(student.getStudentId(), -1));
         }
         return new CommonResponse<String>().error(result.get("msg").toString());
     }

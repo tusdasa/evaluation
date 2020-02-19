@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SecondKpiClientImpl implements SecondKpiClient {
-
     @Override
     public CommonResponse<SecondKpi> findAllByFirstKpiIds(IdsRequest idsRequest) {
         return new CommonResponse<SecondKpi>().error("忙");

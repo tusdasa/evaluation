@@ -23,8 +23,8 @@ public class StudentEvaluationController {
     }
 
     @GetMapping("/")
-    public CommonResponse<ThirdKpi> getAllThirdKpi() {
-        return this.studentEvaluationInfoService.findAll();
+    public CommonResponse<ThirdKpi> getAllThirdKpi(@RequestHeader(name = "role") Integer role) {
+        return this.studentEvaluationInfoService.findAll(role);
     }
 
     @GetMapping("/course")
