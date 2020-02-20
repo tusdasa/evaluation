@@ -27,7 +27,6 @@
     $qq_text = array("auto_escape" => true,
     "group_id" => 808154403,
     "message" => "本次构建完成\n完成时间: ".date("Y-m-d h:i:s a")."\n详情: \n".mb_convert_encoding(substr($result[5],13),"UTF-8","EUC-CN");
-    );
     print_r($qq_text);
 
     $qq_data = json_encode($qq_text);
