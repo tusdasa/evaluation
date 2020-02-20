@@ -9,6 +9,9 @@ spring:
     loadbalancer:
       ribbon:
         enabled: false
+  data:
+    mongodb:
+      uri: mongodb://127.0.0.1:27017/teacherevaluation
 eureka:
   client:
     service-url:
