@@ -16,7 +16,7 @@ import java.io.Serializable;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
 /**
- * @Description 学生班级类
+ * 学生班级类
  * @author tusdasa
  * @version 1.0
  * */

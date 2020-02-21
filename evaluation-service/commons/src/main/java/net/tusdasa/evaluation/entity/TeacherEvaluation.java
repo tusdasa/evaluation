@@ -6,13 +6,15 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import net.tusdasa.evaluation.utils.UUIDUtils;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
 
 /**
- * @Description 教学督导评价类
+ * 教学督导评价类
  * @author tusdasa
  * @version 1.0
  * */
@@ -27,7 +29,7 @@ public class TeacherEvaluation {
     private String id;
 
     /**
-     *
+     * 被评价人Id
      */
     private Integer workId;
 
@@ -36,5 +38,19 @@ public class TeacherEvaluation {
      */
     private Integer termId;
 
-    //private Integer ;
+    /**
+     * 评价人ID
+     */
+    private Integer teacherId;
+
+    /**
+     * 总分
+     */
+    private Integer total;
+
+    /**
+     * 三级指标得分
+     */
+    private List<SecondKpi> secondKpiList;
+
 }

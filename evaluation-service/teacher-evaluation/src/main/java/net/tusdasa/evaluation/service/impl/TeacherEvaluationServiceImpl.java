@@ -5,12 +5,16 @@ import net.tusdasa.evaluation.client.AcademicYearClient;
 import net.tusdasa.evaluation.client.RightClient;
 import net.tusdasa.evaluation.client.ThirdKpiClient;
 import net.tusdasa.evaluation.commons.CommonResponse;
+import net.tusdasa.evaluation.dao.TeacherEvaluationDao;
 import net.tusdasa.evaluation.entity.Right;
+import net.tusdasa.evaluation.entity.TeacherEvaluation;
 import net.tusdasa.evaluation.entity.Term;
 import net.tusdasa.evaluation.entity.ThirdKpi;
 import net.tusdasa.evaluation.service.TeacherEvaluationService;
+import net.tusdasa.evaluation.utils.UUIDUtils;
 import net.tusdasa.evaluation.vo.IdsRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -22,10 +26,17 @@ public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
 
     private ThirdKpiClient thirdKpiClient;
 
-    public TeacherEvaluationServiceImpl(AcademicYearClient academicYearClient, RightClient rightClient, ThirdKpiClient thirdKpiClient) {
+    private TeacherEvaluationDao teacherEvaluationDao;
+
+    public TeacherEvaluationServiceImpl(AcademicYearClient academicYearClient,
+                                        RightClient rightClient,
+                                        ThirdKpiClient thirdKpiClient,
+                                        TeacherEvaluationDao teacherEvaluationDao
+    ) {
         this.academicYearClient = academicYearClient;
         this.rightClient = rightClient;
         this.thirdKpiClient = thirdKpiClient;
+        this.teacherEvaluationDao = teacherEvaluationDao;
     }
 
     @Override
@@ -59,6 +70,18 @@ public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
             return new CommonResponse<ThirdKpi>().error(termCommonResponse.getMessage());
         }
 
+    }
+
+    @Transactional
+    @Override
+    public void addTeacherEvaluation(TeacherEvaluation teacherEvaluation, Integer workId) {
+        // 生成主键
+        teacherEvaluation.setId(UUIDUtils.UUID());
+        // 设置评价者工号
+        teacherEvaluation.setTeacherId(workId);
+        // 插入MongoDB
+        teacherEvaluationDao.insert(teacherEvaluation);
+        // 通过消息队列通知分析微服务计算
     }
 
 }

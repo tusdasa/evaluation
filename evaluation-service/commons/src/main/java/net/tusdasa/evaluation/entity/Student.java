@@ -15,7 +15,7 @@ import java.io.Serializable;
 @With
 
 /**
- * @Description 学生类
+ * 学生类
  * @author tusdasa
  * @version 1.0
  * */

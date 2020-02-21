@@ -15,7 +15,7 @@ import java.util.Date;
 @Builder
 
 /**
- * @Description 学期类
+ * 学期类
  * @author tusdasa
  * @version 1.0
  * */

@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Builder
 
 /**
- * @Description 职称类
+ * 职称类
  * @author tusdasa
  * @version 1.0
  * */

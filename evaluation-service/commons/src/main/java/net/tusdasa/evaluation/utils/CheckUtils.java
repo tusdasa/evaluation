@@ -1,5 +1,12 @@
 package net.tusdasa.evaluation.utils;
 
+/**
+ * 校验工具类
+ *
+ * @author tusdasa
+ * @version 1.0
+ */
+
 public class CheckUtils {
 
     public static boolean isString(String string) {

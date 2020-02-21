@@ -13,7 +13,7 @@ import java.io.Serializable;
 @ToString
 
 /**
- * @Description 第二指标类
+ * 第二指标类
  * @author tusdasa
  * @version 1.0
  * */

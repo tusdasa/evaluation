@@ -13,7 +13,8 @@ import java.io.Serializable;
 @Builder
 
 /**
- * @Description 教师状态类 参加评教 不参加评教
+ * 教师状态类
+ * 参加评教 不参加评教
  * @author tusdasa
  * @version 1.0
  * */

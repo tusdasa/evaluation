@@ -13,7 +13,7 @@ import java.io.Serializable;
 @With
 
 /**
- * @Description 专业类
+ * 专业类
  * @author tusdasa
  * @version 1.0
  * */

@@ -15,7 +15,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
 /**
- * @Description 课程类
+ * 课程类
  * @author tusdasa
  * @version 1.0
  * */

@@ -13,7 +13,7 @@ import java.util.HashSet;
 @ToString
 
 /**
- * @Description 权限类 mongodb 数据表 right
+ * 权限类 mongodb 数据表 right
  * @author tusdasa
  * @version 1.0
  * */

@@ -1,14 +1,30 @@
 package net.tusdasa.evaluation.service;
 
 import net.tusdasa.evaluation.commons.CommonResponse;
+import net.tusdasa.evaluation.entity.TeacherEvaluation;
 import net.tusdasa.evaluation.entity.ThirdKpi;
 
-public interface TeacherEvaluationService {
-    // 找出教学督导权限下的三级指标
+/**
+ * 教学督导评价服务接口
+ *
+ * @author tusdasa
+ * @version 1.0
+ */
 
-    // 接收角色ID 和 工号
+public interface TeacherEvaluationService {
+
+    /**
+     * @param role 角色ID
+     *             找出对应权限下，三级指标
+     */
     CommonResponse<ThirdKpi> findAllThirdKpi(Integer role);
 
-    // 接收评教结果
+    /**
+     * 接收评教结果
+     *
+     * @param teacherEvaluation 教学督导评价结果
+     * @param workId            评价者（教学督导）工号
+     */
+    void addTeacherEvaluation(TeacherEvaluation teacherEvaluation, Integer workId);
 
 }

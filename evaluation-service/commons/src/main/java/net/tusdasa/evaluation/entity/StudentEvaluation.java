@@ -15,7 +15,7 @@ import java.util.List;
 @EqualsAndHashCode
 
 /**
- * @Description 学生评价类
+ * 学生评价类
  * @author tusdasa
  * @version 1.0
  * */

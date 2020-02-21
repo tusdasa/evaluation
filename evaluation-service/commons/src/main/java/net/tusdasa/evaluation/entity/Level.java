@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Builder
 
 /**
- * @Description 指标等级类
+ * 指标等级类
  * @author tusdasa
  * @version 1.0
  * */

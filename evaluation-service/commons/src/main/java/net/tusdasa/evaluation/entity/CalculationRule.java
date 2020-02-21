@@ -16,7 +16,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
 /**
- * @Description 计算规则
+ * 计算规则
  * @author tusdasa
  * @version 1.0
  * */
