@@ -4,20 +4,36 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import net.tusdasa.evaluation.utils.UUIDUtils;
 
 @Data
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
+
+/**
+ * @Description 教学督导评价类
+ * @author tusdasa
+ * @version 1.0
+ * */
+
 public class TeacherEvaluation {
 
-    // MongoDB id
+    /**
+     * MongoDB id UUID
+     *
+     * @see UUIDUtils#UUID()
+     */
     private String id;
 
-    // 被评价者Id
+    /**
+     *
+     */
     private Integer workId;
 
-    // 当前学期Id
+    /**
+     * 当前学期Id
+     */
     private Integer termId;
 
     //private Integer ;
