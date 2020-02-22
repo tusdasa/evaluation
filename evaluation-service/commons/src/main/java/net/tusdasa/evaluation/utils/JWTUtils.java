@@ -7,7 +7,6 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.Verification;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.slf4j.Slf4j;
 import net.tusdasa.evaluation.commons.Token;
 import org.apache.commons.codec.binary.Base64;
 
@@ -22,7 +21,6 @@ import java.util.Map;
  * @version 1.0
  */
 
-@Slf4j
 public class JWTUtils {
 
     /**
