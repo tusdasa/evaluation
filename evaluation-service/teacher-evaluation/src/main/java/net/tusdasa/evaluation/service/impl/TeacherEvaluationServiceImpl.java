@@ -39,6 +39,9 @@ public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
         this.teacherEvaluationDao = teacherEvaluationDao;
     }
 
+    /**
+     * @see TeacherEvaluationService#findAllThirdKpi(Integer)
+     */
     @Override
     public CommonResponse<ThirdKpi> findAllThirdKpi(Integer role) {
 
@@ -72,6 +75,11 @@ public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
 
     }
 
+    /**
+     * 此方法已经开启事务
+     *
+     * @see TeacherEvaluationService#addTeacherEvaluation(TeacherEvaluation, Integer)
+     */
     @Transactional
     @Override
     public void addTeacherEvaluation(TeacherEvaluation teacherEvaluation, Integer workId) {
