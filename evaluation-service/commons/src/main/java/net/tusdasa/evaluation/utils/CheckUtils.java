@@ -9,6 +9,10 @@ package net.tusdasa.evaluation.utils;
 
 public class CheckUtils {
 
+    public static boolean isObject(Object object) {
+        return object != null;
+    }
+
     public static boolean isString(String string) {
         return string != null && !"".equals(string) && !string.isEmpty() && string.length() >= 1;
     }

@@ -18,7 +18,6 @@ public class JWTConfig {
     @Bean
     @Scope("singleton")
     public JWTUtils jwtUtils() {
-        System.out.println(secret);
         return new JWTUtils(secret);
     }
 

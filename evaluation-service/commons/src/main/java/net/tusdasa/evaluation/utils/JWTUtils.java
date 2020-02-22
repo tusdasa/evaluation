@@ -7,10 +7,10 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.Verification;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import net.tusdasa.evaluation.commons.Token;
 import org.apache.commons.codec.binary.Base64;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +22,7 @@ import java.util.Map;
  * @version 1.0
  */
 
+@Slf4j
 public class JWTUtils {
 
     /**
@@ -65,16 +66,14 @@ public class JWTUtils {
         // this.keyGenerator = KeyGenerator.getInstance(MAC_NAME);
         // this.secretKey = keyGenerator.generateKey();
         // this.algorithm = Algorithm.HMAC256(secretKey.getEncoded());
-        if (secret != null && !secret.isEmpty()) {
+        if (secret != null) {
             this.algorithm = Algorithm.HMAC256(secret.getBytes());
         } else {
             this.algorithm = Algorithm.HMAC256(SECRET_KEY.getBytes());
         }
-
+        System.out.println("secret: " + secret);
         this.verification = JWT.require(algorithm);
         this.jwtVerifier = verification.build();
-
-
     }
 
     /**
@@ -85,24 +84,10 @@ public class JWTUtils {
     public String generateNewToken(Long ID, Integer role) {
         JWTCreator.Builder builder = JWT.create();
         builder.withSubject(String.valueOf(ID));
-        //builder.withClaim("uuid", uuid);
         builder.withClaim("role", role);
         builder.withExpiresAt(new Date(System.currentTimeMillis() + (3600 * 1000)));
         return builder.sign(algorithm);
     }
-
-
-    /**
-     * @deprecated
-     * */
-    public String generateToken(Long Id, Integer role) {
-        JWTCreator.Builder builder = JWT.create();
-        builder.withSubject(String.valueOf(Id));
-        builder.withClaim("authority", role);
-        builder.withExpiresAt(new Date(System.currentTimeMillis() + (3600 * 1000)));
-        return builder.sign(algorithm);
-    }
-
     /**
      * JWT 校验
      * @param token jwt token
@@ -128,7 +113,7 @@ public class JWTUtils {
         Map<String, Object> result = new HashMap<>();
         try {
             DecodedJWT decodedJWT = this.jwtVerifier.verify(token);
-            String object = new String(Base64.decodeBase64(decodedJWT.getPayload()), StandardCharsets.UTF_8);
+            String object = new String(Base64.decodeBase64(decodedJWT.getPayload()), "UTF8");
             result.put("code", 200);
             ObjectMapper objectMapper = new ObjectMapper();
             result.put("token", objectMapper.readValue(object, Token.class));

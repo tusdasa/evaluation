@@ -88,9 +88,9 @@ public class StudentEvaluationInfoServiceImpl implements StudentEvaluationInfoSe
     public CommonResponse<Course> currentCourse(String studentId) {
         CommonResponse<Student> studentCommonResponse = this.getStudent(studentId);
         if (studentCommonResponse.success()) {
-            CommonResponse<Term> commonResponse = this.getTerm();
-            if (commonResponse.success()) {
-                CommonResponse<Course> courseCommonResponse = courseClient.findCourseByClassIdAndTermId(studentCommonResponse.getData().getStudentClass().getClassId(), commonResponse.getData().getTermId());
+            CommonResponse<Term> termCommonResponse = this.getTerm();
+            if (termCommonResponse.success()) {
+                CommonResponse<Course> courseCommonResponse = courseClient.findCourseByClassIdAndTermId(studentCommonResponse.getData().getStudentClass().getClassId(), termCommonResponse.getData().getTermId());
                 List<Course> courseList = this.checkAllCourse(courseCommonResponse.getTable(), this.getStudentCourseResult(studentId));
                 if (courseList != null) {
                     return new CommonResponse<Course>().ok().table(courseList);
@@ -98,9 +98,11 @@ public class StudentEvaluationInfoServiceImpl implements StudentEvaluationInfoSe
                     return new CommonResponse<Course>().error("您已经完成了所有的评价");
                 }
             } else {
-                return new CommonResponse<Course>().error(commonResponse.getMessage());
+                log.info("未找到学期");
+                return new CommonResponse<Course>().error(termCommonResponse.getMessage());
             }
         } else {
+            log.info("未找到学生信息");
             return new CommonResponse<Course>().error(studentCommonResponse.getMessage());
         }
     }
@@ -134,14 +136,25 @@ public class StudentEvaluationInfoServiceImpl implements StudentEvaluationInfoSe
             if (studentEvaluationList != null && !studentEvaluationList.isEmpty()) {
                 if (studentEvaluationList.size() < courseList.size()) {
                     List<Course> newCourseList = new ArrayList<>(courseList.size() - studentEvaluationList.size());
-                    for (int i = 0; i < courseList.size(); i++) {
+                    int i = 0;
+                    int j = 0;
+                    boolean flag = false;
+                    for (; i < courseList.size(); i++) {
                         Course course = courseList.get(i);
-                        for (int j = 0; j < studentEvaluationList.size(); j++) {
+                        log.info(course.getCourseName());
+                        for (; j < studentEvaluationList.size(); j++) {
                             StudentEvaluation studentEvaluation = studentEvaluationList.get(j);
-                            if (studentEvaluation.getCourseId().intValue() != course.getCourseId().intValue()) {
-                                newCourseList.add(course);
+                            if (studentEvaluation.getCourseId().longValue() == course.getCourseId().longValue()) {
+                                // 已经被评价了不再进入课程列表
+                                flag = true;
+                                break;
                             }
                         }
+                        if (!flag) {
+                            newCourseList.add(course);
+                        }
+                        flag = false;
+                        j = 0;
                     }
                     return newCourseList;
                 } else {

@@ -74,11 +74,11 @@ public class StudentServiceImpl implements StudentService {
                 result.put("obj", student);
             } else {
                 result.put("code", -1);
-                result.put("msg", "密码错误");
+                result.put("msg", "学号或密码错误");
             }
         } else {
             result.put("code", 0);
-            result.put("msg", "用户不存在");
+            result.put("msg", "学号不存在");
         }
 
         return result;

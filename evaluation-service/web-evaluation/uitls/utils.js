@@ -22,6 +22,9 @@ exports.request = function (config, success, failure) {
         timeout: 60000,
     });
     instance(config).then(function (response) {
+        console.log("--------------------------------------------------");
+        console.log(response);
+        console.log("--------------------------------------------------");
         success(response);
     }).catch(function (error) {
         if (error && error.response) {

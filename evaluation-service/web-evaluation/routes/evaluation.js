@@ -33,8 +33,8 @@ router.post('/result', function (req, res) {
         headers: {"Authorization": req.session.token},
         data: req.body
     }, function (response) {
-        console.log(response)
-        if (response.data.code == 200) {
+        console.log(response);
+        if (response.data.code === 200) {
             res.status(200);
             res.send("成功");
         } else {

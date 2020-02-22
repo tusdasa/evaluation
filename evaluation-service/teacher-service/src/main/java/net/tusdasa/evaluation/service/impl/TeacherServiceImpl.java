@@ -58,11 +58,11 @@ public class TeacherServiceImpl implements TeacherService {
                 map.put("obj", teacher);
             } else {
                 map.put("code", -1);
-                map.put("msg", "密码错误");
+                map.put("msg", "工号或密码错误");
             }
         } else {
             map.put("code", 0);
-            map.put("msg", "不存在");
+            map.put("msg", "工号不存在");
         }
         return map;
 

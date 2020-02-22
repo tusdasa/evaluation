@@ -12,7 +12,6 @@ import java.util.List;
 @With
 @ToString
 @EqualsAndHashCode
-@Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
 /**

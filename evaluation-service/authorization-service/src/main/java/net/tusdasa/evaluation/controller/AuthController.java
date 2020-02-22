@@ -48,20 +48,48 @@ public class AuthController {
         if (result.get("obj") != null) {
             Student student = (Student) result.get("obj");
             studentRedisTemplate.opsForValue().set(student.getStudentId().toString(), student, Duration.of(1, ChronoUnit.HOURS));
-            return new CommonResponse<String>().ok().data(jwtUtils.generateNewToken(student.getStudentId(), -1));
+            return new CommonResponse<String>().ok().data(jwtUtils.generateNewToken(student.getStudentId(), 1));
         }
         return new CommonResponse<String>().error(result.get("msg").toString());
     }
 
     @PostMapping("/teacher")
-    public CommonResponse<String> authTeacher(@RequestParam("workId") Integer workId, @RequestParam("password") String password) {
+    public CommonResponse<String> authTeacher(@RequestParam("workId") String workId, @RequestParam("password") String password) {
         Map<String, Object> result = teacherAuthService.findTeacher(Integer.valueOf(workId), password);
         if (result.get("obj") != null) {
             Teacher teacher = (Teacher) result.get("obj");
             teacherRedisTemplate.opsForValue().set(teacher.getWorkId().toString(), teacher, Duration.of(1, ChronoUnit.HOURS));
             return new CommonResponse<String>().ok().data(jwtUtils.generateNewToken(teacher.getWorkId().longValue(), teacher.getRoleId()));
-
         }
         return new CommonResponse<String>().error(result.get("msg").toString());
     }
+/*
+    @PostMapping("/authorization")
+    public CommonResponse<String> authorization(
+            @RequestParam(name = "studentId", required = false) String studentId,
+            @RequestParam(name = "workId", required = false) String workId,
+            @RequestParam("password") String password
+    ){
+        if (CheckUtils.isString(studentId)){
+            Map<String, Object> studentResult = studentAuthService.findStudent(Long.valueOf(studentId), password);
+            if (null != studentResult.get("obj")) {
+                Student student = (Student) studentResult.get("obj");
+                studentRedisTemplate.opsForValue().set(student.getStudentId().toString(), student, Duration.of(1, ChronoUnit.HOURS));
+                return new CommonResponse<String>().ok().data(jwtUtils.generateNewToken(student.getStudentId(), 1));
+            }
+            return new CommonResponse<String>().error(studentResult.get("msg").toString());
+        }else if (CheckUtils.isString(workId)){
+            Map<String, Object> teacherResult = teacherAuthService.findTeacher(Integer.valueOf(workId), password);
+            if (null != teacherResult.get("obj")) {
+                Teacher teacher = (Teacher) teacherResult.get("obj");
+                teacherRedisTemplate.opsForValue().set(teacher.getWorkId().toString(), teacher, Duration.of(1, ChronoUnit.HOURS));
+                return new CommonResponse<String>().ok().data(jwtUtils.generateNewToken(teacher.getWorkId().longValue(), teacher.getRoleId()));
+            }
+            return new CommonResponse<String>().error(teacherResult.get("msg").toString());
+        }else {
+            return new CommonResponse<String>();
+        }
+    }
+
+ */
 }

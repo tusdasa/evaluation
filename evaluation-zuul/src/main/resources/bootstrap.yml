@@ -22,19 +22,19 @@ hystrix:
     default:
       execution:
         timeout:
-          enabled: true
+          enabled: truec
         isolation:
           thread:
-            timeoutInMilliseconds: 60000
+            timeoutInMilliseconds: 70000
 ribbon:
-  ReadTimeout: 60000
-  ConnectTimeout: 60000
+  ReadTimeout: 70000
+  ConnectTimeout: 70000
 zuul:
   prefix: /service
   host:
-    connect-timeout-millis: 60000
-    socket-timeout-millis: 60000
-    connection-request-timeout-millis: 60000
+    connect-timeout-millis: 70000
+    socket-timeout-millis: 70000
+    connection-request-timeout-millis: 70000
     max-total-connections: 500
   routes:
     student:

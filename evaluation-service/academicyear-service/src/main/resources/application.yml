@@ -3,6 +3,9 @@ server:
   servlet:
     context-path: /academic
 spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
   application:
     name: evaluation-academic-service
   datasource:

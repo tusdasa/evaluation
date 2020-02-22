@@ -42,7 +42,7 @@ public class StudentEvaluation implements Serializable {
     /**
      * 当前课程Id
      */
-    private Integer courseId;
+    private Long courseId;
 
     /**
      * 总分 由分析微服务计算
