@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Configuration;
 
 @EnableRabbit
 @Configuration
-public class RabbitMQ {
+public class RabbitMQConfig {
 
     /**
      * 消息转发器名
@@ -33,7 +33,7 @@ public class RabbitMQ {
      */
     public static final String queueName = "evaluation";
 
-    public RabbitMQ() {
+    public RabbitMQConfig() {
 
     }
 
