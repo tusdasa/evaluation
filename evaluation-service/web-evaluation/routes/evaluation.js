@@ -24,7 +24,9 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/result', function (req, res) {
-
+    if (req.session.token == undefined || req.session.token == null) {
+        res.redirect("/");
+    }
     console.log(req.body);
 
     utils.request({
@@ -46,6 +48,6 @@ router.post('/result', function (req, res) {
         res.send(error);
     })
 
-})
+});
 
 module.exports = router;
