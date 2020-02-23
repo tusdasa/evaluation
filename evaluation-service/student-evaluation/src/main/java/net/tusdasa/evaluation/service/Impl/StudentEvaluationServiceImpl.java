@@ -1,7 +1,7 @@
 package net.tusdasa.evaluation.service.Impl;
 
 import lombok.extern.slf4j.Slf4j;
-import net.tusdasa.evaluation.configuration.RabbitMQConfig;
+import net.tusdasa.evaluation.configuration.RabbitMQConfiguration;
 import net.tusdasa.evaluation.dao.StudentEvaluationDao;
 import net.tusdasa.evaluation.entity.StudentEvaluation;
 import net.tusdasa.evaluation.service.StudentEvaluationService;
@@ -32,7 +32,7 @@ public class StudentEvaluationServiceImpl implements StudentEvaluationService {
         studentEvaluation.setStudentId(studentId);
         studentEvaluationDao.insert(studentEvaluation);
         // 通知分析服务计算成绩
-        rabbitTemplate.convertAndSend(RabbitMQConfig.topicExchangeName, "evaluation.result", studentEvaluation);
+        rabbitTemplate.convertAndSend(RabbitMQConfiguration.topicExchangeName, "evaluation.result", studentEvaluation);
     }
 
     @Override

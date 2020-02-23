@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * RabbitMQ 配置类
+ * RabbitMQ 配置类接收端
  *
  * @Author: tusdasa
  * @date: 2020-02-22 11:28 AM
