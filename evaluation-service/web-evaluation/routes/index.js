@@ -12,8 +12,8 @@ router.get('/', function (req, res, next) {
 
 router.post("/student", function (req, res, next) {
     let params = new URLSearchParams();
-    let username = req.body['username'];
-    let password = req.body["password"];
+    let username = req.body['id'];
+    let password = req.body['password'];
     params.append("studentId", username);
     params.append("password", password);
     if (username != null && password != null) {
@@ -39,7 +39,7 @@ router.post("/student", function (req, res, next) {
 
 router.post("/teacher", function (req, res, next) {
     let params = new URLSearchParams();
-    let username = req.body['username'];
+    let username = req.body['id'];
     let password = req.body["password"];
     params.append("workId", username);
     params.append("password", password);
@@ -52,7 +52,7 @@ router.post("/teacher", function (req, res, next) {
         }, function (response) {
             if (response.data.code === 200) {
                 req.session.token = response.data.data;
-                res.redirect("/course");
+                res.redirect("/teacher");
             } else {
                 res.render('auth', {msg: response.data.message});
             }

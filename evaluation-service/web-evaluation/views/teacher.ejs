@@ -30,14 +30,14 @@
                     </div>
                 </div>
             <% } %>
-            <% if (course) { %>
-
+            <% if (teachers) { %>
                 <div class="list-group">
-                    <a href="#" class="list-group-item active">未评价课程</a>
-                    <% course.forEach(function(c){ %>
+                    <a href="#" class="list-group-item active">未评价教师</a>
+                    <% teachers.forEach(function(teacher){ %>
                         <div class="list-group-item">
-                            <a href="evaluation?c=<%= c.courseId %>&t=<%= c.termId %>"
-                               class="list-group-item-heading"><%= c.courseName %></a>
+                            <a href="evaluation?c=<%= teacher.workId %>"
+                               class="list-group-item-heading"><%= teacher.teacherName %></a>
+                            <span class="label label-primary"><%= teacher.professional.professionalTitle %></span>
                         </div>
                     <% }); %>
                 </div>

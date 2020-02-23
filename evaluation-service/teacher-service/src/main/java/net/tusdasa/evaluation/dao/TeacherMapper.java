@@ -11,4 +11,6 @@ import java.util.Map;
 @Mapper
 public interface TeacherMapper extends BaseDao<Teacher, Integer> {
     List<Teacher> findAll(Map<String, Integer> parameter);
+
+    List<Teacher> findAllTeacherByRoleAndDepartment(Map<String, Integer> parameter);
 }

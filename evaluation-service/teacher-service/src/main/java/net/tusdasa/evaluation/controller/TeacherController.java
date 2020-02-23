@@ -80,5 +80,11 @@ public class TeacherController {
         return new CommonResponse<String>().error();
     }
 
+    @GetMapping("/department/{departmentId}/role/{roleId}/state/{stateId}")
+    public CommonResponse<Teacher> findTeacher(@PathVariable("departmentId") Integer departmentId,
+                                               @PathVariable("roleId") Integer roleId,
+                                               @PathVariable("stateId") Integer stateId) {
+        return new CommonResponse<Teacher>().ok().table(this.teacherService.findAllTeacherByRoleAndDepartment(departmentId, stateId, roleId));
+    }
 
 }

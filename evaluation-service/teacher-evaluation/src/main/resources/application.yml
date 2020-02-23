@@ -1,8 +1,11 @@
 server:
   port: 7052
   servlet:
-    context-path: /teacherevaluation
+    context-path: /tevaluation
 spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss:SSS
+    time-zone: GMT+8
   application:
     name: evaluation-teacher-evaluation
   cloud:

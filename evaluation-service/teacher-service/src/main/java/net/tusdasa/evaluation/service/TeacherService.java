@@ -18,4 +18,6 @@ public interface TeacherService {
     List<Teacher> findAll(Integer page, Integer size);
 
     Teacher findTeacherByWorldId(Integer workId);
+
+    List<Teacher> findAllTeacherByRoleAndDepartment(Integer departmentId, Integer stateId, Integer roleId);
 }

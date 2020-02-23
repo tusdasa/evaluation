@@ -3,13 +3,11 @@ package net.tusdasa.evaluation.service.impl;
 import lombok.extern.slf4j.Slf4j;
 import net.tusdasa.evaluation.client.AcademicYearClient;
 import net.tusdasa.evaluation.client.RightClient;
+import net.tusdasa.evaluation.client.TeacherClient;
 import net.tusdasa.evaluation.client.ThirdKpiClient;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.dao.TeacherEvaluationDao;
-import net.tusdasa.evaluation.entity.Right;
-import net.tusdasa.evaluation.entity.TeacherEvaluation;
-import net.tusdasa.evaluation.entity.Term;
-import net.tusdasa.evaluation.entity.ThirdKpi;
+import net.tusdasa.evaluation.entity.*;
 import net.tusdasa.evaluation.service.TeacherEvaluationService;
 import net.tusdasa.evaluation.utils.UUIDUtils;
 import net.tusdasa.evaluation.vo.IdsRequest;
@@ -20,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
 
+    private static final Integer TEACHER_ROLE = 2;
+
     private AcademicYearClient academicYearClient;
 
     private RightClient rightClient;
@@ -28,15 +28,19 @@ public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
 
     private TeacherEvaluationDao teacherEvaluationDao;
 
+    private TeacherClient teacherClient;
+
     public TeacherEvaluationServiceImpl(AcademicYearClient academicYearClient,
                                         RightClient rightClient,
                                         ThirdKpiClient thirdKpiClient,
-                                        TeacherEvaluationDao teacherEvaluationDao
+                                        TeacherEvaluationDao teacherEvaluationDao,
+                                        TeacherClient teacherClient
     ) {
         this.academicYearClient = academicYearClient;
         this.rightClient = rightClient;
         this.thirdKpiClient = thirdKpiClient;
         this.teacherEvaluationDao = teacherEvaluationDao;
+        this.teacherClient = teacherClient;
     }
 
     /**
@@ -90,6 +94,26 @@ public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
         // 插入MongoDB
         teacherEvaluationDao.insert(teacherEvaluation);
         // 通过消息队列通知分析微服务计算
+    }
+
+    @Override
+    public CommonResponse<Teacher> findAllTeacher(Integer workId) {
+        CommonResponse<Teacher> teacherResponse = this.rightClient.checkTeacher(workId);
+        if (teacherResponse.success()) {
+            Teacher teacher = teacherResponse.getData();
+            CommonResponse<Teacher> teacherCommonResponse = this.teacherClient.findTeacher(
+                    teacher.getDepartment().getDepartmentId(),
+                    TEACHER_ROLE,
+                    teacher.getState().getStateId()
+            );
+            if (teacherCommonResponse.success()) {
+                return teacherCommonResponse;
+            } else {
+                return new CommonResponse<Teacher>().error(teacherCommonResponse.getMessage());
+            }
+        } else {
+            return new CommonResponse<Teacher>().error(teacherResponse.getMessage());
+        }
     }
 
 }

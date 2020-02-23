@@ -78,10 +78,10 @@ public class AccessLogFilter extends ZuulFilter {
                     teacher = teacherRedisTemplate.opsForValue().get(token.getSub());
                 }
 
-                if (student != null && teacher == null) {
+                if (student != null) {
                     context.addZuulRequestHeader("studentId", student.getStudentId().toString());
                     context.addZuulRequestHeader("role", token.getRole().toString());
-                } else if (student == null && teacher != null) {
+                } else if (teacher != null) {
                     context.addZuulRequestHeader("workId", teacher.getWorkId().toString());
                     context.addZuulRequestHeader("role", teacher.getRoleId().toString());
                 } else {

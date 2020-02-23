@@ -116,6 +116,7 @@ public class JWTUtils {
             ObjectMapper objectMapper = new ObjectMapper();
             result.put("token", objectMapper.readValue(object, Token.class));
         } catch (Exception e) {
+            System.out.println("token: " + token + " failure");
             result.put("code", 500);
         }
         return result;

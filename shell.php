@@ -30,7 +30,7 @@ $email_result = curl_exec($email);
 // send qq
 $qq_text = array(
     "auto_escape" => 'true',
-    "group_id" => 808154403,
+    "group_id" => 696983243,
     "message" => "本次构建完成\n完成时间: " . date("Y-m-d h:i:s a") . "\n提交说明: \n" . mb_convert_encoding(substr($result[5], 13), "UTF-8", "EUC-CN")
 );
 print_r($qq_text);

@@ -1,6 +1,7 @@
 package net.tusdasa.evaluation.service;
 
 import net.tusdasa.evaluation.commons.CommonResponse;
+import net.tusdasa.evaluation.entity.Teacher;
 import net.tusdasa.evaluation.entity.TeacherEvaluation;
 import net.tusdasa.evaluation.entity.ThirdKpi;
 
@@ -26,5 +27,7 @@ public interface TeacherEvaluationService {
      * @param workId            评价者（教学督导）工号
      */
     void addTeacherEvaluation(TeacherEvaluation teacherEvaluation, Integer workId);
+
+    CommonResponse<Teacher> findAllTeacher(Integer workId);
 
 }

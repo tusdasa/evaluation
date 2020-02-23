@@ -57,13 +57,17 @@ zuul:
       path: /auth/**
       serviceId: evaluation-authorization-service
       strip-prefix: false
-    studentAssessment:
-      path: /evaluation/**
+    studentevaluation:
+      path: /sevaluation/**
       serviceId: evaluation-studentevaluation-service
       strip-prefix: false
     thirdkpi:
       path: /thirdkpi/**
       serviceId: evaluation-thirdkpi-service
+      strip-prefix: false
+    teachentevaluation:
+      path: /tevaluation/**
+      serviceId: evaluation-teacher-evaluation
       strip-prefix: false
 # 加密密钥
 auth:

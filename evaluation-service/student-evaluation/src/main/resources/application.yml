@@ -1,7 +1,7 @@
 server:
   port: 7009
   servlet:
-    context-path: /evaluation
+    context-path: /sevaluation
 spring:
   application:
     name: evaluation-studentevaluation-service

@@ -46,6 +46,7 @@ public class TeacherServiceImpl implements TeacherService {
         }
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Map<String, Object> findTeacherByPassword(Integer workId, String password) {
         Map<String, Object> map = new HashMap<>();
@@ -81,5 +82,15 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public Teacher findTeacherByWorldId(Integer workId) {
         return teacherMapper.selectByPrimaryKey(workId);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Teacher> findAllTeacherByRoleAndDepartment(Integer departmentId, Integer stateId, Integer roleId) {
+        HashMap<String, Integer> parameter = new HashMap<>();
+        parameter.put("departmentId", departmentId);
+        parameter.put("stateId", stateId);
+        parameter.put("roleId", roleId);
+        return this.teacherMapper.findAllTeacherByRoleAndDepartment(parameter);
     }
 }
