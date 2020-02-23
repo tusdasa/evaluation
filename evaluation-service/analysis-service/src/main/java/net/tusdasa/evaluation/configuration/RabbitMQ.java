@@ -21,26 +21,26 @@ import org.springframework.context.annotation.Configuration;
 
 @EnableRabbit
 @Configuration
-public class RabbitMQConfig {
+public class RabbitMQ {
 
     /**
      * 消息转发器名
-     * */
+     */
     public static final String topicExchangeName = "evaluation_exchange";
 
     /**
      * 投递队列名
-     * */
+     */
     public static final String queueName = "evaluation";
 
-    public RabbitMQConfig() {
+    public RabbitMQ() {
 
     }
 
 
     /**
      * 消息队列配置
-     * */
+     */
     @Bean
     public Queue queue() {
         return new Queue(queueName, false);
@@ -48,7 +48,7 @@ public class RabbitMQConfig {
 
     /**
      * 交换机配置
-     * */
+     */
     @Bean
     public TopicExchange topicExchange() {
         return new TopicExchange(topicExchangeName);
@@ -56,7 +56,7 @@ public class RabbitMQConfig {
 
     /**
      * 绑定队列和交换机
-     * */
+     */
     @Bean
     public Binding binding(Queue queue, TopicExchange topicExchange) {
         return BindingBuilder.bind(queue).to(topicExchange).with("evaluation.#");
@@ -64,7 +64,7 @@ public class RabbitMQConfig {
 
     /**
      * 消息接收回调类
-     * */
+     */
     @Bean
     public MessageListenerAdapter listenerAdapter(ResultReceiver receiver) {
         return new MessageListenerAdapter(receiver, "receiveMessage");
@@ -73,7 +73,7 @@ public class RabbitMQConfig {
 
     /**
      * 消息适配
-     * */
+     */
     @Bean
     public SimpleMessageListenerContainer container(ConnectionFactory connectionFactory,
                                                     MessageListenerAdapter listenerAdapter) {
