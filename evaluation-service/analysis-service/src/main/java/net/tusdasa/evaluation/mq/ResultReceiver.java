@@ -7,6 +7,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * RabbitMQ 消息接收处理类
+ *
+ * @Author: tusdasa
+ * @Date: 2020-02-22 11:26 AM
+ */
+
 @Component
 public class ResultReceiver {
 
