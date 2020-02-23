@@ -1,6 +1,5 @@
 package net.tusdasa.evaluation.service.Impl;
 
-import lombok.extern.slf4j.Slf4j;
 import net.tusdasa.evaluation.client.AcademicYearClient;
 import net.tusdasa.evaluation.client.CourseClient;
 import net.tusdasa.evaluation.client.RightClient;
@@ -10,14 +9,17 @@ import net.tusdasa.evaluation.entity.*;
 import net.tusdasa.evaluation.service.StudentEvaluationInfoService;
 import net.tusdasa.evaluation.service.StudentEvaluationService;
 import net.tusdasa.evaluation.vo.IdsRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
 @Service
 public class StudentEvaluationInfoServiceImpl implements StudentEvaluationInfoService {
+
+    Logger logger = LoggerFactory.getLogger(StudentEvaluationInfoServiceImpl.class.getClass());
 
     private AcademicYearClient academicYearClient;
 
@@ -98,11 +100,11 @@ public class StudentEvaluationInfoServiceImpl implements StudentEvaluationInfoSe
                     return new CommonResponse<Course>().error("您已经完成了所有的评价");
                 }
             } else {
-                log.info("未找到学期");
+                logger.info("未找到学期");
                 return new CommonResponse<Course>().error(termCommonResponse.getMessage());
             }
         } else {
-            log.info("未找到学生信息");
+            logger.info("未找到学生信息");
             return new CommonResponse<Course>().error(studentCommonResponse.getMessage());
         }
     }
@@ -141,7 +143,7 @@ public class StudentEvaluationInfoServiceImpl implements StudentEvaluationInfoSe
                     boolean flag = false;
                     for (; i < courseList.size(); i++) {
                         Course course = courseList.get(i);
-                        log.info(course.getCourseName());
+                        logger.info(course.getCourseName());
                         for (; j < studentEvaluationList.size(); j++) {
                             StudentEvaluation studentEvaluation = studentEvaluationList.get(j);
                             if (studentEvaluation.getCourseId().longValue() == course.getCourseId().longValue()) {
