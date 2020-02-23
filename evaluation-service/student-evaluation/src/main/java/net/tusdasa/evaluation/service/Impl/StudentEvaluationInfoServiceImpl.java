@@ -155,7 +155,9 @@ public class StudentEvaluationInfoServiceImpl implements StudentEvaluationInfoSe
                         if (!flag) {
                             newCourseList.add(course);
                         }
+                        // 置为false
                         flag = false;
+                        // 置为0 开始后续过滤
                         j = 0;
                     }
                     return newCourseList;
