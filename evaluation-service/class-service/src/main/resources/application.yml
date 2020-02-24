@@ -23,7 +23,7 @@ spring:
       time-to-live: 604800
     type: redis
   jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
+    date-format: yyyy-MM-dd HH:mm:ss:SSS
     time-zone: GMT+8
   cloud:
     loadbalancer:

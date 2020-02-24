@@ -5,6 +5,9 @@ server:
 spring:
   application:
     name: evaluation-authorization-service
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss:SSS
+    time-zone: GMT+8
   data:
     mongodb:
       uri: mongodb://127.0.0.1:27017/right

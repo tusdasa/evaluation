@@ -20,6 +20,9 @@ spring:
     loadbalancer:
       ribbon:
         enabled: false
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss:SSS
+    time-zone: GMT+8
 eureka:
   client:
     service-url:

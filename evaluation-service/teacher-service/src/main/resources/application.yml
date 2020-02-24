@@ -14,6 +14,9 @@ spring:
       max-active: 4
       min-idle: 2
       initial-size: 2
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss:SSS
+    time-zone: GMT+8
   cloud:
     loadbalancer:
       ribbon:

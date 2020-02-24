@@ -10,6 +10,9 @@ spring:
           username: tusdasa
           password: 3988978349
       label: master
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss:SSS
+    time-zone: GMT+8
 eureka:
   client:
     service-url:
