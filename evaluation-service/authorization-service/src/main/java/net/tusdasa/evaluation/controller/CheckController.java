@@ -23,7 +23,7 @@ public class CheckController {
 
     @PostMapping("/check/student")
     public CommonResponse<Student> checkStudent(@RequestParam("studentId") String studentId) {
-        Student student = studentRedisTemplate.opsForValue().get(studentId.toString());
+        Student student = studentRedisTemplate.opsForValue().get(studentId);
         if (student != null) {
             return new CommonResponse<Student>().ok().data(student);
         } else {
@@ -32,8 +32,8 @@ public class CheckController {
     }
 
     @PostMapping("/check/teacher")
-    public CommonResponse<Teacher> checkTeacher(@RequestParam("workId") Integer workId) {
-        Teacher teacher = teacherRedisTemplate.opsForValue().get(workId.toString());
+    public CommonResponse<Teacher> checkTeacher(@RequestParam("workId") String workId) {
+        Teacher teacher = teacherRedisTemplate.opsForValue().get(workId);
         if (teacher != null) {
             return new CommonResponse<Teacher>().ok().data(teacher);
         } else {
