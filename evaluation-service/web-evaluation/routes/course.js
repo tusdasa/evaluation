@@ -7,7 +7,7 @@ router.get("/", function (req, res, next) {
         res.redirect("/");
     }
     utils.request({
-        url: 'evaluation/course',
+        url: 'sevaluation/course',
         method: 'get',
         headers: {"Authorization": req.session.token}
     }, function (response) {

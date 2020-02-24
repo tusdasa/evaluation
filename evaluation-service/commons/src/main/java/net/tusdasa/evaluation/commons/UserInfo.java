@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @With
 @ToString
@@ -19,4 +20,5 @@ public class UserInfo implements Serializable {
     private String id;
     private String name;
     private Integer role;
+
 }
