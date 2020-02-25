@@ -51,6 +51,6 @@ public class TeacherEvaluation {
     /**
      * 三级指标得分
      */
-    private List<SecondKpi> secondKpiList;
+    private List<KpiScore> secondKpiList;
 
 }

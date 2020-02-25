@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component;
 public class FirstKpiClientImpl implements FirstKpiClient {
     @Override
     public CommonResponse<FirstKpi> findAllByAcademicYearAndIds(Integer yearId, IdsRequest idsRequest) {
-        return new CommonResponse<FirstKpi>().error("忙");
+        return new CommonResponse<FirstKpi>().busy();
     }
 }

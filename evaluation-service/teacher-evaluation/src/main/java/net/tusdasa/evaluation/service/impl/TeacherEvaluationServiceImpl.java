@@ -14,6 +14,9 @@ import net.tusdasa.evaluation.vo.IdsRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
 @Service
 public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
@@ -30,12 +33,7 @@ public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
 
     private TeacherClient teacherClient;
 
-    public TeacherEvaluationServiceImpl(AcademicYearClient academicYearClient,
-                                        RightClient rightClient,
-                                        ThirdKpiClient thirdKpiClient,
-                                        TeacherEvaluationDao teacherEvaluationDao,
-                                        TeacherClient teacherClient
-    ) {
+    public TeacherEvaluationServiceImpl(AcademicYearClient academicYearClient, RightClient rightClient, ThirdKpiClient thirdKpiClient, TeacherEvaluationDao teacherEvaluationDao, TeacherClient teacherClient) {
         this.academicYearClient = academicYearClient;
         this.rightClient = rightClient;
         this.thirdKpiClient = thirdKpiClient;
@@ -55,15 +53,19 @@ public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
             CommonResponse<Right> rightCommonResponse = rightClient.findRightById(role);
             if (rightCommonResponse.success()) {
                 Right right = rightCommonResponse.getData();
-                CommonResponse<ThirdKpi> thirdKpiCommonResponse = thirdKpiClient.findAllBySecondKpiIds(new IdsRequest()
-                        .addFirstIds(right.getSecondKpiId())
-                        .addSecondIds(right.getThirdKpiId())
-                );
-                if (thirdKpiCommonResponse.success()) {
-                    return thirdKpiCommonResponse;
+                if (right != null && right.checkRight()) {
+                    CommonResponse<ThirdKpi> thirdKpiCommonResponse = thirdKpiClient.findAllBySecondKpiIds(new IdsRequest()
+                            .addFirstIds(right.getSecondKpiId())
+                            .addSecondIds(right.getThirdKpiId())
+                    );
+                    if (thirdKpiCommonResponse.success()) {
+                        return thirdKpiCommonResponse;
+                    } else {
+                        log.info("未得到三级指标");
+                        return new CommonResponse<ThirdKpi>().error(thirdKpiCommonResponse.getMessage());
+                    }
                 } else {
-                    log.info("未得到三级指标");
-                    return new CommonResponse<ThirdKpi>().error(thirdKpiCommonResponse.getMessage());
+                    return new CommonResponse<ThirdKpi>().error("您没有权限");
                 }
             } else {
                 log.info("未获得权限");
@@ -81,38 +83,75 @@ public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
 
     /**
      * 此方法已经开启事务
+     * 暂时未认证权限
      *
-     * @see TeacherEvaluationService#addTeacherEvaluation(TeacherEvaluation, Integer)
+     * @see TeacherEvaluationService#addTeacherEvaluation(TeacherEvaluation, Integer, Integer)
      */
     @Transactional
     @Override
-    public void addTeacherEvaluation(TeacherEvaluation teacherEvaluation, Integer workId) {
-        // 生成主键
-        teacherEvaluation.setId(UUIDUtils.UUID());
-        // 设置评价者工号
-        teacherEvaluation.setTeacherId(workId);
-        // 插入MongoDB
-        teacherEvaluationDao.insert(teacherEvaluation);
-        // 通过消息队列通知分析微服务计算
+    public void addTeacherEvaluation(TeacherEvaluation teacherEvaluation, Integer workId, Integer role) {
+        CommonResponse<Term> termCommonResponse = academicYearClient.currentTerm();
+        if (termCommonResponse.success()) {
+            Term term = termCommonResponse.getData();
+            teacherEvaluation.setId(UUIDUtils.UUID());
+            // 设置评价者工号
+            teacherEvaluation.setTeacherId(workId);
+
+            teacherEvaluation.setTermId(term.getTermId());
+            // 插入MongoDB
+            teacherEvaluationDao.insert(teacherEvaluation);
+        }
     }
 
     @Override
-    public CommonResponse<Teacher> findAllTeacher(Integer workId) {
-        CommonResponse<Teacher> teacherResponse = this.rightClient.checkTeacher(workId);
-        if (teacherResponse.success()) {
-            Teacher teacher = teacherResponse.getData();
-            CommonResponse<Teacher> teacherCommonResponse = this.teacherClient.findTeacher(
-                    teacher.getDepartment().getDepartmentId(),
-                    TEACHER_ROLE,
-                    teacher.getState().getStateId()
-            );
-            if (teacherCommonResponse.success()) {
-                return teacherCommonResponse;
-            } else {
-                return new CommonResponse<Teacher>().error(teacherCommonResponse.getMessage());
-            }
+    public CommonResponse<Teacher> findAllTeacher(Integer workId, Integer role) {
+        CommonResponse<Right> rightCommonResponse = rightClient.findRightById(role);
+        if (rightCommonResponse.success() && rightCommonResponse.getData() == null && rightCommonResponse.getData().checkRight()) {
+            return new CommonResponse<Teacher>().error("您没有权限");
         } else {
-            return new CommonResponse<Teacher>().error(teacherResponse.getMessage());
+            CommonResponse<Teacher> teacherResponse = this.rightClient.checkTeacher(workId);
+            if (teacherResponse.success()) {
+                Teacher teacher = teacherResponse.getData();
+                CommonResponse<Teacher> teacherCommonResponse = this.teacherClient.findTeacher(
+                        teacher.getDepartment().getDepartmentId(),
+                        TEACHER_ROLE,
+                        teacher.getState().getStateId()
+                );
+                if (teacherCommonResponse.success()) {
+                    List<Teacher> teacherList = this.clear(this.teacherEvaluationDao.findAllByTeacherId(workId), teacherCommonResponse.getTable());
+                    return new CommonResponse<Teacher>().ok().table(teacherList);
+                } else {
+                    return new CommonResponse<Teacher>().error(teacherCommonResponse.getMessage());
+                }
+            } else {
+                return new CommonResponse<Teacher>().error(teacherResponse.getMessage());
+            }
+        }
+    }
+
+    private List<Teacher> clear(List<TeacherEvaluation> teacherEvaluationList, List<Teacher> teacherList) {
+        if (teacherEvaluationList == null && teacherEvaluationList.isEmpty()) {
+            return teacherList;
+        } else {
+            List<Teacher> newTeacherList = new ArrayList<>(teacherList.size() - teacherEvaluationList.size() + 1);
+            boolean flag = false;
+            int j = 0, i = 0;
+            for (; i < teacherList.size(); i++) {
+                Teacher t = teacherList.get(i);
+                for (; j < teacherEvaluationList.size(); j++) {
+                    TeacherEvaluation teacherEvaluation = teacherEvaluationList.get(j);
+                    if (teacherEvaluation.getWorkId().intValue() == t.getWorkId().intValue()) {
+                        flag = true;
+                        break;
+                    }
+                }
+                if (!flag) {
+                    newTeacherList.add(t);
+                }
+                flag = false;
+                j = 0;
+            }
+            return newTeacherList;
         }
     }
 

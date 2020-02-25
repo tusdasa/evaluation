@@ -41,4 +41,11 @@ public class Right implements Serializable {
      */
     private HashSet<Integer> thirdKpiId;
 
+    public boolean checkRight() {
+        if (this.getFirstKpiId().isEmpty() || this.getSecondKpiId().isEmpty() || this.getThirdKpiId().isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
 }

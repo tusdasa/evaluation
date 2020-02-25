@@ -88,19 +88,19 @@ public class AccessLogFilter extends ZuulFilter {
                     context.setSendZuulResponse(false);
                     context.addZuulResponseHeader("Content-Type", "application/json;charset=utf8");
                     context.setResponseStatusCode(HttpStatus.OK.value());
-                    context.setResponseBody((String) JSON.toJSON(new CommonResponse<String>().error("请重新登录")).toString());
+                    context.setResponseBody((String) JSON.toJSON(new CommonResponse<String>().auth("请重新登录")).toString());
                 }
             } else {
                 context.setSendZuulResponse(false);
                 context.addZuulResponseHeader("Content-Type", "application/json;charset=utf8");
                 context.setResponseStatusCode(HttpStatus.OK.value());
-                context.setResponseBody((String) JSON.toJSON(new CommonResponse<String>().error("授权过期，请重新登录")).toString());
+                context.setResponseBody((String) JSON.toJSON(new CommonResponse<String>().auth("未授权，请登录").toString()));
             }
         } else {
             context.setSendZuulResponse(false);
             context.addZuulResponseHeader("Content-Type", "application/json;charset=utf8");
             context.setResponseStatusCode(HttpStatus.OK.value());
-            context.setResponseBody(JSON.toJSON(new CommonResponse<String>().error("未授权，请登录")).toString());
+            context.setResponseBody(JSON.toJSON(new CommonResponse<String>().auth("未授权，请登录")).toString());
         }
 
         return null;

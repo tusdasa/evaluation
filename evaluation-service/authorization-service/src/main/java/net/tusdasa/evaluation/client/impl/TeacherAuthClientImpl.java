@@ -9,6 +9,6 @@ import org.springframework.stereotype.Component;
 public class TeacherAuthClientImpl implements TeacherAuthClient {
     @Override
     public CommonResponse<Teacher> getTeacher(Integer workId, String password) {
-        return new CommonResponse<Teacher>().error("忙");
+        return new CommonResponse<Teacher>().busy();
     }
 }

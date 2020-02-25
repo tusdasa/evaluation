@@ -46,6 +46,11 @@ public class RightServiceImpl implements RightService {
 
     @Override
     public Right findById(Integer id) {
-        return this.rightDao.findById(id).get();
+        Right right = this.rightDao.findById(id).get();
+        if (right == null) {
+            return null;
+        } else {
+            return right;
+        }
     }
 }

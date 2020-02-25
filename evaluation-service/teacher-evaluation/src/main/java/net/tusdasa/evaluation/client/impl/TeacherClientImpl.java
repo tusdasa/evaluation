@@ -14,6 +14,6 @@ import org.springframework.stereotype.Component;
 public class TeacherClientImpl implements TeacherClient {
     @Override
     public CommonResponse<Teacher> findTeacher(Integer departmentId, Integer roleId, Integer stateId) {
-        return new CommonResponse<Teacher>().error("忙");
+        return new CommonResponse<Teacher>().busy();
     }
 }

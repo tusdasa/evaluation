@@ -47,7 +47,6 @@ public class StudentEvaluationInfoServiceImpl implements StudentEvaluationInfoSe
         this.rightClient = rightClient;
         this.courseClient = courseClient;
         this.studentEvaluationService = studentEvaluationService;
-        this.academicYearClient = academicYearClient;
     }
 
     /**
@@ -70,7 +69,7 @@ public class StudentEvaluationInfoServiceImpl implements StudentEvaluationInfoSe
         CommonResponse<Right> rightCommonResponse = rightClient.findRightById(role);
         if (rightCommonResponse.success()) {
             Right right = rightCommonResponse.getData();
-            if (!right.getFirstKpiId().isEmpty()) {
+            if (right != null && right.checkRight()) {
                 CommonResponse<ThirdKpi> thirdKpi = thirdKpiClient.findAllBySecondKpiIds(new IdsRequest().addFirstIds(right.getSecondKpiId()).addSecondIds(right.getThirdKpiId()));
                 if (thirdKpi.success()) {
                     return thirdKpi;
@@ -113,24 +112,21 @@ public class StudentEvaluationInfoServiceImpl implements StudentEvaluationInfoSe
      * 获取学生信息
      */
     private CommonResponse<Student> getStudent(String studentId) {
-        CommonResponse<Student> studentCommonResponse = this.rightClient.checkStudent(studentId);
-        return studentCommonResponse;
+        return this.rightClient.checkStudent(studentId);
     }
 
     /**
      * 获取当前学期信息
      */
     private CommonResponse<Term> getTerm() {
-        CommonResponse<Term> termCommonResponse = this.academicYearClient.currentTerm();
-        return termCommonResponse;
+        return this.academicYearClient.currentTerm();
     }
 
     /**
      * 获取学生已评价课程
      */
     private List<StudentEvaluation> getStudentCourseResult(String studentId) {
-        List<StudentEvaluation> studentEvaluationList = this.studentEvaluationService.findBydStudentId(Long.valueOf(studentId));
-        return studentEvaluationList;
+        return this.studentEvaluationService.findBydStudentId(Long.valueOf(studentId));
     }
 
     private List<Course> checkAllCourse(List<Course> courseList, List<StudentEvaluation> studentEvaluationList) {

@@ -24,7 +24,7 @@ public class TeacherAuthServiceImpl implements TeacherAuthService {
         HashMap<String, Object> result = new HashMap<>();
         CommonResponse<Teacher> response = teacherAuthClient.getTeacher(workId, DigestUtils.md5DigestAsHex(password.getBytes()));
 
-        if (response.success()) {
+        if (response.success() && response.getCode() == 200) {
             // 认证成功
             result.put("code", response.getCode());
             result.put("obj", response.getData());

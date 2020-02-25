@@ -22,14 +22,15 @@ public class TeacherEvaluationController {
     }
 
     @GetMapping("/teacher")
-    public CommonResponse<Teacher> findTeacher(@RequestHeader(name = "workId") Integer workId) {
-        return teacherEvaluationService.findAllTeacher(workId);
+    public CommonResponse<Teacher> findTeacher(@RequestHeader(name = "workId") Integer workId, @RequestHeader(name = "role") Integer role) {
+        return teacherEvaluationService.findAllTeacher(workId, role);
     }
 
     @PostMapping("/result")
-    public String addTeacherResult(@RequestBody TeacherEvaluation teacherEvaluation, @RequestHeader(name = "workId") Integer workId) {
+    public CommonResponse<String> addTeacherResult(@RequestBody TeacherEvaluation teacherEvaluation, @RequestHeader(name = "workId") Integer workId, @RequestHeader(name = "role") Integer role) {
+        teacherEvaluationService.addTeacherEvaluation(teacherEvaluation, workId, role);
         System.out.println(teacherEvaluation.toString());
-        return "p";
+        return new CommonResponse<String>().ok();
     }
 
 }

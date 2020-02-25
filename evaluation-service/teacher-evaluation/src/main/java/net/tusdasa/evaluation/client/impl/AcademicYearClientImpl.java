@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 public class AcademicYearClientImpl implements AcademicYearClient {
     @Override
     public CommonResponse<AcademicYear> current() {
-        return new CommonResponse<AcademicYear>().error("忙");
+        return new CommonResponse<AcademicYear>().busy();
     }
 
     @Override
     public CommonResponse<Term> currentTerm() {
-        return new CommonResponse<Term>().error("忙");
+        return new CommonResponse<Term>().busy();
     }
 }

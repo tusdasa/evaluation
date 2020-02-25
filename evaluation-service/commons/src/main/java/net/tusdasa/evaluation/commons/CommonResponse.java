@@ -15,6 +15,7 @@ public class CommonResponse<Model extends Serializable> {
     public static final long CODE_VALIDATE_FAILED = 404;
     public static final long CODE_UNAUTHORIZED = 401;
     public static final long CODE_FORBIDDEN = 403;
+    public static final long CODE_TIMEOUT = 408;
 
 
     private long code;
@@ -55,6 +56,13 @@ public class CommonResponse<Model extends Serializable> {
         return this;
     }
 
+    public CommonResponse<Model> auth(String message) {
+        this.setCode(CommonResponse.CODE_UNAUTHORIZED);
+        this.setRequestId(UUIDUtils.UUID());
+        this.setMessage(message);
+        return this;
+    }
+
 
     public CommonResponse<Model> data(Model data) {
         this.setData(data);
@@ -69,11 +77,18 @@ public class CommonResponse<Model extends Serializable> {
         return this;
     }
 
+    public CommonResponse<Model> busy() {
+        this.setCode(CODE_TIMEOUT);
+        this.setRequestId(UUIDUtils.UUID());
+        this.setMessage("已断路, 服务繁忙/离线, 请重试");
+        return this;
+    }
+
     public boolean success() {
-        if (this.getCode() == CommonResponse.CODE_SUCCESS) {
-            return true;
+        if (this.getCode() == CODE_TIMEOUT) {
+            return false;
         }
-        return false;
+        return true;
     }
 
     public boolean emptyTable() {

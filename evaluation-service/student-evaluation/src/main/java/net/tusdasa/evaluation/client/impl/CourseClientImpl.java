@@ -9,6 +9,6 @@ import org.springframework.stereotype.Component;
 public class CourseClientImpl implements CourseClient {
     @Override
     public CommonResponse<Course> findCourseByClassIdAndTermId(Integer classId, Integer termId) {
-        return new CommonResponse<Course>().error("忙");
+        return new CommonResponse<Course>().busy();
     }
 }

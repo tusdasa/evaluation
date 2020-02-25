@@ -24,7 +24,7 @@ public class StudentAuthServiceImpl implements StudentAuthService {
         HashMap<String, Object> result = new HashMap<>();
         CommonResponse<Student> response = studentAuthClient.getStudent(studentId, DigestUtils.md5DigestAsHex(password.getBytes()));
 
-        if (response.success()) {
+        if (response.success() && response.getCode() == 200) {
             // 认证成功
             result.put("code", response.getCode());
             result.put("obj", response.getData());

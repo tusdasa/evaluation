@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 public class RightClientImpl implements RightClient {
     @Override
     public CommonResponse<Right> findRightById(Integer id) {
-        return new CommonResponse<Right>().error("忙");
+        return new CommonResponse<Right>().busy();
     }
 
     @Override
     public CommonResponse<Teacher> checkTeacher(Integer workId) {
-        return new CommonResponse<Teacher>().error("忙");
+        return new CommonResponse<Teacher>().busy();
     }
 }
