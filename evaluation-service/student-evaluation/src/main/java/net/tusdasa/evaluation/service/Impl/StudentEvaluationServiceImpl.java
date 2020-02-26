@@ -32,7 +32,7 @@ public class StudentEvaluationServiceImpl implements StudentEvaluationService {
         studentEvaluation.setStudentId(studentId);
         studentEvaluationDao.insert(studentEvaluation);
         // 通知分析服务计算成绩
-        rabbitTemplate.convertAndSend(RabbitMQConfig.topicExchangeName, "evaluation.result", studentEvaluation);
+        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_STUDENT, RabbitMQConfig.ROUTE_KEY_STUDENT, studentEvaluation);
     }
 
     @Override

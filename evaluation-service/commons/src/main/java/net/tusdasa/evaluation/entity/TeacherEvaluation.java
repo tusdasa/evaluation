@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import net.tusdasa.evaluation.utils.UUIDUtils;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Data
@@ -19,7 +20,7 @@ import java.util.List;
  * @version 1.0
  * */
 
-public class TeacherEvaluation {
+public class TeacherEvaluation implements Serializable {
 
     /**
      * MongoDB id UUID

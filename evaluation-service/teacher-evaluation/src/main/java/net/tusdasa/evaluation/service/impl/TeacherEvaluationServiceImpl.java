@@ -6,11 +6,13 @@ import net.tusdasa.evaluation.client.RightClient;
 import net.tusdasa.evaluation.client.TeacherClient;
 import net.tusdasa.evaluation.client.ThirdKpiClient;
 import net.tusdasa.evaluation.commons.CommonResponse;
+import net.tusdasa.evaluation.configuration.RabbitMQConfig;
 import net.tusdasa.evaluation.dao.TeacherEvaluationDao;
 import net.tusdasa.evaluation.entity.*;
 import net.tusdasa.evaluation.service.TeacherEvaluationService;
 import net.tusdasa.evaluation.utils.UUIDUtils;
 import net.tusdasa.evaluation.vo.IdsRequest;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,12 +35,15 @@ public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
 
     private TeacherClient teacherClient;
 
-    public TeacherEvaluationServiceImpl(AcademicYearClient academicYearClient, RightClient rightClient, ThirdKpiClient thirdKpiClient, TeacherEvaluationDao teacherEvaluationDao, TeacherClient teacherClient) {
+    private RabbitTemplate rabbitTemplate;
+
+    public TeacherEvaluationServiceImpl(AcademicYearClient academicYearClient, RightClient rightClient, ThirdKpiClient thirdKpiClient, TeacherEvaluationDao teacherEvaluationDao, TeacherClient teacherClient, RabbitTemplate rabbitTemplate) {
         this.academicYearClient = academicYearClient;
         this.rightClient = rightClient;
         this.thirdKpiClient = thirdKpiClient;
         this.teacherEvaluationDao = teacherEvaluationDao;
         this.teacherClient = teacherClient;
+        this.rabbitTemplate = rabbitTemplate;
     }
 
     /**
@@ -89,7 +94,7 @@ public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
      */
     @Transactional
     @Override
-    public void addTeacherEvaluation(TeacherEvaluation teacherEvaluation, Integer workId, Integer role) {
+    public boolean addTeacherEvaluation(TeacherEvaluation teacherEvaluation, Integer workId, Integer role) {
         CommonResponse<Term> termCommonResponse = academicYearClient.currentTerm();
         if (termCommonResponse.success()) {
             Term term = termCommonResponse.getData();
@@ -100,7 +105,10 @@ public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
             teacherEvaluation.setTermId(term.getTermId());
             // 插入MongoDB
             teacherEvaluationDao.insert(teacherEvaluation);
+            rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_TEACHER, RabbitMQConfig.ROUTE_KEY_TEACHER, teacherEvaluation);
+            return true;
         }
+        return false;
     }
 
     @Override

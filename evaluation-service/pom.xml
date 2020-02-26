@@ -14,7 +14,6 @@
     <description>
         教学评价系统-微服务-微服务组件
     </description>
-
     <modules>
         <module>commons</module>
         <module>student-service</module>
@@ -34,6 +33,7 @@
         <module>config-service</module>
         <module>analysis-service</module>
         <module>teacher-evaluation</module>
+        <module>admin-service</module>
     </modules>
     <artifactId>evaluation-service</artifactId>
 

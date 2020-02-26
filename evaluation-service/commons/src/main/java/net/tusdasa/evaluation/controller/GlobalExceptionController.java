@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionController {
     @ExceptionHandler(Exception.class)
     public CommonResponse<String> AllExceptionHandler(Exception e) {
+        System.out.println(e.getLocalizedMessage());
         return new CommonResponse<String>().error(e.getMessage());
     }
 }

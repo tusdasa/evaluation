@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.tusdasa.evaluation.dao.TermMapper">
-    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
     <resultMap id="BaseResultMap" type="net.tusdasa.evaluation.entity.Term">
         <id column="term_id" jdbcType="INTEGER" property="termId"/>
         <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>

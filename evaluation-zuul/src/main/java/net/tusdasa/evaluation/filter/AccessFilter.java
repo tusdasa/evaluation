@@ -21,7 +21,7 @@ import java.util.Map;
 
 @Slf4j
 @Component
-public class AccessLogFilter extends ZuulFilter {
+public class AccessFilter extends ZuulFilter {
 
     private JWTUtils jwtUtils;
 
@@ -29,7 +29,7 @@ public class AccessLogFilter extends ZuulFilter {
 
     private RedisTemplate<String, Teacher> teacherRedisTemplate;
 
-    public AccessLogFilter(JWTUtils jwtUtils, RedisTemplate<String, Student> studentRedisTemplate, RedisTemplate<String, Teacher> teacherRedisTemplate) {
+    public AccessFilter(JWTUtils jwtUtils, RedisTemplate<String, Student> studentRedisTemplate, RedisTemplate<String, Teacher> teacherRedisTemplate) {
         this.jwtUtils = jwtUtils;
         this.studentRedisTemplate = studentRedisTemplate;
         this.teacherRedisTemplate = teacherRedisTemplate;

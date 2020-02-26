@@ -1,15 +1,6 @@
 package net.tusdasa.evaluation.configuration;
 
-import net.tusdasa.evaluation.mq.ResultReceiver;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
-import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -26,62 +17,21 @@ public class RabbitMQConfig {
     /**
      * 消息转发器名
      */
-    public static final String topicExchangeName = "evaluation_exchange";
+    public static final String EXCHANGE_TEACHER = "evaluation_exchange_teacher";
+    public static final String EXCHANGE_STUDENT = "evaluation_exchange_student";
 
     /**
      * 投递队列名
      */
-    public static final String queueName = "evaluation";
+    public static final String QUEUE_STUDENT = "student_evaluation";
+
+    public static final String QUEUE_TEACHER = "teacher_evaluation";
+
+    public static final String ROUTE_KEY_STUDENT = "evaluation.student";
+
+    public static final String ROUTE_KEY_TEACHER = "evaluation.teacher";
 
     public RabbitMQConfig() {
 
     }
-
-
-    /**
-     * 消息队列配置
-     */
-    @Bean
-    public Queue queue() {
-        return new Queue(queueName, false);
-    }
-
-    /**
-     * 交换机配置
-     */
-    @Bean
-    public TopicExchange topicExchange() {
-        return new TopicExchange(topicExchangeName);
-    }
-
-    /**
-     * 绑定队列和交换机
-     */
-    @Bean
-    public Binding binding(Queue queue, TopicExchange topicExchange) {
-        return BindingBuilder.bind(queue).to(topicExchange).with("evaluation.#");
-    }
-
-    /**
-     * 消息接收回调类
-     */
-    @Bean
-    public MessageListenerAdapter listenerAdapter(ResultReceiver receiver) {
-        return new MessageListenerAdapter(receiver, "receiveMessage");
-    }
-
-
-    /**
-     * 消息适配
-     */
-    @Bean
-    public SimpleMessageListenerContainer container(ConnectionFactory connectionFactory,
-                                                    MessageListenerAdapter listenerAdapter) {
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory);
-        container.setQueueNames(queueName);
-        container.setMessageListener(listenerAdapter);
-        return container;
-    }
-
 }

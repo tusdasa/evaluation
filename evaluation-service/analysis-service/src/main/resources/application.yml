@@ -10,11 +10,14 @@ spring:
     time-zone: GMT+8
   data:
     mongodb:
-      uri: mongodb://127.0.0.1:27017/evaluation
+      student:
+        uri: mongodb://127.0.0.1:27017/evaluation
+      teacher:
+        uri: mongodb://127.0.0.1:27017/teacherevaluation
   rabbitmq:
     host: 127.0.0.1
     port: 5672
-    username: student_evaluation
+    username: evaluation
     password: 123456
 eureka:
   client:

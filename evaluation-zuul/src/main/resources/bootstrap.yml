@@ -37,22 +37,26 @@ zuul:
   #    connection-request-timeout-millis: 30000
   #    max-total-connections: 500
   routes:
-    student:
-      path: /student/**
-      serviceId: evaluation-student-service
-      strip-prefix: false
-    teacher:
-      path: /teacher/**
-      serviceId: evaluation-teacher-service
-      strip-prefix: false
-    course:
-      path: /course/**
-      serviceId: evaluation-course-service
-      strip-prefix: false
-    data:
-      path: /data/**
-      serviceId: evaluation-data-service
-      strip-prefix: false
+#    student:
+    #      path: /student/**
+    #      serviceId: evaluation-student-service
+    #      strip-prefix: false
+    #    teacher:
+    #      path: /teacher/**
+    #      serviceId: evaluation-teacher-service
+    #      strip-prefix: false
+    #    course:
+    #      path: /course/**
+    #      serviceId: evaluation-course-service
+    #      strip-prefix: false
+    #    data:
+    #      path: /data/**
+    #      serviceId: evaluation-data-service
+    #      strip-prefix: false
+    #    thirdkpi:
+    #      path: /thirdkpi/**
+    #      serviceId: evaluation-thirdkpi-service
+    #      strip-prefix: false
     auth:
       path: /auth/**
       serviceId: evaluation-authorization-service
@@ -61,14 +65,27 @@ zuul:
       path: /sevaluation/**
       serviceId: evaluation-studentevaluation-service
       strip-prefix: false
-    thirdkpi:
-      path: /thirdkpi/**
-      serviceId: evaluation-thirdkpi-service
-      strip-prefix: false
     teachentevaluation:
       path: /tevaluation/**
       serviceId: evaluation-teacher-evaluation
       strip-prefix: false
+    admin:
+      path: /admin/**
+      serviceId: evaluation-admin-service
+      strip-prefix: false
+  ignored-patterns:
+    - /student/**
+    - /teacher/**
+    - /course/**
+    - /data/**
+    - /thirdkpi/**
+    - /academic/**
+    - evaluation-student-service
+    - evaluation-teacher-service
+    - evaluation-course-service
+    - evaluation-data-service
+    - evaluation-thirdkpi-service
+    - evaluation-academic-service
 # 加密密钥
 auth:
   secret: 9O2B+amfn52nzowCysmC7+hfuA0q9xvxcgLU1UDVYwM=

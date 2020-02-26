@@ -1,4 +1,4 @@
-package net.tusdasa.evaluation.dao;
+package net.tusdasa.evaluation.dao.student;
 
 import net.tusdasa.evaluation.entity.StudentEvaluation;
 import org.springframework.data.mongodb.repository.MongoRepository;

@@ -1,6 +1,6 @@
 package net.tusdasa.evaluation.service.impl;
 
-import net.tusdasa.evaluation.dao.StudentEvaluationDao;
+import net.tusdasa.evaluation.dao.student.StudentEvaluationDao;
 import net.tusdasa.evaluation.entity.StudentEvaluation;
 import net.tusdasa.evaluation.service.StudentEvaluationService;
 import org.springframework.stereotype.Service;

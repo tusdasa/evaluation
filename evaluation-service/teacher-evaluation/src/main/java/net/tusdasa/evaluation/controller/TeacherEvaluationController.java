@@ -28,9 +28,16 @@ public class TeacherEvaluationController {
 
     @PostMapping("/result")
     public CommonResponse<String> addTeacherResult(@RequestBody TeacherEvaluation teacherEvaluation, @RequestHeader(name = "workId") Integer workId, @RequestHeader(name = "role") Integer role) {
-        teacherEvaluationService.addTeacherEvaluation(teacherEvaluation, workId, role);
         System.out.println(teacherEvaluation.toString());
-        return new CommonResponse<String>().ok();
+        try {
+            if (teacherEvaluationService.addTeacherEvaluation(teacherEvaluation, workId, role)) {
+                return new CommonResponse<String>().ok();
+            } else {
+                return new CommonResponse<String>().error();
+            }
+        } catch (Exception e) {
+            return new CommonResponse<String>().error(e.getMessage());
+        }
     }
 
 }

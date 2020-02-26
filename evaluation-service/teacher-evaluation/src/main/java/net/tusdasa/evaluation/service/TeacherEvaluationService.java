@@ -26,7 +26,7 @@ public interface TeacherEvaluationService {
      * @param teacherEvaluation 教学督导评价结果
      * @param workId            评价者（教学督导）工号
      */
-    void addTeacherEvaluation(TeacherEvaluation teacherEvaluation, Integer workId, Integer role);
+    boolean addTeacherEvaluation(TeacherEvaluation teacherEvaluation, Integer workId, Integer role);
 
     CommonResponse<Teacher> findAllTeacher(Integer workId, Integer role);
 

@@ -26,16 +26,14 @@ public class RabbitMQConfig {
     /**
      * 消息转发器名
      */
-    public static final String EXCHANGE_STUDENT = "evaluation_exchange_student";
+    public static final String EXCHANGE_TEACHER = "evaluation_exchange_teacher";
 
     /**
      * 投递队列名
      */
-    public static final String QUEUE_STUDENT = "student_evaluation";
+    public static final String QUEUE_TEACHER = "teacher_evaluation";
 
-
-    public static final String ROUTE_KEY_STUDENT = "evaluation.student";
-
+    public static final String ROUTE_KEY_TEACHER = "evaluation.teacher";
 
     public RabbitMQConfig() {
 
@@ -46,7 +44,7 @@ public class RabbitMQConfig {
      */
     @Bean
     public Queue queue() {
-        return new Queue(QUEUE_STUDENT, false);
+        return new Queue(QUEUE_TEACHER, false);
     }
 
     /**
@@ -54,7 +52,7 @@ public class RabbitMQConfig {
      */
     @Bean
     public TopicExchange topicExchange() {
-        return new TopicExchange(EXCHANGE_STUDENT);
+        return new TopicExchange(EXCHANGE_TEACHER);
     }
 
     /**
@@ -62,7 +60,7 @@ public class RabbitMQConfig {
      */
     @Bean
     public Binding binding(Queue queue, TopicExchange topicExchange) {
-        return BindingBuilder.bind(queue).to(topicExchange).with(ROUTE_KEY_STUDENT);
+        return BindingBuilder.bind(queue).to(topicExchange).with(ROUTE_KEY_TEACHER);
     }
 
     /**
