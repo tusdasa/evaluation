@@ -24,9 +24,9 @@ public interface TeacherEvaluationDao extends MongoRepository<TeacherEvaluation,
     /**
      * 查询某一教学督导的评价情况
      *
-     * @param teacherId 教学督导工号
+     * @param evaluatorId 教学督导工号
      */
-    List<TeacherEvaluation> findAllByTeacherId(Integer teacherId);
+    List<TeacherEvaluation> findAllByEvaluatorId(Integer evaluatorId);
 
     /**
      * 查询教学督导某一学期的评价情况
@@ -34,7 +34,7 @@ public interface TeacherEvaluationDao extends MongoRepository<TeacherEvaluation,
      * @param teacherId 被评价人Id（教师）
      * @param termId    当前学期Id
      */
-    List<TeacherEvaluation> findAllByTeacherIdAndTermId(Integer teacherId, Integer termId);
+    List<TeacherEvaluation> findAllByEvaluatorIdAndTermId(Integer teacherId, Integer termId);
 
     /**
      * 用于分析服务异步计算成绩, 更新本次总成绩

@@ -17,9 +17,9 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-    @GetMapping("/{classId}")
-    public CommonResponse<Course> findByCourseId(@PathVariable("classId") Long classId) {
-        Course course = this.courseService.findCourseById(classId);
+    @GetMapping("/{courseId}")
+    public CommonResponse<Course> findByCourseId(@PathVariable("courseId") Long courseId) {
+        Course course = this.courseService.findCourseById(courseId);
         if (course != null) {
             return new CommonResponse<Course>().ok().data(course);
         }

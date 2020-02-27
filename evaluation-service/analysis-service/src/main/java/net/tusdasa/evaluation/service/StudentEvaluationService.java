@@ -1,22 +1,93 @@
 package net.tusdasa.evaluation.service;
 
-import net.tusdasa.evaluation.entity.StudentEvaluation;
+import net.tusdasa.evaluation.client.CourseClient;
+import net.tusdasa.evaluation.client.StudentClient;
+import net.tusdasa.evaluation.client.TeacherClient;
+import net.tusdasa.evaluation.commons.CommonResponse;
+import net.tusdasa.evaluation.dao.StudentTeachingSituationDao;
+import net.tusdasa.evaluation.entity.*;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
+/**
+ * @Author: tusdasa
+ * @Date: 2020-02-27 8:29 PM
+ */
 
-public interface StudentEvaluationService {
+@Service
+public class StudentEvaluationService {
 
-    StudentEvaluation addStudentCourseResult(StudentEvaluation studentEvaluation);
+    private StudentTeachingSituationDao studentTeachingSituationDao;
 
-    void updateCourseResultTotal(StudentEvaluation studentEvaluation);
+    private CourseClient courseClient;
 
-    List<StudentEvaluation> findAllByCourseId(Integer courseId);
+    private StudentClient studentClient;
 
-    StudentEvaluation findAllById(String id);
+    private TeacherClient teacherClient;
 
-    List<StudentEvaluation> findAllByCourseIdAndTermId(Integer courseId, Integer termId);
+    public StudentEvaluationService(StudentTeachingSituationDao studentTeachingSituationDao, CourseClient courseClient, StudentClient studentClient, TeacherClient teacherClient) {
+        this.studentTeachingSituationDao = studentTeachingSituationDao;
+        this.courseClient = courseClient;
+        this.studentClient = studentClient;
+        this.teacherClient = teacherClient;
+    }
 
-    List<StudentEvaluation> findAllByStudentId(Long studentId);
+    public StudentTeachingSituation findByWorkId(Integer workId) {
+        return this.studentTeachingSituationDao.findById(workId).get();
+    }
 
-    List<StudentEvaluation> findAllByStudentIdAndAndTermId(Long studentId, Integer termId);
+    public Course findCourseByCourseId(Long courseId) {
+        CommonResponse<Course> courseCommonResponse = courseClient.findByCourseId(courseId);
+        if (courseCommonResponse.success()) {
+            return courseCommonResponse.getData();
+        }
+        return null;
+    }
+
+    public Student findStudentById(Long studentId) {
+        CommonResponse<Student> studentCommonResponse = studentClient.getStudentById(studentId);
+        if (studentCommonResponse.success()) {
+            return studentCommonResponse.getData();
+        }
+        return null;
+    }
+
+    public Teacher findTeacherById(Integer workId) {
+        CommonResponse<Teacher> teacherCommonResponse = teacherClient.getTeacherById(workId);
+        if (teacherCommonResponse.success()) {
+            return teacherCommonResponse.getData();
+        }
+        return null;
+    }
+
+    public StudentTeachingSituation add(StudentTeachingSituation studentTeachingSituation, StudentEvaluation studentEvaluation) {
+
+        Student student = this.findStudentById(studentEvaluation.getStudentId());
+        Course course = this.findCourseByCourseId(studentEvaluation.getCourseId());
+
+        if (studentTeachingSituation != null) {
+
+
+        } else {
+            Teacher teacher = this.findTeacherById(course.getTeacherWorkId());
+
+            studentTeachingSituation = this.getStudentTeachingSituation(teacher);
+
+        }
+
+
+        return null;
+    }
+
+    public FactorClasses getFactorClasses(Student student) {
+        return new FactorClasses(student);
+    }
+
+    public FactorCourse getFactorCourse(Course course) {
+        return new FactorCourse(course);
+    }
+
+    public StudentTeachingSituation getStudentTeachingSituation(Teacher teacher) {
+        return new StudentTeachingSituation(teacher);
+    }
+
 }

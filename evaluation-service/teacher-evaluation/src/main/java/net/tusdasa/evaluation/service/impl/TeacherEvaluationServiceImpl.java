@@ -94,21 +94,20 @@ public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
      */
     @Transactional
     @Override
-    public boolean addTeacherEvaluation(TeacherEvaluation teacherEvaluation, Integer workId, Integer role) {
+    public void addTeacherEvaluation(TeacherEvaluation teacherEvaluation, Integer workId, Integer role) {
         CommonResponse<Term> termCommonResponse = academicYearClient.currentTerm();
         if (termCommonResponse.success()) {
             Term term = termCommonResponse.getData();
             teacherEvaluation.setId(UUIDUtils.UUID());
             // 设置评价者工号
-            teacherEvaluation.setTeacherId(workId);
+            teacherEvaluation.setEvaluatorId(workId);
 
             teacherEvaluation.setTermId(term.getTermId());
             // 插入MongoDB
             teacherEvaluationDao.insert(teacherEvaluation);
             rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_TEACHER, RabbitMQConfig.ROUTE_KEY_TEACHER, teacherEvaluation);
-            return true;
+
         }
-        return false;
     }
 
     @Override
@@ -126,7 +125,7 @@ public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
                         teacher.getState().getStateId()
                 );
                 if (teacherCommonResponse.success()) {
-                    List<Teacher> teacherList = this.clear(this.teacherEvaluationDao.findAllByTeacherId(workId), teacherCommonResponse.getTable());
+                    List<Teacher> teacherList = this.clear(this.teacherEvaluationDao.findAllByEvaluatorId(workId), teacherCommonResponse.getTable());
                     return new CommonResponse<Teacher>().ok().table(teacherList);
                 } else {
                     return new CommonResponse<Teacher>().error(teacherCommonResponse.getMessage());

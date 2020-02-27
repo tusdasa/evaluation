@@ -42,7 +42,7 @@ public class TeacherEvaluation implements Serializable {
     /**
      * 评价人ID
      */
-    private Integer teacherId;
+    private Integer evaluatorId;
 
     /**
      * 总分

@@ -8,12 +8,10 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss:SSS
     time-zone: GMT+8
-  data:
-    mongodb:
-      student:
-        uri: mongodb://127.0.0.1:27017/evaluation
-      teacher:
-        uri: mongodb://127.0.0.1:27017/teacherevaluation
+  elasticsearch:
+    rest:
+      uris: http://127.0.0.1:9200
+      connection-timeout: 10s
   rabbitmq:
     host: 127.0.0.1
     port: 5672
