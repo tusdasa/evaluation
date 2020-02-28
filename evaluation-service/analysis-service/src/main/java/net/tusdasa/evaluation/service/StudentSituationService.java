@@ -5,8 +5,9 @@ import net.tusdasa.evaluation.client.CourseClient;
 import net.tusdasa.evaluation.client.StudentClient;
 import net.tusdasa.evaluation.client.TeacherClient;
 import net.tusdasa.evaluation.commons.CommonResponse;
-import net.tusdasa.evaluation.dao.StudentTeachingSituationDao;
+import net.tusdasa.evaluation.dao.StudentSituationDao;
 import net.tusdasa.evaluation.entity.*;
+import net.tusdasa.evaluation.mongodb.StudentEvaluationDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -21,11 +22,11 @@ import java.util.Optional;
  */
 
 @Service
-public class StudentEvaluationService {
+public class StudentSituationService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(StudentEvaluationService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(StudentSituationService.class);
 
-    private StudentTeachingSituationDao studentTeachingSituationDao;
+    private StudentSituationDao studentSituationDao;
 
     private CourseClient courseClient;
 
@@ -35,12 +36,15 @@ public class StudentEvaluationService {
 
     private AcademicYearClient academicYearClient;
 
-    public StudentEvaluationService(StudentTeachingSituationDao studentTeachingSituationDao, CourseClient courseClient, StudentClient studentClient, TeacherClient teacherClient, AcademicYearClient academicYearClient) {
-        this.studentTeachingSituationDao = studentTeachingSituationDao;
+    private StudentEvaluationDao studentEvaluationDao;
+
+    public StudentSituationService(StudentSituationDao studentSituationDao, CourseClient courseClient, StudentClient studentClient, TeacherClient teacherClient, AcademicYearClient academicYearClient, StudentEvaluationDao studentEvaluationDao) {
+        this.studentSituationDao = studentSituationDao;
         this.courseClient = courseClient;
         this.studentClient = studentClient;
         this.teacherClient = teacherClient;
         this.academicYearClient = academicYearClient;
+        this.studentEvaluationDao = studentEvaluationDao;
     }
 
     private Term findCurrentTerm() {
@@ -48,11 +52,12 @@ public class StudentEvaluationService {
         if (termCommonResponse.success()) {
             return termCommonResponse.getData();
         }
+        LOG.error("AcademicYear service unavailable");
         return null;
     }
 
-    private StudentTeachingSituation findByWorkId(Integer workId) {
-        return this.studentTeachingSituationDao.findById(workId).get();
+    private Optional<StudentSituation> findByWorkId(Integer workId) {
+        return this.studentSituationDao.findById(workId);
     }
 
     private Course findCourseByCourseId(Long courseId) {
@@ -82,36 +87,40 @@ public class StudentEvaluationService {
         return null;
     }
 
-    public void add(StudentEvaluation studentEvaluation) {
+    public void addStudentEvaluation(StudentEvaluation studentEvaluation) {
+
+        this.studentEvaluationDao.save(studentEvaluation);
 
         Student student = this.findStudentById(studentEvaluation.getStudentId());
+
         Course course = this.findCourseByCourseId(studentEvaluation.getCourseId());
+
         Term term = this.findCurrentTerm();
 
-        StudentTeachingSituation studentTeachingSituation = null;
+        StudentSituation studentSituation = null;
 
         if (course != null && student != null && term != null) {
-            Optional<StudentTeachingSituation> optional = this.studentTeachingSituationDao.findById(course.getTeacherWorkId());
+            Optional<StudentSituation> optional = this.findByWorkId(course.getTeacherWorkId());
             if (optional.isPresent()) {
-                studentTeachingSituation = optional.get();
+                studentSituation = optional.get();
             }
         } else {
             LOG.error("calculate error service unavailable {}", studentEvaluation);
         }
 
         FactorClasses factorClasses = this.getFactorClasses(student, studentEvaluation);
-        if (studentTeachingSituation != null) {
+        if (studentSituation != null) {
             FactorCourse factorCourse = this.getFactorCourse(course, term);
-            StudentTeachingSituation ss = this.addNew(studentTeachingSituation, factorClasses, factorCourse, studentEvaluation.getTotal());
+            StudentSituation ss = this.addNew(studentSituation, factorClasses, factorCourse, studentEvaluation.getTotal());
             System.out.println(ss.toString());
-            this.studentTeachingSituationDao.save(ss);
+            this.studentSituationDao.save(ss);
         } else {
             Teacher teacher = this.findTeacherById(course.getTeacherWorkId());
             if (teacher != null) {
                 FactorCourse factorCourse = this.getFactorCourse(course, term).add(factorClasses);
-                StudentTeachingSituation situation = this.getStudentTeachingSituation(teacher).add(factorCourse);
+                StudentSituation situation = this.getStudentTeachingSituation(teacher).add(factorCourse);
                 System.out.println(situation.toString());
-                this.studentTeachingSituationDao.save(situation);
+                this.studentSituationDao.save(situation);
             } else {
                 LOG.error("calculate error service unavailable {}", studentEvaluation);
             }
@@ -126,8 +135,8 @@ public class StudentEvaluationService {
         return new FactorCourse(course, term);
     }
 
-    private StudentTeachingSituation getStudentTeachingSituation(Teacher teacher) {
-        return new StudentTeachingSituation(teacher);
+    private StudentSituation getStudentTeachingSituation(Teacher teacher) {
+        return new StudentSituation(teacher);
     }
 
     /***
@@ -136,13 +145,12 @@ public class StudentEvaluationService {
      * FactorClasses classes 新的
      * FactorCourse course
      * */
-    private StudentTeachingSituation addNew(StudentTeachingSituation situation,
-                                            FactorClasses classes,  //根据
-                                            FactorCourse course,
-                                            Integer score) {
+    private StudentSituation addNew(StudentSituation situation,
+                                    FactorClasses classes,
+                                    FactorCourse course,
+                                    Integer score) {
         // 获得当前的课程列表
         List<FactorCourse> factorCourseList = situation.getFactorCourseList();
-
         // 遍历课程列表
         int i = 0, j = 0;
         boolean flag1 = false;
@@ -155,7 +163,6 @@ public class StudentEvaluationService {
                 // 是否是已经存在课程
                 flag1 = true;
                 List<FactorClasses> classesList = tempCourse.getClassesList();
-
                 // 遍历班级列表
                 for (; j < classesList.size(); j++) {
                     // 取出当前一个班级
@@ -169,13 +176,11 @@ public class StudentEvaluationService {
                         break;
                     }
                 }
-
                 // 新班级
                 if (!flag2) {
                     classesList.add(classes.addScore(score));
                     flag2 = false;
                 }
-
             }
         }
         // 为假表明是列表中不存在的一门课程

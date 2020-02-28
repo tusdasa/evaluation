@@ -17,6 +17,9 @@ spring:
     port: 5672
     username: evaluation
     password: 123456
+  data:
+    mongodb:
+      uri: mongodb://127.0.0.1:27017/evaluation
 eureka:
   client:
     service-url:

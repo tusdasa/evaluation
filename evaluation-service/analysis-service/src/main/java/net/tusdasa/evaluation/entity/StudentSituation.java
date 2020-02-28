@@ -17,7 +17,7 @@ import java.util.List;
  */
 
 @Document(indexName = "student")
-public class StudentTeachingSituation implements Serializable {
+public class StudentSituation implements Serializable {
 
     // workId
     private Integer id;
@@ -37,14 +37,17 @@ public class StudentTeachingSituation implements Serializable {
     // 该教师开设的课程不同班级的给的评价信息
     private List<FactorCourse> factorCourseList;
 
-    public StudentTeachingSituation(Teacher teacher) {
+    public StudentSituation() {
+    }
+
+    public StudentSituation(Teacher teacher) {
         this.id = teacher.getWorkId();
         this.teacherName = teacher.getTeacherName();
         this.departmentName = teacher.getDepartment().getDepartmentName();
         this.professionalTitle = teacher.getProfessional().getProfessionalTitle();
     }
 
-    public StudentTeachingSituation add(FactorCourse course) {
+    public StudentSituation add(FactorCourse course) {
         if (this.factorCourseList == null) {
             this.factorCourseList = new ArrayList<>(10);
         }

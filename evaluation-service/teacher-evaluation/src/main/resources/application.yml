@@ -14,7 +14,7 @@ spring:
         enabled: false
   data:
     mongodb:
-      uri: mongodb://127.0.0.1:27017/teacherevaluation
+      uri: mongodb://127.0.0.1:27017/evaluation
   rabbitmq:
     host: 127.0.0.1
     port: 5672

@@ -32,6 +32,9 @@ public class FactorCourse implements Serializable {
     // 参加课的班级
     List<FactorClasses> classesList;
 
+    public FactorCourse() {
+    }
+
     public FactorCourse add(FactorClasses classes) {
         if (this.classesList == null) {
             this.classesList = new ArrayList<>(20);

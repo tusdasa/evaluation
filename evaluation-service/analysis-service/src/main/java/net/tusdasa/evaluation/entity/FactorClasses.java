@@ -45,13 +45,15 @@ public class FactorClasses implements Serializable {
     //List<FactorSecondKPI> secondKPIList;
 
 
+    public FactorClasses() {
+    }
+
     public FactorClasses addScore(Integer score) {
         if (this.totalList == null) {
             totalList = new ArrayList<>(50);
         }
         totalList.add(score);
         this.totalScore += this.totalScore + score;
-        this.totalScore = this.totalScore / this.totalList.size();
         return this;
     }
 
@@ -113,6 +115,7 @@ public class FactorClasses implements Serializable {
     }
 
     public Double getAverageScore() {
+        this.averageScore = (double) (this.totalScore / this.totalList.size());
         return averageScore;
     }
 

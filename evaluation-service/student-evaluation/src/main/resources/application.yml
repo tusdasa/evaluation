@@ -10,7 +10,7 @@ spring:
     time-zone: GMT+8
   data:
     mongodb:
-      uri: mongodb://127.0.0.1:27017/studentevaluation
+      uri: mongodb://127.0.0.1:27017/evaluation
   cloud:
     loadbalancer:
       ribbon:
