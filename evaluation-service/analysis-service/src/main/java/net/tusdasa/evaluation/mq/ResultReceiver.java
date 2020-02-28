@@ -1,11 +1,10 @@
 package net.tusdasa.evaluation.mq;
 
-import net.tusdasa.evaluation.client.CourseClient;
 import net.tusdasa.evaluation.configuration.RabbitMQConfig;
-import net.tusdasa.evaluation.dao.StudentTeachingSituationDao;
 import net.tusdasa.evaluation.entity.KpiScore;
 import net.tusdasa.evaluation.entity.StudentEvaluation;
 import net.tusdasa.evaluation.entity.TeacherEvaluation;
+import net.tusdasa.evaluation.service.StudentEvaluationService;
 import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;
@@ -26,12 +25,11 @@ import java.util.List;
 @Component
 public class ResultReceiver {
 
-    private StudentTeachingSituationDao studentTeachingSituationDao;
 
-    private CourseClient courseClient;
+    private StudentEvaluationService studentEvaluationService;
 
-    public ResultReceiver(StudentTeachingSituationDao studentTeachingSituationDao) {
-        this.studentTeachingSituationDao = studentTeachingSituationDao;
+    public ResultReceiver(StudentEvaluationService studentEvaluationService) {
+        this.studentEvaluationService = studentEvaluationService;
     }
 
     // 计算总成绩
@@ -47,35 +45,7 @@ public class ResultReceiver {
         }
         studentEvaluation.setTotal(totalScore);
         // 根据课程Id 获得 工号
-
-        Long courseId = studentEvaluation.getCourseId();
-
-        /*
-        CommonResponse<Course> courseCommonResponse = courseClient.findByCourseId(courseId);
-
-        if (courseCommonResponse.success()){
-            StudentTeachingSituation studentTeachingSituation = studentTeachingSituationDao.findById(courseCommonResponse.getData().getTeacherWorkId()).get();
-            if (studentTeachingSituation != null){
-                List<FactorCourse> factorCourseList = studentTeachingSituation.getFactorCourseList();
-                if (factorCourseList !=null){
-
-                }else {
-                }
-            }else {
-                studentTeachingSituation = new StudentTeachingSituation();
-            }
-        }else {
-            // 无法计算
-        }
-         */
-
-        // 工号查询 是否存在studentTeachingSituation
-        // 不存在
-        // 创建对象
-        // 存在 根据学生ID 获得班级学院 遍历List<FactorCourse> factorCourseList 遍历课程ID
-        // 找到对应的课程 再遍历List<FactorClasses> classesList 根据班级ID 找到班级
-        // 加入总分
-
+        this.studentEvaluationService.add(studentEvaluation);
     }
 
     @RabbitListener(bindings = {
