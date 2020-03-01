@@ -39,19 +39,14 @@ public class FactorClasses implements Serializable {
     private Double averageScore = 0.0;
 
     // 总分列表
-    private List<Integer> totalList;
-
-    // 二级指标得分详情
-    //List<FactorSecondKPI> secondKPIList;
+    private List<Integer> totalList = totalList = new ArrayList<>(50);
+    ;
 
 
     public FactorClasses() {
     }
 
     public FactorClasses addScore(Integer score) {
-        if (this.totalList == null) {
-            totalList = new ArrayList<>(50);
-        }
         totalList.add(score);
         this.totalScore += this.totalScore + score;
         return this;

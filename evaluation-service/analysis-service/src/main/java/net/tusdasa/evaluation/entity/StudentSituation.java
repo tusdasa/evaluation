@@ -35,7 +35,7 @@ public class StudentSituation implements Serializable {
     private Double totalScore = 0.0;
 
     // 该教师开设的课程不同班级的给的评价信息
-    private List<FactorCourse> factorCourseList;
+    private List<FactorCourse> factorCourseList = new ArrayList<>(10);
 
     public StudentSituation() {
     }
@@ -48,11 +48,7 @@ public class StudentSituation implements Serializable {
     }
 
     public StudentSituation add(FactorCourse course) {
-        if (this.factorCourseList == null) {
-            this.factorCourseList = new ArrayList<>(10);
-        }
         this.factorCourseList.add(course);
-        this.totalScore = this.totalScore + course.getTotalScore();
         return this;
     }
 
@@ -89,6 +85,11 @@ public class StudentSituation implements Serializable {
     }
 
     public Double getTotalScore() {
+        double temp = 0.0;
+        for (FactorCourse factorCourse : factorCourseList) {
+            temp = temp + factorCourse.getTotalScore();
+        }
+        this.totalScore = temp / getFactorCourseList().size();
         return totalScore;
     }
 

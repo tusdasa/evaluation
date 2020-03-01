@@ -30,17 +30,13 @@ public class FactorCourse implements Serializable {
     private Double totalScore = 0.0;
 
     // 参加课的班级
-    List<FactorClasses> classesList;
+    List<FactorClasses> classesList = new ArrayList<>(20);
 
     public FactorCourse() {
     }
 
     public FactorCourse add(FactorClasses classes) {
-        if (this.classesList == null) {
-            this.classesList = new ArrayList<>(20);
-        }
         this.classesList.add(classes);
-        this.totalScore = this.totalScore + classes.getAverageScore();
         return this;
     }
 
@@ -75,6 +71,12 @@ public class FactorCourse implements Serializable {
     }
 
     public Double getTotalScore() {
+
+        double temp = 0.0;
+        for (FactorClasses factorClasses : classesList) {
+            temp = temp + factorClasses.getAverageScore();
+        }
+        this.totalScore = temp / this.classesList.size();
         return totalScore;
     }
 
