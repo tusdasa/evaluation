@@ -5,7 +5,6 @@ import net.tusdasa.evaluation.entity.ThirdKpi;
 import net.tusdasa.evaluation.service.ThirdKpiService;
 import net.tusdasa.evaluation.vo.IdsRequest;
 import net.tusdasa.evaluation.vo.ThirdKpiRequest;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,14 +12,10 @@ import java.util.List;
 @RestController
 public class ThirdKpiController {
 
-    private RedisTemplate<String, List<ThirdKpi>> redisTemplate;
-
     private ThirdKpiService thirdKpiService;
 
-    public ThirdKpiController(ThirdKpiService thirdKpiService, RedisTemplate<String, List<ThirdKpi>> redisTemplate) {
+    public ThirdKpiController(ThirdKpiService thirdKpiService) {
         this.thirdKpiService = thirdKpiService;
-        this.redisTemplate = redisTemplate;
-
     }
 
     @GetMapping("/")

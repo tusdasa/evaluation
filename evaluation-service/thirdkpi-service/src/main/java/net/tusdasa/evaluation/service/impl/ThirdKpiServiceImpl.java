@@ -17,7 +17,6 @@ import java.util.List;
 @Service
 public class ThirdKpiServiceImpl implements ThirdKpiService {
 
-
     private ThirdKpiMapper thirdKpiMapper;
 
     public ThirdKpiServiceImpl(ThirdKpiMapper thirdKpiMapper) {
