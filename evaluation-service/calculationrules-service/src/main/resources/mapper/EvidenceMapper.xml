@@ -89,4 +89,10 @@
         where evidence_type = #{evidenceType,jdbcType=INTEGER}
     </select>
 
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_evidence`
+    </select>
+
 </mapper>

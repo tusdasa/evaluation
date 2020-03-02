@@ -87,4 +87,10 @@
         from `t_level`
         where level_type = #{levelType,jdbcType=INTEGER}
     </select>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_level`
+    </select>
 </mapper>

@@ -42,6 +42,7 @@ public class Evidence implements Serializable {
      */
     private Integer evidenceScore;
 
+
     private static final long serialVersionUID = 100050L;
 
 }

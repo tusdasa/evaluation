@@ -3,12 +3,12 @@ package net.tusdasa.evaluation.controller;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.CalculationRule;
 import net.tusdasa.evaluation.service.CalculationRuleService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import net.tusdasa.evaluation.vo.CalculationRuleRequest;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class CalculationRulesController {
+
     private CalculationRuleService calculationRuleService;
 
     public CalculationRulesController(CalculationRuleService calculationRuleService) {
@@ -28,5 +28,17 @@ public class CalculationRulesController {
     @GetMapping("/")
     public CommonResponse<CalculationRule> findAll() {
         return new CommonResponse<CalculationRule>().ok().table(this.calculationRuleService.findAll());
+    }
+
+    @PutMapping("/")
+    public CommonResponse<String> updateCalculationRule(@RequestBody CalculationRuleRequest ruleRequest) {
+        this.calculationRuleService.updateCalculationRule(ruleRequest);
+        return new CommonResponse<String>().ok();
+    }
+
+    @PostMapping("/")
+    public CommonResponse<String> createCalculationRule(@RequestBody CalculationRuleRequest ruleRequest) {
+        this.calculationRuleService.addCalculationRule(ruleRequest);
+        return new CommonResponse<String>().ok();
     }
 }

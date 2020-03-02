@@ -2,7 +2,6 @@ package net.tusdasa.evaluation.dao;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -64,7 +63,7 @@ public interface BaseDao<Model, PK extends Serializable> {
      * @return 返回集合
      */
 
-    List<Model> findAll(Map<String, Integer> parameter);
+    List<Model> findAll();
 
 }
 
