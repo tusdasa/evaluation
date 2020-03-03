@@ -3,9 +3,7 @@ package net.tusdasa.evaluation.controller;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.Level;
 import net.tusdasa.evaluation.service.LevelService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Author: tusdasa
@@ -33,5 +31,17 @@ public class LevelController {
             return new CommonResponse<Level>().ok().data(level);
         }
         return new CommonResponse<Level>().error();
+    }
+
+    @PutMapping("/")
+    public CommonResponse<String> update(@RequestBody Level level) {
+        this.levelService.updateLevel(level);
+        return new CommonResponse<String>().ok();
+    }
+
+    @PostMapping("/")
+    public CommonResponse<String> create(@RequestBody Level level) {
+        this.levelService.addLevel(level);
+        return new CommonResponse<String>().ok();
     }
 }
