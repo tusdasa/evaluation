@@ -21,7 +21,7 @@ public class EvidenceController {
     }
 
     @GetMapping("/{id}")
-    public CommonResponse<Evidence> findById(@PathVariable("id") Integer id) {
+    public CommonResponse<Evidence> findEvidenceById(@PathVariable("id") Integer id) {
         Evidence evidence = this.evidenceService.findById(id);
 
         if (evidence != null) {
@@ -31,7 +31,7 @@ public class EvidenceController {
     }
 
     @GetMapping("/")
-    public CommonResponse<Evidence> findAll() {
+    public CommonResponse<Evidence> findAllEvidence() {
         return new CommonResponse<Evidence>().ok().table(this.evidenceService.findAll());
     }
 

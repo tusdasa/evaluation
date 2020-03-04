@@ -20,12 +20,12 @@ public class LevelController {
     }
 
     @GetMapping("/")
-    public CommonResponse<Level> findAll() {
+    public CommonResponse<Level> findAllLevel() {
         return new CommonResponse<Level>().table(this.levelService.findAll());
     }
 
     @GetMapping("/{id}")
-    public CommonResponse<Level> findById(@PathVariable("id") Integer id) {
+    public CommonResponse<Level> findLevelById(@PathVariable("id") Integer id) {
         Level level = this.levelService.findById(id);
         if (level != null) {
             return new CommonResponse<Level>().ok().data(level);
@@ -34,13 +34,13 @@ public class LevelController {
     }
 
     @PutMapping("/")
-    public CommonResponse<String> update(@RequestBody Level level) {
+    public CommonResponse<String> updateLevel(@RequestBody Level level) {
         this.levelService.updateLevel(level);
         return new CommonResponse<String>().ok();
     }
 
     @PostMapping("/")
-    public CommonResponse<String> create(@RequestBody Level level) {
+    public CommonResponse<String> createLevel(@RequestBody Level level) {
         this.levelService.addLevel(level);
         return new CommonResponse<String>().ok();
     }

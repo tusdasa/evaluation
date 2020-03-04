@@ -3,9 +3,8 @@ package net.tusdasa.evaluation.controller;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.Grade;
 import net.tusdasa.evaluation.service.GradeService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import net.tusdasa.evaluation.vo.GradeRequest;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -31,5 +30,17 @@ public class GradeController {
     @GetMapping("/")
     public CommonResponse<Grade> findAll() {
         return new CommonResponse<Grade>().ok().table(this.gradeService.findAll());
+    }
+
+    @PostMapping("/")
+    public CommonResponse<String> create(@RequestBody GradeRequest request) {
+        this.gradeService.addGrade(request);
+        return new CommonResponse<String>().ok();
+    }
+
+    @PutMapping("/")
+    public CommonResponse<String> update(@RequestBody GradeRequest request) {
+        this.gradeService.updateGrade(request);
+        return new CommonResponse<String>().ok();
     }
 }

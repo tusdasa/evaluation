@@ -7,16 +7,16 @@ import net.tusdasa.evaluation.vo.CalculationRuleRequest;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class CalculationRulesController {
+public class CalculationRuleController {
 
     private CalculationRuleService calculationRuleService;
 
-    public CalculationRulesController(CalculationRuleService calculationRuleService) {
+    public CalculationRuleController(CalculationRuleService calculationRuleService) {
         this.calculationRuleService = calculationRuleService;
     }
 
     @GetMapping("/{id}")
-    public CommonResponse<CalculationRule> findById(@PathVariable("id") Integer id) {
+    public CommonResponse<CalculationRule> findCalculationRuleById(@PathVariable("id") Integer id) {
         CalculationRule calculationRule = calculationRuleService.findCalculationRuleById(id);
         if (calculationRule != null) {
             return new CommonResponse<CalculationRule>().ok().data(calculationRule);
@@ -26,7 +26,7 @@ public class CalculationRulesController {
     }
 
     @GetMapping("/")
-    public CommonResponse<CalculationRule> findAll() {
+    public CommonResponse<CalculationRule> findAllCalculationRule() {
         return new CommonResponse<CalculationRule>().ok().table(this.calculationRuleService.findAll());
     }
 

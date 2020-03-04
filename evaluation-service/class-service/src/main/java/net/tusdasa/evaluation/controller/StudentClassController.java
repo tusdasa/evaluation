@@ -17,7 +17,7 @@ public class StudentClassController {
     }
 
     @GetMapping("/")
-    public CommonResponse<StudentClass> findAll() {
+    public CommonResponse<StudentClass> findAllStudentClass() {
         return new CommonResponse<StudentClass>().ok().table(this.studentClassService.findAll());
     }
 
@@ -31,13 +31,13 @@ public class StudentClassController {
     }
 
     @PostMapping("/")
-    public CommonResponse<String> create(@RequestBody StudentClassRequest request) {
+    public CommonResponse<String> createStudentClass(@RequestBody StudentClassRequest request) {
         this.studentClassService.addStudentClass(request);
         return new CommonResponse<String>().ok();
     }
 
     @PutMapping("/")
-    public CommonResponse<String> update(@RequestBody StudentClassRequest request) {
+    public CommonResponse<String> updateStudentClass(@RequestBody StudentClassRequest request) {
         this.studentClassService.updateStudentClass(request);
         return new CommonResponse<String>().ok();
     }
