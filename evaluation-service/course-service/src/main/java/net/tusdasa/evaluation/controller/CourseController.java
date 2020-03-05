@@ -3,9 +3,8 @@ package net.tusdasa.evaluation.controller;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.Course;
 import net.tusdasa.evaluation.service.CourseService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import net.tusdasa.evaluation.vo.CourseRequest;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -39,6 +38,22 @@ public class CourseController {
     @GetMapping("/work/{workId}")
     public CommonResponse<Course> findCourseByWorkId(@PathVariable("workId") Integer workId) {
         return new CommonResponse<Course>().ok().table(this.courseService.findCourseByWorkId(workId));
+    }
+
+    @GetMapping("/")
+    public CommonResponse<Course> findAllCourse(@RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
+                                                @RequestParam(name = "size", defaultValue = "20", required = false) Integer size) {
+        return new CommonResponse<Course>().ok().table(this.courseService.findAllByPage(page, size));
+    }
+
+    @PostMapping("/")
+    public CommonResponse<String> updateCourse(@RequestBody CourseRequest request) {
+        return new CommonResponse<String>().ok();
+    }
+
+    @PutMapping("/")
+    public CommonResponse<String> createCourse(@RequestBody CourseRequest request) {
+        return new CommonResponse<String>().ok();
     }
 
 }
