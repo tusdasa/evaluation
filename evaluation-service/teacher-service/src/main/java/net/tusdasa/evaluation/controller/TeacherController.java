@@ -87,4 +87,10 @@ public class TeacherController {
         return new CommonResponse<Teacher>().ok().table(this.teacherService.findAllTeacherByRoleAndDepartment(departmentId, stateId, roleId));
     }
 
+    @GetMapping("/")
+    public CommonResponse<Teacher> findAll(@RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
+                                           @RequestParam(name = "size", defaultValue = "20", required = false) Integer size) {
+        return new CommonResponse<Teacher>().ok().table(this.teacherService.findAll(page, size));
+    }
+
 }

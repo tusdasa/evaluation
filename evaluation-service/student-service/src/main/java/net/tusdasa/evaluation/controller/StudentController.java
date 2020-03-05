@@ -51,12 +51,12 @@ public class StudentController {
      */
 
     @PutMapping("/")
-    public CommonResponse<Student> updateStudent(@RequestBody StudentRequest request) {
+    public CommonResponse<String> updateStudent(@RequestBody StudentRequest request) {
         if (request.isUpdateRequest()) {
             studentService.updateStudent(request);
-            return new CommonResponse<Student>().ok();
+            return new CommonResponse<String>().ok();
         }
-        return new CommonResponse<Student>().error();
+        return new CommonResponse<String>().error();
     }
 
     /***
@@ -72,13 +72,13 @@ public class StudentController {
      */
 
     @PostMapping("/")
-    public CommonResponse<Student> crateStudent(@RequestBody StudentRequest request) {
+    public CommonResponse<String> crateStudent(@RequestBody StudentRequest request) {
 
         if (request.isCreateRequest()) {
             studentService.addStudent(request);
-            return new CommonResponse<Student>().ok();
+            return new CommonResponse<String>().ok();
         }
-        return new CommonResponse<Student>().error();
+        return new CommonResponse<String>().error();
     }
 
 
