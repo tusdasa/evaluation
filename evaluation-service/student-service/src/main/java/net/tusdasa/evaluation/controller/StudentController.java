@@ -80,4 +80,11 @@ public class StudentController {
         }
         return new CommonResponse<Student>().error();
     }
+
+
+    @GetMapping("/")
+    public CommonResponse<Student> findAll(@RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
+                                           @RequestParam(name = "size", defaultValue = "20", required = false) Integer size) {
+        return new CommonResponse<Student>().ok().table(this.studentService.findAllByPage(page, size));
+    }
 }
