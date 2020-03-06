@@ -3,9 +3,8 @@ package net.tusdasa.evaluation.controller;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.Term;
 import net.tusdasa.evaluation.service.TermService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import net.tusdasa.evaluation.vo.TermRequest;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class TermController {
@@ -29,4 +28,18 @@ public class TermController {
         }
         return new CommonResponse<Term>().error("未找到");
     }
+
+    @PostMapping("/")
+    public CommonResponse<String> createTerm(@RequestBody TermRequest request) {
+        this.termService.addTerm(request);
+        return new CommonResponse<String>().ok();
+    }
+
+
+    @PutMapping("/")
+    public CommonResponse<String> updateTerm(@RequestBody TermRequest request) {
+        this.termService.updateTerm(request);
+        return new CommonResponse<String>().ok();
+    }
+
 }
