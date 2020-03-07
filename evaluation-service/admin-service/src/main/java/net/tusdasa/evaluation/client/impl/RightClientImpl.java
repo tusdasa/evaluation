@@ -26,4 +26,9 @@ public class RightClientImpl implements RightClient {
     public CommonResponse<String> updateRight(Right right) {
         return new CommonResponse<String>().busy();
     }
+
+    @Override
+    public CommonResponse<String> createRight(Right right) {
+        return new CommonResponse<String>().busy();
+    }
 }

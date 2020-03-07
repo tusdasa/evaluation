@@ -35,4 +35,9 @@ public class RightController {
         return this.rightService.update(right);
     }
 
+    @PostMapping("/")
+    public CommonResponse<String> create(@RequestBody Right right) {
+        return this.rightService.create(right);
+    }
+
 }

@@ -4,10 +4,7 @@ import net.tusdasa.evaluation.client.impl.RightClientImpl;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.Right;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 @FeignClient(value = "evaluation-authorization-service", path = "/auth", fallback = RightClientImpl.class)
 public interface RightClient {
@@ -20,5 +17,8 @@ public interface RightClient {
 
     @PutMapping("/right")
     CommonResponse<String> updateRight(@RequestBody Right right);
+
+    @PostMapping("/right")
+    CommonResponse<String> createRight(@RequestBody Right right);
 
 }

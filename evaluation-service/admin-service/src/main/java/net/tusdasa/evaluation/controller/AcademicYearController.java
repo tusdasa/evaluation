@@ -1,7 +1,10 @@
 package net.tusdasa.evaluation.controller;
 
+import net.tusdasa.evaluation.commons.CommonResponse;
+import net.tusdasa.evaluation.entity.AcademicYear;
 import net.tusdasa.evaluation.service.AcademicYearService;
-import org.springframework.web.bind.annotation.RestController;
+import net.tusdasa.evaluation.vo.AcademicYearRequest;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Author: tusdasa
@@ -9,12 +12,33 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
+@RequestMapping("/academicyear")
 public class AcademicYearController {
 
     private AcademicYearService academicYearService;
 
     public AcademicYearController(AcademicYearService academicYearService) {
         this.academicYearService = academicYearService;
+    }
+
+    @GetMapping("/{id}")
+    public CommonResponse<AcademicYear> findById(@PathVariable("id") Integer id) {
+        return this.academicYearService.findById(id);
+    }
+
+    @GetMapping("/")
+    public CommonResponse<AcademicYear> findAll() {
+        return this.academicYearService.findAll();
+    }
+
+    @PutMapping("/")
+    public CommonResponse<String> update(@RequestBody AcademicYearRequest request) {
+        return this.academicYearService.update(request);
+    }
+
+    @PostMapping("/")
+    public CommonResponse<String> create(@RequestBody AcademicYearRequest request) {
+        return this.academicYearService.create(request);
     }
 
 }

@@ -28,7 +28,7 @@ public class RightController {
      * }
      */
     @PostMapping("/right")
-    public CommonResponse<String> addRight(@RequestBody Right right) {
+    public CommonResponse<String> createRight(@RequestBody Right right) {
         rightService.addRight(right);
         return new CommonResponse<String>().ok();
     }

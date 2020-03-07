@@ -31,4 +31,8 @@ public class RightService {
     public CommonResponse<String> update(Right right) {
         return this.rightClient.updateRight(right);
     }
+
+    public CommonResponse<String> create(Right right) {
+        return this.rightClient.createRight(right);
+    }
 }
