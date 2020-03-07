@@ -41,4 +41,9 @@ public class AcademicYearController {
         return this.academicYearService.create(request);
     }
 
+    @GetMapping("/current")
+    public CommonResponse<AcademicYear> current() {
+        return this.academicYearService.current();
+    }
+
 }
