@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import net.tusdasa.evaluation.commons.Token;
 import org.apache.commons.codec.binary.Base64;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -111,7 +112,7 @@ public class JWTUtils {
         Map<String, Object> result = new HashMap<>();
         try {
             DecodedJWT decodedJWT = this.jwtVerifier.verify(token);
-            String object = new String(Base64.decodeBase64(decodedJWT.getPayload()), "UTF8");
+            String object = new String(Base64.decodeBase64(decodedJWT.getPayload()), StandardCharsets.UTF_8);
             result.put("code", 200);
             ObjectMapper objectMapper = new ObjectMapper();
             result.put("token", objectMapper.readValue(object, Token.class));
