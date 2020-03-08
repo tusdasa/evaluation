@@ -35,4 +35,5 @@ public class SecondKPIService {
     public CommonResponse<String> create(SecondKpiRequest request) {
         return this.secondKPIClient.createSecondKpi(request);
     }
+
 }
