@@ -7,7 +7,7 @@ import net.tusdasa.evaluation.vo.ThirdKpiRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(value = "evaluation-thirdkpi-service", path = "/term", fallback = ThirdKPIClientImpl.class)
+@FeignClient(value = "evaluation-thirdkpi-service", path = "/thirdkpi", fallback = ThirdKPIClientImpl.class)
 public interface ThirdKPIClient {
 
     @GetMapping("/")

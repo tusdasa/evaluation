@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
  * @Date: 2020-03-07 1:40 PM
  */
 @RestController
+@RequestMapping("/first")
 public class FirstKpiController {
 
     private FirstKpiService firstKpiService;
