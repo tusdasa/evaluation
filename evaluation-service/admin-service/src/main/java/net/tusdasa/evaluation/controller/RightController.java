@@ -6,6 +6,8 @@ import net.tusdasa.evaluation.service.RightService;
 import org.springframework.web.bind.annotation.*;
 
 /**
+ * 权限
+ *
  * @Author: tusdasa
  * @Date: 2020-03-06 3:10 PM
  */

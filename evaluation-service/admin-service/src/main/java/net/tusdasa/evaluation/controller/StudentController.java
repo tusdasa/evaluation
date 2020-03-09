@@ -7,6 +7,8 @@ import net.tusdasa.evaluation.vo.StudentRequest;
 import org.springframework.web.bind.annotation.*;
 
 /**
+ * 学生管理
+ *
  * @Author: tusdasa
  * @Date: 2020-03-08 8:58 PM
  */

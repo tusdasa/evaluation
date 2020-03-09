@@ -7,6 +7,8 @@ import net.tusdasa.evaluation.vo.AcademicYearRequest;
 import org.springframework.web.bind.annotation.*;
 
 /**
+ * 学年管理
+ *
  * @Author: tusdasa
  * @Date: 2020-03-06 7:55 PM
  */
