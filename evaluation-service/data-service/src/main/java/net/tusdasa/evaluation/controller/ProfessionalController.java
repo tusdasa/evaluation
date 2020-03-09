@@ -19,7 +19,7 @@ public class ProfessionalController {
     }
 
     @GetMapping("/{professionalId}")
-    public CommonResponse<Professional> findById(@PathVariable("professionalId") Integer professionalId) {
+    public CommonResponse<Professional> findProfessionalById(@PathVariable("professionalId") Integer professionalId) {
         Professional professional = this.professionalService.findById(professionalId);
         if (professional != null) {
             return new CommonResponse<Professional>().data(professional);
@@ -28,7 +28,7 @@ public class ProfessionalController {
     }
 
     @GetMapping("/")
-    public CommonResponse<Professional> findAll() {
+    public CommonResponse<Professional> findAllProfessional() {
         return new CommonResponse<Professional>().ok().table(this.professionalService.findAll());
     }
 }

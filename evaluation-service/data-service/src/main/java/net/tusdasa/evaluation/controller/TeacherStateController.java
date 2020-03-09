@@ -20,7 +20,7 @@ public class TeacherStateController {
     }
 
     @GetMapping("/{stateId}")
-    public CommonResponse<TeacherState> findById(@PathVariable("stateId") Integer stateId) {
+    public CommonResponse<TeacherState> findTeacherStateById(@PathVariable("stateId") Integer stateId) {
         TeacherState teacherState = this.teacherStateService.findById(stateId);
         if (teacherState != null) {
             return new CommonResponse<TeacherState>().ok().data(teacherState);
@@ -29,7 +29,7 @@ public class TeacherStateController {
     }
 
     @GetMapping("/")
-    public CommonResponse<TeacherState> findAll() {
+    public CommonResponse<TeacherState> findAllTeacherState() {
         return new CommonResponse<TeacherState>().ok().table(this.teacherStateService.findAll());
     }
 }
