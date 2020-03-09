@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RestController
+@RequestMapping("/level")
 public class LevelController {
 
     private LevelService levelService;

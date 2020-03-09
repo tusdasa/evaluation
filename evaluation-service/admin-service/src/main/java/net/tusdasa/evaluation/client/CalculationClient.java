@@ -29,28 +29,28 @@ public interface CalculationClient {
     @PostMapping("/")
     CommonResponse<String> createCalculationRule(@RequestBody CalculationRuleRequest ruleRequest);
 
-    @GetMapping("/{id}")
+    @GetMapping("/evidence/{id}")
     CommonResponse<Evidence> findEvidenceById(@PathVariable("id") Integer id);
 
-    @GetMapping("/")
+    @GetMapping("/evidence/")
     CommonResponse<Evidence> findAllEvidence();
 
-    @PostMapping("/")
+    @PostMapping("/evidence/")
     CommonResponse<String> createEvidence(@RequestBody Evidence evidence);
 
-    @PutMapping("/")
+    @PutMapping("/evidence/")
     CommonResponse<String> updateEvidence(@RequestBody Evidence evidence);
 
-    @GetMapping("/")
+    @GetMapping("/level/")
     CommonResponse<Level> findAllLevel();
 
-    @GetMapping("/{id}")
+    @GetMapping("/level/{id}")
     CommonResponse<Level> findLevelById(@PathVariable("id") Integer id);
 
-    @PutMapping("/")
+    @PutMapping("/level/")
     CommonResponse<String> updateLevel(@RequestBody Level level);
 
-    @PostMapping("/")
+    @PostMapping("/level/")
     CommonResponse<String> createLevel(@RequestBody Level level);
 
 }

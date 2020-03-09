@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RestController
+@RequestMapping("/evidence")
 public class EvidenceController {
 
     private EvidenceService evidenceService;
