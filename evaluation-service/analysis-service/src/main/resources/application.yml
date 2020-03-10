@@ -1,3 +1,7 @@
+server:
+  port: 7030
+  servlet:
+    context-path: /analysis
 spring:
   application:
     name: evaluation-analysis-service
@@ -5,6 +9,11 @@ spring:
     loadbalancer:
       ribbon:
         enabled: false
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        health-check-path: /analysis/actuator/health
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss:SSS
     time-zone: GMT+8
@@ -20,14 +29,10 @@ spring:
   data:
     mongodb:
       uri: mongodb://127.0.0.1:27017/evaluation
-eureka:
-  client:
-    service-url:
-      defaultZone: http://tusdasa:8000/eureka/
-server:
-  port: 7030
-  servlet:
-    context-path: /analysis
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://tusdasa:8000/eureka/
 feign:
   hystrix:
     enabled: true

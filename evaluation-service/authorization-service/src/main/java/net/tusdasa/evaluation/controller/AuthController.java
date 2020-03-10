@@ -2,6 +2,7 @@ package net.tusdasa.evaluation.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.Student;
@@ -41,8 +42,11 @@ public class AuthController {
     }
 
     @PostMapping("/student")
-    @ApiImplicitParam(paramType = "query", name = "studentId", value = "用户名", dataType = "long")
-    @ApiOperation(value = "用户认证")
+    @ApiOperation(value = "学生认证")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "studentId", value = "学号", dataType = "String"),
+            @ApiImplicitParam(paramType = "query", name = "password", value = "密码", dataType = "String")
+    })
     public CommonResponse<String> authStudent(@RequestParam("studentId") String studentId, @RequestParam("password") String password) {
         Map<String, Object> result = studentAuthService.findStudent(Long.valueOf(studentId), password);
         if (result.get("obj") != null) {
@@ -53,6 +57,11 @@ public class AuthController {
         return new CommonResponse<String>().auth(result.get("msg").toString());
     }
 
+    @ApiOperation(value = "教师认证")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "workId", value = "工号", dataType = "String"),
+            @ApiImplicitParam(paramType = "query", name = "password", value = "密码", dataType = "String")
+    })
     @PostMapping("/teacher")
     public CommonResponse<String> authTeacher(@RequestParam("workId") String workId, @RequestParam("password") String password) {
         Map<String, Object> result = teacherAuthService.findTeacher(Integer.valueOf(workId), password);

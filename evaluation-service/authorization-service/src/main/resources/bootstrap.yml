@@ -5,6 +5,8 @@ server:
 spring:
   application:
     name: evaluation-authorization-service
+  profiles:
+    active: dev
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss:SSS
     time-zone: GMT+8
@@ -23,12 +25,24 @@ spring:
     loadbalancer:
       ribbon:
         enabled: false
-    config:
-      uri: http://localhost:7023/config/
-eureka:
-  client:
-    service-url:
-      defaultZone: http://tusdasa:8000/eureka/
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        health-check-path: /auth/actuator/health
+      config:
+        enabled: true
+        format: yaml
+        prefix: config
+        data-key: data
+        # config/evaluation-authorization-service,dev/data
+        default-context: evaluation-authorization-service
+#    config:
+#      uri: http://localhost:7023/config/
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://tusdasa:8000/eureka/
 feign:
   hystrix:
     enabled: true

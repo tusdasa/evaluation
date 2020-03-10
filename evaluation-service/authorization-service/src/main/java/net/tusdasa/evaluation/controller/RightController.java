@@ -1,5 +1,6 @@
 package net.tusdasa.evaluation.controller;
 
+import io.swagger.annotations.Api;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.Right;
 import net.tusdasa.evaluation.service.RightService;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@Api("权限")
 public class RightController {
     private RightService rightService;
 

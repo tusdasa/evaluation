@@ -1,5 +1,6 @@
 package net.tusdasa.evaluation.controller;
 
+import io.swagger.annotations.Api;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.commons.UserInfo;
 import net.tusdasa.evaluation.entity.Student;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
+@Api("用户信息获取")
 public class UserInfoController {
 
     private RedisTemplate<String, Student> studentRedisTemplate;

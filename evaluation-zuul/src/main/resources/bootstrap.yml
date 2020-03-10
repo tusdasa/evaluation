@@ -3,20 +3,32 @@ server:
 spring:
   application:
     name: evaluation-zuul-service
+  profiles:
+    active: dev
   cloud:
     loadbalancer:
       ribbon:
         enabled: false
-    config:
-      uri: http://localhost:7023/config/
+    #    config:
+    #      uri: http://localhost:7023/config/
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      config:
+        enabled: true
+        format: yaml
+        prefix: config
+        data-key: data
+        # config/evaluation-zuul-service,dev/data
+        default-context: evaluation-zuul-service
   redis:
     host: 127.0.0.1
     port: 6379
     database: 10
-eureka:
-  client:
-    service-url:
-      defaultZone: http://tusdasa:8000/eureka/
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://tusdasa:8000/eureka/
 hystrix:
   command:
     default:

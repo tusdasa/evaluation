@@ -1,3 +1,7 @@
+server:
+  servlet:
+    context-path: /config
+  port: 7023
 spring:
   application:
     name: evaluation-config-service
@@ -10,14 +14,15 @@ spring:
           username: tusdasa
           password: 3988978349
       label: master
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        health-check-path: /class/actuator/health
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss:SSS
     time-zone: GMT+8
-eureka:
-  client:
-    service-url:
-      defaultZone: http://tusdasa:8000/eureka/
-server:
-  servlet:
-    context-path: /config
-  port: 7023
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://tusdasa:8000/eureka/

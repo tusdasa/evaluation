@@ -12,6 +12,11 @@ spring:
     loadbalancer:
       ribbon:
         enabled: false
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        health-check-path: /tevaluation/actuator/health
   data:
     mongodb:
       uri: mongodb://127.0.0.1:27017/evaluation
@@ -23,10 +28,10 @@ spring:
     connection-timeout: 15000
     publisher-returns: true
     publisher-confirm-type: correlated
-eureka:
-  client:
-    service-url:
-      defaultZone: http://tusdasa:8000/eureka/
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://tusdasa:8000/eureka/
 feign:
   hystrix:
     enabled: false

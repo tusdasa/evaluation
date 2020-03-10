@@ -1,5 +1,6 @@
 package net.tusdasa.evaluation.controller;
 
+import net.tusdasa.evaluation.authority.Authority;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.FirstKpi;
 import net.tusdasa.evaluation.service.FirstKpiService;
@@ -23,22 +24,35 @@ public class FirstKpiController {
     }
 
     @GetMapping("/")
-    public CommonResponse<FirstKpi> findAll() {
+    public CommonResponse<FirstKpi> findAll(@RequestHeader("role") Integer roleId) {
+        if (!roleId.equals(Authority.ADMIN)) {
+            return new CommonResponse<FirstKpi>().error("未授权");
+        }
         return this.firstKpiService.findAll();
     }
 
     @GetMapping("/{id}")
-    public CommonResponse<FirstKpi> findById(@PathVariable("id") Integer id) {
+    public CommonResponse<FirstKpi> findById(@PathVariable("id") Integer id, @RequestHeader("role") Integer roleId) {
+        if (!roleId.equals(Authority.ADMIN)) {
+            return new CommonResponse<FirstKpi>().error("未授权");
+        }
         return this.firstKpiService.findById(id);
+
     }
 
     @PutMapping("/")
-    public CommonResponse<String> update(FirstKpiRequest request) {
+    public CommonResponse<String> update(@RequestBody FirstKpiRequest request, @RequestHeader("role") Integer roleId) {
+        if (!roleId.equals(Authority.ADMIN)) {
+            return new CommonResponse<String>().error("未授权");
+        }
         return this.firstKpiService.update(request);
     }
 
     @PostMapping("/")
-    public CommonResponse<String> create(FirstKpiRequest request) {
+    public CommonResponse<String> create(@RequestBody FirstKpiRequest request, @RequestHeader("role") Integer roleId) {
+        if (!roleId.equals(Authority.ADMIN)) {
+            return new CommonResponse<String>().error("未授权");
+        }
         return this.firstKpiService.create(request);
     }
 }

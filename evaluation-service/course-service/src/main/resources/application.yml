@@ -29,9 +29,14 @@ spring:
     loadbalancer:
       ribbon:
         enabled: false
-eureka:
-  client:
-    service-url:
-      defaultZone: http://tusdasa:8000/eureka/
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        health-check-path: /course/actuator/health
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://tusdasa:8000/eureka/
 mybatis:
   config-location: classpath:myBatisConfig.xml

@@ -6,7 +6,8 @@ import org.springframework.cloud.client.SpringCloudApplication;
 
 @EnableCaching
 @SpringCloudApplication
-public class FirstKpiApplication {
+public class
+FirstKpiApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(FirstKpiApplication.class, args);
