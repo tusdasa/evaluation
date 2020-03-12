@@ -22,4 +22,7 @@ public interface SecondKPIClient {
     @PutMapping("/")
     CommonResponse<String> updateSecondKpi(@RequestBody SecondKpiRequest request);
 
+    @DeleteMapping("/{secondKpiId}")
+    CommonResponse<String> deleteSecondKpi(@PathVariable("secondKpiId") Integer secondKpiId);
+
 }

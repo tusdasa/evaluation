@@ -32,4 +32,9 @@ public class FirstKPIClientImpl implements FirstKPIClient {
     public CommonResponse<FirstKpi> findById(Integer firstKpiId) {
         return new CommonResponse<FirstKpi>().busy();
     }
+
+    @Override
+    public CommonResponse<String> deleteFirstKpi(Integer firstKpiId) {
+        return new CommonResponse<String>().busy();
+    }
 }

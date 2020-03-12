@@ -21,4 +21,7 @@ public interface ThirdKPIClient {
 
     @PutMapping("/")
     CommonResponse<String> updateThirdKpi(@RequestBody ThirdKpiRequest request);
+
+    @DeleteMapping("/{thirdKpiId}")
+    CommonResponse<String> deleteThirdKpi(@PathVariable("thirdKpiId") Integer thirdKpiId);
 }

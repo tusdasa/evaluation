@@ -37,4 +37,7 @@ public class ThirdKPIService {
         return this.thirdKPIClient.createThirdKpi(request);
     }
 
+    public CommonResponse<String> delete(Integer id) {
+        return this.thirdKPIClient.deleteThirdKpi(id);
+    }
 }

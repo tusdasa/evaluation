@@ -4,14 +4,12 @@ import net.tusdasa.evaluation.dao.FirstKpiMapper;
 import net.tusdasa.evaluation.entity.FirstKpi;
 import net.tusdasa.evaluation.service.FirstKpiService;
 import net.tusdasa.evaluation.vo.FirstKpiRequest;
-import net.tusdasa.evaluation.vo.IdsRequest;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -22,7 +20,7 @@ public class FirstKpiServiceImpl implements FirstKpiService {
     public FirstKpiServiceImpl(FirstKpiMapper firstKpiMapper) {
         this.firstKpiMapper = firstKpiMapper;
     }
-
+/*
     @Cacheable(value = "findAllByAcademicYearAndId", key = "methodName + #academicYearId + #firstKpiId")
     @Transactional(readOnly = true)
     @Override
@@ -39,7 +37,16 @@ public class FirstKpiServiceImpl implements FirstKpiService {
     public List<FirstKpi> findAllFirstKpiByAcademicYear(Integer academicYearId) {
         return this.firstKpiMapper.findAllByAcademicYear(academicYearId);
     }
-
+    @Cacheable(value = "findAllByAcademicYearAndIds", key = "methodName + #firstKpiIds")
+    @Transactional(readOnly = true)
+    @Override
+    public List<FirstKpi> findAllByAcademicYearAndIds(Integer academicYearId, IdsRequest firstKpiIds) {
+        HashMap<String, Object> parameter = new HashMap<>();
+        parameter.put("academicYearId", academicYearId);
+        parameter.put("firstKpiIds", firstKpiIds.getFirstArray());
+        return this.firstKpiMapper.findAllByAcademicYearAndIds(parameter);
+    }
+*/
     @Cacheable(value = "findAll", key = "methodName")
     @Transactional(readOnly = true)
     @Override
@@ -69,7 +76,7 @@ public class FirstKpiServiceImpl implements FirstKpiService {
     public void updateFirstKpi(FirstKpiRequest request) {
         FirstKpi firstKpi = this.firstKpiMapper.selectByPrimaryKey(request.getFirstKpiId());
         if (firstKpi != null && firstKpi.compareTo(request) != 0) {
-            this.firstKpiMapper.insertSelective(request.build());
+            this.firstKpiMapper.updateByPrimaryKeySelective(request.build());
         }
     }
 
@@ -101,15 +108,5 @@ public class FirstKpiServiceImpl implements FirstKpiService {
     @Override
     public void deleteFirstKpi(Integer firstKpiId) {
         this.firstKpiMapper.deleteByPrimaryKey(firstKpiId);
-    }
-
-    @Cacheable(value = "findAllByAcademicYearAndIds", key = "methodName + #firstKpiIds")
-    @Transactional(readOnly = true)
-    @Override
-    public List<FirstKpi> findAllByAcademicYearAndIds(Integer academicYearId, IdsRequest firstKpiIds) {
-        HashMap<String, Object> parameter = new HashMap<>();
-        parameter.put("academicYearId", academicYearId);
-        parameter.put("firstKpiIds", firstKpiIds.getFirstArray());
-        return this.firstKpiMapper.findAllByAcademicYearAndIds(parameter);
     }
 }

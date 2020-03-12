@@ -36,4 +36,8 @@ public class FirstKpiService {
     public CommonResponse<String> update(@RequestBody FirstKpiRequest request) {
         return this.firstKPIClient.updateFirstKpi(request);
     }
+
+    public CommonResponse<String> delete(Integer id) {
+        return this.firstKPIClient.deleteFirstKpi(id);
+    }
 }

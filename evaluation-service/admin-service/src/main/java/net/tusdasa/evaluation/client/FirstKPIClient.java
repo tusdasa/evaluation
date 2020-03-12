@@ -22,4 +22,7 @@ public interface FirstKPIClient {
     @GetMapping("/{firstKpiId}")
     CommonResponse<FirstKpi> findById(@PathVariable("firstKpiId") Integer firstKpiId);
 
+    @DeleteMapping("/{firstKpiId}")
+    CommonResponse<String> deleteFirstKpi(@PathVariable("firstKpiId") Integer firstKpiId);
+
 }

@@ -70,5 +70,11 @@ public class SecondKpiController {
         return new CommonResponse<String>().error();
     }
 
+    @DeleteMapping("/{secondKpiId}")
+    public CommonResponse<String> deleteSecondKpi(@PathVariable("secondKpiId") Integer secondKpiId) {
+        this.secondKpiService.deleteSecondKpi(secondKpiId);
+        return new CommonResponse<String>().ok();
+    }
+
 
 }

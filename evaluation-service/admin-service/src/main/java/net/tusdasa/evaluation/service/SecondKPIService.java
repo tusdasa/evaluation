@@ -36,4 +36,8 @@ public class SecondKPIService {
         return this.secondKPIClient.createSecondKpi(request);
     }
 
+    public CommonResponse<String> delete(Integer id) {
+        return this.secondKPIClient.deleteSecondKpi(id);
+    }
+
 }

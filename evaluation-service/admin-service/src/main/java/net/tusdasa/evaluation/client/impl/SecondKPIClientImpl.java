@@ -32,4 +32,9 @@ public class SecondKPIClientImpl implements SecondKPIClient {
     public CommonResponse<String> updateSecondKpi(SecondKpiRequest request) {
         return new CommonResponse<String>().busy();
     }
+
+    @Override
+    public CommonResponse<String> deleteSecondKpi(Integer secondKpiId) {
+        return new CommonResponse<String>().busy();
+    }
 }

@@ -55,4 +55,12 @@ public class ThirdKPIController {
         }
         return this.thirdKPIService.create(request);
     }
+
+    @DeleteMapping("/{id}")
+    public CommonResponse<String> delete(@PathVariable("id") Integer id, @RequestHeader("role") Integer roleId) {
+        if (!roleId.equals(Authority.ADMIN)) {
+            return new CommonResponse<String>().error("未授权");
+        }
+        return this.thirdKPIService.delete(id);
+    }
 }

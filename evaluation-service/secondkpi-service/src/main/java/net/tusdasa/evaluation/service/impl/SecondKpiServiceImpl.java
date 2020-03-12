@@ -49,7 +49,7 @@ public class SecondKpiServiceImpl implements SecondKpiService {
     @Transactional
     @Override
     public void updateSecondKpi(SecondKpiRequest request) {
-        SecondKpi secondKpi = this.secondKpiMapper.selectByPrimaryKey(request.getFirstKpiId());
+        SecondKpi secondKpi = this.secondKpiMapper.selectByPrimaryKey(request.getSecondKpiId());
         if (secondKpi.compareTo(request) != 0) {
             this.secondKpiMapper.updateByPrimaryKeySelective(request.build());
         }

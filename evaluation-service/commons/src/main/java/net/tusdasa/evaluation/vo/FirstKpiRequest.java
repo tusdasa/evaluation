@@ -16,23 +16,20 @@ public class FirstKpiRequest implements CommonRequest<FirstKpi> {
 
     private String firsKpiContent;
 
-    private Integer academicYearId;
 
     public FirstKpi build() {
-        return FirstKpi.builder().build().withFirstKpiId(this.getFirstKpiId()).withAcademicYearId(this.getAcademicYearId())
+        return FirstKpi.builder().build().withFirstKpiId(this.getFirstKpiId())
                 .withFirsKpiContent(this.getFirsKpiContent());
     }
 
     @Override
     public boolean isUpdateRequest() {
-        return CheckUtils.isIntegerNumber(this.getFirstKpiId()) && CheckUtils.isString(this.getFirsKpiContent())
-                && CheckUtils.isIntegerNumber(this.getAcademicYearId());
+        return CheckUtils.isIntegerNumber(this.getFirstKpiId()) && CheckUtils.isString(this.getFirsKpiContent());
     }
 
     @Override
     public boolean isCreateRequest() {
-        return CheckUtils.isString(this.getFirsKpiContent())
-                && CheckUtils.isIntegerNumber(this.getAcademicYearId());
+        return CheckUtils.isString(this.getFirsKpiContent());
     }
 
 }

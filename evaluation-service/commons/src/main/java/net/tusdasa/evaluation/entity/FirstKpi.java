@@ -33,7 +33,7 @@ public class FirstKpi implements Serializable, Comparable<FirstKpiRequest> {
     /**
      * 一级指标所在学年
      */
-    private Integer academicYearId;
+    // private Integer academicYearId;
 
     private static final long serialVersionUID = 10051564L;
 
@@ -44,9 +44,8 @@ public class FirstKpi implements Serializable, Comparable<FirstKpiRequest> {
      */
     @Override
     public int compareTo(FirstKpiRequest request) {
-
-        if (request.getAcademicYearId().intValue() == this.getAcademicYearId().intValue()
-                && request.getFirsKpiContent().equals(this.getFirsKpiContent())
+        // request.getAcademicYearId().intValue() == this.getAcademicYearId().intValue() &&
+        if (request.getFirsKpiContent().equals(this.getFirsKpiContent())
                 && request.getFirstKpiId().intValue() == this.getFirstKpiId().intValue()
         ) {
             return 0;

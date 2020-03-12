@@ -73,4 +73,11 @@ public class ThirdKpiController {
     }
 
 
+    @DeleteMapping("/{thirdKpiId}")
+    public CommonResponse<String> deleteThirdKpi(@PathVariable("thirdKpiId") Integer thirdKpiId) {
+        this.thirdKpiService.deleteThirdKpi(thirdKpiId);
+        return new CommonResponse<String>().ok();
+    }
+
+
 }

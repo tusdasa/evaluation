@@ -32,4 +32,9 @@ public class ThirdKPIClientImpl implements ThirdKPIClient {
     public CommonResponse<String> updateThirdKpi(ThirdKpiRequest request) {
         return new CommonResponse<String>().busy();
     }
+
+    @Override
+    public CommonResponse<String> deleteThirdKpi(Integer thirdKpiId) {
+        return new CommonResponse<String>().busy();
+    }
 }

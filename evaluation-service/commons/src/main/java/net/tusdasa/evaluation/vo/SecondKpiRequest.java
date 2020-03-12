@@ -19,7 +19,10 @@ public class SecondKpiRequest implements CommonRequest<SecondKpi> {
 
     @Override
     public SecondKpi build() {
-        return SecondKpi.builder().build().withFirstKpiId(this.getFirstKpiId()).withSecondKpiContent(this.getSecondKpiContent()).withFirstKpiId(this.getFirstKpiId());
+        return SecondKpi.builder().build()
+                .withFirstKpiId(this.getFirstKpiId())
+                .withSecondKpiContent(this.getSecondKpiContent())
+                .withSecondKpiId(this.getSecondKpiId());
     }
 
     @Override
