@@ -2,6 +2,8 @@ package net.tusdasa.evaluation.controller;
 
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.CalculationRule;
+import net.tusdasa.evaluation.entity.Evidence;
+import net.tusdasa.evaluation.entity.Level;
 import net.tusdasa.evaluation.service.CalculationService;
 import net.tusdasa.evaluation.vo.CalculationRuleRequest;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +41,46 @@ public class CalculationController {
     @PostMapping("/calculation")
     public CommonResponse<String> createCalculationRule(CalculationRuleRequest ruleRequest) {
         return this.calculationService.createCalculationRule(ruleRequest);
+    }
+
+    @GetMapping("/evidence")
+    public CommonResponse<Evidence> findAllEvidence() {
+        return this.calculationService.findAllEvidence();
+    }
+
+    @GetMapping("/level")
+    public CommonResponse<Level> findAllLevel() {
+        return this.calculationService.findAllLevel();
+    }
+
+    @GetMapping("/level/{id}")
+    public CommonResponse<Level> findEvidenceById(@PathVariable("id") Integer id) {
+        return this.calculationService.findEvidenceById(id);
+    }
+
+    @PutMapping("/level")
+    public CommonResponse<String> updateEvidence(Evidence evidence) {
+        return this.calculationService.updateEvidence(evidence);
+    }
+
+    @PostMapping("/level")
+    public CommonResponse<String> createEvidence(Evidence evidence) {
+        return this.calculationService.createEvidence(evidence);
+    }
+
+    @DeleteMapping("/evidence/{id}")
+    public CommonResponse<String> deleteEvidence(@PathVariable("id") Integer id) {
+        return this.calculationService.deleteEvidence(id);
+    }
+
+    @DeleteMapping("/level/{id}")
+    public CommonResponse<String> deleteLevel(@PathVariable("id") Integer id) {
+        return this.calculationService.deleteLevel(id);
+    }
+
+    @DeleteMapping("/calculation/{id}")
+    public CommonResponse<String> deleteCalculationRule(@PathVariable("id") Integer id) {
+        return this.calculationService.deleteCalculationRule(id);
     }
 
 }

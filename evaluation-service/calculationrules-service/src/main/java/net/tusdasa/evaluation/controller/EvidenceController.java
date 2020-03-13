@@ -47,4 +47,10 @@ public class EvidenceController {
         this.evidenceService.updateEvidence(evidence);
         return new CommonResponse<String>().ok();
     }
+
+    @DeleteMapping("/{id}")
+    public CommonResponse<String> deleteEvidence(@PathVariable("id") Integer id) {
+        this.evidenceService.deleteEvidence(id);
+        return new CommonResponse<String>().ok();
+    }
 }

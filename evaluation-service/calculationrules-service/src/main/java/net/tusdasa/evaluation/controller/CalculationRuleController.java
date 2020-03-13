@@ -41,4 +41,10 @@ public class CalculationRuleController {
         this.calculationRuleService.addCalculationRule(ruleRequest);
         return new CommonResponse<String>().ok();
     }
+
+    @DeleteMapping("/{id}")
+    public CommonResponse<String> deleteCalculationRule(@PathVariable("id") Integer id) {
+        this.calculationRuleService.deleteCalculationRule(id);
+        return new CommonResponse<String>().ok();
+    }
 }

@@ -22,7 +22,7 @@ public class LevelController {
 
     @GetMapping("/")
     public CommonResponse<Level> findAllLevel() {
-        return new CommonResponse<Level>().table(this.levelService.findAll());
+        return new CommonResponse<Level>().ok().table(this.levelService.findAll());
     }
 
     @GetMapping("/{id}")
@@ -43,6 +43,12 @@ public class LevelController {
     @PostMapping("/")
     public CommonResponse<String> createLevel(@RequestBody Level level) {
         this.levelService.addLevel(level);
+        return new CommonResponse<String>().ok();
+    }
+
+    @DeleteMapping("/{id}")
+    public CommonResponse<String> deleteLevel(@PathVariable("id") Integer id) {
+        this.levelService.deleteLevel(id);
         return new CommonResponse<String>().ok();
     }
 }

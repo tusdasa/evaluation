@@ -29,6 +29,9 @@ public interface CalculationClient {
     @PostMapping("/")
     CommonResponse<String> createCalculationRule(@RequestBody CalculationRuleRequest ruleRequest);
 
+    @DeleteMapping("/{id}")
+    CommonResponse<String> deleteCalculationRule(@PathVariable("id") Integer id);
+
     @GetMapping("/evidence/{id}")
     CommonResponse<Evidence> findEvidenceById(@PathVariable("id") Integer id);
 
@@ -41,6 +44,9 @@ public interface CalculationClient {
     @PutMapping("/evidence/")
     CommonResponse<String> updateEvidence(@RequestBody Evidence evidence);
 
+    @DeleteMapping("/evidence/{id}")
+    CommonResponse<String> deleteEvidence(@PathVariable("id") Integer id);
+
     @GetMapping("/level/")
     CommonResponse<Level> findAllLevel();
 
@@ -52,5 +58,8 @@ public interface CalculationClient {
 
     @PostMapping("/level/")
     CommonResponse<String> createLevel(@RequestBody Level level);
+
+    @DeleteMapping("/level/{id}")
+    CommonResponse<String> deleteLevel(@PathVariable("id") Integer id);
 
 }

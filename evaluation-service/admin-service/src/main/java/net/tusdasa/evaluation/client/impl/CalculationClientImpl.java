@@ -36,6 +36,11 @@ public class CalculationClientImpl implements CalculationClient {
     }
 
     @Override
+    public CommonResponse<String> deleteCalculationRule(Integer id) {
+        return new CommonResponse<String>().busy();
+    }
+
+    @Override
     public CommonResponse<Evidence> findEvidenceById(Integer id) {
         return new CommonResponse<Evidence>().busy();
     }
@@ -56,6 +61,11 @@ public class CalculationClientImpl implements CalculationClient {
     }
 
     @Override
+    public CommonResponse<String> deleteEvidence(Integer id) {
+        return new CommonResponse<String>().busy();
+    }
+
+    @Override
     public CommonResponse<Level> findAllLevel() {
         return new CommonResponse<Level>().busy();
     }
@@ -72,6 +82,11 @@ public class CalculationClientImpl implements CalculationClient {
 
     @Override
     public CommonResponse<String> createLevel(Level level) {
+        return new CommonResponse<String>().busy();
+    }
+
+    @Override
+    public CommonResponse<String> deleteLevel(Integer id) {
         return new CommonResponse<String>().busy();
     }
 }
