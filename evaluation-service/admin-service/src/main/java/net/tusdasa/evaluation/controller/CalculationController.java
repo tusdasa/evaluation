@@ -43,29 +43,14 @@ public class CalculationController {
         return this.calculationService.createCalculationRule(ruleRequest);
     }
 
+    @DeleteMapping("/calculation/{id}")
+    public CommonResponse<String> deleteCalculationRule(@PathVariable("id") Integer id) {
+        return this.calculationService.deleteCalculationRule(id);
+    }
+
     @GetMapping("/evidence")
     public CommonResponse<Evidence> findAllEvidence() {
         return this.calculationService.findAllEvidence();
-    }
-
-    @GetMapping("/level")
-    public CommonResponse<Level> findAllLevel() {
-        return this.calculationService.findAllLevel();
-    }
-
-    @GetMapping("/level/{id}")
-    public CommonResponse<Level> findEvidenceById(@PathVariable("id") Integer id) {
-        return this.calculationService.findEvidenceById(id);
-    }
-
-    @PutMapping("/level")
-    public CommonResponse<String> updateEvidence(Evidence evidence) {
-        return this.calculationService.updateEvidence(evidence);
-    }
-
-    @PostMapping("/level")
-    public CommonResponse<String> createEvidence(Evidence evidence) {
-        return this.calculationService.createEvidence(evidence);
     }
 
     @DeleteMapping("/evidence/{id}")
@@ -73,14 +58,45 @@ public class CalculationController {
         return this.calculationService.deleteEvidence(id);
     }
 
+    @GetMapping("/evidence/{id}")
+    public CommonResponse<Level> findEvidenceById(@PathVariable("id") Integer id) {
+        return this.calculationService.findEvidenceById(id);
+    }
+
+    @PutMapping("/evidence")
+    public CommonResponse<String> updateEvidence(@RequestBody Evidence evidence) {
+        return this.calculationService.updateEvidence(evidence);
+    }
+
+    @PostMapping("/evidence")
+    public CommonResponse<String> createEvidence(Evidence evidence) {
+        return this.calculationService.createEvidence(evidence);
+    }
+
+    @GetMapping("/level")
+    public CommonResponse<Level> findAllLevel() {
+        return this.calculationService.findAllLevel();
+    }
+
     @DeleteMapping("/level/{id}")
     public CommonResponse<String> deleteLevel(@PathVariable("id") Integer id) {
         return this.calculationService.deleteLevel(id);
     }
 
-    @DeleteMapping("/calculation/{id}")
-    public CommonResponse<String> deleteCalculationRule(@PathVariable("id") Integer id) {
-        return this.calculationService.deleteCalculationRule(id);
+    @GetMapping("/level/{id}")
+    public CommonResponse<Level> findLevelById(@PathVariable("id") Integer id) {
+        return this.calculationService.findLevelById(id);
     }
+
+    @PutMapping("/level")
+    public CommonResponse<String> updateLevel(@RequestBody Level level) {
+        return this.calculationService.updateLevel(level);
+    }
+
+    @PostMapping("/level")
+    public CommonResponse<String> createLevel(@RequestBody Level level) {
+        return this.calculationService.createLevel(level);
+    }
+
 
 }

@@ -70,4 +70,18 @@ public class CalculationService {
     public CommonResponse<String> deleteCalculationRule(Integer id) {
         return this.calculationClient.deleteCalculationRule(id);
     }
+
+    public CommonResponse<Level> findLevelById(Integer id) {
+        return this.calculationClient.findLevelById(id);
+    }
+
+    public CommonResponse<String> updateLevel(Level level) {
+        return this.calculationClient.updateLevel(level);
+    }
+
+    public CommonResponse<String> createLevel(Level level) {
+        return this.calculationClient.createLevel(level);
+    }
+
+
 }
