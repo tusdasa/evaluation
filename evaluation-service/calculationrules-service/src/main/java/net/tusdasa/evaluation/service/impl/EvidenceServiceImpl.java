@@ -35,7 +35,7 @@ public class EvidenceServiceImpl implements EvidenceService {
 
     @Override
     public void updateEvidence(Evidence evidence) {
-        this.evidenceMapper.updateByPrimaryKeySelective(evidence);
+        this.evidenceMapper.updateByPrimaryKey(evidence);
     }
 
     @Override

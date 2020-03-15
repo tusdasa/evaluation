@@ -43,12 +43,12 @@ public class CalculationService {
         return this.calculationClient.findAllEvidence();
     }
 
-    public CommonResponse<Level> findAllLevel() {
-        return this.calculationClient.findAllLevel();
+    public CommonResponse<Evidence> findEvidenceById(Integer id) {
+        return this.calculationClient.findEvidenceById(id);
     }
 
-    public CommonResponse<Level> findEvidenceById(Integer id) {
-        return this.calculationClient.findLevelById(id);
+    public CommonResponse<Level> findAllLevel() {
+        return this.calculationClient.findAllLevel();
     }
 
     public CommonResponse<String> updateEvidence(Evidence evidence) {
@@ -56,7 +56,7 @@ public class CalculationService {
     }
 
     public CommonResponse<String> createEvidence(Evidence evidence) {
-        return this.calculationClient.updateEvidence(evidence);
+        return this.calculationClient.createEvidence(evidence);
     }
 
     public CommonResponse<String> deleteEvidence(Integer id) {

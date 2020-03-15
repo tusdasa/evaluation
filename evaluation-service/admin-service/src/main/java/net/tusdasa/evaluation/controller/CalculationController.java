@@ -34,12 +34,12 @@ public class CalculationController {
     }
 
     @PutMapping("/calculation")
-    public CommonResponse<String> updateCalculationRule(CalculationRuleRequest ruleRequest) {
+    public CommonResponse<String> updateCalculationRule(@RequestBody CalculationRuleRequest ruleRequest) {
         return this.calculationService.updateCalculationRule(ruleRequest);
     }
 
     @PostMapping("/calculation")
-    public CommonResponse<String> createCalculationRule(CalculationRuleRequest ruleRequest) {
+    public CommonResponse<String> createCalculationRule(@RequestBody CalculationRuleRequest ruleRequest) {
         return this.calculationService.createCalculationRule(ruleRequest);
     }
 
@@ -59,7 +59,7 @@ public class CalculationController {
     }
 
     @GetMapping("/evidence/{id}")
-    public CommonResponse<Level> findEvidenceById(@PathVariable("id") Integer id) {
+    public CommonResponse<Evidence> findEvidenceById(@PathVariable("id") Integer id) {
         return this.calculationService.findEvidenceById(id);
     }
 
@@ -69,7 +69,7 @@ public class CalculationController {
     }
 
     @PostMapping("/evidence")
-    public CommonResponse<String> createEvidence(Evidence evidence) {
+    public CommonResponse<String> createEvidence(@RequestBody Evidence evidence) {
         return this.calculationService.createEvidence(evidence);
     }
 

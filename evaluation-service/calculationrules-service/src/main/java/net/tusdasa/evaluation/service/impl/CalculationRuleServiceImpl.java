@@ -43,7 +43,7 @@ public class CalculationRuleServiceImpl implements CalculationRuleService {
     @Transactional
     @Override
     public void updateCalculationRule(CalculationRuleRequest ruleRequest) {
-        this.calculationRuleMapper.updateByPrimaryKeySelective(ruleRequest);
+        this.calculationRuleMapper.updateByPrimaryKey(ruleRequest);
     }
 
     @Caching(evict = {
