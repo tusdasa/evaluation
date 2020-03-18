@@ -63,6 +63,13 @@ public class CommonResponse<Model extends Serializable> {
         return this;
     }
 
+    public CommonResponse<Model> bad() {
+        this.setCode(CODE_FORBIDDEN);
+        this.setRequestId(UUIDUtils.UUID());
+        this.setMessage("禁止访问");
+        return this;
+    }
+
 
     public CommonResponse<Model> data(Model data) {
         this.setData(data);

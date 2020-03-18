@@ -85,9 +85,6 @@
       <if test="studentSecret != null">
         student_secret = #{studentSecret,jdbcType=VARCHAR},
       </if>
-      <if test="studentName != null">
-        student_name = #{studentName,jdbcType=VARCHAR},
-      </if>
       <if test="studentClass.classId != null">
         class_id = #{studentClass.classId,jdbcType=INTEGER},
       </if>

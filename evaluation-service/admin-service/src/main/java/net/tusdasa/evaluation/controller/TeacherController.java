@@ -29,7 +29,7 @@ public class TeacherController {
         return this.teacherService.findById(id);
     }
 
-    @GetMapping("/")
+    @PutMapping("/")
     public CommonResponse<String> update(@RequestBody TeacherRequest request) {
         return this.teacherService.update(request);
     }

@@ -52,11 +52,8 @@ public class StudentController {
 
     @PutMapping("/")
     public CommonResponse<String> updateStudent(@RequestBody StudentRequest request) {
-        if (request.isUpdateRequest()) {
-            studentService.updateStudent(request);
-            return new CommonResponse<String>().ok();
-        }
-        return new CommonResponse<String>().error();
+        studentService.updateStudent(request);
+        return new CommonResponse<String>().ok();
     }
 
     /***

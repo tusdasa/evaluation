@@ -2,7 +2,6 @@ package net.tusdasa.evaluation.entity;
 
 import lombok.*;
 import net.tusdasa.evaluation.vo.StudentRequest;
-import org.springframework.util.DigestUtils;
 
 import java.io.Serializable;
 
@@ -62,11 +61,7 @@ public class Student implements Serializable, Comparable<StudentRequest> {
      */
     @Override
     public int compareTo(StudentRequest request) {
-        if (request.getStudentId().longValue() == this.getStudentId()
-                && this.getStudentSecret().equals(DigestUtils.md5DigestAsHex(this.getStudentSecret().getBytes()))
-                && request.getStudentName().equals(this.getStudentName())
-                && request.getClassId().intValue() == this.getStudentClass().getClassId().intValue()
-
+        if (request.getStudentId().equals(request.getStudentId())
         ) {
             return 0;
         }

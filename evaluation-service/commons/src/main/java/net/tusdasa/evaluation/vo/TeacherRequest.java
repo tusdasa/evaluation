@@ -48,7 +48,7 @@ public class TeacherRequest implements CommonRequest<Teacher> {
     public boolean isUpdateRequest() {
         return CheckUtils.isIntegerNumber(this.getWorkId())
                 && CheckUtils.isName(this.getTeacherName())
-                && CheckUtils.isPassword(this.getTeacherSecret())
+                //&& CheckUtils.isPassword(this.getTeacherSecret())
                 && CheckUtils.isIntegerNumber(this.getDepartmentId())
                 && CheckUtils.isIntegerNumber(this.getProfessionalId())
                 && CheckUtils.isIntegerNumber(this.getRoleId())

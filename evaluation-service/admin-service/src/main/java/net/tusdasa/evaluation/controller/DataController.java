@@ -30,8 +30,8 @@ public class DataController {
     }
 
     @GetMapping("/major")
-    public CommonResponse<Role> findAllRole() {
-        return this.dataService.findAllRole();
+    public CommonResponse<Major> findAllRole() {
+        return this.dataService.findAllMajor();
     }
 
     @GetMapping("/professional")
@@ -40,8 +40,8 @@ public class DataController {
     }
 
     @GetMapping("/role")
-    public CommonResponse<Major> findAllMajor() {
-        return this.dataService.findAllMajor();
+    public CommonResponse<Role> findAllMajor() {
+        return this.dataService.findAllRole();
     }
 
     @GetMapping("/state")

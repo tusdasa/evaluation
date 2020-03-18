@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.tusdasa.evaluation.dao.StudentClassMapper;
 import net.tusdasa.evaluation.dao.StudentMapper;
 import net.tusdasa.evaluation.entity.Student;
+import net.tusdasa.evaluation.entity.StudentClass;
 import net.tusdasa.evaluation.service.StudentService;
 import net.tusdasa.evaluation.vo.StudentRequest;
 import org.springframework.stereotype.Service;
@@ -40,12 +41,16 @@ public class StudentServiceImpl implements StudentService {
     @Transactional
     public void updateStudent(StudentRequest request) {
         Student student = this.studentMapper.selectByPrimaryKey(request.getStudentId());
-        if (student.compareTo(request) != 0) {
-            this.studentMapper.updateByPrimaryKeySelective(request.build());
-            this.studentClassMapper.updateByPrimaryKeySelective(request.build().getStudentClass());
+        if (student != null) {
+            if (request.getStudentSecret() != null) {
+                student.setStudentSecret(request.build().getStudentSecret());
+            }
+            StudentClass studentClass = student.getStudentClass();
+            studentClass.setClassId(request.getClassId());
+            student.setStudentClass(studentClass);
+            this.studentMapper.updateByPrimaryKeySelective(student);
             log.info("update student {}", student);
         }
-
     }
 
     @Override

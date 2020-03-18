@@ -40,8 +40,12 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public void updateTeacher(TeacherRequest request) {
         Teacher teacher = teacherMapper.selectByPrimaryKey(request.getWorkId());
-        if (teacher.compareTo(request) != 0) {
-            teacherMapper.updateByPrimaryKeySelective(request.build());
+        if (teacher != null) {
+            Teacher newTeacher = request.build();
+            if (request.getTeacherSecret() == null || "".equals(request.getTeacherSecret())) {
+                newTeacher.setTeacherSecret(null);
+            }
+            this.teacherMapper.updateByPrimaryKeySelective(newTeacher);
             log.info("update teacher {}", request);
         }
     }
