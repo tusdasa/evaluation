@@ -1,6 +1,5 @@
 package net.tusdasa.evaluation.controller;
 
-import net.tusdasa.evaluation.authority.Authority;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.SecondKpi;
 import net.tusdasa.evaluation.service.SecondKPIService;
@@ -25,42 +24,27 @@ public class SecondKPIController {
     }
 
     @GetMapping("/")
-    public CommonResponse<SecondKpi> findAll(@RequestHeader("role") Integer roleId) {
-        if (!roleId.equals(Authority.ADMIN)) {
-            return new CommonResponse<SecondKpi>().error("未授权");
-        }
+    public CommonResponse<SecondKpi> findAll() {
         return this.secondKPIService.findAll();
     }
 
     @GetMapping("/{id}")
-    public CommonResponse<SecondKpi> findById(@PathVariable("id") Integer id, @RequestHeader("role") Integer roleId) {
-        if (!roleId.equals(Authority.ADMIN)) {
-            return new CommonResponse<SecondKpi>().error("未授权");
-        }
+    public CommonResponse<SecondKpi> findById(@PathVariable("id") Integer id) {
         return this.secondKPIService.findById(id);
     }
 
     @PutMapping("/")
-    public CommonResponse<String> update(@RequestBody SecondKpiRequest request, @RequestHeader("role") Integer roleId) {
-        if (!roleId.equals(Authority.ADMIN)) {
-            return new CommonResponse<String>().error("未授权");
-        }
+    public CommonResponse<String> update(@RequestBody SecondKpiRequest request) {
         return this.secondKPIService.update(request);
     }
 
     @PostMapping("/")
-    public CommonResponse<String> create(@RequestBody SecondKpiRequest request, @RequestHeader("role") Integer roleId) {
-        if (!roleId.equals(Authority.ADMIN)) {
-            return new CommonResponse<String>().error("未授权");
-        }
+    public CommonResponse<String> create(@RequestBody SecondKpiRequest request) {
         return this.secondKPIService.create(request);
     }
 
     @DeleteMapping("/{id}")
-    public CommonResponse<String> delete(@PathVariable("id") Integer id, @RequestHeader("role") Integer roleId) {
-        if (!roleId.equals(Authority.ADMIN)) {
-            return new CommonResponse<String>().error("未授权");
-        }
+    public CommonResponse<String> delete(@PathVariable("id") Integer id) {
         return this.secondKPIService.delete(id);
     }
 
