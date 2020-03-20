@@ -34,6 +34,7 @@
         <module>analysis-service</module>
         <module>teacher-evaluation</module>
         <module>admin-service</module>
+        <module>calculation-service</module>
     </modules>
     <artifactId>evaluation-service</artifactId>
 

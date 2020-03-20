@@ -1,0 +1,31 @@
+server:
+  port: 7085
+  servlet:
+    context-path: /calulation
+spring:
+  application:
+    name: evaluation-calulation-service
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        health-check-path: /calulation/actuator/health
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss:SSS
+    time-zone: GMT+8
+  data:
+    mongodb:
+      uri: mongodb://127.0.0.1:27017/evaluation
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://tusdasa:8000/eureka/
+feign:
+  hystrix:
+    enabled: true
+  okhttp:
+    enabled: true

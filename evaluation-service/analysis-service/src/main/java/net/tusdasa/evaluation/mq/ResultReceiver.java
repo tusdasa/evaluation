@@ -11,6 +11,7 @@ import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -42,7 +43,7 @@ public class ResultReceiver {
     @RabbitListener(bindings = {
             @QueueBinding(value = @Queue(value = RabbitMQConfig.QUEUE_STUDENT, declare = "false"), exchange = @Exchange(value = RabbitMQConfig.EXCHANGE_STUDENT, type = ExchangeTypes.TOPIC), key = RabbitMQConfig.ROUTE_KEY_STUDENT)
     })
-    public void countStudentEvaluation(StudentEvaluation studentEvaluation) {
+    public void countStudentEvaluation(@Payload StudentEvaluation studentEvaluation) {
         // 计算成绩
         List<KpiScore> kpiScoreList = studentEvaluation.getKpiScoreList();
         int totalScore = 0;
@@ -62,7 +63,7 @@ public class ResultReceiver {
             @QueueBinding(value = @Queue(value = RabbitMQConfig.QUEUE_TEACHER, declare = "false"),
                     exchange = @Exchange(value = RabbitMQConfig.EXCHANGE_TEACHER, type = ExchangeTypes.TOPIC), key = RabbitMQConfig.ROUTE_KEY_TEACHER)
     })
-    public void countTeacherEvaluation(TeacherEvaluation teacherEvaluation) {
+    public void countTeacherEvaluation(@Payload TeacherEvaluation teacherEvaluation) {
         // 计算成绩
         List<KpiScore> kpiScoreList = teacherEvaluation.getSecondKpiList();
         int totalScore = 0;
