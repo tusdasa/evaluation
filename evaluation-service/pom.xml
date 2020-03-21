@@ -35,6 +35,7 @@
         <module>teacher-evaluation</module>
         <module>admin-service</module>
         <module>calculation-service</module>
+        <module>mathutils</module>
     </modules>
     <artifactId>evaluation-service</artifactId>
 

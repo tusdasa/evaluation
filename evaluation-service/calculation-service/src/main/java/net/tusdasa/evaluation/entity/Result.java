@@ -13,6 +13,8 @@ public class Result {
     // 教师名称
     private String teacherName;
 
+    private String academicYearName;
+
     // 教师的部门
     private String departmentName;
 
@@ -22,6 +24,8 @@ public class Result {
     private Double studentResult = 0.0D;
 
     private Double teacherResult = 0.0D;
+
+    private Double total = studentResult * 10 + teacherResult;
 
     public Result() {
     }
@@ -72,5 +76,21 @@ public class Result {
 
     public void setTeacherResult(Double teacherResult) {
         this.teacherResult = teacherResult;
+    }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
+    public String getAcademicYearName() {
+        return academicYearName;
+    }
+
+    public void setAcademicYearName(String academicYearName) {
+        this.academicYearName = academicYearName;
     }
 }
