@@ -4,15 +4,13 @@ import net.tusdasa.evaluation.client.AcademicYearClient;
 import net.tusdasa.evaluation.client.TeacherClient;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.dao.TeacherSituationDao;
-import net.tusdasa.evaluation.entity.Teacher;
-import net.tusdasa.evaluation.entity.TeacherEvaluation;
-import net.tusdasa.evaluation.entity.TeacherSituation;
-import net.tusdasa.evaluation.entity.Term;
+import net.tusdasa.evaluation.entity.*;
 import net.tusdasa.evaluation.mongodb.TeacherEvaluationDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -69,31 +67,56 @@ public class TeacherSituationService {
 
         Teacher evaluator = this.findTeacherById(teacherEvaluation.getEvaluatorId());
 
-        if (evaluator == null) {
+        Term term = this.findCurrentTerm();
+
+
+        if (evaluator == null || term == null) {
             LOG.error("service unavailable");
             return;
         }
 
         if (optional.isPresent()) {
             TeacherSituation situation = optional.get();
-            situation.add(evaluator.getTeacherName(), teacherEvaluation.getTotal());
+            List<FactorTeacher> factorTeacherList = situation.getFactorTeacherList();
+            boolean flag = false;
+            for (FactorTeacher factorTeacher : factorTeacherList) {
+                if (teacherEvaluation.getTermId().equals(factorTeacher.getTermId())) {
+                    factorTeacher.add(evaluator.getTeacherName(), teacherEvaluation.getTotal());
+                    flag = true;
+                    break;
+                }
+            }
+
+            // 遍历完了, 没有找到对应的学期
+            if (!flag) {
+                FactorTeacher factorTeacher = new FactorTeacher(term);
+                factorTeacher.add(evaluator.getTeacherName(), teacherEvaluation.getTotal());
+                situation.add(factorTeacher);
+            }
+
+            // FactorTeacher factorTeacher = new FactorTeacher(term);
+            // factorTeacher.add(evaluator.getTeacherName(), teacherEvaluation.getTotal());
             this.teacherSituationDao.save(situation);
         } else {
-
-            Term term = this.findCurrentTerm();
             Teacher teacher = this.findTeacherById(teacherEvaluation.getWorkId());
-            if (term == null || teacher == null) {
+            if (teacher == null) {
                 LOG.error("service unavailable");
                 return;
             }
-            TeacherSituation teacherSituation = new TeacherSituation();
-            teacherSituation.setTeacherName(teacher.getTeacherName());
-            teacherSituation.setTermName(term.getTermName());
-            teacherSituation.setId(teacher.getWorkId());
-            teacherSituation.add(evaluator.getTeacherName(), teacherEvaluation.getTotal());
-            this.teacherSituationDao.save(teacherSituation);
+            TeacherSituation teacherSituation = this.getTeacherSituation(teacher);
+            FactorTeacher factorTeacher = new FactorTeacher(term);
+            factorTeacher.add(evaluator.getTeacherName(), teacherEvaluation.getTotal());
+            this.teacherSituationDao.save(teacherSituation.add(factorTeacher));
         }
 
+    }
+
+    private TeacherSituation getTeacherSituation(Teacher teacher) {
+        TeacherSituation teacherSituation = new TeacherSituation();
+        teacherSituation.setTeacherName(teacher.getTeacherName());
+        teacherSituation.setId(teacher.getWorkId());
+        teacherSituation.setDepartmentName(teacher.getDepartment().getDepartmentName());
+        return teacherSituation;
     }
 
 }

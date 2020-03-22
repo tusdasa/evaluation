@@ -3,6 +3,7 @@ package net.tusdasa.evaluation.service;
 import mathutils.MathUtils;
 import mathutils.array.MathArrayUtils;
 import mathutils.sorts.QuickSort;
+import net.tusdasa.evaluation.client.AcademicYearClient;
 import net.tusdasa.evaluation.client.AnalysisClient;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.*;
@@ -26,11 +27,14 @@ public class TeacherResultService {
 
     private MathUtils mathUtils;
 
+    private AcademicYearClient academicYearClient;
+
     private double PERCENTAGE = 0.1D;
 
-    public TeacherResultService(AnalysisClient analysisClient, MathUtils mathUtils) {
+    public TeacherResultService(AnalysisClient analysisClient, MathUtils mathUtils, AcademicYearClient academicYearClient) {
         this.analysisClient = analysisClient;
         this.mathUtils = mathUtils;
+        this.academicYearClient = academicYearClient;
     }
 
     // 获得学生评价结果
@@ -51,9 +55,16 @@ public class TeacherResultService {
         return null;
     }
 
-    // 返回结果
-    public Result getScore(Integer id) {
-        /*
+    // 获得当前学年
+    private AcademicYear getCurrentAcademicYear() {
+        CommonResponse<AcademicYear> commonResponse = this.academicYearClient.current();
+        if (commonResponse.success()) {
+            return commonResponse.getData();
+        }
+        return null;
+    }
+
+     /*
         // 取教师信息
         this.getTeacherScore(id);
         StudentSituation studentSituation = this.getStudentSituation(id);
@@ -101,20 +112,24 @@ public class TeacherResultService {
             return null;
         }
         */
+
+    // 返回结果
+    public Result getScore(Integer id) {
         StudentSituation studentSituation = this.getStudentSituation(id);
         TeacherSituation teacherSituation = this.getTeacherSituation(id);
+        AcademicYear academicYear = this.getCurrentAcademicYear();
 
-        if (studentSituation != null && teacherSituation != null) {
-            double[] studentScore = this.getStudentScore(studentSituation);
-            double[] teacherScore = this.getTeacherScore(teacherSituation);
-            return this.generateResult(studentSituation, studentScore, teacherScore);
+        if (studentSituation != null && teacherSituation != null && academicYear != null) {
+            double[] studentScore = this.getStudentScore(studentSituation, academicYear);
+            double teacherScore = this.getTeacherScore(teacherSituation, academicYear);
+            return this.generateResult(studentSituation, studentScore, teacherScore, academicYear);
         }
         return null;
     }
 
-    private Result generateResult(StudentSituation studentSituation, double[] studentScore, double[] teacherScore) {
+    private Result generateResult(StudentSituation studentSituation, double[] studentScore, double teacherScore, AcademicYear academicYear) {
         Result result = new Result(studentScore, teacherScore);
-        result.setAcademicYearName("111");
+        result.setAcademicYearName(academicYear.getAcademicYearName());
         result.setDepartmentName(studentSituation.getDepartmentName());
         result.setId(studentSituation.getId());
         result.setProfessionalTitle(studentSituation.getProfessionalTitle());
@@ -128,10 +143,29 @@ public class TeacherResultService {
         return map.get(keys[0]);
     }
 
-    // 此方法计算
-    private double[] getTeacherScore(TeacherSituation teacherSituation) {
+    // 此方法计算教学督导
+    private double getTeacherScore(TeacherSituation teacherSituation, AcademicYear academicYear) {
+        List<FactorTeacher> factorTeacherList = teacherSituation.getFactorTeacherList();
+        Term startTerm = academicYear.getStartTerm();
+        Term endTerm = academicYear.getEndTerm();
+        double[] sum = new double[4];
+        int i = 0;
+        for (FactorTeacher factorTeacher : factorTeacherList) {
+            if (factorTeacher.getTermId().equals(startTerm.getTermId()) || factorTeacher.getTermId().equals(endTerm.getTermId())) {
+                // 取所有评价
+                List<Map<String, Integer>> mapList = factorTeacher.getScoreList();
+                // 转化为数组
+                List<Integer> allTeacher = mapList.stream().map(this::getMapValue).collect(Collectors.toList());
+                // 转换为double[] 并求和
+                sum[i++] = mathUtils.sumNumber(MathArrayUtils.ListIntegerToArray(allTeacher));
+            }
+        }
+
+        return mathUtils.sumNumber(sum);
+
+        /*
         // 取所有评价
-        List<Map<String, Integer>> mapList = teacherSituation.getScoreList();
+        List<Map<String, Integer>> mapList =
         // 转化为数组
         List<Integer> allTeacher = mapList.stream().map(this::getMapValue).collect(Collectors.toList());
         // 转换为double[]
@@ -144,11 +178,12 @@ public class TeacherResultService {
         doubles[1] = mathUtils.standardDeviationNumber(allTeacherScore);
         // 平均数
         doubles[2] = mathUtils.meanNumber(allTeacherScore);
-        return doubles;
+         */
+        // return doubles;
     }
 
     // 这个方法会计算学生成绩
-    private double[] getStudentScore(StudentSituation studentSituation) {
+    private double[] getStudentScore(StudentSituation studentSituation, AcademicYear academicYear) {
         int MEAN_SIZE = studentSituation.getFactorCourseList().size();
         int j = 0;
         // 保存所有学生的成绩

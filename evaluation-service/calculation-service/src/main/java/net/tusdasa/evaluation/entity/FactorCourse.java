@@ -47,6 +47,7 @@ public class FactorCourse implements Serializable {
         this.id = course.getCourseId();
         this.courseName = course.getCourseName();
         this.termName = term.getTermName();
+        this.termId = term.getTermId();
     }
 
     public Long getId() {

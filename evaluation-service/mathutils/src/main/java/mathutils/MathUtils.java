@@ -66,6 +66,14 @@ public class MathUtils {
         return StatUtils.mode(array);
     }
 
+    /**
+     * @param array double[]
+     * @return 和
+     */
+    public double sumNumber(double[] array) {
+        return StatUtils.sum(array);
+    }
+
     private boolean check(double[] array) {
         if (array.length < 2) {
             return true;

@@ -32,22 +32,16 @@ public class Result implements Serializable {
 
     private Double studentStandardDeviation = 0.0D;
 
-    private Double teacherMode = 0.0D;
-
-    private Double teacherStandardDeviation = 0.0D;
-
     private Double total = 0.0D;
 
     public Result() {
     }
 
-    public Result(double[] studentScore, double[] teacherScore) {
+    public Result(double[] studentScore, double teacherScore) {
         this.studentMode = studentScore[0];
         this.studentStandardDeviation = studentScore[1];
         this.studentResult = studentScore[2];
-        this.teacherMode = teacherScore[0];
-        this.teacherStandardDeviation = teacherScore[1];
-        this.teacherResult = teacherScore[2];
+        this.teacherResult = teacherScore;
         this.total = this.studentResult * 10 + this.teacherResult;
     }
 
@@ -151,20 +145,4 @@ public class Result implements Serializable {
                 '}';
     }
 
-    public Double getTeacherMode() {
-        return teacherMode;
-    }
-
-    public void setTeacherMode(Double teacherMode) {
-        this.teacherMode = teacherMode;
-    }
-
-    public Double getTeacherStandardDeviation() {
-        BigDecimal bigDecimal = new BigDecimal(this.teacherStandardDeviation);
-        return bigDecimal.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
-    }
-
-    public void setTeacherStandardDeviation(Double teacherStandardDeviation) {
-        this.teacherStandardDeviation = teacherStandardDeviation;
-    }
 }

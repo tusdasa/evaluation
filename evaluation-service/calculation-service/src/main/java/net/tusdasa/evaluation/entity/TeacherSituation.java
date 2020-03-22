@@ -5,9 +5,7 @@ import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @ToString
 @EqualsAndHashCode
@@ -25,27 +23,24 @@ public class TeacherSituation implements Serializable {
     // 评价人
     private String teacherName;
 
-    // 学期
-    private String termName;
+    // 部门
+    private String departmentName;
 
     // 成绩
     private Integer totalScore = 0;
 
     // 分数
-    private List<Map<String, Integer>> scoreList;
-
+    private List<FactorTeacher> factorTeacherList;
 
     public TeacherSituation() {
     }
 
-    public TeacherSituation add(String evaluator, Integer score) {
-        if (this.scoreList == null) {
-            this.scoreList = new ArrayList<>();
+    public TeacherSituation add(FactorTeacher factorTeacher) {
+        if (this.factorTeacherList == null) {
+            this.factorTeacherList = new ArrayList<>();
         }
-        HashMap<String, Integer> evaluation = new HashMap<>();
-        evaluation.put(evaluator, score);
-        this.totalScore = this.totalScore + score;
-        this.scoreList.add(evaluation);
+        this.totalScore = this.totalScore + factorTeacher.getTotalScore();
+        this.factorTeacherList.add(factorTeacher);
         return this;
     }
 
@@ -65,14 +60,6 @@ public class TeacherSituation implements Serializable {
         this.teacherName = teacherName;
     }
 
-    public String getTermName() {
-        return termName;
-    }
-
-    public void setTermName(String termName) {
-        this.termName = termName;
-    }
-
     public Integer getTotalScore() {
         return totalScore;
     }
@@ -81,11 +68,19 @@ public class TeacherSituation implements Serializable {
         this.totalScore = totalScore;
     }
 
-    public List<Map<String, Integer>> getScoreList() {
-        return scoreList;
+    public List<FactorTeacher> getFactorTeacherList() {
+        return factorTeacherList;
     }
 
-    public void setScoreList(List<Map<String, Integer>> scoreList) {
-        this.scoreList = scoreList;
+    public void setFactorTeacherList(List<FactorTeacher> factorTeacherList) {
+        this.factorTeacherList = factorTeacherList;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
 }
