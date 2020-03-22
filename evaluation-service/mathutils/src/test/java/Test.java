@@ -20,7 +20,7 @@ public class Test {
         for (int i = 0; i < 20; i++) {
             integerList.add(RandomUtils.nextInt(10, 100));
         }
-        double[] a = MathArrayUtils.getDoubleArray(integerList);
+        double[] a = MathArrayUtils.ListIntegerToArray(integerList);
 
         System.out.println(Arrays.toString(a));
     }
@@ -31,7 +31,7 @@ public class Test {
         for (int i = 0; i < 20; i++) {
             integerList.add(RandomUtils.nextInt(10, 100));
         }
-        double[] a = MathArrayUtils.getDoubleArray(integerList);
+        double[] a = MathArrayUtils.ListIntegerToArray(integerList);
         System.out.println(MathArrayUtils.getPercentageIndex(a, 0.1d));
     }
 
@@ -41,7 +41,7 @@ public class Test {
         for (int i = 0; i < 20; i++) {
             integerList.add(RandomUtils.nextInt(10, 100));
         }
-        double[] a = MathArrayUtils.getDoubleArray(integerList);
+        double[] a = MathArrayUtils.ListIntegerToArray(integerList);
         QuickSort.quickSort(a, a.length);
         System.out.println(Arrays.toString(a));
     }

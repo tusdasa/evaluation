@@ -1,6 +1,7 @@
 package net.tusdasa.evaluation.controller;
 
 import net.tusdasa.evaluation.commons.CommonResponse;
+import net.tusdasa.evaluation.entity.Result;
 import net.tusdasa.evaluation.service.TeacherResultService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,9 +22,13 @@ public class ResultController {
     }
 
     @GetMapping("/{id}")
-    public CommonResponse<Double> findById(@PathVariable("id") Integer id) {
+    public CommonResponse<Result> findById(@PathVariable("id") Integer id) {
         //return this.analysisClient.findStudentSituationById(id);
-        return new CommonResponse<Double>().ok().data(this.teacherResultService.getScore(id));
+        Result result = this.teacherResultService.getScore(id);
+        if (result != null) {
+            return new CommonResponse<Result>().ok().data(result);
+        }
+        return new CommonResponse<Result>().error("未找到");
     }
 
 }

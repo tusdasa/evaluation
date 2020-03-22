@@ -23,6 +23,9 @@ public class FactorCourse implements Serializable {
     // 课程名称
     private String courseName;
 
+    // 学期ID
+    private Integer termId;
+
     // 开课的学期
     private String termName;
 
@@ -44,6 +47,7 @@ public class FactorCourse implements Serializable {
         this.id = course.getCourseId();
         this.courseName = course.getCourseName();
         this.termName = term.getTermName();
+        this.termId = term.getTermId();
     }
 
     public Long getId() {
@@ -92,4 +96,11 @@ public class FactorCourse implements Serializable {
         this.classesList = classesList;
     }
 
+    public Integer getTermId() {
+        return termId;
+    }
+
+    public void setTermId(Integer termId) {
+        this.termId = termId;
+    }
 }

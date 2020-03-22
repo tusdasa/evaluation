@@ -44,16 +44,14 @@ public class ResultReceiver {
             @QueueBinding(value = @Queue(value = RabbitMQConfig.QUEUE_STUDENT, declare = "false"), exchange = @Exchange(value = RabbitMQConfig.EXCHANGE_STUDENT, type = ExchangeTypes.TOPIC), key = RabbitMQConfig.ROUTE_KEY_STUDENT)
     })
     public void countStudentEvaluation(@Payload StudentEvaluation studentEvaluation) {
-        // 计算成绩
-        List<KpiScore> kpiScoreList = studentEvaluation.getKpiScoreList();
-        int totalScore = 0;
-        for (int i = 0; i < kpiScoreList.size(); i++) {
-            KpiScore kpiScore = kpiScoreList.get(i);
-            totalScore += kpiScore.getScore();
-        }
-        studentEvaluation.setTotal(totalScore);
+        if (studentEvaluation != null && studentEvaluation.getKpiScoreList() != null) {
+            // 计算成绩
+            int totalScore = this.getTotalScore(studentEvaluation.getKpiScoreList());
+            studentEvaluation.setTotal(totalScore);
 
-        this.studentEvaluationService.addStudentEvaluation(studentEvaluation);
+            this.studentEvaluationService.addStudentEvaluation(studentEvaluation);
+        }
+
     }
 
     /**
@@ -64,14 +62,26 @@ public class ResultReceiver {
                     exchange = @Exchange(value = RabbitMQConfig.EXCHANGE_TEACHER, type = ExchangeTypes.TOPIC), key = RabbitMQConfig.ROUTE_KEY_TEACHER)
     })
     public void countTeacherEvaluation(@Payload TeacherEvaluation teacherEvaluation) {
-        // 计算成绩
-        List<KpiScore> kpiScoreList = teacherEvaluation.getSecondKpiList();
+
+        if (teacherEvaluation != null && teacherEvaluation.getSecondKpiList() != null) {
+            // 计算成绩
+
+            int totalScore = this.getTotalScore(teacherEvaluation.getSecondKpiList());
+
+            teacherEvaluation.setTotal(totalScore);
+
+            this.teacherSituationService.addTeacherSituation(teacherEvaluation);
+        }
+    }
+
+    private int getTotalScore(List<KpiScore> kpiScoreList) {
         int totalScore = 0;
         for (int i = 0; i < kpiScoreList.size(); i++) {
-            totalScore += kpiScoreList.get(i).getScore();
+            KpiScore kpiScore = kpiScoreList.get(i);
+            if (kpiScore.getScore() != null) {
+                totalScore += kpiScore.getScore();
+            }
         }
-        teacherEvaluation.setTotal(totalScore);
-
-        this.teacherSituationService.addTeacherSituation(teacherEvaluation);
+        return totalScore;
     }
 }

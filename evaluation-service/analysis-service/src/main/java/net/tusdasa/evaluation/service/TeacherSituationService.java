@@ -77,7 +77,6 @@ public class TeacherSituationService {
         if (optional.isPresent()) {
             TeacherSituation situation = optional.get();
             situation.add(evaluator.getTeacherName(), teacherEvaluation.getTotal());
-            System.out.println(situation);
             this.teacherSituationDao.save(situation);
         } else {
 
@@ -92,7 +91,6 @@ public class TeacherSituationService {
             teacherSituation.setTermName(term.getTermName());
             teacherSituation.setId(teacher.getWorkId());
             teacherSituation.add(evaluator.getTeacherName(), teacherEvaluation.getTotal());
-            System.out.println(teacherSituation);
             this.teacherSituationDao.save(teacherSituation);
         }
 

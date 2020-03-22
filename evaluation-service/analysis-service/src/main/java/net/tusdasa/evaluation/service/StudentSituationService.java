@@ -112,14 +112,12 @@ public class StudentSituationService {
         if (studentSituation != null) {
             FactorCourse factorCourse = this.getFactorCourse(course, term);
             StudentSituation ss = this.addNew(studentSituation, factorClasses, factorCourse, studentEvaluation.getTotal());
-            System.out.println(ss.toString());
             this.studentSituationDao.save(ss);
         } else {
             Teacher teacher = this.findTeacherById(course.getTeacherWorkId());
             if (teacher != null) {
                 FactorCourse factorCourse = this.getFactorCourse(course, term).add(factorClasses);
                 StudentSituation situation = this.getStudentTeachingSituation(teacher).add(factorCourse);
-                System.out.println(situation.toString());
                 this.studentSituationDao.save(situation);
             } else {
                 LOG.error("calculate error service unavailable {}", studentEvaluation);

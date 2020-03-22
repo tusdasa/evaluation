@@ -7,6 +7,7 @@ import net.tusdasa.evaluation.vo.TermRequest;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/term")
 public class TermController {
 
     private TermService termService;

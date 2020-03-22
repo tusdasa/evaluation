@@ -23,6 +23,9 @@ public class MathUtils {
      * @return 平均数
      */
     public double meanNumber(double[] array) {
+        if (check(array)) {
+            return array[0];
+        }
         return StatUtils.mean(array);
     }
 
@@ -33,6 +36,9 @@ public class MathUtils {
      * @return 标准差
      */
     public double standardDeviationNumber(double[] array) {
+        if (check(array)) {
+            return 0.0D;
+        }
         return standardDeviation.evaluate(array);
     }
 
@@ -43,6 +49,9 @@ public class MathUtils {
      * @return 方差
      */
     public double varianceNumber(double[] array) {
+        if (check(array)) {
+            return array[0];
+        }
         return StatUtils.populationVariance(array);
     }
 
@@ -51,7 +60,17 @@ public class MathUtils {
      * @return 众数
      */
     public double[] modeNumber(double[] array) {
+        if (check(array)) {
+            return array;
+        }
         return StatUtils.mode(array);
+    }
+
+    private boolean check(double[] array) {
+        if (array.length < 2) {
+            return true;
+        }
+        return false;
     }
 
 }

@@ -1,11 +1,14 @@
 package net.tusdasa.evaluation.entity;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+
 /**
  * @Author: tusdasa
  * @Date: 2020-03-20 8:34 PM
  */
 
-public class Result {
+public class Result implements Serializable {
 
     // workId
     private Integer id;
@@ -25,9 +28,27 @@ public class Result {
 
     private Double teacherResult = 0.0D;
 
-    private Double total = studentResult * 10 + teacherResult;
+    private Double studentMode = 0.0D;
+
+    private Double studentStandardDeviation = 0.0D;
+
+    private Double teacherMode = 0.0D;
+
+    private Double teacherStandardDeviation = 0.0D;
+
+    private Double total = 0.0D;
 
     public Result() {
+    }
+
+    public Result(double[] studentScore, double[] teacherScore) {
+        this.studentMode = studentScore[0];
+        this.studentStandardDeviation = studentScore[1];
+        this.studentResult = studentScore[2];
+        this.teacherMode = teacherScore[0];
+        this.teacherStandardDeviation = teacherScore[1];
+        this.teacherResult = teacherScore[2];
+        this.total = this.studentResult * 10 + this.teacherResult;
     }
 
     public Integer getId() {
@@ -63,7 +84,8 @@ public class Result {
     }
 
     public Double getStudentResult() {
-        return studentResult;
+        BigDecimal bigDecimal = new BigDecimal(this.studentResult);
+        return bigDecimal.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 
     public void setStudentResult(Double studentResult) {
@@ -71,7 +93,8 @@ public class Result {
     }
 
     public Double getTeacherResult() {
-        return teacherResult;
+        BigDecimal bigDecimal = new BigDecimal(this.teacherResult);
+        return bigDecimal.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 
     public void setTeacherResult(Double teacherResult) {
@@ -79,7 +102,8 @@ public class Result {
     }
 
     public Double getTotal() {
-        return total;
+        BigDecimal bigDecimal = new BigDecimal(this.total);
+        return bigDecimal.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 
     public void setTotal(Double total) {
@@ -92,5 +116,55 @@ public class Result {
 
     public void setAcademicYearName(String academicYearName) {
         this.academicYearName = academicYearName;
+    }
+
+    public Double getStudentMode() {
+        return studentMode;
+    }
+
+    public void setStudentMode(Double studentMode) {
+        this.studentMode = studentMode;
+    }
+
+    public Double getStudentStandardDeviation() {
+        BigDecimal bigDecimal = new BigDecimal(this.studentStandardDeviation);
+        return bigDecimal.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
+    }
+
+    public void setStudentStandardDeviation(Double studentStandardDeviation) {
+        this.studentStandardDeviation = studentStandardDeviation;
+    }
+
+    @Override
+    public String toString() {
+        return "Result{" +
+                "id=" + id +
+                ", teacherName='" + teacherName + '\'' +
+                ", academicYearName='" + academicYearName + '\'' +
+                ", departmentName='" + departmentName + '\'' +
+                ", professionalTitle='" + professionalTitle + '\'' +
+                ", studentResult=" + studentResult +
+                ", teacherResult=" + teacherResult +
+                ", studentMode=" + studentMode +
+                ", studentStandardDeviation=" + studentStandardDeviation +
+                ", total=" + total +
+                '}';
+    }
+
+    public Double getTeacherMode() {
+        return teacherMode;
+    }
+
+    public void setTeacherMode(Double teacherMode) {
+        this.teacherMode = teacherMode;
+    }
+
+    public Double getTeacherStandardDeviation() {
+        BigDecimal bigDecimal = new BigDecimal(this.teacherStandardDeviation);
+        return bigDecimal.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
+    }
+
+    public void setTeacherStandardDeviation(Double teacherStandardDeviation) {
+        this.teacherStandardDeviation = teacherStandardDeviation;
     }
 }

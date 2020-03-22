@@ -38,11 +38,27 @@ public class MathArrayUtils {
      * @param integerList 整数集合
      * @return 转换后的double类型数组
      */
-    public static double[] getDoubleArray(List<Integer> integerList) {
+    public static double[] ListIntegerToArray(List<Integer> integerList) {
         Integer[] var1 = integerList.toArray(new Integer[0]);
         double[] var2 = new double[var1.length];
         int i = 0;
         for (Integer v : var1) {
+            var2[i++] = v;
+        }
+        return var2;
+    }
+
+    /**
+     * 将 List<Double> 转换为 double[]
+     *
+     * @param doubleList Double集合
+     * @return 转换后的double类型数组
+     */
+    public static double[] ListDoubleToArray(List<Double> doubleList) {
+        Double[] var1 = doubleList.toArray(new Double[0]);
+        double[] var2 = new double[var1.length];
+        int i = 0;
+        for (Double v : var1) {
             var2[i++] = v;
         }
         return var2;
