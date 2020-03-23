@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RestController
-@RequestMapping("/second")
 public class SecondKPIController {
 
     private SecondKPIService secondKPIService;
@@ -23,27 +22,27 @@ public class SecondKPIController {
         this.secondKPIService = secondKPIService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/second")
     public CommonResponse<SecondKpi> findAll() {
         return this.secondKPIService.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/second/{id}")
     public CommonResponse<SecondKpi> findById(@PathVariable("id") Integer id) {
         return this.secondKPIService.findById(id);
     }
 
-    @PutMapping("/")
+    @PutMapping("/second")
     public CommonResponse<String> update(@RequestBody SecondKpiRequest request) {
         return this.secondKPIService.update(request);
     }
 
-    @PostMapping("/")
+    @PostMapping("/second")
     public CommonResponse<String> create(@RequestBody SecondKpiRequest request) {
         return this.secondKPIService.create(request);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/second/{id}")
     public CommonResponse<String> delete(@PathVariable("id") Integer id) {
         return this.secondKPIService.delete(id);
     }

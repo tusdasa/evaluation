@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RestController
-@RequestMapping("/right")
 public class RightController {
 
     RightService rightService;
@@ -22,22 +21,22 @@ public class RightController {
         this.rightService = rightService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/right")
     public CommonResponse<Right> findAll() {
         return this.rightService.findAllRight();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("right/{id}")
     public CommonResponse<Right> findById(@PathVariable("id") Integer id) {
         return this.rightService.findRightById(id);
     }
 
-    @PutMapping("/")
+    @PutMapping("/right")
     public CommonResponse<String> update(@RequestBody Right right) {
         return this.rightService.update(right);
     }
 
-    @PostMapping("/")
+    @PostMapping("/right")
     public CommonResponse<String> create(@RequestBody Right right) {
         return this.rightService.create(right);
     }

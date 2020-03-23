@@ -35,11 +35,12 @@ public class UserInfoController {
             UserInfo userInfo = UserInfo.builder().build().withId(studentId).withName(student.getStudentName()).withRole(1);
             return new CommonResponse<UserInfo>().ok().data(userInfo);
         }
-        return null;
+        return new CommonResponse<UserInfo>().error("未找到用户信息");
     }
 
     @GetMapping("/teacherinfo")
     public CommonResponse<UserInfo> getTeacherInfo(@RequestHeader("workId") String workId) {
+        System.out.println(workId);
         Teacher teacher = teacherRedisTemplate.opsForValue().get(workId);
         if (teacher != null) {
             UserInfo userInfo = UserInfo.builder().build().withId(workId).withName(teacher.getTeacherName()).withRole(teacher.getRoleId());

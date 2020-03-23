@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RestController
-@RequestMapping("/third")
 public class ThirdKPIController {
 
     private ThirdKPIService thirdKPIService;
@@ -24,7 +23,7 @@ public class ThirdKPIController {
         this.thirdKPIService = thirdKPIService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/third")
     public CommonResponse<ThirdKpi> findAll(@RequestHeader("role") Integer roleId) {
         if (!roleId.equals(Authority.ADMIN)) {
             return new CommonResponse<ThirdKpi>().error("未授权");
@@ -32,7 +31,7 @@ public class ThirdKPIController {
         return this.thirdKPIService.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/third/{id}")
     public CommonResponse<ThirdKpi> findById(@PathVariable("id") Integer id, @RequestHeader("role") Integer roleId) {
         if (!roleId.equals(Authority.ADMIN)) {
             return new CommonResponse<ThirdKpi>().error("未授权");
@@ -40,7 +39,7 @@ public class ThirdKPIController {
         return this.thirdKPIService.findById(id);
     }
 
-    @PutMapping("/")
+    @PutMapping("/third")
     public CommonResponse<String> update(@RequestBody ThirdKpiRequest request, @RequestHeader("role") Integer roleId) {
         if (!roleId.equals(Authority.ADMIN)) {
             return new CommonResponse<String>().error("未授权");
@@ -48,7 +47,7 @@ public class ThirdKPIController {
         return this.thirdKPIService.update(request);
     }
 
-    @PostMapping("/")
+    @PostMapping("/third")
     public CommonResponse<String> create(@RequestBody ThirdKpiRequest request, @RequestHeader("role") Integer roleId) {
         if (!roleId.equals(Authority.ADMIN)) {
             return new CommonResponse<String>().error("未授权");
@@ -56,7 +55,7 @@ public class ThirdKPIController {
         return this.thirdKPIService.create(request);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/third/{id}")
     public CommonResponse<String> delete(@PathVariable("id") Integer id, @RequestHeader("role") Integer roleId) {
         if (!roleId.equals(Authority.ADMIN)) {
             return new CommonResponse<String>().error("未授权");

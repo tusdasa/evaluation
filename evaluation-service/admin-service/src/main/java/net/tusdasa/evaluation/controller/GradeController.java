@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RestController
-@RequestMapping("/grade")
 public class GradeController {
 
     private GradeService gradeService;
@@ -21,22 +20,22 @@ public class GradeController {
         this.gradeService = gradeService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/grade")
     public CommonResponse<Grade> findAll() {
         return this.gradeService.findAll();
     }
 
-    @PostMapping("/")
+    @PostMapping("/grade")
     public CommonResponse<String> create(GradeRequest request) {
         return this.gradeService.create(request);
     }
 
-    @PutMapping("/")
+    @PutMapping("/grade")
     public CommonResponse<String> update(GradeRequest request) {
         return this.gradeService.update(request);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/grade/{id}")
     public CommonResponse<Grade> findById(@PathVariable("id") Integer gradeId) {
         return this.gradeService.findById(gradeId);
     }

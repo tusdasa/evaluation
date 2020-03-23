@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
  * @Date: 2020-03-07 1:40 PM
  */
 @RestController
-@RequestMapping("/first")
 public class FirstKpiController {
 
     private FirstKpiService firstKpiService;
@@ -22,28 +21,28 @@ public class FirstKpiController {
         this.firstKpiService = firstKpiService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/first")
     public CommonResponse<FirstKpi> findAll() {
         return this.firstKpiService.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/first/{id}")
     public CommonResponse<FirstKpi> findById(@PathVariable("id") Integer id) {
         return this.firstKpiService.findById(id);
 
     }
 
-    @PutMapping("/")
+    @PutMapping("/first")
     public CommonResponse<String> update(@RequestBody FirstKpiRequest request) {
         return this.firstKpiService.update(request);
     }
 
-    @PostMapping("/")
+    @PostMapping("/first")
     public CommonResponse<String> create(@RequestBody FirstKpiRequest request) {
         return this.firstKpiService.create(request);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/first/{id}")
     public CommonResponse<String> delete(@PathVariable("id") Integer id) {
         return this.firstKpiService.delete(id);
     }

@@ -7,6 +7,7 @@
         <module>evaluation-eureka</module>
         <module>evaluation-zuul</module>
         <module>evaluation-service</module>
+        <module>evaluation-gateway</module>
     </modules>
 
     <parent>
@@ -41,7 +42,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <spring-cloud.version>Hoxton.SR1</spring-cloud.version>
+        <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
         <output.jar.location>${env.BUILD_DIR}</output.jar.location>
     </properties>
 

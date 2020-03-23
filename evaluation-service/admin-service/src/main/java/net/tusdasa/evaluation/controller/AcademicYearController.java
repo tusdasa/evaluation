@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RestController
-@RequestMapping("/academicyear")
 public class AcademicYearController {
 
     private AcademicYearService academicYearService;
@@ -23,27 +22,27 @@ public class AcademicYearController {
         this.academicYearService = academicYearService;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/academicyear/{id}")
     public CommonResponse<AcademicYear> findById(@PathVariable("id") Integer id) {
         return this.academicYearService.findById(id);
     }
 
-    @GetMapping("/")
+    @GetMapping("/academicyear")
     public CommonResponse<AcademicYear> findAll() {
         return this.academicYearService.findAll();
     }
 
-    @PutMapping("/")
+    @PutMapping("/academicyear")
     public CommonResponse<String> update(@RequestBody AcademicYearRequest request) {
         return this.academicYearService.update(request);
     }
 
-    @PostMapping("/")
+    @PostMapping("/academicyear")
     public CommonResponse<String> create(@RequestBody AcademicYearRequest request) {
         return this.academicYearService.create(request);
     }
 
-    @GetMapping("/current")
+    @GetMapping("/academicyear/current")
     public CommonResponse<AcademicYear> current() {
         return this.academicYearService.current();
     }

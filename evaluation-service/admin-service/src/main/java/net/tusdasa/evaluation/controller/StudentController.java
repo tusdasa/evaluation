@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RestController
-@RequestMapping("/student")
 public class StudentController {
 
     private StudentService studentService;
@@ -23,12 +22,12 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/student/{id}")
     public CommonResponse<Student> findById(@PathVariable("id") Long id) {
         return this.studentService.findById(id);
     }
 
-    @PutMapping("/")
+    @PutMapping("/student")
     public CommonResponse<String> update(@RequestBody StudentRequest request) {
         return this.studentService.update(request);
     }

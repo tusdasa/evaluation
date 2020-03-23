@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RestController
-@RequestMapping("/term")
 public class TermController {
 
     private TermService termService;
@@ -23,22 +22,22 @@ public class TermController {
         this.termService = termService;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/term/{id}")
     public CommonResponse<Term> findById(@PathVariable("id") Integer id) {
         return this.termService.findById(id);
     }
 
-    @GetMapping("/")
+    @GetMapping("/term")
     public CommonResponse<Term> findAll() {
         return this.termService.findAll();
     }
 
-    @PutMapping("/")
+    @PutMapping("/term")
     public CommonResponse<String> update(TermRequest request) {
         return this.termService.update(request);
     }
 
-    @PostMapping("/")
+    @PostMapping("/term")
     public CommonResponse<String> create(TermRequest request) {
         return this.termService.create(request);
     }
