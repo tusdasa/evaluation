@@ -7,6 +7,7 @@ import net.tusdasa.evaluation.service.TeacherService;
 import net.tusdasa.evaluation.vo.TeacherRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.DigestUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -96,5 +97,16 @@ public class TeacherServiceImpl implements TeacherService {
         parameter.put("stateId", stateId);
         parameter.put("roleId", roleId);
         return this.teacherMapper.findAllTeacherByRoleAndDepartment(parameter);
+    }
+
+    @Override
+    public boolean restPassword(Integer workId, String newPassword, String oldPassword) {
+        Teacher teacher = this.teacherMapper.selectByPrimaryKey(workId);
+        if (teacher != null && teacher.getTeacherSecret().equals(DigestUtils.md5DigestAsHex(oldPassword.getBytes()))) {
+            teacher.setTeacherSecret(DigestUtils.md5DigestAsHex(newPassword.getBytes()));
+            this.teacherMapper.restPassword(teacher);
+            return true;
+        }
+        return false;
     }
 }

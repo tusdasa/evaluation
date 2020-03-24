@@ -157,11 +157,12 @@ public class TeacherResultService {
                 // 转化为数组
                 List<Integer> allTeacher = mapList.stream().map(this::getMapValue).collect(Collectors.toList());
                 // 转换为double[] 并求和
-                sum[i++] = mathUtils.sumNumber(MathArrayUtils.ListIntegerToArray(allTeacher));
+                //sum[i++] = mathUtils.sumNumber(MathArrayUtils.ListIntegerToArray(allTeacher));
+                sum[i++] = mathUtils.meanNumber(MathArrayUtils.ListIntegerToArray(allTeacher));
             }
         }
 
-        return mathUtils.sumNumber(sum);
+        return mathUtils.meanNumber(sum);
 
         /*
         // 取所有评价

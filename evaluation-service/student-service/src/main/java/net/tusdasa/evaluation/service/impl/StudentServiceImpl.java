@@ -97,4 +97,15 @@ public class StudentServiceImpl implements StudentService {
         parameter.put("size", size);
         return studentMapper.findAll(parameter);
     }
+
+    @Override
+    public boolean resetPassword(Long studentId, String newPassword, String oldPassword) {
+        Student student = this.studentMapper.selectByPrimaryKey(studentId);
+        if (student != null && student.getStudentSecret().equals(DigestUtils.md5DigestAsHex(oldPassword.getBytes()))) {
+            student.setStudentSecret(DigestUtils.md5DigestAsHex(newPassword.getBytes()));
+            this.studentMapper.resetPassword(student);
+            return true;
+        }
+        return false;
+    }
 }

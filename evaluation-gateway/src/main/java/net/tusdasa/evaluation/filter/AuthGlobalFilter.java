@@ -5,6 +5,8 @@ import lombok.SneakyThrows;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.commons.Token;
 import net.tusdasa.evaluation.utils.JWTUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -25,6 +27,7 @@ import java.util.Map;
 @Component
 public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
+    private static final Logger LOG = LoggerFactory.getLogger(AuthGlobalFilter.class);
 
     private JWTUtils jwtUtils;
 
@@ -42,7 +45,6 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         String uri2 = "/auth/teacher";
         // 获得当前的url
         ServerHttpRequest request = exchange.getRequest();
-        System.out.println(request.getPath().value());
         if (request.getPath().value().equals(uri1) || request.getPath().value().equals(uri2)) {
             // 需要放行
             flag = true;
@@ -61,7 +63,6 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
                         // 校验成功
                         Token token = (Token) checkResult.get("token");
 
-                        System.out.println(token.toString());
                         if (!token.getRole().equals(1)) {
                             exchange.getRequest().mutate().header("workId", token.getSub()).build();
                             // 是老师 设置工号
@@ -70,8 +71,10 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
                             exchange.getRequest().mutate().header("studentId", token.getSub()).build();
                         }
                         exchange.getRequest().mutate().header("role", String.valueOf(token.getRole())).build();
-
+                        LOG.info("userId =>{} : roleId => {} : uri => {}", token.getSub(), token.getRole(), request.getPath().value());
                         flag = true;
+                    } else {
+                        LOG.info("token check failure {}", tokenString);
                     }
                 }
             }

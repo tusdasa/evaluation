@@ -11,4 +11,9 @@ public class TeacherAuthClientImpl implements TeacherAuthClient {
     public CommonResponse<Teacher> getTeacher(Integer workId, String password) {
         return new CommonResponse<Teacher>().busy();
     }
+
+    @Override
+    public CommonResponse<String> restPassword(Integer workId, String newPassword, String oldPassword) {
+        return new CommonResponse<String>().busy();
+    }
 }

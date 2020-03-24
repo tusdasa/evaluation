@@ -84,4 +84,12 @@ public class StudentController {
                                            @RequestParam(name = "size", defaultValue = "20", required = false) Integer size) {
         return new CommonResponse<Student>().ok().table(this.studentService.findAllByPage(page, size));
     }
+
+    @PutMapping("/rest/{studentId}")
+    public CommonResponse<String> restPassword(@PathVariable("studentId") Long studentId, @RequestParam("new") String newPassword, @RequestParam("old") String oldPassword) {
+        if (studentService.resetPassword(studentId, newPassword, oldPassword)) {
+            return new CommonResponse<String>().ok();
+        }
+        return new CommonResponse<String>().error();
+    }
 }

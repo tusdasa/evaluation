@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-public class DateController {
+public class AnalysisDateController {
 
     private StudentSituationDao studentSituationDao;
 
     private TeacherSituationDao teacherSituationDao;
 
-    public DateController(StudentSituationDao studentSituationDao, TeacherSituationDao teacherSituationDao) {
+    public AnalysisDateController(StudentSituationDao studentSituationDao, TeacherSituationDao teacherSituationDao) {
         this.studentSituationDao = studentSituationDao;
         this.teacherSituationDao = teacherSituationDao;
     }
@@ -42,7 +42,6 @@ public class DateController {
         if (teacherSituation != null) {
             return new CommonResponse<TeacherSituation>().ok().data(teacherSituation);
         }
-
         return new CommonResponse<TeacherSituation>().error("未找到");
 
     }

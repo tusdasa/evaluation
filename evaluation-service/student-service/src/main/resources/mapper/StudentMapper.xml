@@ -94,9 +94,9 @@
   <update id="updateByPrimaryKey" parameterType="net.tusdasa.evaluation.entity.Student">
     update `t_student`
     set student_secret = #{studentSecret,jdbcType=VARCHAR},
-      student_name = #{studentName,jdbcType=VARCHAR},
-      class_id = #{classId,jdbcType=INTEGER}
-    where student_id = #{studentClass.classId,jdbcType=BIGINT}
+        student_name   = #{studentName,jdbcType=VARCHAR},
+        class_id       = #{classId,jdbcType=INTEGER}
+    where student_id = #{studentId,jdbcType=BIGINT}
   </update>
   <select id="findAll" parameterType="java.util.Map" resultMap="StudentResultMap">
     SELECT
@@ -111,12 +111,16 @@
       t_major.major_name,
       t_department.department_id,
       t_department.department_name
-    FROM
-      t_student
-        INNER JOIN t_student_class ON t_student.class_id = t_student_class.class_id
-        INNER JOIN t_grade ON t_student_class.grade_id = t_grade.grade_id
-        INNER JOIN t_major ON t_student_class.major_id = t_major.major_id
-        INNER JOIN t_department ON t_student_class.department_id = t_department.department_id
+    FROM t_student
+           INNER JOIN t_student_class ON t_student.class_id = t_student_class.class_id
+           INNER JOIN t_grade ON t_student_class.grade_id = t_grade.grade_id
+           INNER JOIN t_major ON t_student_class.major_id = t_major.major_id
+           INNER JOIN t_department ON t_student_class.department_id = t_department.department_id
     LIMIT #{page,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
   </select>
+  <update id="resetPassword" parameterType="net.tusdasa.evaluation.entity.Student">
+    update `t_student`
+    set student_secret = #{studentSecret,jdbcType=VARCHAR}
+    where student_id = #{studentId,jdbcType=BIGINT}
+  </update>
 </mapper>

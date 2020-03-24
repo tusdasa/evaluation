@@ -3,7 +3,6 @@ package net.tusdasa.evaluation.service;
 import net.tusdasa.evaluation.entity.Student;
 import net.tusdasa.evaluation.vo.StudentRequest;
 
-import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Map;
 
@@ -19,4 +18,6 @@ public interface StudentService {
     Map<String, Object> findStudentByIdAndPassword(Long studentId, String password);
 
     List<Student> findAllByPage(Integer page, Integer size);
+
+    boolean resetPassword(Long studentId, String newPassword, String oldPassword);
 }

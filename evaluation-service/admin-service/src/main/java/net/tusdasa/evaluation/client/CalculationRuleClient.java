@@ -1,6 +1,6 @@
 package net.tusdasa.evaluation.client;
 
-import net.tusdasa.evaluation.client.impl.CalculationClientImpl;
+import net.tusdasa.evaluation.client.impl.CalculationRuleClientImpl;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.CalculationRule;
 import net.tusdasa.evaluation.entity.Evidence;
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
  * @Date: 2020-03-01 7:25 PM
  */
 
-@FeignClient(value = "evaluation-calculationrule-service", path = "/calc", fallback = CalculationClientImpl.class)
-public interface CalculationClient {
+@FeignClient(value = "evaluation-calculationrule-service", path = "/calc", fallback = CalculationRuleClientImpl.class)
+public interface CalculationRuleClient {
 
     @GetMapping("/{id}")
     CommonResponse<CalculationRule> findCalculationRuleById(@PathVariable("id") Integer id);

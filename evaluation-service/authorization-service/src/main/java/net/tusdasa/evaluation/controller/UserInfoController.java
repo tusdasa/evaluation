@@ -30,7 +30,7 @@ public class UserInfoController {
 
     @GetMapping("/studentinfo")
     public CommonResponse<UserInfo> getStudentInfo(@RequestHeader("studentId") String studentId) {
-        Student student = studentRedisTemplate.opsForValue().get(studentId.toString());
+        Student student = studentRedisTemplate.opsForValue().get(studentId);
         if (student != null) {
             UserInfo userInfo = UserInfo.builder().build().withId(studentId).withName(student.getStudentName()).withRole(1);
             return new CommonResponse<UserInfo>().ok().data(userInfo);

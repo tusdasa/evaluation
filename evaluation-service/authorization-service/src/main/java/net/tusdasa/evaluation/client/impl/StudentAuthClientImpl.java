@@ -11,4 +11,9 @@ public class StudentAuthClientImpl implements StudentAuthClient {
     public CommonResponse<Student> getStudent(Long studentId, String password) {
         return new CommonResponse<Student>().busy();
     }
+
+    @Override
+    public CommonResponse<String> restPassword(Long studentId, String newPassword, String oldPassword) {
+        return new CommonResponse<String>().busy();
+    }
 }

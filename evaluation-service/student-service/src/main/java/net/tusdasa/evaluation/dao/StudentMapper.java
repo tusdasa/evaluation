@@ -11,6 +11,8 @@ import java.util.Map;
 @Mapper
 public interface StudentMapper extends BaseDao<Student, Long> {
     List<Student> findAll(Map<String, Integer> parameter);
+
+    void resetPassword(Student request);
     /*
     List<Student> findAllByClass(Map<String, Integer> parameter);
     List<Student> findAllByDepartment(Map<String, Integer> parameter);

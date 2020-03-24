@@ -20,4 +20,6 @@ public interface TeacherService {
     Teacher findTeacherByWorldId(Integer workId);
 
     List<Teacher> findAllTeacherByRoleAndDepartment(Integer departmentId, Integer stateId, Integer roleId);
+
+    boolean restPassword(Integer workId, String newPassword, String oldPassword);
 }

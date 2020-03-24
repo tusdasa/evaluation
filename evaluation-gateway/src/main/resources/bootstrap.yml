@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
 spring:
   application:
     name: evaluation-gateway
@@ -42,22 +42,22 @@ spring:
         - id: evaluation-authorization-service
           uri: lb://evaluation-authorization-service
           predicates:
-            - Path=/auth/**,/auth/**/**
+            - Path=/auth,/auth/,/auth/**,/auth/**/**
         # 学生评价服务
         - id: evaluation-studentevaluation-service
           uri: lb://evaluation-studentevaluation-service
           predicates:
-            - Path=/sevaluation/**,/sevaluation/**/**
+            - Path=/sevaluation,/sevaluation/,/sevaluation/**,/sevaluation/**/**
         # 教师评价服务
         - id: evaluation-teacher-evaluation
           uri: lb://evaluation-teacher-evaluation
           predicates:
-            - Path=/tevaluation/**,/tevaluation/**/**
+            - Path=/tevaluation,/tevaluation/,/tevaluation/**,/tevaluation/**/**
         # 管理中心服务
         - id: evaluation-admin-service
           uri: lb://evaluation-admin-service
           predicates:
-            - Path=/admin/**,/admin/**/**,/admin/**/**/**
+            - Path=/admin,/admin/,/admin/**,/admin/**/**,/admin/**/**/**
 management:
   endpoints:
     web:

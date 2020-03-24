@@ -1,6 +1,6 @@
 package net.tusdasa.evaluation.client.impl;
 
-import net.tusdasa.evaluation.client.CalculationClient;
+import net.tusdasa.evaluation.client.CalculationRuleClient;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.CalculationRule;
 import net.tusdasa.evaluation.entity.Evidence;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class CalculationClientImpl implements CalculationClient {
+public class CalculationRuleClientImpl implements CalculationRuleClient {
     @Override
     public CommonResponse<CalculationRule> findCalculationRuleById(Integer id) {
         return new CommonResponse<CalculationRule>().busy();

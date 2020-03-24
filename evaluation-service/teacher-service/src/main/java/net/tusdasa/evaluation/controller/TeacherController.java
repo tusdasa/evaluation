@@ -93,4 +93,12 @@ public class TeacherController {
         return new CommonResponse<Teacher>().ok().table(this.teacherService.findAll(page, size));
     }
 
+    @PutMapping("/rest/{workId}")
+    public CommonResponse<String> restPassword(@PathVariable(name = "workId") Integer workId, @RequestParam("new") String newPassword, @RequestParam("old") String oldPassword) {
+        if (this.teacherService.restPassword(workId, newPassword, oldPassword)) {
+            return new CommonResponse<String>().ok();
+        }
+        return new CommonResponse<String>().error();
+    }
+
 }

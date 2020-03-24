@@ -1,5 +1,8 @@
 package net.tusdasa.evaluation.interceptor;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import net.tusdasa.evaluation.authority.Authority;
+import net.tusdasa.evaluation.commons.CommonResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -23,13 +26,14 @@ public class RoleInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        /*
         String roleId = request.getHeader("role");
-
         if (roleId != null && !roleId.equals("")) {
             if (Integer.valueOf(roleId).equals(Authority.ADMIN)) {
                 return true;
             } else {
+                if (request.getRequestURI().equals("/admin/result")) {
+                    return true;
+                }
                 ObjectMapper objectMapper = new ObjectMapper();
                 response.setHeader("Content-Type", "application/json;charset=utf8");
                 response.getWriter().print(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(new CommonResponse<String>().bad()));
@@ -41,7 +45,5 @@ public class RoleInterceptor implements HandlerInterceptor {
             response.getWriter().print(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(new CommonResponse<String>().bad()));
             return false;
         }
-         */
-        return true;
     }
 }

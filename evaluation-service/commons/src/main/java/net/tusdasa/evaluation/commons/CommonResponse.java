@@ -92,7 +92,7 @@ public class CommonResponse<Model extends Serializable> {
     }
 
     public boolean success() {
-        if (this.getCode() == CODE_TIMEOUT) {
+        if (this.getCode() == CODE_TIMEOUT || this.getCode() == CODE_ERROR) {
             return false;
         }
         return true;

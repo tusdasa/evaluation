@@ -13,4 +13,6 @@ public interface TeacherMapper extends BaseDao<Teacher, Integer> {
     List<Teacher> findAll(Map<String, Integer> parameter);
 
     List<Teacher> findAllTeacherByRoleAndDepartment(Map<String, Integer> parameter);
+
+    void restPassword(Teacher teacher);
 }
