@@ -60,6 +60,11 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <outputDirectory>
+                        ${output.jar.location}
+                    </outputDirectory>
+                </configuration>
             </plugin>
         </plugins>
     </build>
