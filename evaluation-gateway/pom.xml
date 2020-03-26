@@ -10,7 +10,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>evaluation-gateway</artifactId>
-
+    <name>Microservice-Gateway</name>
+    <description>
+        网关微服务
+    </description>
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -56,6 +59,7 @@
     </dependencies>
 
     <build>
+        <finalName>evaluation-gateway</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

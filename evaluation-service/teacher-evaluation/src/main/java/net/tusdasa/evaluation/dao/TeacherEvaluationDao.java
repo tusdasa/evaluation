@@ -42,5 +42,5 @@ public interface TeacherEvaluationDao extends MongoRepository<TeacherEvaluation,
      *
      *
      */
-
+    //List<TeacherEvaluation> findAllByEvaluatorIdAndTermId(Integer evaluatorId, Integer termId);
 }

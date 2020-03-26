@@ -27,7 +27,7 @@ public class StudentEvaluationController {
     }
 
     @GetMapping("/course")
-    public CommonResponse<Course> getAllCourse(@RequestHeader(name = "studentId") String studentId) {
+    public CommonResponse<Course> getAllCourse(@RequestHeader(name = "studentId") Long studentId) {
         return this.studentEvaluationInfoService.currentCourse(studentId);
     }
 

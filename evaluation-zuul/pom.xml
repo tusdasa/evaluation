@@ -11,7 +11,7 @@
 
     <artifactId>evaluation-zuul</artifactId>
 
-    <name>Microservice-Gateway</name>
+    <name>Microservice-Zuul</name>
 
     <description>
         教学评价系统-微服务-服务网关

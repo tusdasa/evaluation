@@ -8,6 +8,6 @@ public interface StudentEvaluationInfoService {
 
     CommonResponse<ThirdKpi> findAll(Integer role);
 
-    CommonResponse<Course> currentCourse(String studentId);
+    CommonResponse<Course> currentCourse(Long studentId);
 
 }

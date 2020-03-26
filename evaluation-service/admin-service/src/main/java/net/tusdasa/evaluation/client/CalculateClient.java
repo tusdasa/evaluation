@@ -2,7 +2,7 @@ package net.tusdasa.evaluation.client;
 
 import net.tusdasa.evaluation.client.impl.CalculateClientImpl;
 import net.tusdasa.evaluation.commons.CommonResponse;
-import net.tusdasa.evaluation.entity.Result;
+import net.tusdasa.evaluation.entity.AcademicYearResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,5 +16,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface CalculateClient {
 
     @GetMapping("/{id}")
-    CommonResponse<Result> findById(@PathVariable("id") Integer id);
+    CommonResponse<AcademicYearResult> findById(@PathVariable("id") Integer id);
 }

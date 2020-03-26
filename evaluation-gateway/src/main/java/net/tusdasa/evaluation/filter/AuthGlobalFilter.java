@@ -84,7 +84,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
             return chain.filter(exchange);
         } else {
             ObjectMapper objectMapper = new ObjectMapper();
-            byte[] infoByte = objectMapper.writeValueAsString(new CommonResponse<String>().auth("请进行身份认证")).getBytes();
+            byte[] infoByte = objectMapper.writeValueAsString(new CommonResponse<String>().auth("Please log in the server with your account and password")).getBytes();
             DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(infoByte);
             exchange.getResponse().setStatusCode(HttpStatus.OK);
             exchange.getResponse().getHeaders().add("Content-Type", "application/json;charset=utf8");

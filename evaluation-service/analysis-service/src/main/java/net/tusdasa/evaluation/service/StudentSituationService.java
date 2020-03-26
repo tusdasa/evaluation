@@ -106,22 +106,37 @@ public class StudentSituationService {
             }
         } else {
             LOG.error("calculate error service unavailable {}", studentEvaluation);
+            throw new RuntimeException("服务失败");
+        }
+        Teacher teacher = this.findTeacherById(course.getTeacherWorkId());
+
+        if (teacher == null) {
+            LOG.error("calculate error service unavailable {}", studentEvaluation);
+            throw new RuntimeException("教师服务失败");
         }
 
         FactorClasses factorClasses = this.getFactorClasses(student, studentEvaluation);
+
         if (studentSituation != null) {
+            this.updateInfo(studentSituation, teacher);
             FactorCourse factorCourse = this.getFactorCourse(course, term);
             StudentSituation ss = this.addNew(studentSituation, factorClasses, factorCourse, studentEvaluation.getTotal());
             this.studentSituationDao.save(ss);
         } else {
-            Teacher teacher = this.findTeacherById(course.getTeacherWorkId());
-            if (teacher != null) {
-                FactorCourse factorCourse = this.getFactorCourse(course, term).add(factorClasses);
-                StudentSituation situation = this.getStudentTeachingSituation(teacher).add(factorCourse);
-                this.studentSituationDao.save(situation);
-            } else {
-                LOG.error("calculate error service unavailable {}", studentEvaluation);
-            }
+            FactorCourse factorCourse = this.getFactorCourse(course, term).add(factorClasses);
+            StudentSituation situation = this.getStudentTeachingSituation(teacher).add(factorCourse);
+            this.studentSituationDao.save(situation);
+
+        }
+    }
+
+    private void updateInfo(StudentSituation studentSituation, Teacher teacher) {
+        if (!studentSituation.getDepartmentId().equals(teacher.getDepartment().getDepartmentId())) {
+            studentSituation.setDepartmentId(teacher.getDepartment().getDepartmentId());
+            studentSituation.setDepartmentName(teacher.getDepartment().getDepartmentName());
+        }
+        if (!studentSituation.getProfessionalTitle().equals(teacher.getTeacherName())) {
+            studentSituation.setProfessionalTitle(teacher.getProfessional().getProfessionalTitle());
         }
     }
 
@@ -189,5 +204,4 @@ public class StudentSituationService {
 
         return situation;
     }
-
 }

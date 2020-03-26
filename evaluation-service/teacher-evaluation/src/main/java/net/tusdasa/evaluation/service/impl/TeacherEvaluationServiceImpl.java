@@ -25,6 +25,8 @@ public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
 
     private static final Integer TEACHER_ROLE = 2;
 
+    private static final Integer TEACHER_STATE = 1;
+
     private AcademicYearClient academicYearClient;
 
     private RightClient rightClient;
@@ -51,39 +53,24 @@ public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
      */
     @Override
     public CommonResponse<ThirdKpi> findAllThirdKpi(Integer role) {
+        Term currentTerm = this.getTerm();
+        Right right1 = this.getRight(role);
 
-        CommonResponse<Term> termCommonResponse = academicYearClient.currentTerm();
+        if (currentTerm != null && right1 != null) {
+            if (right1.checkRight()) {
 
-        if (termCommonResponse.success()) {
-            CommonResponse<Right> rightCommonResponse = rightClient.findRightById(role);
-            if (rightCommonResponse.success()) {
-                Right right = rightCommonResponse.getData();
-                if (right != null && right.checkRight()) {
-                    CommonResponse<ThirdKpi> thirdKpiCommonResponse = thirdKpiClient.findAllBySecondKpiIds(new IdsRequest()
-                            .addFirstIds(right.getSecondKpiId())
-                            .addSecondIds(right.getThirdKpiId())
-                    );
-                    if (thirdKpiCommonResponse.success()) {
-                        return thirdKpiCommonResponse;
-                    } else {
-                        log.info("未得到三级指标");
-                        return new CommonResponse<ThirdKpi>().error(thirdKpiCommonResponse.getMessage());
-                    }
-                } else {
-                    return new CommonResponse<ThirdKpi>().error("您没有权限");
-                }
+                return this.getThirdKpi(
+                        new IdsRequest()
+                                .addFirstIds(right1.getSecondKpiId())
+                                .addSecondIds(right1.getThirdKpiId())
+                );
+
             } else {
-                log.info("未获得权限");
-                // 未获得权限
-                return new CommonResponse<ThirdKpi>().error(rightCommonResponse.getMessage());
+                return new CommonResponse<ThirdKpi>().bad();
             }
-
         } else {
-            log.info("未获取到当前学期");
-            // 未获取到当前学期
-            return new CommonResponse<ThirdKpi>().error(termCommonResponse.getMessage());
+            return new CommonResponse<ThirdKpi>().busy();
         }
-
     }
 
     /**
@@ -95,23 +82,47 @@ public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
     @Transactional
     @Override
     public void addTeacherEvaluation(TeacherEvaluation teacherEvaluation, Integer workId, Integer role) {
-        CommonResponse<Term> termCommonResponse = academicYearClient.currentTerm();
-        if (termCommonResponse.success()) {
-            Term term = termCommonResponse.getData();
+        Term currentTerm = this.getTerm();
+        if (currentTerm != null) {
             teacherEvaluation.setId(UUIDUtils.UUID());
             // 设置评价者工号
             teacherEvaluation.setEvaluatorId(workId);
 
-            teacherEvaluation.setTermId(term.getTermId());
+            teacherEvaluation.setTermId(currentTerm.getTermId());
             // 插入MongoDB
             teacherEvaluationDao.insert(teacherEvaluation);
-            rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_TEACHER, RabbitMQConfig.ROUTE_KEY_TEACHER, teacherEvaluation);
-
+            // 发送给分析微服务
+            rabbitTemplate.convertAndSend(
+                    RabbitMQConfig.EXCHANGE_TEACHER,
+                    RabbitMQConfig.ROUTE_KEY_TEACHER,
+                    teacherEvaluation
+            );
         }
     }
 
     @Override
     public CommonResponse<Teacher> findAllTeacher(Integer workId, Integer role) {
+        Right right = this.getRight(role);
+        Term currentTerm = this.getTerm();
+        if (right != null && currentTerm != null) {
+            Teacher teacher = this.getTeacher(workId);
+            if (teacher != null) {
+                List<Teacher> teacherList = this.getTeacherList(
+                        teacher.getDepartment().getDepartmentId()
+                );
+
+                List<Teacher> newTeacherList = this.clearTeacherList(
+                        this.teacherEvaluationDao.findAllByEvaluatorIdAndTermId(workId, currentTerm.getTermId()),
+                        teacherList
+                );
+                return new CommonResponse<Teacher>().ok().table(newTeacherList);
+            } else {
+                return new CommonResponse<Teacher>().busy();
+            }
+        } else {
+            return new CommonResponse<Teacher>().bad();
+        }
+/*
         CommonResponse<Right> rightCommonResponse = rightClient.findRightById(role);
         if (rightCommonResponse.success() && rightCommonResponse.getData() == null && rightCommonResponse.getData().checkRight()) {
             return new CommonResponse<Teacher>().error("您没有权限");
@@ -125,7 +136,7 @@ public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
                         teacher.getState().getStateId()
                 );
                 if (teacherCommonResponse.success()) {
-                    List<Teacher> teacherList = this.clear(this.teacherEvaluationDao.findAllByEvaluatorId(workId), teacherCommonResponse.getTable());
+                    List<Teacher> teacherList = this.clear(this.teacherEvaluationDao.findAllByEvaluatorIdAndTermId(workId, ), teacherCommonResponse.getTable());
                     return new CommonResponse<Teacher>().ok().table(teacherList);
                 } else {
                     return new CommonResponse<Teacher>().error(teacherCommonResponse.getMessage());
@@ -134,10 +145,11 @@ public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
                 return new CommonResponse<Teacher>().error(teacherResponse.getMessage());
             }
         }
+ */
     }
 
-    private List<Teacher> clear(List<TeacherEvaluation> teacherEvaluationList, List<Teacher> teacherList) {
-        if (teacherEvaluationList == null && teacherEvaluationList.isEmpty()) {
+    private List<Teacher> clearTeacherList(List<TeacherEvaluation> teacherEvaluationList, List<Teacher> teacherList) {
+        if (teacherEvaluationList == null || teacherEvaluationList.isEmpty()) {
             return teacherList;
         } else {
             List<Teacher> newTeacherList = new ArrayList<>(teacherList.size() - teacherEvaluationList.size() + 1);
@@ -147,7 +159,7 @@ public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
                 Teacher t = teacherList.get(i);
                 for (; j < teacherEvaluationList.size(); j++) {
                     TeacherEvaluation teacherEvaluation = teacherEvaluationList.get(j);
-                    if (teacherEvaluation.getWorkId().intValue() == t.getWorkId().intValue()) {
+                    if (teacherEvaluation.getWorkId().equals(t.getWorkId())) {
                         flag = true;
                         break;
                     }
@@ -161,5 +173,42 @@ public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
             return newTeacherList;
         }
     }
+
+    private Right getRight(Integer role) {
+        CommonResponse<Right> rightCommonResponse = rightClient.findRightById(role);
+        if (rightCommonResponse.success()) {
+            return rightCommonResponse.getData();
+        }
+        return null;
+    }
+
+    private Term getTerm() {
+        CommonResponse<Term> termCommonResponse = academicYearClient.currentTerm();
+        if (termCommonResponse.success()) {
+            return termCommonResponse.getData();
+        }
+        return null;
+    }
+
+    private CommonResponse<ThirdKpi> getThirdKpi(IdsRequest request) {
+        return this.thirdKpiClient.findAllBySecondKpiIds(request);
+    }
+
+    private Teacher getTeacher(Integer wordId) {
+        CommonResponse<Teacher> teacherCommonResponse = rightClient.checkTeacher(wordId);
+        if (teacherCommonResponse.success()) {
+            return teacherCommonResponse.getData();
+        }
+        return null;
+    }
+
+    private List<Teacher> getTeacherList(Integer departmentId) {
+        CommonResponse<Teacher> teacherCommonResponse = this.teacherClient.findTeacher(departmentId, TEACHER_ROLE, TEACHER_STATE);
+        if (teacherCommonResponse.success()) {
+            return teacherCommonResponse.getTable();
+        }
+        return null;
+    }
+
 
 }

@@ -26,6 +26,9 @@ public class StudentSituation implements Serializable {
     // 教师的部门
     private String departmentName;
 
+    // 教师的部门id
+    private Integer departmentId;
+
     // 教师的职称
     private String professionalTitle;
 
@@ -43,6 +46,7 @@ public class StudentSituation implements Serializable {
         this.teacherName = teacher.getTeacherName();
         this.departmentName = teacher.getDepartment().getDepartmentName();
         this.professionalTitle = teacher.getProfessional().getProfessionalTitle();
+        this.departmentId = teacher.getDepartment().getDepartmentId();
     }
 
     public StudentSituation add(FactorCourse course) {
@@ -103,4 +107,11 @@ public class StudentSituation implements Serializable {
         this.factorCourseList = factorCourseList;
     }
 
+    public Integer getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
+    }
 }

@@ -40,4 +40,9 @@ public class StudentEvaluationServiceImpl implements StudentEvaluationService {
         return studentEvaluationDao.findAllByStudentId(studentId);
     }
 
+    @Override
+    public List<StudentEvaluation> findAllByStudentIdAndAndTermId(Long studentId, Integer termId) {
+        return studentEvaluationDao.findAllByStudentIdAndAndTermId(studentId, termId);
+    }
+
 }

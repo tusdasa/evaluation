@@ -2,14 +2,9 @@ package net.tusdasa.evaluation.service;
 
 import mathutils.MathUtils;
 import mathutils.array.MathArrayUtils;
-import mathutils.sorts.QuickSort;
-import net.tusdasa.evaluation.client.AcademicYearClient;
-import net.tusdasa.evaluation.client.AnalysisClient;
-import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.*;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -23,119 +18,53 @@ import java.util.stream.Collectors;
 @Service
 public class TeacherResultService {
 
-    private AnalysisClient analysisClient;
-
     private MathUtils mathUtils;
 
-    private AcademicYearClient academicYearClient;
-
-    private double PERCENTAGE = 0.1D;
-
-    public TeacherResultService(AnalysisClient analysisClient, MathUtils mathUtils, AcademicYearClient academicYearClient) {
-        this.analysisClient = analysisClient;
+    public TeacherResultService(MathUtils mathUtils) {
         this.mathUtils = mathUtils;
-        this.academicYearClient = academicYearClient;
     }
 
-    // 获得学生评价结果
-    private StudentSituation getStudentSituation(Integer id) {
-        CommonResponse<StudentSituation> situationCommonResponse = this.analysisClient.findStudentSituationById(id);
-        if (situationCommonResponse.success()) {
-            return situationCommonResponse.getData();
-        }
-        return null;
-    }
-
-    // 获得教师评价结果
-    private TeacherSituation getTeacherSituation(Integer id) {
-        CommonResponse<TeacherSituation> situationCommonResponse = this.analysisClient.findTeacherSituation(id);
-        if (situationCommonResponse.success()) {
-            return situationCommonResponse.getData();
-        }
-        return null;
-    }
-
-    // 获得当前学年
-    private AcademicYear getCurrentAcademicYear() {
-        CommonResponse<AcademicYear> commonResponse = this.academicYearClient.current();
-        if (commonResponse.success()) {
-            return commonResponse.getData();
-        }
-        return null;
-    }
-
-     /*
-        // 取教师信息
-        this.getTeacherScore(id);
-        StudentSituation studentSituation = this.getStudentSituation(id);
-        List<Integer> all = new LinkedList<>();
-        if (studentSituation != null) {
-            // 每门课程平均分 大小为课程列表大小
-            double[] courseMean = new double[studentSituation.getFactorCourseList().size()];
-            // 取课程
-            List<FactorCourse> factorCourseList = studentSituation.getFactorCourseList();
-            int j = 0;
-            // 遍历课程
-            for (FactorCourse factorCourse : factorCourseList) {
-                // 取这一门课程上课的所有班级
-                List<FactorClasses> factorClassesList = factorCourse.getClassesList();
-                // 保存每个班级的平均分
-                double[] classMean = new double[factorCourse.getClassesList().size()];
-                int i = 0;
-                for (FactorClasses factorClasses : factorClassesList) {
-                    // 取出班级所有学生的学生评价成绩
-                    double[] allStudentScore = MathArrayUtils.ListIntegerToArray(factorClasses.getTotalList());
-                    all.addAll(factorClasses.getTotalList());
-                    // 快速排序 默认升序 无影响
-                    QuickSort.quickSort(allStudentScore, allStudentScore.length);
-                    // 除去前后10%的成绩
-                    double[] re_classMean = MathArrayUtils.getArrayFrontAndBack(allStudentScore, PERCENTAGE);
-                    // 计算评价分添加到班级评价分
-                    classMean[i++] = mathUtils.meanNumber(re_classMean);
-                }
-                // 计算完该门课程所有的班级平均分
-                // 求所有班级的平均分的平均分
-                courseMean[j++] = mathUtils.meanNumber(classMean);
-            }
-            // 计算每门课程平均分的平均分
-            Result result = this.generateResult(studentSituation,
-                    // 计算所有学生给出的评价中的众数 只取第一个
-                    mathUtils.modeNumber(MathArrayUtils.ListIntegerToArray(all))[0],
-                    // 计算所有学生给出的评价中的标准差
-                    mathUtils.standardDeviationNumber(MathArrayUtils.ListIntegerToArray(all)),
-                    // 去头去尾10% 的成绩的平均数
-                    mathUtils.meanNumber(courseMean)
-                    );
-            System.out.println(result.toString());
-            return result;
-        } else {
+    public AcademicYearResult getTeacherResult(AcademicYearResult academicYearResult, TeacherSituation teacherSituation, AcademicYear academicYear) {
+        if (academicYearResult == null) {
             return null;
         }
-        */
+        // 获取教师评价
+        List<FactorTeacher> factorTeacherList = teacherSituation.getFactorTeacherList();
 
-    // 返回结果
-    public Result getScore(Integer id) {
-        StudentSituation studentSituation = this.getStudentSituation(id);
-        TeacherSituation teacherSituation = this.getTeacherSituation(id);
-        AcademicYear academicYear = this.getCurrentAcademicYear();
-
-        if (studentSituation != null && teacherSituation != null && academicYear != null) {
-            double[] studentScore = this.getStudentScore(studentSituation, academicYear);
-            double teacherScore = this.getTeacherScore(teacherSituation, academicYear);
-            return this.generateResult(studentSituation, studentScore, teacherScore, academicYear);
+        if (factorTeacherList != null && !factorTeacherList.isEmpty() && academicYearResult != null) {
+            // 第一学期成绩
+            TermResult startTermResult = academicYearResult.getFirstTerm();
+            // 第二学期成绩
+            TermResult endTermResult = academicYearResult.getSecondTerm();
+            // 遍历
+            for (FactorTeacher factorTeacher : factorTeacherList) {
+                // 第一学期
+                if (factorTeacher.getTermId().equals(startTermResult.getTermId())) {
+                    // 取所有评价 计算
+                    startTermResult.setTeacherScore(this.getMapScore(factorTeacher.getScoreList()));
+                }
+                // 第二学期
+                if (factorTeacher.getTermId().equals(endTermResult.getTermId())) {
+                    // 取所有评价 计算
+                    endTermResult.setTeacherScore(this.getMapScore(factorTeacher.getScoreList()));
+                }
+            }
         }
-        return null;
+        academicYearResult.setTeacherScore(mathUtils.meanNumber(new double[]{
+                academicYearResult.getFirstTerm().getTeacherResult(),
+                academicYearResult.getSecondTerm().getTeacherResult()
+        }));
+        academicYearResult.setStudentScore(mathUtils.meanNumber(new double[]{
+                academicYearResult.getFirstTerm().getStudentResult(),
+                academicYearResult.getSecondTerm().getStudentResult()
+        }));
+        academicYearResult.setTotal(
+                academicYearResult.getTeacherScore() +
+                        10 * academicYearResult.getStudentScore()
+        );
+        return academicYearResult;
     }
 
-    private Result generateResult(StudentSituation studentSituation, double[] studentScore, double teacherScore, AcademicYear academicYear) {
-        Result result = new Result(studentScore, teacherScore);
-        result.setAcademicYearName(academicYear.getAcademicYearName());
-        result.setDepartmentName(studentSituation.getDepartmentName());
-        result.setId(studentSituation.getId());
-        result.setProfessionalTitle(studentSituation.getProfessionalTitle());
-        result.setTeacherName(studentSituation.getTeacherName());
-        return result;
-    }
 
     private Integer getMapValue(Map<String, Integer> map) {
         Set<String> keySet = map.keySet();
@@ -143,14 +72,47 @@ public class TeacherResultService {
         return map.get(keys[0]);
     }
 
+    private double getMapScore(List<Map<String, Integer>> mapList) {
+        // lambda表达式 转化为集合 getMapValue 取成绩
+        List<Integer> allTeacherScore = mapList.stream()
+                .map(this::getMapValue)
+                .collect(Collectors.toList());
+        // 返回成绩
+        return mathUtils.meanNumber(MathArrayUtils.ListIntegerToArray(allTeacherScore));
+    }
+
+    /*
     // 此方法计算教学督导
     private double getTeacherScore(TeacherSituation teacherSituation, AcademicYear academicYear) {
         List<FactorTeacher> factorTeacherList = teacherSituation.getFactorTeacherList();
-        Term startTerm = academicYear.getStartTerm();
-        Term endTerm = academicYear.getEndTerm();
+        // 第一学期
+        Term start = academicYear.getStartTerm();
+        // 第二学期
+        Term end = academicYear.getEndTerm();
         double[] sum = new double[4];
         int i = 0;
         for (FactorTeacher factorTeacher : factorTeacherList) {
+
+            if (factorTeacher.getTermId().equals(start.getTermId())){
+                // 第一学期
+                // 取所有评价
+                List<Map<String, Integer>> mapList = factorTeacher.getScoreList();
+                // 转化为数组
+                List<Integer> allTeacher = mapList.stream().map(this::getMapValue).collect(Collectors.toList());
+                // 转换为double[] 并求平均数
+                sum[i++] = mathUtils.meanNumber(MathArrayUtils.ListIntegerToArray(allTeacher));
+            }
+
+            if (factorTeacher.getTermId().equals(end.getTermId())){
+                // 第二学期
+                // 取所有评价
+                List<Map<String, Integer>> mapList = factorTeacher.getScoreList();
+                // 转化为数组
+                List<Integer> allTeacher = mapList.stream().map(this::getMapValue).collect(Collectors.toList());
+                // 转换为double[] 并求平均数
+                sum[i++] = mathUtils.meanNumber(MathArrayUtils.ListIntegerToArray(allTeacher));
+            }
+
             if (factorTeacher.getTermId().equals(startTerm.getTermId()) || factorTeacher.getTermId().equals(endTerm.getTermId())) {
                 // 取所有评价
                 List<Map<String, Integer>> mapList = factorTeacher.getScoreList();
@@ -160,11 +122,10 @@ public class TeacherResultService {
                 //sum[i++] = mathUtils.sumNumber(MathArrayUtils.ListIntegerToArray(allTeacher));
                 sum[i++] = mathUtils.meanNumber(MathArrayUtils.ListIntegerToArray(allTeacher));
             }
+
         }
 
         return mathUtils.meanNumber(sum);
-
-        /*
         // 取所有评价
         List<Map<String, Integer>> mapList =
         // 转化为数组
@@ -183,8 +144,11 @@ public class TeacherResultService {
         // return doubles;
     }
 
+/*
     // 这个方法会计算学生成绩
     private double[] getStudentScore(StudentSituation studentSituation, AcademicYear academicYear) {
+        Term startTerm = academicYear.getStartTerm();
+        Term endTerm = academicYear.getEndTerm();
         int MEAN_SIZE = studentSituation.getFactorCourseList().size();
         int j = 0;
         // 保存所有学生的成绩
@@ -195,25 +159,27 @@ public class TeacherResultService {
         List<FactorCourse> factorCourseList = studentSituation.getFactorCourseList();
         // 遍历课程
         for (FactorCourse factorCourse : factorCourseList) {
-            // 取这一门课程上课的所有班级
-            List<FactorClasses> factorClassesList = factorCourse.getClassesList();
-            // 保存每个班级的平均分
-            double[] classMean = new double[factorCourse.getClassesList().size()];
-            int i = 0;
-            for (FactorClasses factorClasses : factorClassesList) {
-                // 取出班级所有学生的学生评价成绩
-                double[] allStudentScore = MathArrayUtils.ListIntegerToArray(factorClasses.getTotalList());
-                All.addAll(factorClasses.getTotalList());
-                // 快速排序 默认升序 无影响
-                QuickSort.quickSort(allStudentScore, allStudentScore.length);
-                // 除去前后10%的成绩
-                double[] re_classMean = MathArrayUtils.getArrayFrontAndBack(allStudentScore, PERCENTAGE);
-                // 计算评价分添加到班级评价分
-                classMean[i++] = mathUtils.meanNumber(re_classMean);
+            if (factorCourse.getTermId().equals(startTerm.getTermId()) || factorCourse.getTermId().equals(endTerm.getTermId())) {
+                // 取这一门课程上课的所有班级
+                List<FactorClasses> factorClassesList = factorCourse.getClassesList();
+                // 保存每个班级的平均分
+                double[] classMean = new double[factorCourse.getClassesList().size()];
+                int i = 0;
+                for (FactorClasses factorClasses : factorClassesList) {
+                    // 取出班级所有学生的学生评价成绩
+                    double[] allStudentScore = MathArrayUtils.ListIntegerToArray(factorClasses.getTotalList());
+                    All.addAll(factorClasses.getTotalList());
+                    // 快速排序 默认升序 无影响
+                    QuickSort.quickSort(allStudentScore, allStudentScore.length);
+                    // 除去前后10%的成绩
+                    double[] re_classMean = MathArrayUtils.getArrayFrontAndBack(allStudentScore, PERCENTAGE);
+                    // 计算评价分添加到班级评价分
+                    classMean[i++] = mathUtils.meanNumber(re_classMean);
+                }
+                // 计算完该门课程所有的班级平均分
+                // 求所有班级的平均分的平均分
+                courseMean[j++] = mathUtils.meanNumber(classMean);
             }
-            // 计算完该门课程所有的班级平均分
-            // 求所有班级的平均分的平均分
-            courseMean[j++] = mathUtils.meanNumber(classMean);
         }
         double[] doubles = new double[3];
         // 计算所有学生给出的评价中的众数 只取第一个
@@ -224,6 +190,5 @@ public class TeacherResultService {
         doubles[2] = mathUtils.meanNumber(courseMean);
         return doubles;
     }
-
-
 }
+*/

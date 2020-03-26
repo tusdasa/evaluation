@@ -86,13 +86,13 @@ public class StudentEvaluationInfoServiceImpl implements StudentEvaluationInfoSe
     }
 
     @Override
-    public CommonResponse<Course> currentCourse(String studentId) {
+    public CommonResponse<Course> currentCourse(Long studentId) {
         CommonResponse<Student> studentCommonResponse = this.getStudent(studentId);
         if (studentCommonResponse.success()) {
             CommonResponse<Term> termCommonResponse = this.getTerm();
             if (termCommonResponse.success()) {
                 CommonResponse<Course> courseCommonResponse = courseClient.findCourseByClassIdAndTermId(studentCommonResponse.getData().getStudentClass().getClassId(), termCommonResponse.getData().getTermId());
-                List<Course> courseList = this.checkAllCourse(courseCommonResponse.getTable(), this.getStudentCourseResult(studentId));
+                List<Course> courseList = this.checkAllCourse(courseCommonResponse.getTable(), this.getStudentCourseResult(studentId, termCommonResponse.getData().getTermId()));
                 if (courseList != null) {
                     return new CommonResponse<Course>().ok().table(courseList);
                 } else {
@@ -111,8 +111,8 @@ public class StudentEvaluationInfoServiceImpl implements StudentEvaluationInfoSe
     /**
      * 获取学生信息
      */
-    private CommonResponse<Student> getStudent(String studentId) {
-        return this.rightClient.checkStudent(studentId);
+    private CommonResponse<Student> getStudent(Long studentId) {
+        return this.rightClient.checkStudent(String.valueOf(studentId));
     }
 
     /**
@@ -125,8 +125,8 @@ public class StudentEvaluationInfoServiceImpl implements StudentEvaluationInfoSe
     /**
      * 获取学生已评价课程
      */
-    private List<StudentEvaluation> getStudentCourseResult(String studentId) {
-        return this.studentEvaluationService.findBydStudentId(Long.valueOf(studentId));
+    private List<StudentEvaluation> getStudentCourseResult(Long studentId, Integer termId) {
+        return this.studentEvaluationService.findAllByStudentIdAndAndTermId(studentId, termId);
     }
 
     private List<Course> checkAllCourse(List<Course> courseList, List<StudentEvaluation> studentEvaluationList) {

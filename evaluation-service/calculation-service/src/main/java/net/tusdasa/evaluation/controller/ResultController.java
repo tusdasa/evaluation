@@ -1,8 +1,8 @@
 package net.tusdasa.evaluation.controller;
 
 import net.tusdasa.evaluation.commons.CommonResponse;
-import net.tusdasa.evaluation.entity.Result;
-import net.tusdasa.evaluation.service.TeacherResultService;
+import net.tusdasa.evaluation.entity.AcademicYearResult;
+import net.tusdasa.evaluation.service.CalculateResultService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,20 +15,28 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ResultController {
 
-    private TeacherResultService teacherResultService;
+    private CalculateResultService calculateResultService;
 
-    public ResultController(TeacherResultService teacherResultService) {
-        this.teacherResultService = teacherResultService;
+    public ResultController(CalculateResultService calculateResultService) {
+        this.calculateResultService = calculateResultService;
     }
 
-    @GetMapping("/{id}")
-    public CommonResponse<Result> findById(@PathVariable("id") Integer id) {
-        //return this.analysisClient.findStudentSituationById(id);
-        Result result = this.teacherResultService.getScore(id);
+    @GetMapping("/{workId}")
+    public CommonResponse<AcademicYearResult> findById(@PathVariable("workId") Integer id) {
+        AcademicYearResult result = this.calculateResultService.getAcademicYearResult(id);
         if (result != null) {
-            return new CommonResponse<Result>().ok().data(result);
+            return new CommonResponse<AcademicYearResult>().ok().data(result);
         }
-        return new CommonResponse<Result>().error("未找到");
+        return new CommonResponse<AcademicYearResult>().error("未找到");
+    }
+
+    @GetMapping("/{academicYearId}/{workId}")
+    public CommonResponse<AcademicYearResult> findByIdAndAcademic(@PathVariable("academicYearId") Integer academicYearId, @PathVariable("workId") Integer id) {
+        AcademicYearResult result = this.calculateResultService.getAcademicYearResultByAcademicYear(id, academicYearId);
+        if (result != null) {
+            return new CommonResponse<AcademicYearResult>().ok().data(result);
+        }
+        return new CommonResponse<AcademicYearResult>().error("未找到");
     }
 
 }

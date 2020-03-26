@@ -4,7 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @ToString
@@ -39,7 +39,7 @@ public class FactorClasses implements Serializable {
     private Double averageScore = 0.0;
 
     // 总分列表
-    private List<Integer> totalList = new ArrayList<>(50);
+    private List<Integer> totalList = new LinkedList<>();
 
 
     public FactorClasses() {
@@ -124,4 +124,5 @@ public class FactorClasses implements Serializable {
     public void setTotalList(List<Integer> totalList) {
         this.totalList = totalList;
     }
+
 }

@@ -9,4 +9,6 @@ public interface StudentEvaluationService {
     void addStudentCourseResult(StudentEvaluation studentEvaluation, Long studentId);
 
     List<StudentEvaluation> findBydStudentId(Long studentId);
+
+    List<StudentEvaluation> findAllByStudentIdAndAndTermId(Long studentId, Integer termId);
 }

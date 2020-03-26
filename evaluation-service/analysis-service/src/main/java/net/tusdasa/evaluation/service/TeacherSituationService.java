@@ -72,7 +72,7 @@ public class TeacherSituationService {
 
         if (evaluator == null || term == null) {
             LOG.error("service unavailable");
-            return;
+            throw new RuntimeException("服务异常");
         }
 
         if (optional.isPresent()) {
@@ -101,7 +101,7 @@ public class TeacherSituationService {
             Teacher teacher = this.findTeacherById(teacherEvaluation.getWorkId());
             if (teacher == null) {
                 LOG.error("service unavailable");
-                return;
+                throw new RuntimeException("服务异常");
             }
             TeacherSituation teacherSituation = this.getTeacherSituation(teacher);
             FactorTeacher factorTeacher = new FactorTeacher(term);
@@ -116,6 +116,7 @@ public class TeacherSituationService {
         teacherSituation.setTeacherName(teacher.getTeacherName());
         teacherSituation.setId(teacher.getWorkId());
         teacherSituation.setDepartmentName(teacher.getDepartment().getDepartmentName());
+        teacherSituation.setDepartmentId(teacher.getDepartment().getDepartmentId());
         return teacherSituation;
     }
 

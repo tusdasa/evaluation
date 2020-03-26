@@ -11,6 +11,7 @@
 
     <artifactId>mathutils</artifactId>
     <version>1.0</version>
+    <name>MathUtils</name>
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
         <dependency>
