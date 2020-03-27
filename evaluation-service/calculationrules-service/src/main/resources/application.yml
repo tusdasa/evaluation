@@ -34,9 +34,15 @@ spring:
       port: 8500
       discovery:
         health-check-path: /calc/actuator/health
+        tags: management.context-path=/calc/actuator
 #eureka:
 #  client:
 #    service-url:
 #      defaultZone: http://tusdasa:8000/eureka/
 mybatis:
   config-location: classpath:myBatisConfig.xml
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

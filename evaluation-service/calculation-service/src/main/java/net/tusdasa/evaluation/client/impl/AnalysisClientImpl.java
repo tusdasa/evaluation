@@ -23,7 +23,7 @@ public class AnalysisClientImpl implements AnalysisClient {
     }
 
     @Override
-    public CommonResponse<TeacherSituation> findTeacherSituation(Integer id) {
+    public CommonResponse<TeacherSituation> findTeacherSituationById(Integer id) {
         return new CommonResponse<TeacherSituation>().busy();
     }
 }

@@ -5,10 +5,13 @@ import net.tusdasa.evaluation.dao.StudentSituationDao;
 import net.tusdasa.evaluation.dao.TeacherSituationDao;
 import net.tusdasa.evaluation.entity.StudentSituation;
 import net.tusdasa.evaluation.entity.TeacherSituation;
+import net.tusdasa.evaluation.vo.IdsRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -38,7 +41,7 @@ public class AnalysisDateController {
     }
 
     @GetMapping("teacher/{id}")
-    public CommonResponse<TeacherSituation> findTeacherSituation(@PathVariable("id") Integer id) {
+    public CommonResponse<TeacherSituation> findTeacherSituationById(@PathVariable("id") Integer id) {
         TeacherSituation teacherSituation = teacherSituationDao.findById(id).orElse(null);
 
         if (teacherSituation != null) {
@@ -51,6 +54,23 @@ public class AnalysisDateController {
     public CommonResponse<StudentSituation> findStudentSituationByDepartment(@PathVariable("id") Integer id) {
         List<StudentSituation> studentSituation = studentSituationDao.findAllByDepartmentId(id);
         return new CommonResponse<StudentSituation>().ok().table(studentSituation);
+    }
+
+    @GetMapping("student/ids")
+    public CommonResponse<StudentSituation> findStudentSituationByIds(@RequestBody IdsRequest idsRequest) {
+        Iterable<StudentSituation> iterable = studentSituationDao.findAllById(idsRequest.getFirstIds());
+        List<StudentSituation> studentSituationList = new LinkedList<>();
+        iterable.forEach(studentSituationList::add);
+        return new CommonResponse<StudentSituation>().ok().table(studentSituationList);
+    }
+
+    @GetMapping("teacher/ids")
+    public CommonResponse<TeacherSituation> findTeacherSituationByIds(@RequestBody IdsRequest idsRequest) {
+
+        Iterable<TeacherSituation> iterable = teacherSituationDao.findAllById(idsRequest.getFirstIds());
+        List<TeacherSituation> teacherSituationList = new LinkedList<>();
+        iterable.forEach(teacherSituationList::add);
+        return new CommonResponse<TeacherSituation>().ok().table(teacherSituationList);
     }
 /*
     @PutMapping("up")

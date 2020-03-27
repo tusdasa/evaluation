@@ -25,6 +25,7 @@ spring:
         health-check-path: /firstkpi/actuator/health
         health-check-timeout: 15s
         health-check-critical-timeout: 30s
+        tags: management.context-path=/firstkpi/actuator
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss:SSS
     time-zone: GMT+8
@@ -43,3 +44,8 @@ spring:
 #      defaultZone: http://tusdasa:8000/eureka/
 mybatis:
   config-location: classpath:myBatisConfig.xml
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

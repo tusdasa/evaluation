@@ -20,5 +20,5 @@ public interface AnalysisClient {
     CommonResponse<StudentSituation> findStudentSituationById(@PathVariable("id") Integer id);
 
     @GetMapping("teacher/{id}")
-    CommonResponse<TeacherSituation> findTeacherSituation(@PathVariable("id") Integer id);
+    CommonResponse<TeacherSituation> findTeacherSituationById(@PathVariable("id") Integer id);
 }

@@ -25,6 +25,7 @@ spring:
       port: 8500
       discovery:
         health-check-path: /secondkpi/actuator/health
+        tags: management.context-path=/secondkpi/actuator
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss:SSS
     time-zone: GMT+8
@@ -34,3 +35,8 @@ spring:
 #      defaultZone: http://tusdasa:8000/eureka/
 mybatis:
   config-location: classpath:myBatisConfig.xml
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

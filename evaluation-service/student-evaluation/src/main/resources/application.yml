@@ -20,6 +20,7 @@ spring:
       port: 8500
       discovery:
         health-check-path: /sevaluation/actuator/health
+        tags: management.context-path=/sevaluation/actuator
   rabbitmq:
     host: 127.0.0.1
     port: 5672
@@ -37,3 +38,8 @@ feign:
     enabled: true
   okhttp:
     enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

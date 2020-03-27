@@ -17,6 +17,7 @@ spring:
       port: 8500
       discovery:
         health-check-path: /tevaluation/actuator/health
+        tags: management.context-path=/tevaluation/actuator
   data:
     mongodb:
       uri: mongodb://127.0.0.1:27017/evaluation
@@ -34,6 +35,11 @@ spring:
 #      defaultZone: http://tusdasa:8000/eureka/
 feign:
   hystrix:
-    enabled: false
+    enabled: true
   okhttp:
     enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

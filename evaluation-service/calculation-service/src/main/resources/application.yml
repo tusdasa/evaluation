@@ -14,6 +14,7 @@ spring:
       port: 8500
       discovery:
         health-check-path: /calulation/actuator/health
+        tags: management.context-path=/calulation/actuator
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss:SSS
     time-zone: GMT+8
@@ -29,3 +30,8 @@ feign:
     enabled: true
   okhttp:
     enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

@@ -18,6 +18,8 @@ spring:
         prefix: config
         data-key: data
         default-context: evaluation-gateway-service
+      discovery:
+        tags: user.name=admin,user.password=admin1
     gateway:
       httpclient:
         connect-timeout: 6000
@@ -44,6 +46,7 @@ spring:
           predicates:
             - Path=/auth,/auth/,/auth/**,/auth/**/**
           filters:
+            # 熔断
             - name: Hystrix
               args:
                 name: fallback
@@ -82,7 +85,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: health, info
 hystrix:
   command:
     default:
@@ -92,9 +95,6 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 100000
-logging:
-  level:
-    root: info
 
 auth:
   secret: 9O2B+amfn52nzowCysmC7+hfuA0q9xvxcgLU1UDVYwM=

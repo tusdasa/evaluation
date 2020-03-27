@@ -5,6 +5,10 @@ server:
 spring:
   application:
     name: evaluation-authorization-service
+    admin:
+      enabled: true
+      client:
+        url: evaluation-operations
   profiles:
     active: dev
   jackson:
@@ -30,6 +34,7 @@ spring:
       port: 8500
       discovery:
         health-check-path: /auth/actuator/health
+        tags: management.context-path=/auth/actuator
       config:
         enabled: true
         format: yaml
@@ -37,6 +42,11 @@ spring:
         data-key: data
         # config/evaluation-authorization-service,dev/data
         default-context: evaluation-authorization-service
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 #    config:
 #      uri: http://localhost:7023/config/
 #eureka:

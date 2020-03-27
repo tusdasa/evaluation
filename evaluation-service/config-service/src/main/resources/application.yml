@@ -18,7 +18,8 @@ spring:
       host: 127.0.0.1
       port: 8500
       discovery:
-        health-check-path: /class/actuator/health
+        health-check-path: /config/actuator/health
+        tags: management.context-path=/config/actuator
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss:SSS
     time-zone: GMT+8
@@ -26,3 +27,8 @@ spring:
 #  client:
 #    service-url:
 #      defaultZone: http://tusdasa:8000/eureka/
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

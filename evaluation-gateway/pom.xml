@@ -59,11 +59,18 @@
     </dependencies>
 
     <build>
-        <finalName>evaluation-gateway</finalName>
+        <finalName>evaluation-gateway-service</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build-info</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
                     <outputDirectory>
                         ${output.jar.location}

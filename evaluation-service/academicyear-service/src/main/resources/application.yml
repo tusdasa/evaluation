@@ -26,6 +26,7 @@ spring:
       port: 8500
       discovery:
         health-check-path: /academic/actuator/health
+        tags: management.context-path=/academic/actuator
   redis:
     host: 127.0.0.1
     port: 6379
@@ -40,3 +41,8 @@ spring:
 #      defaultZone: http://tusdasa:8000/eureka/
 mybatis:
   config-location: classpath:myBatisConfig.xml
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

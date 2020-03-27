@@ -24,6 +24,12 @@ public class TeacherResultService {
         this.mathUtils = mathUtils;
     }
 
+    /**
+     * @param academicYearResult 学年成绩
+     * @param teacherSituation   教学督导评价
+     * @param academicYear       当前学年
+     * @return
+     */
     public AcademicYearResult getTeacherResult(AcademicYearResult academicYearResult, TeacherSituation teacherSituation, AcademicYear academicYear) {
         if (academicYearResult == null) {
             return null;
@@ -31,7 +37,7 @@ public class TeacherResultService {
         // 获取教师评价
         List<FactorTeacher> factorTeacherList = teacherSituation.getFactorTeacherList();
 
-        if (factorTeacherList != null && !factorTeacherList.isEmpty() && academicYearResult != null) {
+        if (factorTeacherList != null && !factorTeacherList.isEmpty()) {
             // 第一学期成绩
             TermResult startTermResult = academicYearResult.getFirstTerm();
             // 第二学期成绩

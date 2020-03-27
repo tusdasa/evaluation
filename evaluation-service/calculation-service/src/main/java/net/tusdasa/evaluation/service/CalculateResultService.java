@@ -9,6 +9,8 @@ import net.tusdasa.evaluation.entity.StudentSituation;
 import net.tusdasa.evaluation.entity.TeacherSituation;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 /**
  * @Author: tusdasa
  * @Date: 2020-03-25 9:06 PM
@@ -55,6 +57,10 @@ public class CalculateResultService {
 
     }
 
+    public AcademicYearResult getAcademicYearResultByIds(ArrayList<Integer> ids) {
+        return null;
+    }
+
     public AcademicYearResult getAcademicYearResultByAcademicYear(Integer workId, Integer academicYearId) {
         AcademicYear academicYear = this.getAcademicYearById(academicYearId);
 
@@ -86,7 +92,7 @@ public class CalculateResultService {
 
     // 获得教师评价结果
     private TeacherSituation getTeacherSituation(Integer id) {
-        CommonResponse<TeacherSituation> situationCommonResponse = this.analysisClient.findTeacherSituation(id);
+        CommonResponse<TeacherSituation> situationCommonResponse = this.analysisClient.findTeacherSituationById(id);
         if (situationCommonResponse.success()) {
             return situationCommonResponse.getData();
         }

@@ -45,7 +45,7 @@ public class StudentController {
      * "gradeId": 1,
      * "majorId": 1,
      * "studentId": 1810212128,
-     * "studentName": "爸爸",
+     * "studentName": "二维",
      * "studentSecret": "12345678"
      * }
      */
@@ -63,7 +63,7 @@ public class StudentController {
      * "gradeId": 1,
      * "majorId": 1,
      * "studentId": 1810212128,
-     * "studentName": "爸爸",
+     * "studentName": "问问",
      * "studentSecret": "12345678"
      * }
      */
