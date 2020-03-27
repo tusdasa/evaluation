@@ -1,7 +1,7 @@
 package net.tusdasa.evaluation.filter;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.SneakyThrows;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.commons.Token;
 import net.tusdasa.evaluation.utils.JWTUtils;
@@ -35,9 +35,15 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         this.jwtUtils = jwtUtils;
     }
 
-    @SneakyThrows
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        String[] msg = new String[]{
+                "Please log in the server with your account and password",
+                "Token is empty",
+                "Token verify failure"
+        };
+        // 默认返回的消息msg[0]
+        int msgIndex = 0;
         // 放行与否 默认不放行
         boolean flag = false;
         // 两个不拦截的URI
@@ -75,20 +81,29 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
                         flag = true;
                     } else {
                         LOG.info("token check failure {}", tokenString);
+                        msgIndex = 2;
                     }
+                } else {
+                    msgIndex = 1;
                 }
+            } else {
+                msgIndex = 1;
             }
         }
-
         if (flag) {
             return chain.filter(exchange);
         } else {
             ObjectMapper objectMapper = new ObjectMapper();
-            byte[] infoByte = objectMapper.writeValueAsString(new CommonResponse<String>().auth("Please log in the server with your account and password")).getBytes();
-            DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(infoByte);
-            exchange.getResponse().setStatusCode(HttpStatus.OK);
-            exchange.getResponse().getHeaders().add("Content-Type", "application/json;charset=utf8");
-            return exchange.getResponse().writeWith(Mono.just(buffer));
+            CommonResponse<String> response = new CommonResponse<String>().auth(msg[msgIndex]);
+            try {
+                byte[] infoByte = objectMapper.writeValueAsString(response).getBytes();
+                DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(infoByte);
+                exchange.getResponse().setStatusCode(HttpStatus.OK);
+                exchange.getResponse().getHeaders().add("Content-Type", "application/json;charset=utf8");
+                return exchange.getResponse().writeWith(Mono.just(buffer));
+            } catch (JsonProcessingException e) {
+                return exchange.getResponse().setComplete();
+            }
         }
 
     }

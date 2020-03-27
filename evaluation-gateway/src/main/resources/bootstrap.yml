@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
 spring:
   application:
     name: evaluation-gateway
@@ -43,21 +43,41 @@ spring:
           uri: lb://evaluation-authorization-service
           predicates:
             - Path=/auth,/auth/,/auth/**,/auth/**/**
+          filters:
+            - name: Hystrix
+              args:
+                name: fallback
+                fallbackUri: forward:/fallback
         # 学生评价服务
         - id: evaluation-studentevaluation-service
           uri: lb://evaluation-studentevaluation-service
           predicates:
             - Path=/sevaluation,/sevaluation/,/sevaluation/**,/sevaluation/**/**
+          filters:
+            - name: Hystrix
+              args:
+                name: fallback
+                fallbackUri: forward:/fallback
         # 教师评价服务
         - id: evaluation-teacher-evaluation
           uri: lb://evaluation-teacher-evaluation
           predicates:
             - Path=/tevaluation,/tevaluation/,/tevaluation/**,/tevaluation/**/**
+          filters:
+            - name: Hystrix
+              args:
+                name: fallback
+                fallbackUri: forward:/fallback
         # 管理中心服务
         - id: evaluation-admin-service
           uri: lb://evaluation-admin-service
           predicates:
             - Path=/admin,/admin/,/admin/**,/admin/**/**,/admin/**/**/**
+          filters:
+            - name: Hystrix
+              args:
+                name: fallback
+                fallbackUri: forward:/fallback
 management:
   endpoints:
     web:

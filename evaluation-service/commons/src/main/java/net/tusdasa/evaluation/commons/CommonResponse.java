@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CommonResponse<Model extends Serializable> {
+public class CommonResponse<Model extends Serializable> implements Serializable {
 
     public static final long CODE_SUCCESS = 200;
     public static final long CODE_ERROR = 500;
