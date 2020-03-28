@@ -1,24 +1,24 @@
--- µ¼Èëjson
+-- å¯¼å…¥json
 cjson = require "cjson"
--- µ¼Èë¸ºÔØ¾ùºâ
+-- å¯¼å…¥è´Ÿè½½å‡è¡¡
 balancer = require "ngx.balancer"
 --[[
 Shared memory zones are always shared by all the Nginx worker processes in the current Nginx server instance.
--- ´ËcacheÏß³Ì°²È«±£ÕÏ
--- DICTÎªlua_shared_dictÖ¸Áî¶¨ÒåµÄ¹²Ïí´æ´¢Çø»ñÈ¡»ùÓÚshmµÄLua×Öµä¶ÔÏó¡£
--- ¹²ÏíÄÚ´æÇøÓòÊ¼ÖÕÓÉµ±Ç°Nginx·şÎñÆ÷ÊµÀıÖĞµÄËùÓĞNginx¹¤×÷½ø³Ì¹²Ïí¡£
+-- æ­¤cacheçº¿ç¨‹å®‰å…¨ä¿éšœ
+-- DICTä¸ºlua_shared_dictæŒ‡ä»¤å®šä¹‰çš„å…±äº«å­˜å‚¨åŒºè·å–åŸºäºshmçš„Luaå­—å…¸å¯¹è±¡ã€‚
+-- å…±äº«å†…å­˜åŒºåŸŸå§‹ç»ˆç”±å½“å‰NginxæœåŠ¡å™¨å®ä¾‹ä¸­çš„æ‰€æœ‰Nginxå·¥ä½œè¿›ç¨‹å…±äº«ã€‚
 --]]
 cache = ngx.shared.vtimes
 
--- Ä¬ÈÏÅäÖÃ ×ª·¢µ½ 127.0.0.1:8081
+-- é»˜è®¤é…ç½® è½¬å‘åˆ° 127.0.0.1:8081
 local s1 = {}
 local cluster = {}
 s1["host"] = "127.0.0.1"
 s1["port"] = "8081"
 cluster["host"] = {}
 cluster["host"][1] = s1
--- times Îª-1Ê±»ñÈ¡×îĞÂÅäÖÃÄÚÈİ
+-- times ä¸º-1æ—¶è·å–æœ€æ–°é…ç½®å†…å®¹
 cache:set("times", -1)
--- ×ª»»ÎªJSON ±£´æÔÚ»º´æÖĞ
+-- è½¬æ¢ä¸ºJSON ä¿å­˜åœ¨ç¼“å­˜ä¸­
 cache:set("cluster", cjson.encode(cluster))
 cache:set("currentserver", 1)

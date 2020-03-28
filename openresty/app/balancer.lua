@@ -1,24 +1,24 @@
 local cache = ngx.shared.vtimes;
--- »ñÈ¡µ±Ç°·şÎñÆ÷
+-- è·å–å½“å‰æœåŠ¡å™¨
 local hosts = cjson.decode(cache:get("cluster"));
--- »ñÈ¡µ±Ç°·şÎñÆ÷ÏÂ±ê
+-- è·å–å½“å‰æœåŠ¡å™¨ä¸‹æ ‡
 local currentserver = cache:get("currentserver")
--- »ñÈ¡hosts´óĞ¡
+-- è·å–hostså¤§å°
 local size = table.getn(hosts["host"])
--- »ñÈ¡µ±Ç°·şÎñÆ÷ÁĞ±í
+-- è·å–å½“å‰æœåŠ¡å™¨åˆ—è¡¨
 local serverList = hosts["host"]
 
--- Ö»ÓĞÒ»Ì¨·şÎñÆ÷
+-- åªæœ‰ä¸€å°æœåŠ¡å™¨
 if (size == 1) then
-    -- ÅäÖÃµ±Ç°×ª·¢µØÖ·
+    -- é…ç½®å½“å‰è½¬å‘åœ°å€
     balancer.set_current_peer(serverList[1]["host"], serverList[1]["port"])
 else
-    -- ¶àÌ¨¿ªÊ¼ÂÖÑ¯
+    -- å¤šå°å¼€å§‹è½®è¯¢
     if (size < currentserver) then
-        -- ³¬³öµ±Ç°·şÎñÁĞ±í ±äÎªµÚÒ»¸ö
+        -- è¶…å‡ºå½“å‰æœåŠ¡åˆ—è¡¨ å˜ä¸ºç¬¬ä¸€ä¸ª
         currentserver = 1
     end
     balancer.set_current_peer(serverList[currentserver]["host"], serverList[currentserver]["port"])
-    -- ÏÂÒ»Ì¨·şÎñÆ÷
+    -- ä¸‹ä¸€å°æœåŠ¡å™¨
     cache:set("currentserver", currentserver + 1)
 end

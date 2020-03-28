@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        table {
+            border-top: 1px solid #ccc;
+            border-left: 1px solid #ccc;
+        }
+
+        table td,
+        table th {
+            border-bottom: 1px solid #ccc;
+            border-right: 1px solid #ccc;
+            padding: 3px 5px;
+        }
+
+        table th {
+            border-bottom: 2px solid #ccc;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<table>
+    <tr>
+        <th>名称</th>
+        <th>指标</th>
+    </tr>
+    <tr>
+        <td>下次更新</td>
+        <td>{{ times }}</td>
+    </tr>
+    <tr>
+        <td colspan="2" align="center">服务器列表</td>
+    </tr>
+    <tr>
+        <td>主机</td>
+        <td>端口</td>
+    </tr>
+    {% for _, s in ipairs(serverList) do %}
+    <tr>
+        <td>{{ s.host }}</td>
+        <td>{{ s.port }}</td>
+    </tr>
+    {% end %}
+</table>
+</body>
+
+</html>
