@@ -1,5 +1,6 @@
 package net.tusdasa.evaluation.service;
 
+import lombok.extern.slf4j.Slf4j;
 import net.tusdasa.evaluation.client.AcademicYearClient;
 import net.tusdasa.evaluation.client.AnalysisClient;
 import net.tusdasa.evaluation.commons.CommonResponse;
@@ -7,15 +8,19 @@ import net.tusdasa.evaluation.entity.AcademicYear;
 import net.tusdasa.evaluation.entity.AcademicYearResult;
 import net.tusdasa.evaluation.entity.StudentSituation;
 import net.tusdasa.evaluation.entity.TeacherSituation;
+import net.tusdasa.evaluation.vo.IdsRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @Author: tusdasa
  * @Date: 2020-03-25 9:06 PM
  */
 
+@Slf4j
 @Service
 public class CalculateResultService {
 
@@ -57,8 +62,49 @@ public class CalculateResultService {
 
     }
 
-    public AcademicYearResult getAcademicYearResultByIds(ArrayList<Integer> ids) {
-        return null;
+    public List<AcademicYearResult> getAcademicYearResultByIds(IdsRequest idsRequest) {
+        List<AcademicYearResult> academicYearResultList = new LinkedList<>();
+        if (!idsRequest.getFirstIds().isEmpty()) {
+            // 基础数据
+            List<TeacherSituation> teacherSituationList = this.findTeacherSituationByIds(idsRequest);
+            List<StudentSituation> studentSituationList = this.findStudentSituationByIds(idsRequest);
+            AcademicYear academicYear = this.getCurrentAcademicYear();
+            if (!teacherSituationList.isEmpty() && !studentSituationList.isEmpty() && academicYear != null) {
+                // 有学生评价不一定有教师评价, 有教师评价不一定有学生评价
+                for (StudentSituation studentSituation : studentSituationList) {
+                    for (TeacherSituation teacherSituation : teacherSituationList) {
+                        if (studentSituation.getId().equals(teacherSituation.getId())) {
+                            AcademicYearResult academicYearResult = studentResultService.getStudentResult(studentSituation, academicYear);
+                            academicYearResultList.add(
+                                    // 增加到成绩列表
+                                    teacherResultService.getTeacherResult(
+                                            academicYearResult,
+                                            teacherSituation,
+                                            academicYear
+                                    )
+                            );
+                        }
+                    }
+                }
+            }
+        }
+        return academicYearResultList;
+    }
+
+    public List<TeacherSituation> findTeacherSituationByIds(IdsRequest idsRequest) {
+        CommonResponse<TeacherSituation> situationCommonResponse = this.analysisClient.findTeacherSituationByIds(idsRequest);
+        if (situationCommonResponse.success()) {
+            return situationCommonResponse.getTable();
+        }
+        return Collections.emptyList();
+    }
+
+    public List<StudentSituation> findStudentSituationByIds(IdsRequest idsRequest) {
+        CommonResponse<StudentSituation> situationCommonResponse = this.analysisClient.findStudentSituationByIds(idsRequest);
+        if (situationCommonResponse.success()) {
+            return situationCommonResponse.getTable();
+        }
+        return Collections.emptyList();
     }
 
     public AcademicYearResult getAcademicYearResultByAcademicYear(Integer workId, Integer academicYearId) {

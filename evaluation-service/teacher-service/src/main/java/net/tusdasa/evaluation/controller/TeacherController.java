@@ -87,6 +87,16 @@ public class TeacherController {
         return new CommonResponse<Teacher>().ok().table(this.teacherService.findAllTeacherByRoleAndDepartment(departmentId, stateId, roleId));
     }
 
+    @GetMapping("/department/{departmentId}/role/{roleId}/state/{stateId}/page")
+    public CommonResponse<Teacher> findTeacherByPage(@PathVariable("departmentId") Integer departmentId,
+                                                     @PathVariable("roleId") Integer roleId,
+                                                     @PathVariable("stateId") Integer stateId,
+                                                     @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                     @RequestParam(value = "size", defaultValue = "10") Integer size
+    ) {
+        return new CommonResponse<Teacher>().ok().table(this.teacherService.findAllTeacherByRoleAndDepartmentByPage(departmentId, stateId, roleId, page, size));
+    }
+
     @GetMapping("/")
     public CommonResponse<Teacher> findAll(@RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
                                            @RequestParam(name = "size", defaultValue = "20", required = false) Integer size) {

@@ -1,14 +1,16 @@
 package net.tusdasa.evaluation.service;
 
+import net.tusdasa.evaluation.commons.CommonResponse;
+import net.tusdasa.evaluation.entity.Course;
 import net.tusdasa.evaluation.entity.StudentEvaluation;
-
-import java.util.List;
+import net.tusdasa.evaluation.entity.ThirdKpi;
 
 public interface StudentEvaluationService {
 
-    void addStudentCourseResult(StudentEvaluation studentEvaluation, Long studentId);
+    CommonResponse<String> addStudentCourseResult(StudentEvaluation studentEvaluation, Long studentId);
 
-    List<StudentEvaluation> findBydStudentId(Long studentId);
+    CommonResponse<ThirdKpi> findAll(Integer role);
 
-    List<StudentEvaluation> findAllByStudentIdAndAndTermId(Long studentId, Integer termId);
+    CommonResponse<Course> currentCourse(Long studentId);
+
 }

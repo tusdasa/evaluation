@@ -27,18 +27,19 @@ public class RoleInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String roleId = request.getHeader("role");
+        // 默认不放行
+        boolean flag = false;
         if (roleId != null && !roleId.equals("")) {
             if (Integer.valueOf(roleId).equals(Authority.ADMIN)) {
-                return true;
-            } else {
-                if (request.getRequestURI().equals("/admin/result")) {
-                    return true;
-                }
-                ObjectMapper objectMapper = new ObjectMapper();
-                response.setHeader("Content-Type", "application/json;charset=utf8");
-                response.getWriter().print(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(new CommonResponse<String>().bad()));
-                return false;
+                flag = true;
             }
+            // 可以看自己的成绩
+            if (request.getRequestURI().equals("/admin/result")) {
+                flag = true;
+            }
+        }
+        if (flag) {
+            return true;
         } else {
             ObjectMapper objectMapper = new ObjectMapper();
             response.setHeader("Content-Type", "application/json;charset=utf8");

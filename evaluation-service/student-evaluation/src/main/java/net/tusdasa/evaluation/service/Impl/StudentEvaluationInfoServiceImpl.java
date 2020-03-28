@@ -1,52 +1,28 @@
 package net.tusdasa.evaluation.service.Impl;
 
-import net.tusdasa.evaluation.client.AcademicYearClient;
-import net.tusdasa.evaluation.client.CourseClient;
-import net.tusdasa.evaluation.client.RightClient;
-import net.tusdasa.evaluation.client.ThirdKpiClient;
-import net.tusdasa.evaluation.commons.CommonResponse;
-import net.tusdasa.evaluation.entity.*;
+import net.tusdasa.evaluation.dao.StudentEvaluationDao;
+import net.tusdasa.evaluation.entity.Course;
+import net.tusdasa.evaluation.entity.Student;
+import net.tusdasa.evaluation.entity.StudentEvaluation;
 import net.tusdasa.evaluation.service.StudentEvaluationInfoService;
-import net.tusdasa.evaluation.service.StudentEvaluationService;
-import net.tusdasa.evaluation.vo.IdsRequest;
+import net.tusdasa.evaluation.utils.UUIDUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
 public class StudentEvaluationInfoServiceImpl implements StudentEvaluationInfoService {
 
-    Logger logger = LoggerFactory.getLogger(StudentEvaluationInfoServiceImpl.class.getClass());
+    Logger logger = LoggerFactory.getLogger(StudentEvaluationInfoServiceImpl.class);
 
-    private AcademicYearClient academicYearClient;
+    private StudentEvaluationDao studentEvaluationDao;
 
-    //private FirstKpiClient firstKpiClient;
-
-    //private SecondKpiClient secondKpiClient;
-
-    private ThirdKpiClient thirdKpiClient;
-
-    private RightClient rightClient;
-
-    private CourseClient courseClient;
-
-    private StudentEvaluationService studentEvaluationService;
-
-
-    public StudentEvaluationInfoServiceImpl(AcademicYearClient academicYearClient,
-                                            ThirdKpiClient thirdKpiClient,
-                                            RightClient rightClient,
-                                            CourseClient courseClient,
-                                            StudentEvaluationService studentEvaluationService
-    ) {
-        this.academicYearClient = academicYearClient;
-        this.thirdKpiClient = thirdKpiClient;
-        this.rightClient = rightClient;
-        this.courseClient = courseClient;
-        this.studentEvaluationService = studentEvaluationService;
+    public StudentEvaluationInfoServiceImpl(StudentEvaluationDao studentEvaluationDao) {
+        this.studentEvaluationDao = studentEvaluationDao;
     }
 
     /**
@@ -63,8 +39,7 @@ public class StudentEvaluationInfoServiceImpl implements StudentEvaluationInfoSe
      * 第三指标微服务找出第二指标中指定中的三级指标
      * CommonResponse<ThirdKpi> thirdKpiList = thirdKpiClient.findThirdBySecondKpiIds(secondKpiIds);
      **/
-
-    @Override
+/*
     public CommonResponse<ThirdKpi> findAll(Integer role) {
         CommonResponse<Right> rightCommonResponse = rightClient.findRightById(role);
         if (rightCommonResponse.success()) {
@@ -84,8 +59,8 @@ public class StudentEvaluationInfoServiceImpl implements StudentEvaluationInfoSe
         }
 
     }
-
-    @Override
+ */
+/*
     public CommonResponse<Course> currentCourse(Long studentId) {
         CommonResponse<Student> studentCommonResponse = this.getStudent(studentId);
         if (studentCommonResponse.success()) {
@@ -107,29 +82,30 @@ public class StudentEvaluationInfoServiceImpl implements StudentEvaluationInfoSe
             return new CommonResponse<Course>().error(studentCommonResponse.getMessage());
         }
     }
-
+*/
     /**
      * 获取学生信息
      */
+    /*
     private CommonResponse<Student> getStudent(Long studentId) {
         return this.rightClient.checkStudent(String.valueOf(studentId));
     }
+     */
 
     /**
      * 获取当前学期信息
      */
+    /*
     private CommonResponse<Term> getTerm() {
         return this.academicYearClient.currentTerm();
     }
+    */
 
     /**
      * 获取学生已评价课程
      */
-    private List<StudentEvaluation> getStudentCourseResult(Long studentId, Integer termId) {
-        return this.studentEvaluationService.findAllByStudentIdAndAndTermId(studentId, termId);
-    }
 
-    private List<Course> checkAllCourse(List<Course> courseList, List<StudentEvaluation> studentEvaluationList) {
+    public List<Course> checkAllCourse(List<Course> courseList, List<StudentEvaluation> studentEvaluationList) {
         if (courseList != null && !courseList.isEmpty()) {
             if (studentEvaluationList != null && !studentEvaluationList.isEmpty()) {
                 if (studentEvaluationList.size() < courseList.size()) {
@@ -158,7 +134,7 @@ public class StudentEvaluationInfoServiceImpl implements StudentEvaluationInfoSe
                     }
                     return newCourseList;
                 } else {
-                    return null;
+                    return Collections.emptyList();
                 }
             } else {
                 // 没有已经评价了的课程
@@ -167,9 +143,24 @@ public class StudentEvaluationInfoServiceImpl implements StudentEvaluationInfoSe
 
         } else {
             // 没有课
-            return null;
+            return Collections.emptyList();
         }
 
+    }
+
+    @Override
+    public List<StudentEvaluation> findAllByStudentIdAndAndTermId(Long studentId, Integer termId) {
+        return studentEvaluationDao.findAllByStudentIdAndAndTermId(studentId, termId);
+    }
+
+    @Override
+    public StudentEvaluation addStudentCourseResult(StudentEvaluation studentEvaluation, Student student) {
+        String uuid = UUIDUtils.UUID();
+        studentEvaluation.setId(uuid);
+        studentEvaluation.setStudentId(student.getStudentId());
+        studentEvaluation.setClassId(student.getStudentClass().getClassId());
+        studentEvaluation.setStudentName(student.getStudentName());
+        return studentEvaluationDao.insert(studentEvaluation);
     }
 
 

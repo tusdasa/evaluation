@@ -3,10 +3,8 @@ package net.tusdasa.evaluation.controller;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.AcademicYearResult;
 import net.tusdasa.evaluation.service.CalculateService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import net.tusdasa.evaluation.vo.IdsRequest;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Author: tusdasa
@@ -30,5 +28,13 @@ public class CalculateController {
     @GetMapping("/calculate/{id}")
     public CommonResponse<AcademicYearResult> calculateById(@PathVariable("id") Integer id) {
         return calculateService.findById(id);
+    }
+
+    @PostMapping("/calculate/ids")
+    public CommonResponse<AcademicYearResult> calculateByIds(@RequestBody IdsRequest idsRequest) {
+        if (idsRequest.getFirstIds().isEmpty()) {
+            return new CommonResponse<AcademicYearResult>().error();
+        }
+        return calculateService.findByIds(idsRequest);
     }
 }

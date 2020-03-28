@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import net.tusdasa.evaluation.authority.Authority;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.Student;
 import net.tusdasa.evaluation.entity.Teacher;
@@ -52,7 +53,7 @@ public class AuthController {
         if (result.get("obj") != null) {
             Student student = (Student) result.get("obj");
             studentRedisTemplate.opsForValue().set(student.getStudentId().toString(), student, Duration.of(1, ChronoUnit.HOURS));
-            return new CommonResponse<String>().ok().data(jwtUtils.generateNewToken(student.getStudentId(), 1));
+            return new CommonResponse<String>().ok().data(jwtUtils.generateNewToken(student.getStudentId(), Authority.STUDENT));
         }
         return new CommonResponse<String>().auth(result.get("msg").toString());
     }

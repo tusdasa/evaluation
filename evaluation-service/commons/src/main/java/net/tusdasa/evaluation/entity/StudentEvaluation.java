@@ -35,6 +35,21 @@ public class StudentEvaluation implements Serializable {
     private Long studentId;
 
     /**
+     * 姓名
+     */
+    private String studentName;
+
+    /**
+     * 班级
+     */
+    private Integer classId;
+
+    /**
+     * 学院ID
+     */
+    private Integer departmentId;
+
+    /**
      * 当前学期Id
      */
     private Integer termId;

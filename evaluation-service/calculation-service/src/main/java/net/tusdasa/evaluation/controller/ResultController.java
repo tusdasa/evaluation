@@ -4,10 +4,9 @@ import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.AcademicYearResult;
 import net.tusdasa.evaluation.service.CalculateResultService;
 import net.tusdasa.evaluation.vo.IdsRequest;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @Author: tusdasa
@@ -41,9 +40,10 @@ public class ResultController {
         return new CommonResponse<AcademicYearResult>().error("未找到");
     }
 
-    @GetMapping("/ids")
-    public CommonResponse<AcademicYearResult> findAllByIds(@RequestBody IdsRequest request) {
-        return null;
+    @PostMapping("/ids")
+    public CommonResponse<AcademicYearResult> findAllByIds(@RequestBody IdsRequest idsRequest) {
+        List<AcademicYearResult> resultList = this.calculateResultService.getAcademicYearResultByIds(idsRequest);
+        return new CommonResponse<AcademicYearResult>().ok().table(resultList);
     }
 
 }

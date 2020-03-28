@@ -99,6 +99,18 @@ public class TeacherServiceImpl implements TeacherService {
         return this.teacherMapper.findAllTeacherByRoleAndDepartment(parameter);
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public List<Teacher> findAllTeacherByRoleAndDepartmentByPage(Integer departmentId, Integer stateId, Integer roleId, int page, int size) {
+        HashMap<String, Integer> parameter = new HashMap<>();
+        parameter.put("departmentId", departmentId);
+        parameter.put("stateId", stateId);
+        parameter.put("roleId", roleId);
+        parameter.put("page", page);
+        parameter.put("size", size);
+        return this.teacherMapper.findAllTeacherByRoleAndDepartmentByPage(parameter);
+    }
+
     @Override
     public boolean restPassword(Integer workId, String newPassword, String oldPassword) {
         Teacher teacher = this.teacherMapper.selectByPrimaryKey(workId);

@@ -32,4 +32,16 @@ public class TeacherController {
     public CommonResponse<String> update(@RequestBody TeacherRequest request) {
         return this.teacherService.update(request);
     }
+
+    @GetMapping("/teacher/department")
+    public CommonResponse<Teacher> findByTeacherByPage(@RequestHeader("workId") Integer id,
+                                                       @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                       @RequestParam(value = "size", defaultValue = "10") Integer size) {
+        if (page < 0 || size <= 0) {
+            page = 0;
+            size = 10;
+        }
+        return this.teacherService.findByDepartmentByPage(id, page * size, size);
+    }
+
 }

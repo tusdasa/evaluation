@@ -21,5 +21,7 @@ public interface TeacherService {
 
     List<Teacher> findAllTeacherByRoleAndDepartment(Integer departmentId, Integer stateId, Integer roleId);
 
+    List<Teacher> findAllTeacherByRoleAndDepartmentByPage(Integer departmentId, Integer stateId, Integer roleId, int page, int size);
+
     boolean restPassword(Integer workId, String newPassword, String oldPassword);
 }

@@ -2,6 +2,7 @@ package net.tusdasa.evaluation.filter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import net.tusdasa.evaluation.authority.Authority;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.commons.Token;
 import net.tusdasa.evaluation.utils.JWTUtils;
@@ -29,6 +30,13 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
     private static final Logger LOG = LoggerFactory.getLogger(AuthGlobalFilter.class);
 
+    private String[] msg = new String[]
+            {
+                    "Please log in the server with your account and password",
+                    "Token is empty",
+                    "Token verify failure"
+            };
+
     private JWTUtils jwtUtils;
 
     public AuthGlobalFilter(JWTUtils jwtUtils) {
@@ -37,11 +45,6 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        String[] msg = new String[]{
-                "Please log in the server with your account and password",
-                "Token is empty",
-                "Token verify failure"
-        };
         // 默认返回的消息msg[0]
         int msgIndex = 0;
         // 放行与否 默认不放行
@@ -69,9 +72,9 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
                         // 校验成功
                         Token token = (Token) checkResult.get("token");
 
-                        if (!token.getRole().equals(1)) {
-                            exchange.getRequest().mutate().header("workId", token.getSub()).build();
+                        if (!token.getRole().equals(Authority.STUDENT)) {
                             // 是老师 设置工号
+                            exchange.getRequest().mutate().header("workId", token.getSub()).build();
                         } else {
                             // 是学生 设置学号
                             exchange.getRequest().mutate().header("studentId", token.getSub()).build();

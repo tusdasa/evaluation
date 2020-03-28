@@ -3,6 +3,7 @@ package net.tusdasa.evaluation.service;
 import net.tusdasa.evaluation.client.CalculateClient;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.AcademicYearResult;
+import net.tusdasa.evaluation.vo.IdsRequest;
 import org.springframework.stereotype.Service;
 
 /**
@@ -21,5 +22,9 @@ public class CalculateService {
 
     public CommonResponse<AcademicYearResult> findById(Integer id) {
         return calculateClient.findById(id);
+    }
+
+    public CommonResponse<AcademicYearResult> findByIds(IdsRequest idsRequest) {
+        return calculateClient.findAllByIds(idsRequest);
     }
 }

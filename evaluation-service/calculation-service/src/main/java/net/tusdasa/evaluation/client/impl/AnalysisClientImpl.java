@@ -4,6 +4,7 @@ import net.tusdasa.evaluation.client.AnalysisClient;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.StudentSituation;
 import net.tusdasa.evaluation.entity.TeacherSituation;
+import net.tusdasa.evaluation.vo.IdsRequest;
 import org.springframework.stereotype.Component;
 
 /**
@@ -24,6 +25,16 @@ public class AnalysisClientImpl implements AnalysisClient {
 
     @Override
     public CommonResponse<TeacherSituation> findTeacherSituationById(Integer id) {
+        return new CommonResponse<TeacherSituation>().busy();
+    }
+
+    @Override
+    public CommonResponse<StudentSituation> findStudentSituationByIds(IdsRequest idsRequest) {
+        return new CommonResponse<StudentSituation>().busy();
+    }
+
+    @Override
+    public CommonResponse<TeacherSituation> findTeacherSituationByIds(IdsRequest idsRequest) {
         return new CommonResponse<TeacherSituation>().busy();
     }
 }

@@ -1,5 +1,6 @@
 package net.tusdasa.evaluation.service;
 
+import net.tusdasa.evaluation.authority.Authority;
 import net.tusdasa.evaluation.client.TeacherClient;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.Teacher;
@@ -26,5 +27,24 @@ public class TeacherService {
 
     public CommonResponse<String> update(TeacherRequest request) {
         return this.teacherClient.updateTeacher(request);
+    }
+
+    public CommonResponse<Teacher> findByDepartmentByPage(
+            Integer workId,
+            Integer page,
+            Integer size
+    ) {
+        CommonResponse<Teacher> teacherCommonResponse = this.teacherClient.getTeacherById(workId);
+        if (teacherCommonResponse.success()) {
+            Teacher teacher = teacherCommonResponse.getData();
+            return this.teacherClient.findTeacherByPage(
+                    teacher.getDepartment().getDepartmentId(),
+                    Authority.TEACHER,
+                    Authority.ACTIVE,
+                    page,
+                    size
+            );
+        }
+        return new CommonResponse<Teacher>().error();
     }
 }

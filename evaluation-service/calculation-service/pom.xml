@@ -18,6 +18,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+        </dependency>
+        <dependency>
             <groupId>net.tusdasa</groupId>
             <artifactId>mathutils</artifactId>
             <version>1.0</version>

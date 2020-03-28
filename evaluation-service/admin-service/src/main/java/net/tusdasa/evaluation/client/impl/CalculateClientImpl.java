@@ -3,6 +3,7 @@ package net.tusdasa.evaluation.client.impl;
 import net.tusdasa.evaluation.client.CalculateClient;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.AcademicYearResult;
+import net.tusdasa.evaluation.vo.IdsRequest;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,6 +15,11 @@ import org.springframework.stereotype.Component;
 public class CalculateClientImpl implements CalculateClient {
     @Override
     public CommonResponse<AcademicYearResult> findById(Integer id) {
+        return new CommonResponse<AcademicYearResult>().busy();
+    }
+
+    @Override
+    public CommonResponse<AcademicYearResult> findAllByIds(IdsRequest idsRequest) {
         return new CommonResponse<AcademicYearResult>().busy();
     }
 }

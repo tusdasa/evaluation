@@ -1,6 +1,7 @@
 package net.tusdasa.evaluation.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import net.tusdasa.evaluation.authority.Authority;
 import net.tusdasa.evaluation.client.AcademicYearClient;
 import net.tusdasa.evaluation.client.RightClient;
 import net.tusdasa.evaluation.client.TeacherClient;
@@ -23,9 +24,11 @@ import java.util.List;
 @Service
 public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
 
-    private static final Integer TEACHER_ROLE = 2;
+    // 取教师角色
+    private static final Integer TEACHER_ROLE = Authority.TEACHER;
 
-    private static final Integer TEACHER_STATE = 1;
+    // 取参与的教师
+    private static final Integer TEACHER_STATE = Authority.ACTIVE;
 
     private AcademicYearClient academicYearClient;
 
@@ -54,15 +57,15 @@ public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
     @Override
     public CommonResponse<ThirdKpi> findAllThirdKpi(Integer role) {
         Term currentTerm = this.getTerm();
-        Right right1 = this.getRight(role);
+        Right right = this.getRight(role);
 
-        if (currentTerm != null && right1 != null) {
-            if (right1.checkRight()) {
+        if (currentTerm != null && right != null) {
+            if (right.checkRight()) {
 
                 return this.getThirdKpi(
                         new IdsRequest()
-                                .addFirstIds(right1.getSecondKpiId())
-                                .addSecondIds(right1.getThirdKpiId())
+                                .addFirstIds(right.getSecondKpiId())
+                                .addSecondIds(right.getThirdKpiId())
                 );
 
             } else {

@@ -18,4 +18,7 @@ public interface StudentEvaluationDao extends MongoRepository<StudentEvaluation,
 
     List<StudentEvaluation> findAllByStudentIdAndAndTermId(Long studentId, Integer termId);
 
+    long countAllByTermId(Integer termId);
+
+    void deleteAllByTermId(Integer termId);
 }

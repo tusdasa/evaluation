@@ -11,7 +11,12 @@
 
     <artifactId>mathutils</artifactId>
     <version>1.0</version>
-    <name>MathUtils</name>
+
+    <name>Microservice-MathUtils</name>
+    <description>
+        微服务数学相关组件
+    </description>
+
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
         <dependency>

@@ -32,4 +32,9 @@ public class TeacherClientImpl implements TeacherClient {
     public CommonResponse<Teacher> findAll(Integer page, Integer size) {
         return new CommonResponse<Teacher>().busy();
     }
+
+    @Override
+    public CommonResponse<Teacher> findTeacherByPage(Integer departmentId, Integer roleId, Integer stateId, Integer page, Integer size) {
+        return new CommonResponse<Teacher>().busy();
+    }
 }

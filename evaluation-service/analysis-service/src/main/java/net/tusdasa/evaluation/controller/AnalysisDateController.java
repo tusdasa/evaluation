@@ -6,10 +6,7 @@ import net.tusdasa.evaluation.dao.TeacherSituationDao;
 import net.tusdasa.evaluation.entity.StudentSituation;
 import net.tusdasa.evaluation.entity.TeacherSituation;
 import net.tusdasa.evaluation.vo.IdsRequest;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -50,13 +47,7 @@ public class AnalysisDateController {
         return new CommonResponse<TeacherSituation>().error("未找到");
     }
 
-    @GetMapping("student/department/{id}")
-    public CommonResponse<StudentSituation> findStudentSituationByDepartment(@PathVariable("id") Integer id) {
-        List<StudentSituation> studentSituation = studentSituationDao.findAllByDepartmentId(id);
-        return new CommonResponse<StudentSituation>().ok().table(studentSituation);
-    }
-
-    @GetMapping("student/ids")
+    @PostMapping("student/ids")
     public CommonResponse<StudentSituation> findStudentSituationByIds(@RequestBody IdsRequest idsRequest) {
         Iterable<StudentSituation> iterable = studentSituationDao.findAllById(idsRequest.getFirstIds());
         List<StudentSituation> studentSituationList = new LinkedList<>();
@@ -64,7 +55,7 @@ public class AnalysisDateController {
         return new CommonResponse<StudentSituation>().ok().table(studentSituationList);
     }
 
-    @GetMapping("teacher/ids")
+    @PostMapping("teacher/ids")
     public CommonResponse<TeacherSituation> findTeacherSituationByIds(@RequestBody IdsRequest idsRequest) {
 
         Iterable<TeacherSituation> iterable = teacherSituationDao.findAllById(idsRequest.getFirstIds());
@@ -72,6 +63,14 @@ public class AnalysisDateController {
         iterable.forEach(teacherSituationList::add);
         return new CommonResponse<TeacherSituation>().ok().table(teacherSituationList);
     }
+/*
+    @GetMapping("student/department/{id}")
+    public CommonResponse<StudentSituation> findStudentSituationByDepartment(@PathVariable("id") Integer id) {
+        List<StudentSituation> studentSituation = studentSituationDao.findAllByDepartmentId(id);
+        return new CommonResponse<StudentSituation>().ok().table(studentSituation);
+    }
+*/
+
 /*
     @PutMapping("up")
     public String update() {
