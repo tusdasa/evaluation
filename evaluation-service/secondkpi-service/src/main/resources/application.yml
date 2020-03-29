@@ -1,10 +1,12 @@
 server:
-  port: 7007
+  port: 7008
   servlet:
     context-path: /secondkpi
 spring:
   application:
     name: evaluation-secondkpi-service
+  cache:
+    cache-names: secondKpiCache
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/xynu_evaluation?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
     username: root
@@ -14,12 +16,27 @@ spring:
       max-active: 4
       min-idle: 2
       initial-size: 2
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        health-check-path: /secondkpi/actuator/health
+        tags: management.context-path=/secondkpi/actuator
   jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
+    date-format: yyyy-MM-dd HH:mm:ss:SSS
     time-zone: GMT+8
-eureka:
-  client:
-    service-url:
-      defaultZone: http://tusdasa:8000/eureka/
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://tusdasa:8000/eureka/
 mybatis:
   config-location: classpath:myBatisConfig.xml
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

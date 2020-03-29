@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.tusdasa.evaluation.dao.StudentClassMapper;
 import net.tusdasa.evaluation.dao.StudentMapper;
 import net.tusdasa.evaluation.entity.Student;
+import net.tusdasa.evaluation.entity.StudentClass;
 import net.tusdasa.evaluation.service.StudentService;
 import net.tusdasa.evaluation.vo.StudentRequest;
 import org.springframework.stereotype.Service;
@@ -40,32 +41,36 @@ public class StudentServiceImpl implements StudentService {
     @Transactional
     public void updateStudent(StudentRequest request) {
         Student student = this.studentMapper.selectByPrimaryKey(request.getStudentId());
-        if (student.compareTo(request) != 0) {
-            this.studentMapper.updateByPrimaryKeySelective(request.build());
-            this.studentClassMapper.updateByPrimaryKeySelective(request.build().getStudentClass());
+        if (student != null) {
+            if (request.getStudentSecret() != null) {
+                student.setStudentSecret(request.build().getStudentSecret());
+            }
+            StudentClass studentClass = student.getStudentClass();
+            studentClass.setClassId(request.getClassId());
+            student.setStudentClass(studentClass);
+            this.studentMapper.updateByPrimaryKeySelective(student);
             log.info("update student {}", student);
         }
-
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Student findStudentById(Long student_id) {
-        return studentMapper.selectByPrimaryKey(student_id);
+    public Student findStudentById(Long studentId) {
+        return studentMapper.selectByPrimaryKey(studentId);
     }
 
     @Override
     @Transactional
-    public void deleteStudent(Long student_id) {
-        this.studentMapper.deleteByPrimaryKey(student_id);
-        log.info("delete student {}", student_id);
+    public void deleteStudent(Long studentId) {
+        this.studentMapper.deleteByPrimaryKey(studentId);
+        log.info("delete student {}", studentId);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Map<String, Object> findStudentByIdAndPassword(Long student_id, String password) {
+    public Map<String, Object> findStudentByIdAndPassword(Long studentId, String password) {
         Map<String, Object> result = new HashMap<>();
-        Student student = this.studentMapper.selectByPrimaryKey(student_id);
+        Student student = this.studentMapper.selectByPrimaryKey(studentId);
 
         if (student != null) {
             if (password.equals(student.getStudentSecret())) {
@@ -74,11 +79,11 @@ public class StudentServiceImpl implements StudentService {
                 result.put("obj", student);
             } else {
                 result.put("code", -1);
-                result.put("msg", "密码错误");
+                result.put("msg", "学号或密码错误");
             }
         } else {
             result.put("code", 0);
-            result.put("msg", "用户不存在");
+            result.put("msg", "学号不存在");
         }
 
         return result;
@@ -91,5 +96,21 @@ public class StudentServiceImpl implements StudentService {
         parameter.put("page", page);
         parameter.put("size", size);
         return studentMapper.findAll(parameter);
+    }
+
+    @Override
+    public boolean resetPassword(Long studentId, String newPassword, String oldPassword) {
+        Student student = this.studentMapper.selectByPrimaryKey(studentId);
+        if (student != null && student.getStudentSecret().equals(DigestUtils.md5DigestAsHex(oldPassword.getBytes()))) {
+            student.setStudentSecret(DigestUtils.md5DigestAsHex(newPassword.getBytes()));
+            this.studentMapper.resetPassword(student);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public long countByDepartmentId(Integer departmentId) {
+        return this.studentMapper.countByDepartmentId(departmentId);
     }
 }

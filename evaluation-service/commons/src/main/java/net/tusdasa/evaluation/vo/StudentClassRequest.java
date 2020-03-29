@@ -1,9 +1,6 @@
 package net.tusdasa.evaluation.vo;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import net.tusdasa.evaluation.entity.Department;
 import net.tusdasa.evaluation.entity.Grade;
 import net.tusdasa.evaluation.entity.Major;
@@ -14,6 +11,7 @@ import net.tusdasa.evaluation.utils.CheckUtils;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Builder
 public class StudentClassRequest implements CommonRequest<StudentClass> {
 
     private Integer classId;

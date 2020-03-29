@@ -15,21 +15,27 @@ public class FirstKpiController {
         this.firstKpiService = firstKpiService;
     }
 
-    @GetMapping("/academicyear/{id}")
-    public CommonResponse<FirstKpi> findAllByFirstKpi(@PathVariable("id") Integer id) {
-        return new CommonResponse<FirstKpi>().ok().table(this.firstKpiService.findAllFirstKpiByAcademicYear(id));
-    }
-
+    /**
+     * @GetMapping("/year/{yearId}") public CommonResponse<FirstKpi> findAllFirstKpiByAcademicYear(@PathVariable("yearId") Integer yearId) {
+     * return new CommonResponse<FirstKpi>().ok().table(this.firstKpiService.findAllFirstKpiByAcademicYear(yearId));
+     * }
+     * @GetMapping("/year/{yearId}/{firstKpiId}") public CommonResponse<FirstKpi> findAllByAcademicYearAndId(@PathVariable("yearId") Integer yearId, @PathVariable("firstKpiId") Integer firstKpiId) {
+     * return new CommonResponse<FirstKpi>().ok().table(this.firstKpiService.findAllByAcademicYearAndId(yearId, firstKpiId));
+     * }
+     * @PostMapping("/ids/{yearId}") public CommonResponse<FirstKpi> findAllByAcademicYearAndIds(@PathVariable("yearId") Integer yearId, @RequestBody IdsRequest idsRequest) {
+     * return new CommonResponse<FirstKpi>().ok().table(this.firstKpiService.findAllByAcademicYearAndIds(yearId, idsRequest));
+     * }
+     */
     @GetMapping("/")
     public CommonResponse<FirstKpi> findAll() {
         return new CommonResponse<FirstKpi>().ok().table(this.firstKpiService.findAll());
     }
 
-    @GetMapping("/{id}")
-    public CommonResponse<FirstKpi> findById(@PathVariable("id") Integer id) {
-        FirstKpi firstKpi = this.firstKpiService.findById(id);
+    @GetMapping("/{firstKpiId}")
+    public CommonResponse<FirstKpi> findById(@PathVariable("firstKpiId") Integer firstKpiId) {
+        FirstKpi firstKpi = this.firstKpiService.findById(firstKpiId);
         if (firstKpi != null) {
-            return new CommonResponse<FirstKpi>().ok().data(this.firstKpiService.findById(id));
+            return new CommonResponse<FirstKpi>().ok().data(this.firstKpiService.findById(firstKpiId));
         } else {
             return new CommonResponse<FirstKpi>().error("未找到");
         }
@@ -51,6 +57,12 @@ public class FirstKpiController {
             return new CommonResponse<String>().ok();
         }
         return new CommonResponse<String>().error();
+    }
+
+    @DeleteMapping("/{firstKpiId}")
+    public CommonResponse<String> deleteFirstKpi(@PathVariable("firstKpiId") Integer firstKpiId) {
+        this.firstKpiService.deleteFirstKpi(firstKpiId);
+        return new CommonResponse<String>().ok();
     }
 
 }

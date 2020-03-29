@@ -2,57 +2,108 @@
 <html lang="zh-CN">
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>登录</title>
-  <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
-  <link rel="shortcut icon" href="/images/favicon.ico" />
-  <!--[if lt IE 9]>
-      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>教学评价系统SSO</title>
+    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/images/favicon.ico"/>
+    <!--[if lt IE 9]>
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
     <![endif]-->
 </head>
 
 <body>
-  <div class="container">
+<div class="container">
     <div class="page-header">
-      <h1>登录</h1>
+        <h1>统一SSO</h1>
     </div>
     <div>
-      <div class="row clearfix">
-        <div class="col-md-4 column"></div>
-        <div class="col-md-4 column">
-          <form role="form" method="POST" action="auth" enctype="application/x-www-form-urlencoded" onsubmit="return check();">
-            <div class="form-group">
-              <label for="Inputusername">用户名</label><input type="text" class="form-control" id="Inputusername"
-                name="username" />
+        <% if (msg) { %>
+            <div class="row clearfix">
+                <div class="col-md-4 column"></div>
+                <div class="col-md-4 column">
+                    <div class="alert alert-dismissable alert-warning">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <strong><%= msg %></strong>
+                    </div>
+                </div>
+                <div class="col-md-4 column"></div>
             </div>
-            <div class="form-group">
-              <label for="InputPassword">密码</label><input type="password" class="form-control" id="InputPassword"
-                name="password" />
-            </div>
+        <% } %>
+        <div class="row clearfix">
+            <div class="col-md-4 column"></div>
+            <div class="col-md-4 column">
+                <div class="tabbable" id="tabs-451131">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#panel-18989" data-toggle="tab"> <strong>学生</strong> </a>
+                        </li>
+                        <li>
+                            <a href="#panel-545728" data-toggle="tab"><strong>教师</strong></a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="panel-18989">
+                            <div class="row clearfix">
+                                <div class="col-md-12 column">
+                                    <div style="width: 100%; height: 25px;"></div>
+                                </div>
+                                <div class="col-md-12 column">
+                                    <form role="form" method="POST" action="student"
+                                          enctype="application/x-www-form-urlencoded"
+                                          onsubmit="return studentCheck();">
+                                        <div class="form-group">
+                                            <label for="studentId">学号</label>
+                                            <input type="text" class="form-control" id="studentId" name="id"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="studentPwd">密码</label>
+                                            <input type="password" class="form-control" id="studentPwd"
+                                                   name="password"/>
+                                        </div>
+                                        <button type="submit" class="btn btn-default btn-block btn-primary">登录</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="panel-545728">
+                            <div class="row clearfix">
+                                <div class="col-md-12 column">
+                                    <div style="width: 100%; height: 25px;"></div>
+                                </div>
+                                <div class="col-md-12 column">
+                                    <p>请从教师端操作</p>
+                                    <!--
+                                    <form role="form" method="POST" action="teacher"
+                                          enctype="application/x-www-form-urlencoded" onsubmit="return teacherCheck();">
+                                        <div class="form-group">
+                                            <label for="teacherId">工号</label>
+                                            <input type="text" class="form-control" id="teacherId" name="id"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="teacherPwd">密码</label>
+                                            <input type="password" class="form-control" id="teacherPwd"
+                                                   name="password"/>
+                                        </div>
+                                        <button type="submit" class="btn btn-default btn-block btn-primary">登录</button>
+                                    </form>
+                                    -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            <button type="submit" class="btn btn-default btn-block btn-primary">登录</button>
-          </form>
+            </div>
+            <div class="col-md-4 column"></div>
         </div>
-        <div class="col-md-4 column"></div>
-      </div>
     </div>
-  </div>
-  <script src="/javascripts/jquery-3.4.1.min.js"></script>
-  <script src="/javascripts/bootstrap.min.js"></script>
-  <script>
-    function check() {
-      let username = $("Inputusername").val();
-      let password = $("InputPassword").val();
-      if (username && password && username.length<=10 && password.length >=7 && password.length <20 ){
-        return true;
-      }else {
-        return false;
-      }
-    }
-  </script>
+</div>
+<script src="/javascripts/jquery-3.4.1.min.js"></script>
+<script src="/javascripts/bootstrap.min.js"></script>
+<script src="/javascripts/lib.js"></script>
 </body>
 
 </html>

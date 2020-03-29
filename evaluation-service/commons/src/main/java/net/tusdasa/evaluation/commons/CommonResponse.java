@@ -1,20 +1,21 @@
 package net.tusdasa.evaluation.commons;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import net.tusdasa.evaluation.utils.UUIDUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CommonResponse<Model extends Serializable> {
+public class CommonResponse<Model extends Serializable> implements Serializable {
 
     public static final long CODE_SUCCESS = 200;
     public static final long CODE_ERROR = 500;
     public static final long CODE_VALIDATE_FAILED = 404;
     public static final long CODE_UNAUTHORIZED = 401;
     public static final long CODE_FORBIDDEN = 403;
+    public static final long CODE_TIMEOUT = 408;
 
 
     private long code;
@@ -29,29 +30,43 @@ public class CommonResponse<Model extends Serializable> {
 
     public CommonResponse<Model> ok() {
         this.setCode(CommonResponse.CODE_SUCCESS);
-        this.setRequestId(UUID.randomUUID().toString().replaceAll("-", ""));
+        this.setRequestId(UUIDUtils.UUID());
         this.setMessage("success");
         return this;
     }
 
     public CommonResponse<Model> ok(String message) {
         this.setCode(CommonResponse.CODE_SUCCESS);
-        this.setRequestId(UUID.randomUUID().toString().replaceAll("-", ""));
+        this.setRequestId(UUIDUtils.UUID());
         this.setMessage(message);
         return this;
     }
 
     public CommonResponse<Model> error() {
         this.setCode(CommonResponse.CODE_ERROR);
-        this.setRequestId(UUID.randomUUID().toString().replaceAll("-", ""));
+        this.setRequestId(UUIDUtils.UUID());
         this.setMessage("failure");
         return this;
     }
 
     public CommonResponse<Model> error(String message) {
         this.setCode(CommonResponse.CODE_ERROR);
-        this.setRequestId(UUID.randomUUID().toString().replaceAll("-", ""));
+        this.setRequestId(UUIDUtils.UUID());
         this.setMessage(message);
+        return this;
+    }
+
+    public CommonResponse<Model> auth(String message) {
+        this.setCode(CommonResponse.CODE_UNAUTHORIZED);
+        this.setRequestId(UUIDUtils.UUID());
+        this.setMessage(message);
+        return this;
+    }
+
+    public CommonResponse<Model> bad() {
+        this.setCode(CODE_FORBIDDEN);
+        this.setRequestId(UUIDUtils.UUID());
+        this.setMessage("当前角色禁止访问");
         return this;
     }
 
@@ -69,11 +84,25 @@ public class CommonResponse<Model extends Serializable> {
         return this;
     }
 
+    public CommonResponse<Model> busy() {
+        this.setCode(CODE_TIMEOUT);
+        this.setRequestId(UUIDUtils.UUID());
+        this.setMessage("已断路, 服务繁忙/离线, 请重试");
+        return this;
+    }
+
     public boolean success() {
-        if (this.getCode() == CommonResponse.CODE_SUCCESS) {
-            return true;
+        if (this.getCode() == CODE_TIMEOUT || this.getCode() == CODE_ERROR) {
+            return false;
         }
-        return false;
+        return true;
+    }
+
+    public boolean emptyTable() {
+        if (this.getTable() != null && !this.getTable().isEmpty()) {
+            return false;
+        }
+        return true;
     }
 
     public Model getData() {

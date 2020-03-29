@@ -10,6 +10,7 @@ import org.springframework.util.DigestUtils;
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
+@Builder
 public class StudentRequest implements CommonRequest<Student> {
 
     private Long studentId;
@@ -36,8 +37,7 @@ public class StudentRequest implements CommonRequest<Student> {
     }
 
     public boolean isUpdateRequest() {
-        return CheckUtils.isLongNumber(this.getStudentId()) &&
-                CheckUtils.isPassword(this.getStudentSecret())
+        return CheckUtils.isLongNumber(this.getStudentId())
                 && CheckUtils.isName(this.getStudentName())
                 && CheckUtils.isIntegerNumber(this.getClassId())
                 && CheckUtils.isIntegerNumber(this.getDepartmentId())
@@ -49,11 +49,11 @@ public class StudentRequest implements CommonRequest<Student> {
         Department department = Department.builder().build().withDepartmentId(this.getDepartmentId());
         Grade grade = Grade.builder().build().withGradeId(this.getGradeId());
         Major major = Major.builder().build().withMajorId(this.getMajorId());
-        StudentClass studentClass = StudentClass.builder().build().withClassId(this.getClassId()).withGrade(grade).withDepartment(department).withMajor(major);
+        StudentClass studentClass = StudentClass.builder().build().withClassId(this.getClassId()).withMajor(major).withGrade(grade).withDepartment(department);
         return Student.builder().build()
                 .withStudentId(this.getStudentId())
-                .withStudentSecret(DigestUtils.md5DigestAsHex(this.getStudentSecret().getBytes()))
                 .withStudentName(this.getStudentName())
+                .withStudentSecret(DigestUtils.md5DigestAsHex(this.getStudentSecret().getBytes()))
                 .withStudentClass(studentClass);
     }
 

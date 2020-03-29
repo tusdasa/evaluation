@@ -24,7 +24,7 @@ public class MajorServiceImpl implements MajorService {
     }
 
     @Override
-    public Major findById(Integer id) {
-        return majorMapper.selectByPrimaryKey(id);
+    public Major findById(Integer majorId) {
+        return majorMapper.selectByPrimaryKey(majorId);
     }
 }

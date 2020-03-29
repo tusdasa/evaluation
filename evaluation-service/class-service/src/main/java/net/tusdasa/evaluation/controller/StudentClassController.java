@@ -3,9 +3,8 @@ package net.tusdasa.evaluation.controller;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.StudentClass;
 import net.tusdasa.evaluation.service.StudentClassService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import net.tusdasa.evaluation.vo.StudentClassRequest;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -18,17 +17,30 @@ public class StudentClassController {
     }
 
     @GetMapping("/")
-    public CommonResponse<StudentClass> findAll() {
+    public CommonResponse<StudentClass> findAllStudentClass() {
         return new CommonResponse<StudentClass>().ok().table(this.studentClassService.findAll());
     }
 
-    @GetMapping("/{id}")
-    public CommonResponse<StudentClass> findById(@PathVariable Integer id) {
-        StudentClass studentClass = this.studentClassService.findStudentClassById(id);
+    @GetMapping("/{studentClassId}")
+    public CommonResponse<StudentClass> findByStudentClassId(@PathVariable("studentClassId") Integer studentClassId) {
+        StudentClass studentClass = this.studentClassService.findStudentClassById(studentClassId);
         if (studentClass != null) {
             return new CommonResponse<StudentClass>().ok().data(studentClass);
         }
         return new CommonResponse<StudentClass>().error("未找到");
     }
+
+    @PostMapping("/")
+    public CommonResponse<String> createStudentClass(@RequestBody StudentClassRequest request) {
+        this.studentClassService.addStudentClass(request);
+        return new CommonResponse<String>().ok();
+    }
+
+    @PutMapping("/")
+    public CommonResponse<String> updateStudentClass(@RequestBody StudentClassRequest request) {
+        this.studentClassService.updateStudentClass(request);
+        return new CommonResponse<String>().ok();
+    }
+
 
 }

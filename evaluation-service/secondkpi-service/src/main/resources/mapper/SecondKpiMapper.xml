@@ -1,82 +1,116 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.tusdasa.evaluation.dao.SecondKpiMapper">
-  <resultMap id="BaseResultMap" type="net.tusdasa.evaluation.entity.SecondKpi">
-    <id column="second_kpi_id" jdbcType="INTEGER" property="secondKpiId" />
-    <result column="first_kpi_id" jdbcType="INTEGER" property="firstKpiId" />
-    <result column="second_kpi_content" jdbcType="VARCHAR" property="secondKpiContent" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    second_kpi_id, first_kpi_id, second_kpi_content
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from `t_second_kpi`
-    where second_kpi_id = #{secondKpiId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from `t_second_kpi`
-    where second_kpi_id = #{secondKpiId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="net.tusdasa.evaluation.entity.SecondKpi">
-    insert into `t_second_kpi` (second_kpi_id, first_kpi_id, second_kpi_content
-      )
-    values (#{secondKpiId,jdbcType=INTEGER}, #{firstKpiId,jdbcType=INTEGER}, #{secondKpiContent,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="net.tusdasa.evaluation.entity.SecondKpi">
-    insert into `t_second_kpi`
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="secondKpiId != null">
-        second_kpi_id,
-      </if>
-      <if test="firstKpiId != null">
-        first_kpi_id,
-      </if>
-      <if test="secondKpiContent != null">
-        second_kpi_content,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="secondKpiId != null">
-        #{secondKpiId,jdbcType=INTEGER},
-      </if>
-      <if test="firstKpiId != null">
-        #{firstKpiId,jdbcType=INTEGER},
-      </if>
-      <if test="secondKpiContent != null">
-        #{secondKpiContent,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="net.tusdasa.evaluation.entity.SecondKpi">
-    update `t_second_kpi`
-    <set>
-      <if test="firstKpiId != null">
-        first_kpi_id = #{firstKpiId,jdbcType=INTEGER},
-      </if>
-      <if test="secondKpiContent != null">
-        second_kpi_content = #{secondKpiContent,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where second_kpi_id = #{secondKpiId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="net.tusdasa.evaluation.entity.SecondKpi">
-    update `t_second_kpi`
-    set first_kpi_id = #{firstKpiId,jdbcType=INTEGER},
-      second_kpi_content = #{secondKpiContent,jdbcType=VARCHAR}
-    where second_kpi_id = #{secondKpiId,jdbcType=INTEGER}
-  </update>
-  <select id="findAll" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from `t_second_kpi`
-  </select>
-  <select id="findAllByFirstKpiId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from `t_second_kpi`
-    where first_kpi_id=#{firstKpiId,jdbcType=INTEGER}
-  </select>
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+    <resultMap id="BaseResultMap" type="net.tusdasa.evaluation.entity.SecondKpi">
+        <id column="second_kpi_id" jdbcType="INTEGER" property="secondKpiId"/>
+        <result column="first_kpi_id" jdbcType="INTEGER" property="firstKpiId"/>
+        <result column="second_kpi_content" jdbcType="VARCHAR" property="secondKpiContent"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        second_kpi_id, first_kpi_id, second_kpi_content
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_second_kpi`
+        where second_kpi_id = #{secondKpiId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" flushCache="true">
+        delete
+        from `t_second_kpi`
+        where second_kpi_id = #{secondKpiId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="net.tusdasa.evaluation.entity.SecondKpi" flushCache="true">
+        insert into `t_second_kpi` (second_kpi_id, first_kpi_id, second_kpi_content)
+        values (#{secondKpiId,jdbcType=INTEGER}, #{firstKpiId,jdbcType=INTEGER}, #{secondKpiContent,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="net.tusdasa.evaluation.entity.SecondKpi" flushCache="true">
+        insert into `t_second_kpi`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="secondKpiId != null">
+                second_kpi_id,
+            </if>
+            <if test="firstKpiId != null">
+                first_kpi_id,
+            </if>
+            <if test="secondKpiContent != null">
+                second_kpi_content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="secondKpiId != null">
+                #{secondKpiId,jdbcType=INTEGER},
+            </if>
+            <if test="firstKpiId != null">
+                #{firstKpiId,jdbcType=INTEGER},
+            </if>
+            <if test="secondKpiContent != null">
+                #{secondKpiContent,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="net.tusdasa.evaluation.entity.SecondKpi" flushCache="true">
+        update `t_second_kpi`
+        <set>
+            <if test="firstKpiId != null">
+                first_kpi_id = #{firstKpiId,jdbcType=INTEGER},
+            </if>
+            <if test="secondKpiContent != null">
+                second_kpi_content = #{secondKpiContent,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where second_kpi_id = #{secondKpiId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="net.tusdasa.evaluation.entity.SecondKpi" flushCache="true">
+        update `t_second_kpi`
+        set first_kpi_id       = #{firstKpiId,jdbcType=INTEGER},
+            second_kpi_content = #{secondKpiContent,jdbcType=VARCHAR}
+        where second_kpi_id = #{secondKpiId,jdbcType=INTEGER}
+    </update>
+    <select id="findAll" resultMap="BaseResultMap" useCache="true">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_second_kpi`
+    </select>
+    <select id="findAllByFirstKpiId" parameterType="java.lang.Integer" resultMap="BaseResultMap" useCache="true">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_second_kpi`
+        where first_kpi_id=#{firstKpiId,jdbcType=INTEGER}
+    </select>
+    <select id="findAllByFirstKpiIdAndSecondKpiIds" parameterType="java.util.Map" resultMap="BaseResultMap"
+            useCache="true">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_second_kpi`
+        where first_kpi_id=#{firstKpiId,jdbcType=INTEGER} and second_kpi_id in
+        <foreach item="secondKpiId" collection="secondKpiIds" open="(" separator="," close=")">
+            #{secondKpiId,jdbcType=INTEGER}
+        </foreach>
+    </select>
+    <select id="finAllFirstKpiIdsAndSecondKpiIds" resultMap="BaseResultMap" parameterType="java.util.Map"
+            useCache="true">
+        select
+        <include refid="Base_Column_List"/>
+        from `t_second_kpi`
+        where first_kpi_id in
+        <foreach collection="firstKpiIds" item="firstKpiId" open="(" separator="," close=")">
+            #{firstKpiId,jdbcType=INTEGER}
+        </foreach>
+        and second_kpi_id in
+        <foreach collection="secondKpiIds" item="secondKpiId" open="(" separator="," close=")">
+            #{secondKpiId,jdbcType=INTEGER}
+        </foreach>
+    </select>
+    <select id="findAllByFirstKpiIds" resultMap="BaseResultMap" useCache="true">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        t_second_kpi
+        WHERE first_kpi_id in
+        <foreach collection="firstKpiIds" item="firstKpiId" open="(" separator="," close=")">
+            #{firstKpiId,jdbcType=INTEGER}
+        </foreach>
+    </select>
 </mapper>

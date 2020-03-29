@@ -1,0 +1,34 @@
+server:
+  servlet:
+    context-path: /config
+  port: 7023
+spring:
+  application:
+    name: evaluation-config-service
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://www.lolik.top/git/tusdasa/config.git
+          search-paths: /
+          username: tusdasa
+          password: 3988978349
+      label: master
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        health-check-path: /config/actuator/health
+        tags: management.context-path=/config/actuator
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss:SSS
+    time-zone: GMT+8
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://tusdasa:8000/eureka/
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

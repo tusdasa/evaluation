@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.tusdasa.evaluation.dao.StudentClassMapper">
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"></cache>
     <resultMap id="BaseResultMap" type="net.tusdasa.evaluation.entity.StudentClass">
         <id column="class_id" jdbcType="INTEGER" property="classId"/>
         <result column="class_name" jdbcType="VARCHAR" property="className"/>

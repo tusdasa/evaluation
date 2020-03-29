@@ -1,9 +1,6 @@
 package net.tusdasa.evaluation.vo;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.With;
+import lombok.*;
 import net.tusdasa.evaluation.entity.Department;
 import net.tusdasa.evaluation.entity.Professional;
 import net.tusdasa.evaluation.entity.Teacher;
@@ -15,6 +12,7 @@ import org.springframework.util.DigestUtils;
 @AllArgsConstructor
 @NoArgsConstructor
 @With
+@Builder
 public class TeacherRequest implements CommonRequest<Teacher> {
 
     private Integer workId;
@@ -50,7 +48,7 @@ public class TeacherRequest implements CommonRequest<Teacher> {
     public boolean isUpdateRequest() {
         return CheckUtils.isIntegerNumber(this.getWorkId())
                 && CheckUtils.isName(this.getTeacherName())
-                && CheckUtils.isPassword(this.getTeacherSecret())
+                //&& CheckUtils.isPassword(this.getTeacherSecret())
                 && CheckUtils.isIntegerNumber(this.getDepartmentId())
                 && CheckUtils.isIntegerNumber(this.getProfessionalId())
                 && CheckUtils.isIntegerNumber(this.getRoleId())

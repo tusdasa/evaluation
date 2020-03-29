@@ -1,0 +1,100 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: evaluation-gateway
+  profiles:
+    active: dev
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      config:
+        enabled: true
+        format: yaml
+        prefix: config
+        data-key: data
+        default-context: evaluation-gateway-service
+      discovery:
+        tags: user.name=admin,user.password=admin1
+    gateway:
+      httpclient:
+        connect-timeout: 6000
+        response-timeout: 60s
+      discovery:
+        locator:
+          enabled: false
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            allowCredentials: true
+            maxAge: 18000
+      routes:
+        # 认证服务
+        - id: evaluation-authorization-service
+          uri: lb://evaluation-authorization-service
+          predicates:
+            - Path=/auth,/auth/,/auth/**,/auth/**/**
+          filters:
+            # 熔断
+            - name: Hystrix
+              args:
+                name: fallback
+                fallbackUri: forward:/fallback
+        # 学生评价服务
+        - id: evaluation-studentevaluation-service
+          uri: lb://evaluation-studentevaluation-service
+          predicates:
+            - Path=/sevaluation,/sevaluation/,/sevaluation/**,/sevaluation/**/**
+          filters:
+            - name: Hystrix
+              args:
+                name: fallback
+                fallbackUri: forward:/fallback
+        # 教师评价服务
+        - id: evaluation-teacher-evaluation
+          uri: lb://evaluation-teacher-evaluation
+          predicates:
+            - Path=/tevaluation,/tevaluation/,/tevaluation/**,/tevaluation/**/**
+          filters:
+            - name: Hystrix
+              args:
+                name: fallback
+                fallbackUri: forward:/fallback
+        # 管理中心服务
+        - id: evaluation-admin-service
+          uri: lb://evaluation-admin-service
+          predicates:
+            - Path=/admin,/admin/,/admin/**,/admin/**/**,/admin/**/**/**
+          filters:
+            - name: Hystrix
+              args:
+                name: fallback
+                fallbackUri: forward:/fallback
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 100000
+
+auth:
+  secret: 9O2B+amfn52nzowCysmC7+hfuA0q9xvxcgLU1UDVYwM=

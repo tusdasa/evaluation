@@ -1,11 +1,48 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>教学评价系统学生入口</title>
+    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/images/favicon.ico"/>
+    <!--[if lt IE 9]>
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<div class="container">
+    <div class="page-header">
+        <h1>SSO登入</h1>
+    </div>
+    <div>
+        <% if (msg) { %>
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <div class="alert alert-dismissable alert-warning" style="height: 60px;">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <strong><%= msg %></strong>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+        <div class="row clearfix">
+            <div class="col-md-6 column">
+                <button type="button" class="btn btn-block btn-lg" style="width: 100%; height: 200px;">学生</button>
+            </div>
+            <div class="col-md-6 column">
+                <button type="button" class="btn btn-block btn-lg" style="width: 100%; height: 200px;">教师</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/javascripts/jquery-3.4.1.min.js"></script>
+<script src="/javascripts/bootstrap.min.js"></script>
+<script src="/javascripts/lib.js"></script>
+</body>
+
 </html>

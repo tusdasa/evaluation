@@ -1,0 +1,33 @@
+server:
+  port: 7555
+  servlet:
+    context-path: /admin
+spring:
+  application:
+    name: evaluation-admin-service
+    tomcat:
+      max-active: 4
+      min-idle: 2
+      initial-size: 2
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        health-check-path: /admin/actuator/health
+        tags: management.context-path=/admin/actuator
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss:SSS
+    time-zone: GMT+8
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://tusdasa:8000/eureka/
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

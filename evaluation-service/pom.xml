@@ -14,29 +14,28 @@
     <description>
         教学评价系统-微服务-微服务组件
     </description>
-
     <modules>
         <module>commons</module>
         <module>student-service</module>
-        <module>authority-service</module>
+        <module>authorization-service</module>
         <module>teacher-service</module>
         <module>course-service</module>
         <module>firstkpi-service</module>
         <module>secondkpi-service</module>
         <module>thirdkpi-service</module>
         <module>academicyear-service</module>
-        <module>term-service</module>
         <module>grade-service</module>
         <module>data-service</module>
         <module>class-service</module>
+        <module>student-evaluation</module>
+        <module>calculationrules-service</module>
+        <module>config-service</module>
+        <module>analysis-service</module>
+        <module>teacher-evaluation</module>
+        <module>admin-service</module>
+        <module>calculation-service</module>
+        <module>mathutils</module>
     </modules>
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-netflix-eureka-client</artifactId>
-        </dependency>
-    </dependencies>
-
     <artifactId>evaluation-service</artifactId>
 
 </project>

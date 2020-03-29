@@ -1,9 +1,6 @@
 package net.tusdasa.evaluation.vo;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.With;
+import lombok.*;
 import net.tusdasa.evaluation.entity.AcademicYear;
 import net.tusdasa.evaluation.entity.Term;
 import net.tusdasa.evaluation.utils.CheckUtils;
@@ -12,6 +9,7 @@ import net.tusdasa.evaluation.utils.CheckUtils;
 @AllArgsConstructor
 @NoArgsConstructor
 @With
+@Builder
 public class AcademicYearRequest implements CommonRequest<AcademicYear> {
 
     private Integer academicYearId;

@@ -1,0 +1,46 @@
+server:
+  port: 7030
+  servlet:
+    context-path: /analysis
+spring:
+  application:
+    name: evaluation-analysis-service
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        health-check-path: /analysis/actuator/health
+        tags: management.context-path=/analysis/actuator
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss:SSS
+    time-zone: GMT+8
+  elasticsearch:
+    rest:
+      uris: http://127.0.0.1:9200
+      connection-timeout: 10s
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: evaluation
+    password: 123456
+  data:
+    mongodb:
+      uri: mongodb://127.0.0.1:27017/evaluation
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://tusdasa:8000/eureka/
+feign:
+  hystrix:
+    enabled: true
+  okhttp:
+    enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

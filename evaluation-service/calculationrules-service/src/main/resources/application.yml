@@ -1,0 +1,48 @@
+server:
+  port: 7015
+  servlet:
+    context-path: /calc
+spring:
+  application:
+    name: evaluation-calculationrule-service
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/xynu_evaluation?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    tomcat:
+      max-active: 4
+      min-idle: 2
+      initial-size: 2
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 6
+  cache:
+    type: redis
+    redis:
+      time-to-live: 604800
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss:SSS
+    time-zone: GMT+8
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        health-check-path: /calc/actuator/health
+        tags: management.context-path=/calc/actuator
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://tusdasa:8000/eureka/
+mybatis:
+  config-location: classpath:myBatisConfig.xml
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

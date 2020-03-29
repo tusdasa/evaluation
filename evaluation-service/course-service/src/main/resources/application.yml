@@ -14,12 +14,35 @@ spring:
       max-active: 4
       min-idle: 2
       initial-size: 2
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 3
+  cache:
+    type: redis
+    redis:
+      time-to-live: 604800
   jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
+    date-format: yyyy-MM-dd HH:mm:ss:SSS
     time-zone: GMT+8
-eureka:
-  client:
-    service-url:
-      defaultZone: http://tusdasa:8000/eureka/
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        health-check-path: /course/actuator/health
+        tags: management.context-path=/course/actuator
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://tusdasa:8000/eureka/
 mybatis:
   config-location: classpath:myBatisConfig.xml
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

@@ -7,12 +7,14 @@
         <module>evaluation-eureka</module>
         <module>evaluation-zuul</module>
         <module>evaluation-service</module>
+        <module>evaluation-gateway</module>
+        <module>evaluation-operations</module>
     </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.4.RELEASE</version>
+        <version>2.2.5.RELEASE</version>
         <relativePath/>
     </parent>
 
@@ -41,8 +43,9 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <spring-cloud.version>Hoxton.SR1</spring-cloud.version>
-        <out.file>E:/Project/evaluation_app/bulid/</out.file>
+        <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
+        <spring-boot-admin.version>2.2.1</spring-boot-admin.version>
+        <output.jar.location>${env.BUILD_DIR}</output.jar.location>
     </properties>
 
     <dependencies>
@@ -64,17 +67,16 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <outputDirectory>
-                        ${out.file}
-                    </outputDirectory>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <repositories>
+        <repository>
+            <id>spring</id>
+            <url>https://maven.aliyun.com/repository/spring</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 </project>

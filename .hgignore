@@ -1,7 +1,11 @@
 syntax: glob
 *.class
 *.iml
+*.jar
+*.log
 syntax: regexp
 ^\.idea/
 ^target$
-bulid/
+build
+^node_modules/
+evaluation-service/web/

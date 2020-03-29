@@ -1,0 +1,66 @@
+server:
+  port: 7002
+  servlet:
+    context-path: /auth
+spring:
+  application:
+    name: evaluation-authorization-service
+    admin:
+      enabled: true
+      client:
+        url: evaluation-operations
+  profiles:
+    active: dev
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss:SSS
+    time-zone: GMT+8
+  data:
+    mongodb:
+      uri: mongodb://127.0.0.1:27017/right
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 10
+    tomcat:
+      max-active: 4
+      min-idle: 2
+      initial-size: 2
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        health-check-path: /auth/actuator/health
+        tags: management.context-path=/auth/actuator
+      config:
+        enabled: true
+        format: yaml
+        prefix: config
+        data-key: data
+        # config/evaluation-authorization-service,dev/data
+        default-context: evaluation-authorization-service
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+#    config:
+#      uri: http://localhost:7023/config/
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://tusdasa:8000/eureka/
+feign:
+  hystrix:
+    enabled: true
+  okhttp:
+    enabled: true
+#mybatis:
+#  config-location: classpath:myBatisConfig.xml
+
+# 加密密钥
+auth:
+  secret: 9O2B+amfn52nzowCysmC7+hfuA0q9xvxcgLU1UDVYwM=

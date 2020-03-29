@@ -24,7 +24,7 @@ public class TeacherStateServiceImpl implements TeacherStateService {
     }
 
     @Override
-    public TeacherState findById(Integer id) {
-        return teacherStateMapper.selectByPrimaryKey(id);
+    public TeacherState findById(Integer stateId) {
+        return teacherStateMapper.selectByPrimaryKey(stateId);
     }
 }

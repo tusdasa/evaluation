@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>评测</title>
+    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/images/favicon.ico"/>
+    <script src="https://cdn.bootcss.com/axios/0.19.0/axios.js"></script>
+    <!--[if lt IE 9]>
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-1 col-sm-1 col-xs-1 column"></div>
+        <div class="col-md-10 col-sm-10 col-xs-10 column">
+            <% if (msg) { %>
+                <strong><%= msg %></strong>
+            <% } %>
+            <% if (kpi) { %>
+                <h1 class="text-center">
+                    评教
+                </h1>
+                <p class="text-info text-center">
+                    <strong></strong>
+                </p>
+                <form role="form" id="f1" action="evaluation/result" method="post"
+                      enctype="application/x-www-form-urlencoded">
+                    <input type="hidden" value="<%= courseId %>" name="courseId" id="courseId">
+                    <input type="hidden" value="<%= termId %>" name="termId" id="termId">
+                    <% kpi.forEach(function(kp){ %>
+                        <div class="form-group">
+                            <label><strong><%= kp.thirdKpiContent %></strong></label>
+                            <select class="form-control" name="<%= kp.thirdKpiId %>">
+                                <option selected="selected" value="-1">请选择</option>
+                                <option value="6">很好</option>
+                                <option value="4">较好</option>
+                                <option value="2">一般</option>
+                                <option value="0">较差</option>
+                            </select>
+                        </div>
+                    <% }); %>
+                    <button type="button" onclick="submitData()" class="btn btn-primary btn-block btn-default">提交
+                    </button>
+                </form>
+        </div>
+        <% } %>
+    </div>
+    <div class="col-md-offset-1 col-sm-1 col-xs-1 column"></div>
+</div>
+<script src="/javascripts/jquery-3.4.1.min.js"></script>
+<script src="/javascripts/bootstrap.min.js"></script>
+<script>
+    function check() {
+        let obs = $("#f1")[0];
+        let i = 2
+        for (; i < obs.elements.length; i++) {
+            if (obs.elements[i].value == -1) {
+                break;
+            }
+        }
+        if (i < obs.elements.length) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
+    function submitData() {
+        if (!check()) {
+            alert("您有未选择的选项");
+            return
+        }
+        let request = {}
+        let list = new Array()
+        request.scores = []
+        let obs = $("#f1")[0];
+        let i = 2
+        for (; i < obs.elements.length; i++) {
+            let brs = {}
+            let n = obs.elements[i].name;
+            let v = obs.elements[i].value;
+            brs.kid = Number(n);
+            brs.score = Number(v);
+            list.push(brs);
+        }
+        request.courseId = obs.elements[0].value;
+        request.termId = obs.elements[1].value;
+        request.kpiScoreList = list;
+
+        axios.post('/evaluation/result', request)
+            .then(function (response) {
+                if (response.status == 200) {
+                    alert("提交成功");
+                    location.href = "http://" + window.location.host + "/course";
+                } else {
+                    alert("提交失败请重试!")
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+
+</script>
+</body>
+
+</html>

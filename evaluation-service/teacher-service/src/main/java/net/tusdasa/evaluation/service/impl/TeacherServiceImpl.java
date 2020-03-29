@@ -7,6 +7,7 @@ import net.tusdasa.evaluation.service.TeacherService;
 import net.tusdasa.evaluation.vo.TeacherRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.DigestUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -40,12 +41,17 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public void updateTeacher(TeacherRequest request) {
         Teacher teacher = teacherMapper.selectByPrimaryKey(request.getWorkId());
-        if (teacher.compareTo(request) != 0) {
-            teacherMapper.updateByPrimaryKeySelective(request.build());
+        if (teacher != null) {
+            Teacher newTeacher = request.build();
+            if (request.getTeacherSecret() == null || "".equals(request.getTeacherSecret())) {
+                newTeacher.setTeacherSecret(null);
+            }
+            this.teacherMapper.updateByPrimaryKeySelective(newTeacher);
             log.info("update teacher {}", request);
         }
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Map<String, Object> findTeacherByPassword(Integer workId, String password) {
         Map<String, Object> map = new HashMap<>();
@@ -58,11 +64,11 @@ public class TeacherServiceImpl implements TeacherService {
                 map.put("obj", teacher);
             } else {
                 map.put("code", -1);
-                map.put("msg", "密码错误");
+                map.put("msg", "工号或密码错误");
             }
         } else {
             map.put("code", 0);
-            map.put("msg", "不存在");
+            map.put("msg", "工号不存在");
         }
         return map;
 
@@ -81,5 +87,47 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public Teacher findTeacherByWorldId(Integer workId) {
         return teacherMapper.selectByPrimaryKey(workId);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Teacher> findAllTeacherByRoleAndDepartment(Integer departmentId, Integer stateId, Integer roleId) {
+        HashMap<String, Integer> parameter = new HashMap<>();
+        parameter.put("departmentId", departmentId);
+        parameter.put("stateId", stateId);
+        parameter.put("roleId", roleId);
+        return this.teacherMapper.findAllTeacherByRoleAndDepartment(parameter);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Teacher> findAllTeacherByRoleAndDepartmentByPage(Integer departmentId, Integer stateId, Integer roleId, int page, int size) {
+        HashMap<String, Integer> parameter = new HashMap<>();
+        parameter.put("departmentId", departmentId);
+        parameter.put("stateId", stateId);
+        parameter.put("roleId", roleId);
+        parameter.put("page", page);
+        parameter.put("size", size);
+        return this.teacherMapper.findAllTeacherByRoleAndDepartmentByPage(parameter);
+    }
+
+    @Override
+    public boolean restPassword(Integer workId, String newPassword, String oldPassword) {
+        Teacher teacher = this.teacherMapper.selectByPrimaryKey(workId);
+        if (teacher != null && teacher.getTeacherSecret().equals(DigestUtils.md5DigestAsHex(oldPassword.getBytes()))) {
+            teacher.setTeacherSecret(DigestUtils.md5DigestAsHex(newPassword.getBytes()));
+            this.teacherMapper.restPassword(teacher);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public long countByRoleAndDepartment(Integer departmentId, Integer stateId, Integer roleId) {
+        HashMap<String, Integer> parameter = new HashMap<>();
+        parameter.put("departmentId", departmentId);
+        parameter.put("stateId", stateId);
+        parameter.put("roleId", roleId);
+        return this.teacherMapper.countByRoleAndDepartment(parameter);
     }
 }

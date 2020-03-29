@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>info</title>
+</head>
+<body>
+<table border="1" cellspacing="0">
+    <tr>
+        <th>指标</th>
+        <th>值</th>
+    </tr>
+    <tr>
+        <td>下次刷新时间</td>
+        <td>{{ num }}</td>
+    </tr>
+    <tr>
+        <td rowspan="2">服务信息</td>
+    </tr>
+    {% for _, host in ipairs(hosts) do %}
+    <tr>
+        <td>{{ host.host }}</td>
+        <td>{{ host.port }}</td>
+    </tr>
+    {% end %}
+</table>
+</body>
+</html>

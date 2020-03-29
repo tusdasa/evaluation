@@ -1,6 +1,17 @@
 package net.tusdasa.evaluation.utils;
 
+/**
+ * 校验工具类
+ *
+ * @author tusdasa
+ * @version 1.0
+ */
+
 public class CheckUtils {
+
+    public static boolean isObject(Object object) {
+        return object != null;
+    }
 
     public static boolean isString(String string) {
         return string != null && !"".equals(string) && !string.isEmpty() && string.length() >= 1;

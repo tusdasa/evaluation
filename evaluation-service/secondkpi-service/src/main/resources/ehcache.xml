@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
+
+    <diskStore path="java.io.tmpdir/second"/>
+    <defaultCache
+            maxElementsInMemory="10000"
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="120"
+            maxElementsOnDisk="10000000"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap"/>
+    </defaultCache>
+    <cache name="allSecondKpi" maxElementsInMemory="100"
+           timeToIdleSeconds="604800"
+           timeToLiveSeconds="604800"
+           memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap"/>
+    </cache>
+    <cache name="firstKpiId" maxElementsInMemory="100"
+           timeToIdleSeconds="604800"
+           timeToLiveSeconds="604800"
+           memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap"/>
+    </cache>
+    <cache name="firstKpiIdAndSecondKpiIds" maxElementsInMemory="100"
+           timeToIdleSeconds="604800"
+           timeToLiveSeconds="604800"
+           memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap"/>
+    </cache>
+    <cache name="firstKpiIdsAndSecondKpiIds" maxElementsInMemory="100"
+           timeToIdleSeconds="604800"
+           timeToLiveSeconds="604800"
+           memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap"/>
+    </cache>
+    <cache name="firstKpiIds" maxElementsInMemory="100"
+           timeToIdleSeconds="604800"
+           timeToLiveSeconds="604800"
+           memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap"/>
+    </cache>
+</ehcache>

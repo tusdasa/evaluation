@@ -1,17 +1,15 @@
 package net.tusdasa.evaluation;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cloud.client.SpringCloudApplication;
 
-//@EnableFeignClients
-//@EnableCircuitBreaker
-@EnableEurekaClient
-@SpringBootApplication
+@EnableCaching
+@SpringCloudApplication
 public class ThirdKpiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ThirdKpiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ThirdKpiApplication.class, args);
+    }
 
 }

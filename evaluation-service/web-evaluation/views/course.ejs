@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>选择课程</title>
+    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/images/favicon.ico"/>
+    <!--[if lt IE 9]>
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-1 col-sm-1 col-xs-1 column"></div>
+        <div class="col-md-10 col-sm-10 col-xs-10 column">
+            <h1>评价课程</h1>
+            <% if (msg) { %>
+                <div class="row clearfix">
+                    <div class="col-md-12 col-sm-12 col-xs-12 column">
+                        <div class="alert alert-success alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <strong><%= msg %></strong>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+            <% if (course) { %>
+
+                <div class="list-group">
+                    <a href="#" class="list-group-item active">未评价课程</a>
+                    <% course.forEach(function(c){ %>
+                        <div class="list-group-item">
+                            <a href="evaluation?c=<%= c.courseId %>&t=<%= c.termId %>"
+                               class="list-group-item-heading"><%= c.courseName %></a>
+                        </div>
+                    <% }); %>
+                </div>
+
+            <% } %>
+        </div>
+        <div class="col-md-offset-1 col-sm-1 col-xs-1 column"></div>
+    </div>
+    <script src="/javascripts/jquery-3.4.1.min.js"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
+</body>
+
+</html>

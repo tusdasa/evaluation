@@ -1,6 +1,10 @@
 spring:
   application:
     name: evaluation-eureka-server
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
 server:
   port: 8000
 eureka:

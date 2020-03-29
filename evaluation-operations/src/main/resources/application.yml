@@ -1,0 +1,34 @@
+server:
+  port: 8084
+spring:
+  application:
+    name: evaluation-operations
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
+  mail:
+    #host: smtp.qiye.aliyun.com
+    host: 127.0.0.1
+    default-encoding: UTF-8
+    #port: 465
+    prot: 22
+    protocol: smtp
+    #username: service@tusdasa.net
+    username: tusdasa@mail.local.net
+    password: 123456
+    properties:
+      mail:
+        smtp:
+          auth: true
+          #starttls:
+          #  enable: true
+          #  required: true
+          #ssl:
+          #  enable: true
+  boot:
+    admin:
+      notify:
+        mail:
+          to: test@mail.local.net
+          from: tusdasa@mail.local.net

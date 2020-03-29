@@ -3,6 +3,7 @@ package net.tusdasa.evaluation.service.impl;
 import net.tusdasa.evaluation.dao.CourseMapper;
 import net.tusdasa.evaluation.entity.Course;
 import net.tusdasa.evaluation.service.CourseService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,30 +20,51 @@ public class CourseServiceImpl implements CourseService {
         this.courseMapper = courseMapper;
     }
 
+    @Cacheable(value = "findCourseByStudentClassId", key = "methodName + #classId")
     @Transactional(readOnly = true)
     @Override
-    public List<Course> findCourseByStudentClass(Integer classId) {
-        return this.courseMapper.findCourseByStudentClass(classId);
+    public List<Course> findCourseByStudentClassId(Integer classId) {
+        return this.courseMapper.findCourseByStudentClassId(classId);
     }
 
+    @Cacheable(value = "findCourseByStudentClassAndTermId", key = "methodName + #classId + #termId")
     @Transactional(readOnly = true)
     @Override
-    public List<Course> findCourseByTeacher(Integer workId) {
-        return this.courseMapper.findCourseByTeacher(workId);
+    public List<Course> findCourseByStudentClassAndTermId(Integer classId, Integer termId) {
+        Map<String, Integer> parameter = new HashMap<>();
+        parameter.put("classId", classId);
+        parameter.put("termId", termId);
+        return this.courseMapper.findCourseByStudentClassAndTermId(parameter);
     }
 
+    @Cacheable(value = "findCourseByWorkId", key = "methodName + #workId")
     @Transactional(readOnly = true)
     @Override
-    public List<Course> findAll(Integer page, Integer size) {
+    public List<Course> findCourseByWorkId(Integer workId) {
+        return this.courseMapper.findCourseByWorkId(workId);
+    }
+
+    @Cacheable(value = "findAllByPage", key = "methodName + #page + #size")
+    @Transactional(readOnly = true)
+    @Override
+    public List<Course> findAllByPage(Integer page, Integer size) {
         Map<String, Integer> parameter = new HashMap<>();
         parameter.put("page", page);
         parameter.put("size", size);
         return this.courseMapper.findAll(parameter);
     }
 
+    @Cacheable(value = "findCourseById", key = "methodName + #courseId")
     @Transactional(readOnly = true)
     @Override
-    public Course findById(Long courseId) {
+    public Course findCourseById(Long courseId) {
         return this.courseMapper.selectByPrimaryKey(courseId);
+    }
+
+    @Cacheable(value = "findAll", key = "methodName")
+    @Transactional(readOnly = true)
+    @Override
+    public List<Course> findAll() {
+        return this.courseMapper.findAll();
     }
 }

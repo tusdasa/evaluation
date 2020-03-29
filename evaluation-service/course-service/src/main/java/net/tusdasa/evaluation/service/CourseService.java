@@ -5,11 +5,16 @@ import net.tusdasa.evaluation.entity.Course;
 import java.util.List;
 
 public interface CourseService {
-    List<Course> findCourseByStudentClass(Integer classId);
 
-    List<Course> findCourseByTeacher(Integer workId);
+    List<Course> findCourseByStudentClassId(Integer classId);
 
-    List<Course> findAll(Integer page, Integer size);
+    List<Course> findCourseByStudentClassAndTermId(Integer classId, Integer termId);
 
-    Course findById(Long courseId);
+    List<Course> findCourseByWorkId(Integer workId);
+
+    List<Course> findAllByPage(Integer page, Integer size);
+
+    Course findCourseById(Long courseId);
+
+    List<Course> findAll();
 }

@@ -6,7 +6,10 @@ import net.tusdasa.evaluation.vo.FirstKpiRequest;
 import java.util.List;
 
 public interface FirstKpiService {
-    List<FirstKpi> findAllFirstKpiByAcademicYear(Integer academicYearId);
+
+    //List<FirstKpi> findAllByAcademicYearAndId(Integer academicYearId, Integer firstKpiId);
+
+    //List<FirstKpi> findAllFirstKpiByAcademicYear(Integer academicYearId);
 
     List<FirstKpi> findAll();
 
@@ -17,4 +20,6 @@ public interface FirstKpiService {
     void addFirstKpi(FirstKpiRequest request);
 
     void deleteFirstKpi(Integer firstKpiId);
+
+    //List<FirstKpi> findAllByAcademicYearAndIds(Integer academicYearId, IdsRequest firstKpiIds);
 }

@@ -1,0 +1,108 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: evaluation-zuul-service
+  profiles:
+    active: dev
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    #    config:
+    #      uri: http://localhost:7023/config/
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      config:
+        enabled: true
+        format: yaml
+        prefix: config
+        data-key: data
+        # config/evaluation-zuul-service,dev/data
+        default-context: evaluation-zuul-service
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 10
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://tusdasa:8000/eureka/
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 100000
+ribbon:
+  ReadTimeout: 30000
+  ConnectTimeout: 20000
+zuul:
+  prefix: /service
+  #  host:
+  #    connect-timeout-millis: 30000
+  #    socket-timeout-millis: 30000
+  #    connection-request-timeout-millis: 30000
+  #    max-total-connections: 500
+  routes:
+#    student:
+    #      path: /student/**
+    #      serviceId: evaluation-student-service
+    #      strip-prefix: false
+    #    teacher:
+    #      path: /teacher/**
+    #      serviceId: evaluation-teacher-service
+    #      strip-prefix: false
+    #    course:
+    #      path: /course/**
+    #      serviceId: evaluation-course-service
+    #      strip-prefix: false
+    #    data:
+    #      path: /data/**
+    #      serviceId: evaluation-data-service
+    #      strip-prefix: false
+    #    thirdkpi:
+    #      path: /thirdkpi/**
+    #      serviceId: evaluation-thirdkpi-service
+    #      strip-prefix: false
+    auth:
+      path: /auth/**
+      serviceId: evaluation-authorization-service
+      strip-prefix: false
+    studentevaluation:
+      path: /sevaluation/**
+      serviceId: evaluation-studentevaluation-service
+      strip-prefix: false
+    teachentevaluation:
+      path: /tevaluation/**
+      serviceId: evaluation-teacher-evaluation
+      strip-prefix: false
+    admin:
+      path: /admin/**
+      serviceId: evaluation-admin-service
+      strip-prefix: false
+  ignored-patterns:
+    - /student/**
+    - /teacher/**
+    - /course/**
+    - /data/**
+    - /thirdkpi/**
+    - /academic/**
+    - evaluation-student-service
+    - evaluation-teacher-service
+    - evaluation-course-service
+    - evaluation-data-service
+    - evaluation-thirdkpi-service
+    - evaluation-academic-service
+# 加密密钥
+auth:
+  secret: 9O2B+amfn52nzowCysmC7+hfuA0q9xvxcgLU1UDVYwM=
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

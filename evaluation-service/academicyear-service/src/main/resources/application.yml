@@ -1,8 +1,11 @@
 server:
-  port: 7003
+  port: 6996
   servlet:
     context-path: /academic
 spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss:SSS
+    time-zone: GMT+8
   application:
     name: evaluation-academic-service
   datasource:
@@ -14,12 +17,32 @@ spring:
       max-active: 4
       min-idle: 2
       initial-size: 2
-  jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: GMT+8
-eureka:
-  client:
-    service-url:
-      defaultZone: http://tusdasa:8000/eureka/
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        health-check-path: /academic/actuator/health
+        tags: management.context-path=/academic/actuator
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 1
+  cache:
+    type: redis
+    redis:
+      time-to-live: 604800
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://tusdasa:8000/eureka/
 mybatis:
   config-location: classpath:myBatisConfig.xml
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

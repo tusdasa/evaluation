@@ -1,0 +1,45 @@
+server:
+  port: 7052
+  servlet:
+    context-path: /tevaluation
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss:SSS
+    time-zone: GMT+8
+  application:
+    name: evaluation-teacher-evaluation
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        health-check-path: /tevaluation/actuator/health
+        tags: management.context-path=/tevaluation/actuator
+  data:
+    mongodb:
+      uri: mongodb://127.0.0.1:27017/evaluation
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: evaluation
+    password: 123456
+    connection-timeout: 15000
+    publisher-returns: true
+    publisher-confirm-type: correlated
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://tusdasa:8000/eureka/
+feign:
+  hystrix:
+    enabled: true
+  okhttp:
+    enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

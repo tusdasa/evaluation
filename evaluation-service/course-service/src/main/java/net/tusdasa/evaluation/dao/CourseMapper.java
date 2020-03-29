@@ -10,9 +10,14 @@ import java.util.Map;
 @Repository
 @Mapper
 public interface CourseMapper extends BaseDao<Course, Long> {
-    List<Course> findCourseByStudentClass(Integer classId);
+    // Integer classId, Integer termId
+    List<Course> findCourseByStudentClassAndTermId(Map<String, Integer> parameter);
 
-    List<Course> findCourseByTeacher(Integer workId);
+    List<Course> findCourseByStudentClassId(Integer classId);
+
+    List<Course> findCourseByWorkId(Integer workId);
 
     int insertClassAndCourse(Map<String, Long> parameter);
+
+    List<Course> findAll();
 }

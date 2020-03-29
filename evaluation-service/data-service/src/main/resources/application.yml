@@ -1,5 +1,5 @@
 server:
-  port: 7003
+  port: 7005
   servlet:
     context-path: /data
 spring:
@@ -14,12 +14,27 @@ spring:
       max-active: 4
       min-idle: 2
       initial-size: 2
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        health-check-path: /data/actuator/health
+        tags: management.context-path=/data/actuator
   jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
+    date-format: yyyy-MM-dd HH:mm:ss:SSS
     time-zone: GMT+8
-eureka:
-  client:
-    service-url:
-      defaultZone: http://tusdasa:8000/eureka/
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://tusdasa:8000/eureka/
 mybatis:
   config-location: classpath:myBatisConfig.xml
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
