@@ -149,6 +149,21 @@ public class StudentEvaluationInfoServiceImpl implements StudentEvaluationInfoSe
     }
 
     @Override
+    public long countAllByTermId(Integer termId) {
+        return studentEvaluationDao.countAllByTermId(termId);
+    }
+
+    @Override
+    public void deleteAllByTermId(Integer termId) {
+        studentEvaluationDao.deleteAllByTermId(termId);
+    }
+
+    @Override
+    public long countAllByTermIdAndAndDepartmentId(Integer termId, Integer departmentId) {
+        return studentEvaluationDao.countAllByTermIdAndAndDepartmentId(termId, departmentId);
+    }
+
+    @Override
     public List<StudentEvaluation> findAllByStudentIdAndAndTermId(Long studentId, Integer termId) {
         return studentEvaluationDao.findAllByStudentIdAndAndTermId(studentId, termId);
     }
@@ -160,6 +175,7 @@ public class StudentEvaluationInfoServiceImpl implements StudentEvaluationInfoSe
         studentEvaluation.setStudentId(student.getStudentId());
         studentEvaluation.setClassId(student.getStudentClass().getClassId());
         studentEvaluation.setStudentName(student.getStudentName());
+        studentEvaluation.setDepartmentId(student.getStudentClass().getDepartment().getDepartmentId());
         return studentEvaluationDao.insert(studentEvaluation);
     }
 

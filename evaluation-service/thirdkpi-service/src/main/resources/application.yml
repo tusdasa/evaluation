@@ -42,7 +42,15 @@ spring:
 mybatis:
   config-location: classpath:myBatisConfig.xml
 management:
+#  metrics:
+  #    export:
+  #      prometheus:
+  #        pushgateway:
+  #          base-url: http://127.0.0.1:9090
   endpoints:
     web:
+      exposure:
+        include: "*"
+    jmx:
       exposure:
         include: "*"

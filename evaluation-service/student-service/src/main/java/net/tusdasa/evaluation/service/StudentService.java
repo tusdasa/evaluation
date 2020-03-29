@@ -20,4 +20,6 @@ public interface StudentService {
     List<Student> findAllByPage(Integer page, Integer size);
 
     boolean resetPassword(Long studentId, String newPassword, String oldPassword);
+
+    long countByDepartmentId(Integer departmentId);
 }

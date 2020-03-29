@@ -92,4 +92,9 @@ public class StudentController {
         }
         return new CommonResponse<String>().error();
     }
+
+    @GetMapping("/department/{departmentId}")
+    public CommonResponse<Long> countByDepartmentId(@PathVariable("departmentId") Integer departmentId) {
+        return new CommonResponse<Long>().ok().data(this.studentService.countByDepartmentId(departmentId));
+    }
 }

@@ -19,4 +19,12 @@ public interface StudentEvaluationInfoService {
     StudentEvaluation addStudentCourseResult(StudentEvaluation studentEvaluation, Student student);
 
     List<Course> checkAllCourse(List<Course> courseList, List<StudentEvaluation> studentEvaluationList);
+
+    long countAllByTermId(Integer termId);
+
+    void deleteAllByTermId(Integer termId);
+
+    long countAllByTermIdAndAndDepartmentId(Integer termId, Integer departmentId);
+
+
 }

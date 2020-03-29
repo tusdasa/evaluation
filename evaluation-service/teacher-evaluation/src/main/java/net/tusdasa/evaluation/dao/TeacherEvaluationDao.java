@@ -38,9 +38,11 @@ public interface TeacherEvaluationDao extends MongoRepository<TeacherEvaluation,
 
     /**
      * 用于分析服务异步计算成绩, 更新本次总成绩
-     *
-     *
-     *
      */
     //List<TeacherEvaluation> findAllByEvaluatorIdAndTermId(Integer evaluatorId, Integer termId);
+
+    long countAllByTermId(Integer termId);
+
+    void deleteAllByTermId(Integer termId);
+
 }

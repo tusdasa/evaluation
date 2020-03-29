@@ -28,6 +28,11 @@ public interface TeacherEvaluationService {
      */
     void addTeacherEvaluation(TeacherEvaluation teacherEvaluation, Integer workId, Integer role);
 
+
     CommonResponse<Teacher> findAllTeacher(Integer workId, Integer role);
+
+    long countAllByTermId(Integer termId);
+
+    void deleteAllByTermId(Integer termId);
 
 }

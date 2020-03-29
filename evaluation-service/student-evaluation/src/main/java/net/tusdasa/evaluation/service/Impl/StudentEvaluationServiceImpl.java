@@ -150,4 +150,19 @@ public class StudentEvaluationServiceImpl implements StudentEvaluationService {
         }
     }
 
+    @Override
+    public long countAllByTermId(Integer termId) {
+        return studentEvaluationInfoService.countAllByTermId(termId);
+    }
+
+    @Override
+    public void deleteAllByTermId(Integer termId) {
+        studentEvaluationInfoService.deleteAllByTermId(termId);
+    }
+
+    @Override
+    public long countAllByTermIdAndAndDepartmentId(Integer termId, Integer departmentId) {
+        return studentEvaluationInfoService.countAllByTermIdAndAndDepartmentId(termId, departmentId);
+    }
+
 }

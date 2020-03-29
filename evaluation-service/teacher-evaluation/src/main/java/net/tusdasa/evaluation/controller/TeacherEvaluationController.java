@@ -32,4 +32,15 @@ public class TeacherEvaluationController {
         return new CommonResponse<String>().ok();
     }
 
+    @DeleteMapping("/result/{termId}")
+    public CommonResponse<String> deleteTeacherResult(@PathVariable("termId") Integer termId) {
+        teacherEvaluationService.deleteAllByTermId(termId);
+        return new CommonResponse<String>().ok();
+    }
+
+    @GetMapping("/result/{termId}")
+    public CommonResponse<Long> countAll(@PathVariable("termId") Integer termId) {
+        return new CommonResponse<Long>().ok().data(teacherEvaluationService.countAllByTermId(termId));
+    }
+
 }

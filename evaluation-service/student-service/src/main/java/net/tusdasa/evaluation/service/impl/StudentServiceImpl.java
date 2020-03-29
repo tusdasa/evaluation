@@ -108,4 +108,9 @@ public class StudentServiceImpl implements StudentService {
         }
         return false;
     }
+
+    @Override
+    public long countByDepartmentId(Integer departmentId) {
+        return this.studentMapper.countByDepartmentId(departmentId);
+    }
 }

@@ -121,4 +121,13 @@ public class TeacherServiceImpl implements TeacherService {
         }
         return false;
     }
+
+    @Override
+    public long countByRoleAndDepartment(Integer departmentId, Integer stateId, Integer roleId) {
+        HashMap<String, Integer> parameter = new HashMap<>();
+        parameter.put("departmentId", departmentId);
+        parameter.put("stateId", stateId);
+        parameter.put("roleId", roleId);
+        return this.teacherMapper.countByRoleAndDepartment(parameter);
+    }
 }

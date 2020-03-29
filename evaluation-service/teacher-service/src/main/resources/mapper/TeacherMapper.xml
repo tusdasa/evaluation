@@ -191,4 +191,11 @@
         set teacher_secret = #{teacherSecret,jdbcType=VARCHAR}
         where work_id = #{workId,jdbcType=INTEGER}
     </update>
+    <select id="countByRoleAndDepartment" parameterType="java.util.Map" resultType="java.lang.Long">
+        SELECT COUNT(1)
+        FROM t_teacher
+        WHERE t_teacher.role_id = #{roleId, jdbcType=INTEGER}
+          and t_teacher.department_id = #{departmentId, jdbcType=INTEGER}
+          and t_teacher.state_id = #{stateId, jdbcType=INTEGER}
+    </select>
 </mapper>

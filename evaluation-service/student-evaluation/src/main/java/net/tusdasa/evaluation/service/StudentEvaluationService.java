@@ -13,4 +13,11 @@ public interface StudentEvaluationService {
 
     CommonResponse<Course> currentCourse(Long studentId);
 
+    long countAllByTermId(Integer termId);
+
+    void deleteAllByTermId(Integer termId);
+
+    long countAllByTermIdAndAndDepartmentId(Integer termId, Integer departmentId);
+
+
 }

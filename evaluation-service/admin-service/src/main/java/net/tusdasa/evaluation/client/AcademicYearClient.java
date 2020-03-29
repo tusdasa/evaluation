@@ -3,6 +3,7 @@ package net.tusdasa.evaluation.client;
 import net.tusdasa.evaluation.client.impl.AcademicYearClientImpl;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.AcademicYear;
+import net.tusdasa.evaluation.entity.Term;
 import net.tusdasa.evaluation.vo.AcademicYearRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,9 @@ public interface AcademicYearClient {
 
     @GetMapping("/current")
     CommonResponse<AcademicYear> current();
+
+    @GetMapping("/term")
+    CommonResponse<Term> currentTerm();
 
     @PutMapping("/")
     CommonResponse<String> updateAcademicYear(@RequestBody AcademicYearRequest request);

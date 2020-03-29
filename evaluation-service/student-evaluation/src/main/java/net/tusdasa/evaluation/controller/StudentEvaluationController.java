@@ -33,5 +33,26 @@ public class StudentEvaluationController {
         return studentEvaluationService.addStudentCourseResult(studentEvaluation, studentId);
     }
 
+    @GetMapping("/result/{termId}")
+    public CommonResponse<Long> countAllByTermId(@PathVariable("termId") Integer termId) {
+        return new CommonResponse<Long>().ok().data(this.studentEvaluationService.countAllByTermId(termId));
+    }
+
+    @DeleteMapping("/result/{termId}")
+    public CommonResponse<String> deleteAllByTermId(@PathVariable("termId") Integer termId) {
+        this.studentEvaluationService.deleteAllByTermId(termId);
+        return new CommonResponse<String>().ok();
+    }
+
+    @GetMapping("/result/{departmentId}/{termId}")
+    public CommonResponse<Long> countAllByTermIdAndAndDepartmentId(@PathVariable("termId") Integer termId, @PathVariable("departmentId") Integer departmentId) {
+        return new CommonResponse<Long>().ok().data(
+                this.studentEvaluationService.countAllByTermIdAndAndDepartmentId(
+                        termId,
+                        departmentId
+                )
+        );
+    }
+
 
 }

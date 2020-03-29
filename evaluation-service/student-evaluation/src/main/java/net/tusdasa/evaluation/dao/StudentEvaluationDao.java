@@ -21,4 +21,9 @@ public interface StudentEvaluationDao extends MongoRepository<StudentEvaluation,
     long countAllByTermId(Integer termId);
 
     void deleteAllByTermId(Integer termId);
+
+    long countAllByTermIdAndAndDepartmentId(Integer termId, Integer departmentId);
+
+    long countDistinctByStudentIdAndTermId(Long studentId, Integer termId);
+
 }

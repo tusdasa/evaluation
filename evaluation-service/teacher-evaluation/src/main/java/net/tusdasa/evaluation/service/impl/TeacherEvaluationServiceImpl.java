@@ -151,6 +151,16 @@ public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
  */
     }
 
+    @Override
+    public long countAllByTermId(Integer termId) {
+        return teacherEvaluationDao.countAllByTermId(termId);
+    }
+
+    @Override
+    public void deleteAllByTermId(Integer termId) {
+        teacherEvaluationDao.deleteAllByTermId(termId);
+    }
+
     private List<Teacher> clearTeacherList(List<TeacherEvaluation> teacherEvaluationList, List<Teacher> teacherList) {
         if (teacherEvaluationList == null || teacherEvaluationList.isEmpty()) {
             return teacherList;

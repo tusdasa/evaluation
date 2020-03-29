@@ -123,4 +123,10 @@
     set student_secret = #{studentSecret,jdbcType=VARCHAR}
     where student_id = #{studentId,jdbcType=BIGINT}
   </update>
+  <select id="countByDepartmentId" parameterType="java.lang.Integer" resultType="java.lang.Long">
+    SELECT COUNT(1)
+    FROM t_student
+           INNER JOIN t_student_class ON t_student.class_id = t_student_class.class_id
+    WHERE t_student_class.department_id = #{department.departmentId,jdbcType=INTEGER}
+  </select>
 </mapper>

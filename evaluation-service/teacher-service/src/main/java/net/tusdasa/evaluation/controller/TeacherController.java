@@ -111,4 +111,13 @@ public class TeacherController {
         return new CommonResponse<String>().error();
     }
 
+    @GetMapping("/count/{departmentId}/role/{roleId}/state/{stateId}")
+    public CommonResponse<Long> countTeacher(@PathVariable("departmentId") Integer departmentId,
+                                             @PathVariable("roleId") Integer roleId,
+                                             @PathVariable("stateId") Integer stateId) {
+        return new CommonResponse<Long>().ok().data(
+                this.teacherService.countByRoleAndDepartment(departmentId, stateId, roleId)
+        );
+    }
+
 }
