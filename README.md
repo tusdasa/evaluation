@@ -29,7 +29,14 @@ $ java -version
 set BUILD_DIR = \path\build # windows
 export BUILD_DIR = /path/build # Linux
 ```
-
+> 运行项目下
+```
+package.bat
+```
+或
+```
+mvn package -Dmaven.test.skip=true
+```
 > 运行
 
 #### TODO
