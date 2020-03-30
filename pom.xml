@@ -67,7 +67,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-	<!-- 还是得换他 -->
+
     <distributionManagement>
         <repository>
           <id>github</id>
