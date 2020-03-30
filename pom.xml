@@ -67,15 +67,12 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-	<!-- 反复修改你 -->
+	<!-- 还是得换他 -->
     <distributionManagement>
-		<repository>
-			<id>rdc-releases</id>
-			<url>https://repo.rdc.aliyun.com/repository/39069-release-Am8d3S/</url>
-		</repository>
-		<snapshotRepository>
-			<id>rdc-snapshots</id>
-			<url>https://repo.rdc.aliyun.com/repository/39069-snapshot-cjuh5y/</url>
-		</snapshotRepository>
+        <repository>
+          <id>github</id>
+          <name>GitHub OWNER Apache Maven Packages</name>
+          <url>https://maven.pkg.github.com/tusdasa</url>
+	    </repository>
     </distributionManagement>
 </project>
