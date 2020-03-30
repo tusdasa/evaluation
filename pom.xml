@@ -67,7 +67,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
+	<!-- 反复修改你 -->
     <distributionManagement>
 		<repository>
 			<id>rdc-releases</id>
