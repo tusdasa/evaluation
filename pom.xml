@@ -67,6 +67,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
 	<!--
     <distributionManagement>
 		<repository>
