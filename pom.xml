@@ -72,7 +72,7 @@
         <repository>
           <id>github</id>
           <name>GitHub OWNER Apache Maven Packages</name>
-          <url>https://maven.pkg.github.com/tusdasa</url>
+          <url>https://maven.pkg.github.com/tusdasa/evaluation</url>
 	    </repository>
     </distributionManagement>
 </project>
