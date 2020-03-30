@@ -1,17 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
- <servers>
-  <server>
-        <id>rdc-releases</id>
-        <username>whMYDj</username>
-        <password>EP3daxg7Xj</password>
-    </server>
-    <server>
-        <id>rdc-snapshots</id>
-        <username>whMYDj</username>
-        <password>EP3daxg7Xj</password>
-    </server>
-  </servers>
   <mirrors>
       <mirror>
       <id>central</id>
