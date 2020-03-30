@@ -17,8 +17,6 @@ jobs:
       with:
         java-version: 1.8
         server-id: rdc-releases
-	server-username: MAVEN_USERNAME
-	server-password: MAVEN_PASSWORD
         settings-path: ${{ github.workspace }}
 
     - name: Build with Maven
