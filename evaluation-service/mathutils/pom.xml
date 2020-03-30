@@ -61,27 +61,6 @@
         </dependency>
         -->
     </dependencies>
-    <distributionManagement>
-        <!--
-        <repository>
-            <id>rdc-releases</id>
-            <url>https://repo.rdc.aliyun.com/repository/39069-release-Am8d3S/</url>
-        </repository>
-        <snapshotRepository>
-            <id>rdc-snapshots</id>
-            <url>https://repo.rdc.aliyun.com/repository/39069-snapshot-cjuh5y/</url>
-        </snapshotRepository>
-        -->
-        <repository>
-            <id>maven-releases</id>
-            <url>http://127.0.0.1:8081/repository/maven-releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>maven-snapshots</id>
-            <url>http://127.0.0.1:8081/repository/maven-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
-
     <build>
         <plugins>
             <plugin>
