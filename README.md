@@ -23,13 +23,6 @@ $ java -version
 ```
 > build
 
-> 配置 BUILD_DIR 环境变量
-
-```
-set BUILD_DIR = \path\build # windows
-export BUILD_DIR = /path/build # Linux
-```
-> 运行项目下
 ```
 package.bat
 ```
