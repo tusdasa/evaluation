@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <servers>
+  <server>
+        <id>rdc-releases</id>
+        <username>whMYDj</username>
+        <password>EP3daxg7Xj</password>
+    </server>
+    <server>
+        <id>rdc-snapshots</id>
+        <username>whMYDj</username>
+        <password>EP3daxg7Xj</password>
+    </server>
+  </servers>
+  <profiles>
+  <profile>
+    <id>rdc-private-repo</id>
+    <repositories>
+        <repository>
+            <id>rdc-releases</id>
+            <url>https://repo.rdc.aliyun.com/repository/39069-release-Am8d3S/</url>
+        </repository>
+        <repository>
+            <id>rdc-snapshots</id>
+            <url>https://repo.rdc.aliyun.com/repository/39069-snapshot-cjuh5y/</url>
+        </repository>
+    </repositories>
+	</profile>
+  </profiles>
+</settings>
