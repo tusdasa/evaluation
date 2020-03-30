@@ -16,9 +16,9 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-        server-id: rdc-snapshots
+        server-id: github
         server-username: MAVEN_USERNAME
-        server-password: MAVEN_PASSWORD
+        server-password: MAVEN_TOKEN
         settings-path: ${{ github.workspace }}
 
     - name: Build with Maven
@@ -27,5 +27,5 @@ jobs:
     - name: Publish to Apache Maven Central
       run: mvn deploy -Dmaven.test.skip=true -s $GITHUB_WORKSPACE/settings.xml
       env:
-        MAVEN_USERNAME: whMYDj
-        MAVEN_PASSWORD: EP3daxg7Xj
+        MAVEN_USERNAME: tusdasa
+        MAVEN_TOKEN: c2dacee4b3373ac301456686357f0deb1ae56ed3
