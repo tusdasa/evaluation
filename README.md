@@ -1,11 +1,35 @@
-# 札记
+# README
 
-> 评教微服务每次写入的是新数据,读入的是既有数据
-> 查不影响写入
-> 分析微服务是更新和计算
-> 已经完成了成绩的写入
+---
 
-> 课程ID 课程名称 开课的老师
-> 开课学期
-> 评价者 班级 学院 年级
-> 每一项的成绩 对应一级指标 二级指标
+## 微服务教学评估系统
+
+> 编译
+
+> Maven
+
+```
+$ mvn -version
+ Apache Maven 3.6.3 (cecedd343002696d0abb50b32b541b8a6ba2883f)
+```
+
+> Java
+
+```
+$ java -version
+  java version "1.8.0_241"
+  Java(TM) SE Runtime Environment (build 1.8.0_241-b07)
+  Java HotSpot(TM) 64-Bit Server VM (build 25.241-b07, mixed mode)
+```
+> build
+
+> 配置 BUILD_DIR 环境变量
+
+```
+set BUILD_DIR = \path\build # windows
+export BUILD_DIR = /path/build # Linux
+```
+
+> 运行
+
+#### TODO
