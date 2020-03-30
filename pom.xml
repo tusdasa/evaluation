@@ -67,14 +67,16 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+	<!--
     <distributionManagement>
-    <repository>
-        <id>rdc-releases</id>
-        <url>https://repo.rdc.aliyun.com/repository/39069-release-Am8d3S/</url>
-    </repository>
-    <snapshotRepository>
-        <id>rdc-snapshots</id>
-        <url>https://repo.rdc.aliyun.com/repository/39069-snapshot-cjuh5y/</url>
-    </snapshotRepository>
-</distributionManagement>
+		<repository>
+			<id>rdc-releases</id>
+			<url>https://repo.rdc.aliyun.com/repository/39069-release-Am8d3S/</url>
+		</repository>
+		<snapshotRepository>
+			<id>rdc-snapshots</id>
+			<url>https://repo.rdc.aliyun.com/repository/39069-snapshot-cjuh5y/</url>
+		</snapshotRepository>
+    </distributionManagement>
+  -->
 </project>
