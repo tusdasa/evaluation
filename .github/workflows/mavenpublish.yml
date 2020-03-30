@@ -16,7 +16,9 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-        server-id: rdc-releases
+        server-id: rdc-snapshots
+        server-username: MAVEN_USERNAME
+        server-password: MAVEN_CENTRAL_TOKEN
         settings-path: ${{ github.workspace }}
 
     - name: Build with Maven
@@ -26,4 +28,4 @@ jobs:
       run: mvn deploy -Dmaven.test.skip=true -s $GITHUB_WORKSPACE/settings.xml
       env:
         MAVEN_USERNAME: whMYDj
-	MAVEN_PASSWORD: EP3daxg7Xj
+        MAVEN_PASSWORD: EP3daxg7Xj
