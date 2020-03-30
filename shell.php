@@ -1,12 +1,12 @@
 <?php
-$shell = "hg log --limit 1";
+$shell = "git log -n 1";
 
 exec($shell, $result, $status);
-$str = "changeset: " . substr($result[0], 13);
-$str = $str . "<br />" . "分支: " . substr($result[1], 13);
-$str = $str . "<br />" . "提交者: " . substr($result[3], 13);
-$str = $str . "<br />" . "提交时间: " . date("Y-m-d h:i:s a", strtotime(substr($result[4], 13)));
-$str = $str . "<br />" . "提交信息: " . mb_convert_encoding(substr($result[5], 13), "UTF-8", "EUC-CN");
+print_r($result);
+$str = "commit: " . $result[0];
+$str = $str . "<br />" . "提交者: " . substr($result[1], 8);
+$str = $str . "<br />" . "提交时间: " . date("Y-m-d h:i:s a", strtotime(substr($result[2], 8)));
+$str = $str . "<br />" . "提交信息: " . substr($result[4], 7);
 
 $email_text = array(
     "to" => "tusdasa@qq.com",
@@ -14,7 +14,9 @@ $email_text = array(
     "text" => $str
 );
 $email_data = json_encode($email_text);
+
 print_r($email_text);
+
 
 // send email
 $email = curl_init('http://127.0.0.1:8085/send2');
@@ -31,7 +33,7 @@ $email_result = curl_exec($email);
 $qq_text = array(
     "auto_escape" => 'true',
     "group_id" => 696983243,
-    "message" => "本次构建完成\n完成时间: " . date("Y-m-d h:i:s a") . "\n提交说明: \n" . mb_convert_encoding(substr($result[5], 13), "UTF-8", "EUC-CN")
+    "message" => "本次构建完成\n完成时间: " . date("Y-m-d h:i:s a") . "\n提交说明: \n" . substr($result[4], 7)
 );
 print_r($qq_text);
 

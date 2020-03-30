@@ -23,13 +23,13 @@ $ java -version
 ```
 > build
 
-> 配置 BUILD_DIR 环境变量
-
 ```
-set BUILD_DIR = \path\build # windows
-export BUILD_DIR = /path/build # Linux
+package.bat
 ```
-
+或
+```
+mvn package -Dmaven.test.skip=true
+```
 > 运行
 
 #### TODO

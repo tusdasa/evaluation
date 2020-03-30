@@ -45,7 +45,7 @@
         <java.version>1.8</java.version>
         <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
         <spring-boot-admin.version>2.2.1</spring-boot-admin.version>
-        <output.jar.location>${env.BUILD_DIR}</output.jar.location>
+        <output.jar.location>${basedir}/target</output.jar.location>
     </properties>
 
     <dependencies>
@@ -67,16 +67,14 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    <repositories>
-        <repository>
-            <id>spring</id>
-            <url>https://maven.aliyun.com/repository/spring</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+    <distributionManagement>
+    <repository>
+        <id>rdc-releases</id>
+        <url>https://repo.rdc.aliyun.com/repository/39069-release-Am8d3S/</url>
+    </repository>
+    <snapshotRepository>
+        <id>rdc-snapshots</id>
+        <url>https://repo.rdc.aliyun.com/repository/39069-snapshot-cjuh5y/</url>
+    </snapshotRepository>
+</distributionManagement>
 </project>
