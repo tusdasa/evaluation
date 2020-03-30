@@ -68,7 +68,6 @@
         </dependencies>
     </dependencyManagement>
 
-	<!--
     <distributionManagement>
 		<repository>
 			<id>rdc-releases</id>
@@ -79,5 +78,5 @@
 			<url>https://repo.rdc.aliyun.com/repository/39069-snapshot-cjuh5y/</url>
 		</snapshotRepository>
     </distributionManagement>
-  -->
+
 </project>
