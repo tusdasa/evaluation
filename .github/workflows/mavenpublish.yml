@@ -26,3 +26,5 @@ jobs:
       run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
       env:
         GITHUB_TOKEN: ${{ github.token }}
+        RDC_USERNAME: whMYDj 
+        RDC_TOKEN: EP3daxg7Xj
