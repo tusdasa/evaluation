@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
  <servers>
   <server>
         <id>rdc-releases</id>
@@ -11,6 +12,14 @@
         <password>EP3daxg7Xj</password>
     </server>
   </servers>
+  <mirrors>
+      <mirror>
+      <id>central</id>
+      <name>central</name>
+      <mirrorOf>*</mirrorOf>
+      <url>https://repo1.maven.org/maven2/</url>
+     </mirror>
+  </mirrors>
   <profiles>
   <profile>
     <id>rdc-private-repo</id>
