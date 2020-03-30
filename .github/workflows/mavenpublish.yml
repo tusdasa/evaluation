@@ -23,6 +23,4 @@ jobs:
       run: mvn -B package -Dmaven.test.skip=true --file pom.xml
 
     - name: Publish to GitHub Packages Apache Maven
-      run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
-      env:
-        GITHUB_TOKEN: c2dacee4b3373ac301456686357f0deb1ae56ed3
+      run: mvn deploy -Dmaven.test.skip=true -Dregistry=https://maven.pkg.github.com/tusdasa -Dtoken=c2dacee4b3373ac301456686357f0deb1ae56ed3
