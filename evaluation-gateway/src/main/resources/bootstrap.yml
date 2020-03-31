@@ -9,6 +9,10 @@ spring:
     loadbalancer:
       ribbon:
         enabled: false
+      health-check:
+        path:
+          evaluation-authorization-service: /auth/actuator/health
+
     consul:
       host: 127.0.0.1
       port: 8500

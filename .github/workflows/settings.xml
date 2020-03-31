@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <mirrors>
+      <mirror>
+      <id>central</id>
+      <name>central</name>
+      <mirrorOf>*</mirrorOf>
+      <url>https://repo1.maven.org/maven2/</url>
+     </mirror>
+  </mirrors>
+  <servers>
+    <server>
+        <id>github</id>
+        <username>${env.MAVEN_USERNAME}</username>
+        <password>${env.MAVEN_TOKEN}</password>
+    </server>
+  </servers>
+</settings>
