@@ -5,6 +5,7 @@ import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.AcademicYear;
 import net.tusdasa.evaluation.entity.Term;
 import net.tusdasa.evaluation.vo.AcademicYearRequest;
+import net.tusdasa.evaluation.vo.TermRequest;
 import org.springframework.stereotype.Component;
 
 /**
@@ -42,5 +43,25 @@ public class AcademicYearClientImpl implements AcademicYearClient {
     @Override
     public CommonResponse<AcademicYear> findByAcademicYearId(Integer academicYearId) {
         return new CommonResponse<AcademicYear>().busy();
+    }
+
+    @Override
+    public CommonResponse<Term> findAllTerm() {
+        return new CommonResponse<Term>().busy();
+    }
+
+    @Override
+    public CommonResponse<Term> findById(Integer termId) {
+        return new CommonResponse<Term>().busy();
+    }
+
+    @Override
+    public CommonResponse<String> createTerm(TermRequest request) {
+        return new CommonResponse<String>().busy();
+    }
+
+    @Override
+    public CommonResponse<String> updateTerm(TermRequest request) {
+        return new CommonResponse<String>().busy();
     }
 }

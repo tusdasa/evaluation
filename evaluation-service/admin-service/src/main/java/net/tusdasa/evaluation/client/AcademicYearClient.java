@@ -5,6 +5,7 @@ import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.AcademicYear;
 import net.tusdasa.evaluation.entity.Term;
 import net.tusdasa.evaluation.vo.AcademicYearRequest;
+import net.tusdasa.evaluation.vo.TermRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,5 +29,17 @@ public interface AcademicYearClient {
 
     @GetMapping("/{academicYearId}")
     CommonResponse<AcademicYear> findByAcademicYearId(@PathVariable("academicYearId") Integer academicYearId);
+
+    @GetMapping("/term/")
+    CommonResponse<Term> findAllTerm();
+
+    @GetMapping("/term/{termId}")
+    CommonResponse<Term> findById(@PathVariable("termId") Integer termId);
+
+    @PostMapping("/term/")
+    CommonResponse<String> createTerm(@RequestBody TermRequest request);
+
+    @PutMapping("/term/")
+    CommonResponse<String> updateTerm(@RequestBody TermRequest request);
 
 }

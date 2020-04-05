@@ -86,7 +86,7 @@
     </dependencies>
 
     <build>
-        <finalName>evaluation-data-service</finalName>
+        <finalName>evaluation-grade-service</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
