@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/state")
 public class TeacherStateController {
 
     private TeacherStateService teacherStateService;
@@ -19,7 +18,7 @@ public class TeacherStateController {
         this.teacherStateService = teacherStateService;
     }
 
-    @GetMapping("/{stateId}")
+    @GetMapping("/state/{stateId}")
     public CommonResponse<TeacherState> findTeacherStateById(@PathVariable("stateId") Integer stateId) {
         TeacherState teacherState = this.teacherStateService.findById(stateId);
         if (teacherState != null) {
@@ -28,7 +27,7 @@ public class TeacherStateController {
         return new CommonResponse<TeacherState>().error("未找到");
     }
 
-    @GetMapping("/")
+    @GetMapping("/state")
     public CommonResponse<TeacherState> findAllTeacherState() {
         return new CommonResponse<TeacherState>().ok().table(this.teacherStateService.findAll());
     }

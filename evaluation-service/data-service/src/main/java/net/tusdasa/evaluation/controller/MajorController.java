@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/major")
 public class MajorController {
 
     private MajorService majorService;
@@ -19,7 +18,7 @@ public class MajorController {
         this.majorService = majorService;
     }
 
-    @GetMapping("/{majorId}")
+    @GetMapping("major/{majorId}")
     public CommonResponse<Major> findMajorById(@PathVariable("majorId") Integer majorId) {
         Major major = this.majorService.findById(majorId);
         if (major != null) {
@@ -28,7 +27,7 @@ public class MajorController {
         return new CommonResponse<Major>().error("未找到");
     }
 
-    @GetMapping("/")
+    @GetMapping("/major")
     public CommonResponse<Major> findAllMajor() {
         return new CommonResponse<Major>().ok().table(this.majorService.findAll());
     }

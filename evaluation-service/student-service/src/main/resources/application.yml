@@ -18,12 +18,16 @@ spring:
     loadbalancer:
       ribbon:
         enabled: false
+  redis:
     consul:
       host: 127.0.0.1
       port: 8500
       discovery:
         health-check-path: /student/actuator/health
         tags: management.context-path=/student/actuator
+    database: 5
+  cache:
+    type: redis
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss:SSS
     time-zone: GMT+8
