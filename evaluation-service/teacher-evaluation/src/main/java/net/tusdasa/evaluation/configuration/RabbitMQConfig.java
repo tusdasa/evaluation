@@ -44,7 +44,7 @@ public class RabbitMQConfig {
      */
     @Bean
     public Queue queue() {
-        return new Queue(QUEUE_TEACHER, false);
+        return new Queue(QUEUE_TEACHER, true);
     }
 
     /**

@@ -12,7 +12,10 @@ spring:
       health-check:
         path:
           evaluation-authorization-service: /auth/actuator/health
-
+#  redis:
+#    host: 127.0.0.1
+#    port: 6379
+#    database: 10
     consul:
       host: 127.0.0.1
       port: 8500
