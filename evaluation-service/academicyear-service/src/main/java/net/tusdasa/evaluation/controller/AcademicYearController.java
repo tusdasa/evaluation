@@ -55,6 +55,11 @@ public class AcademicYearController {
         return new CommonResponse<AcademicYear>().error("未找到");
     }
 
+    @DeleteMapping("/{academicYearId}")
+    public CommonResponse<String> deleteAcademicYear(@PathVariable("academicYearId") Integer academicYearId){
+        this.academicYearService.deleteAcaAcademicYear(academicYearId);
+        return new CommonResponse<String>().ok();
+    }
     @GetMapping("/term")
     public CommonResponse<Term> currentTerm() {
         Term term = this.academicYearService.currentTerm();
