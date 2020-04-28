@@ -10,18 +10,28 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CommonResponse<Model extends Serializable> implements Serializable {
 
+    // 成功
     public static final long CODE_SUCCESS = 200;
+    // 出现错误
     public static final long CODE_ERROR = 500;
+    // 未找到
     public static final long CODE_VALIDATE_FAILED = 404;
+    // 未认证
     public static final long CODE_UNAUTHORIZED = 401;
+    // 拒接访问
     public static final long CODE_FORBIDDEN = 403;
+    // 超时
     public static final long CODE_TIMEOUT = 408;
 
 
     private long code;
+    // 错误信息
     private String message;
+    // 请求ID
     private String requestId;
+    // 数据
     private Model data;
+    // 集合数据
     private List<Model> table;
 
     public CommonResponse() {

@@ -6,7 +6,7 @@ spring:
   application:
     name: evaluation-calculationrule-service
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/xynu_evaluation?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://mycat.tusdasa.net:8066/evaluation?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -15,9 +15,9 @@ spring:
       min-idle: 2
       initial-size: 2
   redis:
-    host: 127.0.0.1
+    host: redis.tusdasa.net
     port: 6379
-    database: 6
+    database: 3
   cache:
     type: redis
     redis:
@@ -30,11 +30,12 @@ spring:
       ribbon:
         enabled: false
     consul:
-      host: 127.0.0.1
+      host: consul.tusdasa.net
       port: 8500
       discovery:
         health-check-path: /calc/actuator/health
         tags: management.context-path=/calc/actuator
+        prefer-ip-address: true
 #eureka:
 #  client:
 #    service-url:

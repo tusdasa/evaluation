@@ -10,19 +10,20 @@ spring:
     time-zone: GMT+8
   data:
     mongodb:
-      uri: mongodb://127.0.0.1:27017/evaluation
+      uri: mongodb://mongodb.tusdasa.net:27017/evaluation
   cloud:
     loadbalancer:
       ribbon:
         enabled: false
     consul:
-      host: 127.0.0.1
+      host: consul.tusdasa.net
       port: 8500
       discovery:
         health-check-path: /sevaluation/actuator/health
         tags: management.context-path=/sevaluation/actuator
+        prefer-ip-address: true
   rabbitmq:
-    host: 127.0.0.1
+    host: rabbitmq.tusdasa.net
     port: 5672
     username: evaluation
     password: 123456

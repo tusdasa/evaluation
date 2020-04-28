@@ -14,11 +14,12 @@ spring:
       ribbon:
         enabled: false
     consul:
-      host: 127.0.0.1
+      host: consul.tusdasa.net
       port: 8500
       discovery:
         health-check-path: /admin/actuator/health
         tags: management.context-path=/admin/actuator
+        prefer-ip-address: true
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss:SSS
     time-zone: GMT+8

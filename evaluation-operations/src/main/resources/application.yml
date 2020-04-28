@@ -7,28 +7,22 @@ spring:
     consul:
       host: 127.0.0.1
       port: 8500
+      discovery:
+        prefer-ip-address: true
   mail:
-    #host: smtp.qiye.aliyun.com
     host: 127.0.0.1
     default-encoding: UTF-8
-    #port: 465
     prot: 22
     protocol: smtp
-    #username: service@tusdasa.net
-    username: tusdasa@mail.local.net
+    username: tusdasa@local.net
     password: 123456
     properties:
       mail:
         smtp:
           auth: true
-          #starttls:
-          #  enable: true
-          #  required: true
-          #ssl:
-          #  enable: true
   boot:
     admin:
       notify:
         mail:
-          to: test@mail.local.net
-          from: tusdasa@mail.local.net
+          to: test@local.net
+          from: tusdasa@local.net

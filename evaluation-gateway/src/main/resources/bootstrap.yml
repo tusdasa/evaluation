@@ -27,6 +27,7 @@ spring:
         default-context: evaluation-gateway-service
       discovery:
         tags: user.name=admin,user.password=admin1
+        prefer-ip-address: true
     gateway:
       httpclient:
         connect-timeout: 6000

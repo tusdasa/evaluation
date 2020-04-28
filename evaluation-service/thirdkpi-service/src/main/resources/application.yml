@@ -6,15 +6,15 @@ spring:
   application:
     name: evaluation-thirdkpi-service
   redis:
-    host: 127.0.0.1
+    host: redis.tusdasa.net
     port: 6379
-    database: 0
+    database: 7
   cache:
     redis:
       time-to-live: 604800
     type: redis
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/xynu_evaluation?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://mycat.tusdasa.net:8066/evaluation?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -27,11 +27,12 @@ spring:
       ribbon:
         enabled: false
     consul:
-      host: 127.0.0.1
+      host: consul.tusdasa.net
       port: 8500
       discovery:
         health-check-path: /thirdkpi/actuator/health
         tags: management.context-path=/thirdkpi/actuator
+        prefer-ip-address: true
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss:SSS
     time-zone: GMT+8

@@ -98,13 +98,14 @@ public class StudentEvaluationServiceImpl implements StudentEvaluationService {
 
     @Override
     public CommonResponse<String> addStudentCourseResult(StudentEvaluation studentEvaluation, Long studentId) {
-
         Student student = this.getStudent(studentId);
         if (student != null) {
             rabbitTemplate.convertAndSend(
                     RabbitMQConfig.EXCHANGE_STUDENT,
                     RabbitMQConfig.ROUTE_KEY_STUDENT,
-                    this.studentEvaluationInfoService.addStudentCourseResult(studentEvaluation, student)
+                    this.studentEvaluationInfoService.addStudentCourseResult(
+                            studentEvaluation,
+                            student)
             );
             return new CommonResponse<String>().ok();
         } else {
@@ -135,7 +136,7 @@ public class StudentEvaluationServiceImpl implements StudentEvaluationService {
             List<Course> courseList = this.getCourseList(student.getStudentClass().getClassId(), currentTerm.getTermId());
             List<Course> currentCourse = studentEvaluationInfoService.checkAllCourse(
                     courseList,
-                    this.studentEvaluationInfoService.findAllByStudentIdAndAndTermId(
+                    this.studentEvaluationInfoService.findAllByStudentIdAndTermId(
                             studentId,
                             currentTerm.getTermId()
                     )

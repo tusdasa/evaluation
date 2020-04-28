@@ -6,7 +6,7 @@ spring:
   application:
     name: evaluation-firstkpi-service
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/xynu_evaluation?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://mycat.tusdasa.net:8066/evaluation?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -19,20 +19,21 @@ spring:
       ribbon:
         enabled: false
     consul:
-      host: 127.0.0.1
+      host: consul.tusdasa.net
       port: 8500
       discovery:
         health-check-path: /firstkpi/actuator/health
         health-check-timeout: 15s
         health-check-critical-timeout: 30s
         tags: management.context-path=/firstkpi/actuator
+        prefer-ip-address: true
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss:SSS
     time-zone: GMT+8
   redis:
-    host: 127.0.0.1
+    host: redis.tusdasa.net
     port: 6379
-    database: 4
+    database: 5
   cache:
     type: redis
     redis:

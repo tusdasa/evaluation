@@ -16,11 +16,11 @@ spring:
     time-zone: GMT+8
   data:
     mongodb:
-      uri: mongodb://127.0.0.1:27017/right
+      uri: mongodb://mongodb.tusdasa.net:27017/right
   redis:
-    host: 127.0.0.1
+    host: redis.tusdasa.net
     port: 6379
-    database: 10
+    database: 2
     tomcat:
       max-active: 4
       min-idle: 2
@@ -30,11 +30,12 @@ spring:
       ribbon:
         enabled: false
     consul:
-      host: 127.0.0.1
+      host: consul.tusdasa.net
       port: 8500
       discovery:
         health-check-path: /auth/actuator/health
         tags: management.context-path=/auth/actuator
+        prefer-ip-address: true
       config:
         enabled: true
         format: yaml
