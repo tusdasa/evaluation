@@ -14,7 +14,7 @@ public interface StudentEvaluationInfoService {
 
     //List<StudentEvaluation> findBydStudentId(Long studentId);
 
-    List<StudentEvaluation> findAllByStudentIdAndAndTermId(Long studentId, Integer termId);
+    List<StudentEvaluation> findAllByStudentIdAndTermId(Long studentId, Integer termId);
 
     StudentEvaluation addStudentCourseResult(StudentEvaluation studentEvaluation, Student student);
 
