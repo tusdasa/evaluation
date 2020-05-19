@@ -2,12 +2,14 @@ package net.tusdasa.evaluation.client.impl;
 
 import net.tusdasa.evaluation.client.StudentEvaluationClient;
 import net.tusdasa.evaluation.commons.CommonResponse;
+import org.springframework.stereotype.Component;
 
 /**
  * @Author: tusdasa
  * @Date: 2020-03-29 1:25 PM
  */
 
+@Component
 public class StudentEvaluationClientImpl implements StudentEvaluationClient {
     @Override
     public CommonResponse<Long> countAllByTermId(Integer termId) {

@@ -80,6 +80,13 @@ public class CommonResponse<Model extends Serializable> implements Serializable 
         return this;
     }
 
+    public CommonResponse<Model> bad(String msg) {
+        this.setCode(CODE_FORBIDDEN);
+        this.setRequestId(UUIDUtils.UUID());
+        this.setMessage(msg);
+        return this;
+    }
+
 
     public CommonResponse<Model> data(Model data) {
         this.setData(data);

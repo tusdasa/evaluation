@@ -60,7 +60,10 @@ public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
         Term currentTerm = this.getTerm();
         // 权限
         Right right = this.getRight(role);
-        if (currentTerm != null && right != null) {
+        if (currentTerm == null){
+            return new CommonResponse<ThirdKpi>().bad("不在评价学期内");
+        }
+        if (right != null) {
             if (right.checkRight()) {
                 return this.getThirdKpi(
                         new IdsRequest()
@@ -71,7 +74,7 @@ public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
                 return new CommonResponse<ThirdKpi>().bad();
             }
         } else {
-            return new CommonResponse<ThirdKpi>().busy();
+            return new CommonResponse<ThirdKpi>().bad("没有权限");
         }
     }
 

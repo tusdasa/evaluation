@@ -17,7 +17,7 @@ spring:
 #    port: 6379
 #    database: 10
     consul:
-      host: 127.0.0.1
+      host: consul.tusdasa.net
       port: 8500
       config:
         enabled: true

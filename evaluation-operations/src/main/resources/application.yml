@@ -5,7 +5,7 @@ spring:
     name: evaluation-operations
   cloud:
     consul:
-      host: 127.0.0.1
+      host: consul.tusdasa.net
       port: 8500
       discovery:
         prefer-ip-address: true
