@@ -10,7 +10,7 @@ spring:
       discovery:
         prefer-ip-address: true
   mail:
-    host: 127.0.0.1
+    host: mail.local.net
     default-encoding: UTF-8
     prot: 22
     protocol: smtp
