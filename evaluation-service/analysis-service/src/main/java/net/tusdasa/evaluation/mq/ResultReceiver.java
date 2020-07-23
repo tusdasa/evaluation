@@ -40,15 +40,18 @@ public class ResultReceiver {
     /**
      * 学生评价通知
      */
+
     @RabbitListener(bindings = {
-            @QueueBinding(value = @Queue(value = RabbitMQConfig.QUEUE_STUDENT, declare = "false"), exchange = @Exchange(value = RabbitMQConfig.EXCHANGE_STUDENT, type = ExchangeTypes.TOPIC), key = RabbitMQConfig.ROUTE_KEY_STUDENT)
+            @QueueBinding(value = @Queue(value = RabbitMQConfig.QUEUE_STUDENT, declare = "false"),
+                    exchange = @Exchange(value = RabbitMQConfig.EXCHANGE_STUDENT,
+                            type = ExchangeTypes.TOPIC),
+                    key = RabbitMQConfig.ROUTE_KEY_STUDENT)
     })
     public void countStudentEvaluation(@Payload StudentEvaluation studentEvaluation) {
         if (studentEvaluation != null && studentEvaluation.getKpiScoreList() != null) {
             // 计算成绩
             int totalScore = this.getTotalScore(studentEvaluation.getKpiScoreList());
             studentEvaluation.setTotal(totalScore);
-
             this.studentEvaluationService.addStudentEvaluation(studentEvaluation);
         }
 
@@ -59,17 +62,15 @@ public class ResultReceiver {
      */
     @RabbitListener(bindings = {
             @QueueBinding(value = @Queue(value = RabbitMQConfig.QUEUE_TEACHER, declare = "false"),
-                    exchange = @Exchange(value = RabbitMQConfig.EXCHANGE_TEACHER, type = ExchangeTypes.TOPIC), key = RabbitMQConfig.ROUTE_KEY_TEACHER)
+                    exchange = @Exchange(value = RabbitMQConfig.EXCHANGE_TEACHER,
+                            type = ExchangeTypes.TOPIC),
+                    key = RabbitMQConfig.ROUTE_KEY_TEACHER)
     })
     public void countTeacherEvaluation(@Payload TeacherEvaluation teacherEvaluation) {
-
         if (teacherEvaluation != null && teacherEvaluation.getSecondKpiList() != null) {
             // 计算成绩
-
             int totalScore = this.getTotalScore(teacherEvaluation.getSecondKpiList());
-
             teacherEvaluation.setTotal(totalScore);
-
             this.teacherSituationService.addTeacherSituation(teacherEvaluation);
         }
     }

@@ -56,23 +56,25 @@ public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
      */
     @Override
     public CommonResponse<ThirdKpi> findAllThirdKpi(Integer role) {
+        // 确保在评价时间内
         Term currentTerm = this.getTerm();
+        // 权限
         Right right = this.getRight(role);
-
-        if (currentTerm != null && right != null) {
+        if (currentTerm == null){
+            return new CommonResponse<ThirdKpi>().bad("不在评价学期内");
+        }
+        if (right != null) {
             if (right.checkRight()) {
-
                 return this.getThirdKpi(
                         new IdsRequest()
                                 .addFirstIds(right.getSecondKpiId())
                                 .addSecondIds(right.getThirdKpiId())
                 );
-
             } else {
                 return new CommonResponse<ThirdKpi>().bad();
             }
         } else {
-            return new CommonResponse<ThirdKpi>().busy();
+            return new CommonResponse<ThirdKpi>().bad("没有权限");
         }
     }
 
@@ -90,15 +92,11 @@ public class TeacherEvaluationServiceImpl implements TeacherEvaluationService {
             teacherEvaluation.setId(UUIDUtils.UUID());
             // 设置评价者工号
             teacherEvaluation.setEvaluatorId(workId);
-
             teacherEvaluation.setTermId(currentTerm.getTermId());
-            // 插入MongoDB
-            teacherEvaluationDao.insert(teacherEvaluation);
-            // 发送给分析微服务
             rabbitTemplate.convertAndSend(
                     RabbitMQConfig.EXCHANGE_TEACHER,
                     RabbitMQConfig.ROUTE_KEY_TEACHER,
-                    teacherEvaluation
+                    teacherEvaluationDao.insert(teacherEvaluation)
             );
         }
     }

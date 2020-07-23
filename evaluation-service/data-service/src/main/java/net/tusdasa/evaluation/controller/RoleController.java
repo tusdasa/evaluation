@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/role")
 public class RoleController {
 
     private RoleService roleService;
@@ -19,7 +18,7 @@ public class RoleController {
         this.roleService = roleService;
     }
 
-    @GetMapping("/{roleId}")
+    @GetMapping("/role/{roleId}")
     public CommonResponse<Role> findRoleById(@PathVariable("roleId") Integer roleId) {
         Role role = this.roleService.findById(roleId);
         if (role != null) {
@@ -28,7 +27,7 @@ public class RoleController {
         return new CommonResponse<Role>().error("未找到");
     }
 
-    @GetMapping("/")
+    @GetMapping("/role")
     public CommonResponse<Role> findAllRole() {
         return new CommonResponse<Role>().ok().table(this.roleService.findAll());
     }

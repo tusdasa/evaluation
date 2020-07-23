@@ -1,9 +1,14 @@
-# README
+# 毕设：微服务教师教学评价系统
 
+<<<<<<< HEAD
 ## 毕设：微服务教学评估系统
+=======
+来自于开源，回馈于开源。
+>>>>>>> devel
 
-> 编译
+## 文档
 
+<<<<<<< HEAD
 > Maven
 
 ```
@@ -65,3 +70,6 @@ DNS记录
 
 ## 文档 
 TODO
+=======
+[请阅读Wiki](https://github.com/tusdasa/evaluation/wiki)
+>>>>>>> devel

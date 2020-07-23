@@ -38,4 +38,7 @@ public class DataService {
     public CommonResponse<TeacherState> findAllTeacherState() {
         return this.dataClient.findAllTeacherState();
     }
+    public CommonResponse<Grade> findGradeAll() {
+        return this.dataClient.findAllGrade();
+    }
 }

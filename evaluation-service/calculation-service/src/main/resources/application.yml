@@ -10,17 +10,18 @@ spring:
       ribbon:
         enabled: false
     consul:
-      host: 127.0.0.1
+      host: consul.tusdasa.net
       port: 8500
       discovery:
         health-check-path: /calulation/actuator/health
         tags: management.context-path=/calulation/actuator
+        prefer-ip-address: true
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss:SSS
     time-zone: GMT+8
   data:
     mongodb:
-      uri: mongodb://127.0.0.1:27017/evaluation
+      uri: mongodb://mongodb.tusdasa.net:27017/evaluation
 #eureka:
 #  client:
 #    service-url:

@@ -160,12 +160,12 @@ public class StudentEvaluationInfoServiceImpl implements StudentEvaluationInfoSe
 
     @Override
     public long countAllByTermIdAndAndDepartmentId(Integer termId, Integer departmentId) {
-        return studentEvaluationDao.countAllByTermIdAndAndDepartmentId(termId, departmentId);
+        return studentEvaluationDao.countAllByTermIdAndDepartmentId(termId, departmentId);
     }
 
     @Override
-    public List<StudentEvaluation> findAllByStudentIdAndAndTermId(Long studentId, Integer termId) {
-        return studentEvaluationDao.findAllByStudentIdAndAndTermId(studentId, termId);
+    public List<StudentEvaluation> findAllByStudentIdAndTermId(Long studentId, Integer termId) {
+        return studentEvaluationDao.findAllByStudentIdAndTermId(studentId, termId);
     }
 
     @Override

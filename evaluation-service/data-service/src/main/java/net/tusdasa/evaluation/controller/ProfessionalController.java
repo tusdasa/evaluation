@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/professional")
 public class ProfessionalController {
     private ProfessionalService professionalService;
 
@@ -18,7 +17,7 @@ public class ProfessionalController {
         this.professionalService = professionalService;
     }
 
-    @GetMapping("/{professionalId}")
+    @GetMapping("/professional/{professionalId}")
     public CommonResponse<Professional> findProfessionalById(@PathVariable("professionalId") Integer professionalId) {
         Professional professional = this.professionalService.findById(professionalId);
         if (professional != null) {
@@ -27,7 +26,7 @@ public class ProfessionalController {
         return new CommonResponse<Professional>().error("未找到");
     }
 
-    @GetMapping("/")
+    @GetMapping("/professional")
     public CommonResponse<Professional> findAllProfessional() {
         return new CommonResponse<Professional>().ok().table(this.professionalService.findAll());
     }

@@ -1,6 +1,7 @@
 package net.tusdasa.evaluation.service;
 
 import net.tusdasa.evaluation.client.ClassClient;
+import net.tusdasa.evaluation.client.StudentClient;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.StudentClass;
 import net.tusdasa.evaluation.vo.StudentClassRequest;
@@ -14,26 +15,26 @@ import org.springframework.stereotype.Service;
 @Service
 public class ClassService {
 
-    private ClassClient classClient;
+    private StudentClient studentClient;
 
-    public ClassService(ClassClient classClient) {
-        this.classClient = classClient;
+    public ClassService(StudentClient studentClient) {
+        this.studentClient = studentClient;
     }
 
     public CommonResponse<StudentClass> findAllStudentClass() {
-        return this.classClient.findAllStudentClass();
+        return this.studentClient.findAllStudentClass();
     }
 
     public CommonResponse<StudentClass> findByStudentClassId(Integer id) {
-        return this.classClient.findByStudentClassId(id);
+        return this.studentClient.findByStudentClassId(id);
     }
 
     public CommonResponse<String> createStudentClass(StudentClassRequest request) {
-        return this.classClient.createStudentClass(request);
+        return this.studentClient.createStudentClass(request);
     }
 
     public CommonResponse<String> updateStudentClass(StudentClassRequest request) {
-        return this.classClient.updateStudentClass(request);
+        return this.studentClient.updateStudentClass(request);
     }
 
 }

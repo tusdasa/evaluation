@@ -1,6 +1,6 @@
 package net.tusdasa.evaluation.service;
 
-import net.tusdasa.evaluation.client.TermClient;
+import net.tusdasa.evaluation.client.AcademicYearClient;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.Term;
 import net.tusdasa.evaluation.vo.TermRequest;
@@ -14,25 +14,25 @@ import org.springframework.stereotype.Service;
 @Service
 public class TermService {
 
-    private TermClient termClient;
+    private AcademicYearClient academicYearClient;
 
-    public TermService(TermClient termClient) {
-        this.termClient = termClient;
+    public TermService(AcademicYearClient academicYearClient) {
+        this.academicYearClient = academicYearClient;
     }
 
     public CommonResponse<Term> findAll() {
-        return this.termClient.findAllTerm();
+        return this.academicYearClient.findAllTerm();
     }
 
     public CommonResponse<Term> findById(Integer id) {
-        return this.termClient.findById(id);
+        return this.academicYearClient.findById(id);
     }
 
     public CommonResponse<String> update(TermRequest request) {
-        return this.termClient.updateTerm(request);
+        return this.academicYearClient.updateTerm(request);
     }
 
     public CommonResponse<String> create(TermRequest request) {
-        return this.termClient.createTerm(request);
+        return this.academicYearClient.createTerm(request);
     }
 }

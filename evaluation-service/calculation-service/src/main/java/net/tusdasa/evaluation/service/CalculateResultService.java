@@ -48,7 +48,9 @@ public class CalculateResultService {
         if (academicYear == null) {
             return null;
         }
+        // 学生评价
         StudentSituation studentSituation = this.getStudentSituation(workId);
+        // 教学督导评价
         TeacherSituation teacherSituation = this.getTeacherSituation(workId);
 
         if (studentSituation != null && teacherSituation != null) {

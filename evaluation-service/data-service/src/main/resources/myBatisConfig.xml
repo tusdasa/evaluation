@@ -18,5 +18,6 @@
         <mapper resource="mapper/RoleMapper.xml"/>
         <mapper resource="mapper/StudentClassMapper.xml"/>
         <mapper resource="mapper/TeacherStateMapper.xml"/>
+        <mapper resource="mapper/GradeMapper.xml"/>
     </mappers>
 </configuration>

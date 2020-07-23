@@ -16,13 +16,13 @@ public interface StudentEvaluationDao extends MongoRepository<StudentEvaluation,
 
     List<StudentEvaluation> findAllByStudentId(Long studentId);
 
-    List<StudentEvaluation> findAllByStudentIdAndAndTermId(Long studentId, Integer termId);
+    List<StudentEvaluation> findAllByStudentIdAndTermId(Long studentId, Integer termId);
 
     long countAllByTermId(Integer termId);
 
     void deleteAllByTermId(Integer termId);
 
-    long countAllByTermIdAndAndDepartmentId(Integer termId, Integer departmentId);
+    long countAllByTermIdAndDepartmentId(Integer termId, Integer departmentId);
 
     long countDistinctByStudentIdAndTermId(Long studentId, Integer termId);
 

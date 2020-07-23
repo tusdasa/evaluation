@@ -3,6 +3,8 @@ package net.tusdasa.evaluation.client;
 import net.tusdasa.evaluation.client.impl.StudentClientImpl;
 import net.tusdasa.evaluation.commons.CommonResponse;
 import net.tusdasa.evaluation.entity.Student;
+import net.tusdasa.evaluation.entity.StudentClass;
+import net.tusdasa.evaluation.vo.StudentClassRequest;
 import net.tusdasa.evaluation.vo.StudentRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -26,4 +28,18 @@ public interface StudentClient {
 
     @PostMapping("/")
     CommonResponse<String> crateStudent(@RequestBody StudentRequest request);
+
+    /** class **/
+
+    @GetMapping("/class")
+    CommonResponse<StudentClass> findAllStudentClass();
+
+    @GetMapping("/class//{studentClassId}")
+    CommonResponse<StudentClass> findByStudentClassId(@PathVariable("studentClassId") Integer studentClassId);
+
+    @PostMapping("/class")
+    CommonResponse<String> createStudentClass(@RequestBody StudentClassRequest request);
+
+    @PutMapping("/class")
+    CommonResponse<String> updateStudentClass(@RequestBody StudentClassRequest request);
 }

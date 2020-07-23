@@ -43,4 +43,10 @@ public class TermController {
         return new CommonResponse<String>().ok();
     }
 
+    @DeleteMapping("/{termId}")
+    public CommonResponse<String> deleteTerm(@PathVariable("termId") Integer termId){
+        this.termService.deleteTerm(termId);
+        return new CommonResponse<String>().ok();
+    }
+
 }

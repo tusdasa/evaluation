@@ -10,26 +10,27 @@ spring:
       ribbon:
         enabled: false
     consul:
-      host: 127.0.0.1
+      host: consul.tusdasa.net
       port: 8500
       discovery:
         health-check-path: /analysis/actuator/health
         tags: management.context-path=/analysis/actuator
+        prefer-ip-address: true
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss:SSS
     time-zone: GMT+8
   elasticsearch:
     rest:
-      uris: http://127.0.0.1:9200
+      uris: http://elasticsearch.tusdasa.net:9200
       connection-timeout: 10s
   rabbitmq:
-    host: 127.0.0.1
+    host: rabbitmq.tusdasa.net
     port: 5672
     username: evaluation
     password: 123456
   data:
     mongodb:
-      uri: mongodb://127.0.0.1:27017/evaluation
+      uri: mongodb://mongodb.tusdasa.net:27017/evaluation
 #eureka:
 #  client:
 #    service-url:

@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>calculation</artifactId>
+    <artifactId>calculation-service</artifactId>
 
     <name>Microservice-Calculation</name>
     <description>
@@ -71,7 +71,7 @@
     </dependencies>
 
     <build>
-        <finalName>evaluation-analysis-service</finalName>
+        <finalName>evaluation-calculation-service</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
